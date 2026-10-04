@@ -4,6 +4,7 @@ import { crearPuerta } from './puerta.js';
 import { crearOrigen } from './origen.js';
 import { crearBitacora } from './bitacora.js';
 import { crearLimite } from './limite.js';
+import { crearUsuarios } from './usuarios.js';
 
 const VERSION = '0.1.0';
 
@@ -11,7 +12,8 @@ export function crearServidor({ cfg, pool, fetchFn }) {
   const origen = crearOrigen(cfg, fetchFn);
   const bitacora = crearBitacora(pool, cfg);
   const limite = crearLimite();
-  const puerta = crearPuerta({ cfg, pool, origen, bitacora, limite });
+  const usuarios = crearUsuarios({ cfg, pool, origen });
+  const puerta = crearPuerta({ cfg, pool, origen, bitacora, limite, usuarios });
   const desde = Date.now();
 
   const origenPermitido = (o) => !!o && (cfg.origenes.includes('*') || cfg.origenes.includes(o));
@@ -56,6 +58,13 @@ export function crearServidor({ cfg, pool, fetchFn }) {
         await bitacora.vaciar();
         return json(req, res, 200, { ok: true, horas: Number(url.searchParams.get('horas')) || 24, consultas: await bitacora.resumen(Number(url.searchParams.get('horas')) || 24) });
       }
+      if (req.method === 'GET' && url.pathname === '/estado') {
+        if (!cfg.claveAdmin || !igual(url.searchParams.get('clave') || '', cfg.claveAdmin)) return json(req, res, 401, { ok: false, error: 'Falta la clave.' });
+        let est = null, roles = [];
+        try { est = await usuarios.estado(); roles = est ? await usuarios.porRol() : []; } catch (e) { est = { error: 'La base de datos no contestó.' }; }
+        return json(req, res, 200, { ok: true, usuarios: est && !est.error ? { ...est, porRol: roles, sincronizacionLista: usuarios.listo(),
+          ultimaOk: est.ultimaOk ? new Date(est.ultimaOk).toISOString() : null, ultimoIntento: est.ultimoIntento ? new Date(est.ultimoIntento).toISOString() : null } : est });
+      }
       if (req.method === 'POST' && url.pathname === '/') {
         let q;
         try { q = JSON.parse((await leeCuerpo(req)) || '{}'); }
@@ -71,5 +80,5 @@ export function crearServidor({ cfg, pool, fetchFn }) {
   });
   server.keepAliveTimeout = 65000;     // más que el de los balanceadores, para no cortar conexiones
   server.headersTimeout = 66000;
-  return { server, bitacora, origen };
+  return { server, bitacora, origen, usuarios };
 }

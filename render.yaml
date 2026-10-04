@@ -19,6 +19,10 @@ services:
         generateValue: true  # Render inventa una clave larga; la ve en Environment
       - key: TRUST_PROXY
         value: "1"
+      - key: SERVER_TOKEN
+        generateValue: true  # clave secreta compartida con Apps Script (se copia ahí, ver README, Fase 1)
+      - key: PIN_PEPPER
+        generateValue: true  # clave secreta para transformar los PIN: solo vive aquí. Si se borra, se vuelven a transformar solos
       - key: WARM_MINUTES
         value: "4"
 databases:
@@ -27,3 +31,4 @@ databases:
     user: rey
     plan: basic-256mb
     region: ohio
+    ipAllowList: []          # la base solo se abre desde el servidor (red interna de Render), no desde internet

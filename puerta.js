@@ -1,12 +1,12 @@
 /* La «puerta»: recibe una consulta {fn, args, rid} y la contesta aquí (si ya está migrada) o se la pasa a Apps Script.
  * Devuelve siempre lo mismo que devolvía Apps Script: { ok:true, v, ms } o { ok:false, error }. Por eso la app
  * (el frontend) no necesita cambios: solo apunta a esta dirección en lugar de la de Google. */
-import { nativas, escriben } from './nativas.js';
+import { nativas, escriben, conRespaldoEnOrigen, PASAR } from './nativas.js';
 import { unaVez } from './unavez.js';
 
 const NOMBRE_VALIDO = /^[A-Za-z][A-Za-z0-9_]{0,63}$/;
 
-export function crearPuerta({ cfg, pool, origen, bitacora, limite }) {
+export function crearPuerta({ cfg, pool, origen, bitacora, limite, usuarios }) {
   return async function puerta(q, ip) {
     const t0 = Date.now();
     const fn = String((q && q.fn) || '');
@@ -27,12 +27,14 @@ export function crearPuerta({ cfg, pool, origen, bitacora, limite }) {
     // 1) ¿ya está migrada? Se contesta aquí, con la base de datos propia
     if (Object.prototype.hasOwnProperty.call(nativas, fn)) {
       try {
-        const ctx = { pool, rid, ip };
+        const ctx = { pool, rid, ip, cfg, usuarios };
         const correr = () => nativas[fn](ctx, ...args);
         const v = escriben.has(fn) ? await unaVez(pool, rid, fn, correr) : await correr();
-        return fin({ ok: true, v: v === undefined ? null : v, ms: Date.now() - t0 }, true);
+        if (v !== PASAR) return fin({ ok: true, v: v === undefined ? null : v, ms: Date.now() - t0 }, true);
+        // PASAR: esta vez no es seguro contestar aquí; sigue el camino de Apps Script
       } catch (e) {
-        return fin({ ok: false, error: String(e && e.message ? e.message : e) }, true);
+        if (!conRespaldoEnOrigen.has(fn)) return fin({ ok: false, error: String(e && e.message ? e.message : e) }, true);
+        // es una lectura que también sabe contestar Apps Script: si aquí falló algo, que conteste Google
       }
     }
 
