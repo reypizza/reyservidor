@@ -8,3 +8,5 @@ export function partes(d = new Date()) {
 export const hoyISO = (d) => { const p = partes(d); return `${p.year}-${p.month}-${p.day}`; };
 /** «dd/MM/yyyy, HH:mm», el formato que usa la app para el reloj */
 export const ahoraTxt = (d) => { const p = partes(d); return `${p.day}/${p.month}/${p.year}, ${p.hour}:${p.minute}`; };
+/** «HH:mm» en Guatemala */
+export const horaTxt = (d) => { const p = partes(d); return `${p.hour}:${p.minute}`; };

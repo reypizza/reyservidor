@@ -1,5 +1,6 @@
 /* Reconoce a la persona igual que «quien» de Apps Script: mismos mensajes, mismas reglas, mismo resultado. */
 import { verificaPin } from './clave.js';
+import { ErrorApp } from './errores.js';
 
 const CIERRE_MIN = 10;     // cuánto dura el cierre tras demasiados intentos
 
@@ -12,12 +13,12 @@ export async function autoriza({ pool, cfg, usuarios }, cred, { cuenta = false, 
   cred = cred || {};
   const nombre = String(cred.usuario || '').trim();
   const pin = String(cred.pin || '').trim();
-  if (!nombre || !pin) throw new Error('Escoja su nombre y escriba su PIN.');
+  if (!nombre || !pin) throw new ErrorApp('Escoja su nombre y escriba su PIN.');
   const lc = nombre.toLowerCase();
 
   if (cuenta) {
     const f = (await pool.query('SELECT n FROM intentos WHERE nombre_lc=$1 AND hasta > now()', [lc])).rows[0];
-    if (f && f.n >= cfg.maxIntentos) throw new Error(`Demasiados intentos con ese nombre. Espere ${CIERRE_MIN} minutos y vuelva a probar.`);
+    if (f && f.n >= cfg.maxIntentos) throw new ErrorApp(`Demasiados intentos con ese nombre. Espere ${CIERRE_MIN} minutos y vuelva a probar.`);
   }
 
   const busca = async () => {
@@ -36,15 +37,15 @@ export async function autoriza({ pool, cfg, usuarios }, cred, { cuenta = false, 
     if (cuenta) await pool.query(
       `INSERT INTO intentos (nombre_lc, n, hasta) VALUES ($1, 1, now() + interval '${CIERRE_MIN} minutes')
        ON CONFLICT (nombre_lc) DO UPDATE SET n = CASE WHEN intentos.hasta > now() THEN intentos.n + 1 ELSE 1 END, hasta = now() + interval '${CIERRE_MIN} minutes'`, [lc]);
-    throw new Error('Nombre o PIN incorrectos.');
+    throw new ErrorApp('Nombre o PIN incorrectos.');
   }
   if (cuenta) await pool.query('DELETE FROM intentos WHERE nombre_lc=$1', [lc]);
 
   const rol = hallado.rol;
-  if (rol === 'auxiliar' && !aux) throw new Error('Su usuario tiene acceso limitado: solo registra los gastos de su lugar.');
-  if (rol === 'cmo' && !aux && !cmo) throw new Error('Su usuario no entra a esta parte. Tiene su presupuesto, gastos, solicitudes e indicadores.');
+  if (rol === 'auxiliar' && !aux) throw new ErrorApp('Su usuario tiene acceso limitado: solo registra los gastos de su lugar.');
+  if (rol === 'cmo' && !aux && !cmo) throw new ErrorApp('Su usuario no entra a esta parte. Tiene su presupuesto, gastos, solicitudes e indicadores.');
   const conLugar = rol === 'gerente' || rol === 'auxiliar' || rol === 'cmo';
-  if (conLugar && !hallado.sucursal) throw new Error('A su usuario le falta la sucursal o el lugar. Pida al administrador que lo ponga.');
+  if (conLugar && !hallado.sucursal) throw new ErrorApp('A su usuario le falta la sucursal o el lugar. Pida al administrador que lo ponga.');
   const conf = !!hallado.confirma;
   return {
     nombre: hallado.nombre, rol, esAdmin: rol === 'admin',
@@ -60,4 +61,24 @@ export async function autoriza({ pool, cfg, usuarios }, cred, { cuenta = false, 
     soloMira: rol === 'operaciones' || rol === 'finanzas' || rol === 'dueno',
     soloReportes: rol === 'dueno',
   };
+}
+
+/** Igual que «verifica» de Apps Script: la caja no es para bodega ni producción. */
+export async function verifica(ctx, cred, opciones) {
+  const yo = await autoriza(ctx, cred, opciones);
+  if (yo.rol === 'bodega') throw new ErrorApp('Su usuario solo puede registrar traslados de bodega.');
+  if (yo.rol === 'produccion') throw new ErrorApp('Su usuario es de producción: no ve la caja.');
+  return yo;
+}
+/** Igual que «exigeAdmin». */
+export async function exigeAdmin(ctx, cred) {
+  const yo = await verifica(ctx, cred);
+  if (!yo.esAdmin) throw new ErrorApp('Solo un administrador puede hacer eso.');
+  return yo;
+}
+/** Igual que «exigeOperaciones»: leen los directores y el administrador. */
+export async function exigeOperaciones(ctx, cred) {
+  const yo = await autoriza(ctx, cred);
+  if (yo.rol !== 'operaciones' && yo.rol !== 'finanzas' && !yo.esAdmin) throw new ErrorApp('Los indicadores los maneja el director operativo.');
+  return yo;
 }
