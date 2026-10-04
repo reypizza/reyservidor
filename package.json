@@ -1,0 +1,16 @@
+{
+  "name": "rey-servidor",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Servidor propio de Rey Pizza (CAIX, S.A.)",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "pg": "^8.13.0"
+  }
+}

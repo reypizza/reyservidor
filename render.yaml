@@ -1,0 +1,29 @@
+# «Blueprint» de Render: con esto Render crea solo el servidor y la base de datos.
+# Si Render dice que algún «plan» ya no existe, escoja el más barato de pago en la pantalla: no cambia nada más.
+services:
+  - type: web
+    name: rey-servidor
+    runtime: docker
+    plan: starter            # siempre encendido (los gratis se duermen y serían lentos)
+    region: ohio             # EE. UU.: el más cercano a Guatemala (también sirve «virginia»)
+    healthCheckPath: /salud
+    autoDeploy: true         # cada cambio que suba a GitHub se publica solo
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase: { name: rey-db, property: connectionString }
+      - key: APPS_SCRIPT_URL
+        sync: false          # Render se la pregunta al crearlo: pegue la dirección /exec
+      - key: ORIGENES
+        value: https://app.caixsa.com
+      - key: ADMIN_CLAVE
+        generateValue: true  # Render inventa una clave larga; la ve en Environment
+      - key: TRUST_PROXY
+        value: "1"
+      - key: WARM_MINUTES
+        value: "4"
+databases:
+  - name: rey-db
+    databaseName: rey
+    user: rey
+    plan: basic-256mb
+    region: ohio
