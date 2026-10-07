@@ -20,7 +20,9 @@ export function ejecuta(script, entorno, q) {
   const efecto = () => { if (libro.soloLectura) libro._intento(true); };      // mandar un correo, programar algo o guardar una propiedad también cuentan como «cambiar algo»
   const sandbox = {
     console, Date, Proxy, Atomics, SharedArrayBuffer,                       // Date del servidor: así «instanceof Date» vale para las fechas de las hojas
-    SpreadsheetApp: { openById: () => libro, getActiveSpreadsheet: () => libro, getActive: () => libro, openByUrl: () => libro },
+    SpreadsheetApp: { openById: () => libro, getActiveSpreadsheet: () => libro, getActive: () => libro, openByUrl: () => libro,
+      newDataValidation: () => encadenado(), newConditionalFormatRule: () => encadenado(), newFilterCriteria: () => encadenado(),         // solo adornos de la hoja (listas desplegables, colores): no cambian datos
+      WrapStrategy: new Proxy({}, { get: (_, k) => String(k) }), BorderStyle: new Proxy({}, { get: (_, k) => String(k) }), DataValidationCriteria: new Proxy({}, { get: (_, k) => String(k) }) },
     Utilities: crearUtilities(),
     CacheService: { getScriptCache: () => cache, getUserCache: () => cache, getDocumentCache: () => cache },
     PropertiesService: { getScriptProperties: () => propsLectura(propiedades, efecto), getUserProperties: () => propsLectura(propiedades, efecto), getDocumentProperties: () => propsLectura(propiedades, efecto) },
@@ -39,6 +41,7 @@ export function ejecuta(script, entorno, q) {
   };
   const ctx = vm.createContext(sandbox);
   script.runInContext(ctx);
+  if (q && q.__directa) { try { return { ok: true, v: vm.runInContext(q.__directa, ctx).apply(null, q.args || []) }; } catch (e) { return { ok: false, error: String(e && e.message ? e.message : e) }; } }     // solo para pruebas: una función suelta
   let salida;
   try { salida = vm.runInContext('doPost', ctx)({ postData: { contents: JSON.stringify(q) } }); }
   catch (e) { return { ok: false, error: String(e && e.message ? e.message : e), _interno: true }; }

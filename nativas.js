@@ -50,7 +50,8 @@ export const invalidaIndicadores = new Set([
   'guardarKpi', 'borrarKpi', 'enviarKpis', 'agregarRecomendados',
   'guardarKpiCmo', 'borrarKpiCmo', 'enviarKpisCmo', 'agregarRecomendadosCmo',
   'guardarKpiTec', 'borrarKpiTec', 'enviarKpisTec', 'agregarRecomendadosTec',
-  'registrarKpis', 'registrarKpisTec',
+  'guardarKpiCoo', 'borrarKpiCoo', 'enviarKpisCoo', 'agregarRecomendadosCoo',
+  'registrarKpis', 'registrarKpisTec', 'registrarKpisCoo',
 ]);
 
 /* Las que cambian datos y por eso se protegen con «rid» (no se ejecutan dos veces). Se llena al migrar. */

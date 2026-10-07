@@ -431,6 +431,7 @@ function instalar() {
   if (hk.getLastColumn() < 21) encabezaAlFinal(hk, 21, ['Contabilidad']);
   if (hk.getLastColumn() < 22) encabezaAlFinal(hk, 22, ['Marketing']);
   if (hk.getLastColumn() < 23) encabezaAlFinal(hk, 23, ['Tecnología']);
+  if (hk.getLastColumn() < 24) encabezaAlFinal(hk, 24, ['Dirección operativa']);
   hojasInventario(ss);
   hojasIndicadores(ss);
   rellenaArticulos(ss);
@@ -925,7 +926,7 @@ function doGet() {
  * mismo proyecto por POST. Solo se pueden llamar las funciones de esta lista (las mismas
  * que usa la pantalla), y cada una revisa el código de quien pregunta, igual que antes.
  * La lista la pone sola el armado; no hace falta tocarla. */
-/*API_INI*/var API_PERMITIDAS = ['abrirSolicitud', 'abrirTraslado', 'aceptarSolicitud', 'aceptarYPreparar', 'aclararDiferencia', 'activarCorreos', 'activarObligacion', 'activarProducto', 'activarProductoSucursal', 'adjuntarCotizacion', 'agregarEquipo', 'agregarProducto', 'agregarRecomendados', 'agregarRecomendadosCmo', 'agregarRubro', 'anclarProducto', 'anular', 'anularOrden', 'anularPagoImpuesto', 'anularSolicitud', 'aprobarFondos', 'aprobarPresupuesto', 'aprobarPresupuestoArea', 'asignarDescanso', 'borrarKpi', 'borrarKpiCmo', 'borrarSolicitud', 'cambiarEquipo', 'cambiarMiPin', 'cambiarPermiso', 'cancelarPermiso', 'confirmarPlanilla', 'confirmarRegistro', 'consolidado', 'copiarPresupuesto', 'costosTraslados', 'cotizarOrden', 'darDeBaja', 'datos', 'despacharSolicitudes', 'detalleGasto', 'editarProducto', 'eliminarPersonaCal', 'entrar', 'enviarEmergencia', 'enviarKpis', 'enviarKpisCmo', 'enviarSolicitud', 'enviarSugerencia', 'estadoCorreos', 'evaluarMerma', 'existencias', 'existenciasEmergencia', 'firmarTraslado', 'guardarAjustesInv', 'guardarBonoGeneral', 'guardarBonosCal', 'guardarBorradorCal', 'guardarComision', 'guardarConfigCal', 'guardarConteo', 'guardarEstudio', 'guardarHorario', 'guardarHorasApoyo', 'guardarHorasReales', 'guardarKpi', 'guardarKpiCmo', 'guardarLugar', 'guardarMando', 'guardarMedida', 'guardarMiCorreo', 'guardarMiPresupuesto', 'guardarObligacion', 'guardarOrden', 'guardarPersonaCal', 'guardarPrecios', 'guardarPresupuesto', 'guardarProducto', 'guardarProductoBodega', 'guardarProveedor', 'guardarProveedorInv', 'guardarReceta', 'guardarRepartidor', 'guardarTraslado', 'guardarTurnos', 'guardarUsuario', 'habilita', 'habilitarConteo', 'historialTraslados', 'indicadoresConta', 'leerBonoGeneral', 'leerSugerencias', 'listaBodega', 'listaCatalogo', 'listaConsultas', 'listaDiferencias', 'listaEntrada', 'listaFondos', 'listaImpuestos', 'listaKpis', 'listaKpisCmo', 'listaLugares', 'listaOrdenes', 'listaPermisos', 'listaPrecios', 'listaRepartidores', 'listaReportes', 'listaSolicitudes', 'listaUsuarios', 'llegoSolicitud', 'marcarPreparadas', 'medirAceite', 'miAvance', 'miCorreo', 'miPanel', 'miPresupuesto', 'notificaciones', 'ordenesPago', 'pagarFondos', 'pagarOrden', 'pagarRepartidor', 'pantallaCalendarios', 'pantallaConteo', 'pantallaEmergencias', 'pantallaFirmas', 'pantallaHorarios', 'pantallaKpi', 'pantallaMando', 'pantallaMant', 'pantallaMerma', 'pantallaMuestreo', 'pantallaPedidosBodega', 'pantallaProduccion', 'pantallaSolicitud', 'pantallaSugerencias', 'pdfCalendario', 'pdfOrden', 'pedirDescanso', 'pedirEmergencia', 'pedirFondos', 'pedirPermiso', 'ping', 'planillasPorPagar', 'ponPreciosGerentes', 'porConfirmar', 'preguntar', 'presupuestoMes', 'presupuestosAreas', 'probarCorreo', 'productosConfig', 'productosParaAnclar', 'productosSucursal', 'reabrirPlanilla', 'rechazarRegistro', 'recibirEfectivo', 'recibirEmergencia', 'recibirOrden', 'recibirSolicitud', 'registrarGasto', 'registrarIngreso', 'registrarKpis', 'registrarLote', 'registrarMant', 'registrarMerma', 'registrarObservacion', 'registrarPagoImpuesto', 'renombrarCategoria', 'reporteDiario', 'reporteTraslados', 'resolverDescanso', 'responderConsulta', 'responderMerma', 'resultadosKpi', 'resultadosKpiCmo', 'resultadosKpiRango', 'resultadosMuestreo', 'resumenInventario', 'resumenMes', 'revisarPermiso', 'seguimiento', 'sugerenciaCompra', 'tableroFinanzas', 'tableroKpi', 'terminarFondos', 'validarRegistro', 'ventas', 'verTraslado', 'verificarFondos', 'resumenAreas', 'resumenAreasSenales', 'pantallaZonas', 'guardarZonas', 'listaKpisTec', 'guardarKpiTec', 'borrarKpiTec', 'enviarKpisTec', 'agregarRecomendadosTec', 'resultadosKpiTec', 'pantallaKpiTec', 'registrarKpisTec'];/*API_FIN*/
+/*API_INI*/var API_PERMITIDAS = ['abrirSolicitud', 'abrirTraslado', 'aceptarSolicitud', 'aceptarYPreparar', 'aclararDiferencia', 'activarCorreos', 'activarObligacion', 'activarProducto', 'activarProductoSucursal', 'adjuntarCotizacion', 'agregarEquipo', 'agregarProducto', 'agregarRecomendados', 'agregarRecomendadosCmo', 'agregarRubro', 'anclarProducto', 'anular', 'anularOrden', 'anularPagoImpuesto', 'anularSolicitud', 'aprobarFondos', 'aprobarPresupuesto', 'aprobarPresupuestoArea', 'asignarDescanso', 'borrarKpi', 'borrarKpiCmo', 'borrarSolicitud', 'cambiarEquipo', 'cambiarMiPin', 'cambiarPermiso', 'cancelarPermiso', 'confirmarPlanilla', 'confirmarRegistro', 'consolidado', 'copiarPresupuesto', 'costosTraslados', 'cotizarOrden', 'darDeBaja', 'datos', 'despacharSolicitudes', 'detalleGasto', 'editarProducto', 'eliminarPersonaCal', 'entrar', 'enviarEmergencia', 'enviarKpis', 'enviarKpisCmo', 'enviarSolicitud', 'enviarSugerencia', 'estadoCorreos', 'evaluarMerma', 'existencias', 'existenciasEmergencia', 'firmarTraslado', 'guardarAjustesInv', 'guardarBonoGeneral', 'guardarBonosCal', 'guardarBorradorCal', 'guardarComision', 'guardarConfigCal', 'guardarConteo', 'guardarEstudio', 'guardarHorario', 'guardarHorasApoyo', 'guardarHorasReales', 'guardarKpi', 'guardarKpiCmo', 'guardarLugar', 'guardarMando', 'guardarMedida', 'guardarMiCorreo', 'guardarMiPresupuesto', 'guardarObligacion', 'guardarOrden', 'guardarPersonaCal', 'guardarPrecios', 'guardarPresupuesto', 'guardarProducto', 'guardarProductoBodega', 'guardarProveedor', 'guardarProveedorInv', 'guardarReceta', 'guardarRepartidor', 'guardarTraslado', 'guardarTurnos', 'guardarUsuario', 'habilita', 'habilitarConteo', 'historialTraslados', 'indicadoresConta', 'leerBonoGeneral', 'leerSugerencias', 'listaBodega', 'listaCatalogo', 'listaConsultas', 'listaDiferencias', 'listaEntrada', 'listaFondos', 'listaImpuestos', 'listaKpis', 'listaKpisCmo', 'listaLugares', 'listaOrdenes', 'listaPermisos', 'listaPrecios', 'listaRepartidores', 'listaReportes', 'listaSolicitudes', 'listaUsuarios', 'llegoSolicitud', 'marcarPreparadas', 'medirAceite', 'miAvance', 'miCorreo', 'miPanel', 'miPresupuesto', 'notificaciones', 'ordenesPago', 'pagarFondos', 'pagarOrden', 'pagarRepartidor', 'pantallaCalendarios', 'pantallaConteo', 'pantallaEmergencias', 'pantallaFirmas', 'pantallaHorarios', 'pantallaKpi', 'pantallaMando', 'pantallaMant', 'pantallaMerma', 'pantallaMuestreo', 'pantallaPedidosBodega', 'pantallaProduccion', 'pantallaSolicitud', 'pantallaSugerencias', 'pdfCalendario', 'pdfOrden', 'pedirDescanso', 'pedirEmergencia', 'pedirFondos', 'pedirPermiso', 'ping', 'planillasPorPagar', 'ponPreciosGerentes', 'porConfirmar', 'preguntar', 'presupuestoMes', 'presupuestosAreas', 'probarCorreo', 'productosConfig', 'productosParaAnclar', 'productosSucursal', 'reabrirPlanilla', 'rechazarRegistro', 'recibirEfectivo', 'recibirEmergencia', 'recibirOrden', 'recibirSolicitud', 'registrarGasto', 'registrarIngreso', 'registrarKpis', 'registrarLote', 'registrarMant', 'registrarMerma', 'registrarObservacion', 'registrarPagoImpuesto', 'renombrarCategoria', 'reporteDiario', 'reporteTraslados', 'resolverDescanso', 'responderConsulta', 'responderMerma', 'resultadosKpi', 'resultadosKpiCmo', 'resultadosKpiRango', 'resultadosMuestreo', 'resumenInventario', 'resumenMes', 'revisarPermiso', 'seguimiento', 'sugerenciaCompra', 'tableroFinanzas', 'tableroKpi', 'terminarFondos', 'validarRegistro', 'ventas', 'verTraslado', 'verificarFondos', 'listaPendientes', 'llegaPendiente', 'cancelarPendiente', 'despacharPendientes', 'devolverFondo', 'corregirFondo', 'pantallaEquipos', 'guardarEquipoA', 'bajaEquipo', 'revisarEquipos', 'confirmarRevisionEq', 'pedirEquipo', 'resolverPedidoEq', 'entregarCompraEq', 'recibirEquipo', 'devolverOrden', 'corregirOrden', 'reiniciarPrecios', 'guardarMezcla', 'registrarLoteMezcla', 'etiquetasLote', 'guardarConfigEtiquetas', 'listaKpisCoo', 'guardarKpiCoo', 'borrarKpiCoo', 'enviarKpisCoo', 'agregarRecomendadosCoo', 'resultadosKpiCoo', 'pantallaKpiCoo', 'registrarKpisCoo', 'resumenAreas', 'resumenAreasSenales', 'pantallaZonas', 'guardarZonas', 'listaKpisTec', 'guardarKpiTec', 'borrarKpiTec', 'enviarKpisTec', 'agregarRecomendadosTec', 'resultadosKpiTec', 'pantallaKpiTec', 'registrarKpisTec'];/*API_FIN*/
 /** Solo contesta «aquí estoy»: sirve para despertar el servidor y medir la velocidad. No lee ni guarda nada. */
 function ping() { return { ok: true }; }
 function doPost(e) {
@@ -2876,7 +2877,7 @@ function listaPrecios(cred) {
   });
   return { productos: productos, sinPrecio: productos.filter(function (p) { return !(p.costo > 0); }).length,
     puedeEditar: yo.rol === 'bodega' || yo.esAdmin, preciosGerentes: ajustesInv().preciosGerentes,
-    puedeInterruptor: !!(yo.esAdmin || yo.rol === 'operaciones'), unidades: UNIDADES_TRASLADO };
+    puedeInterruptor: !!(yo.esAdmin || yo.rol === 'operaciones'), unidades: UNIDADES_TRASLADO, puedeReiniciar: !!yo.esAdmin };
 }
 /** cambios = [{codigo, precio, rinde, presCompra}] — solo lo que cambió. */
 function guardarPrecios(cred, cambios) {
@@ -2886,7 +2887,7 @@ function guardarPrecios(cred, cambios) {
   if (!cambios.length) throw new Error('No hay precios por guardar.');
   var lock = LockService.getScriptLock();
   lock.waitLock(15000); _LEE = {};
-  var n = 0;
+  var n = 0, hechos = [];
   try {
     var h = hojaBodega(), porCod = {};
     filasBodega().forEach(function (b) { porCod[b.codigo.toUpperCase()] = b; });
@@ -2902,6 +2903,7 @@ function guardarPrecios(cred, cambios) {
       if (!(rinde > 0) || rinde > 100000) throw new Error('«' + b.nombre + '»: diga cuántas ' + plur(2, b.unidad) + ' rinde cada presentación de compra.');
       rinde = Math.round(rinde * 1000) / 1000;
       var pc = c.presCompra == null ? b.presCompra : String(c.presCompra || '').trim().toLowerCase().slice(0, 20);
+      if (precio !== b.precioPres) hechos.push({ nombre: b.nombre, pres: pc || b.presCompra || b.unidad, antes: b.precioPres || 0, ahora: precio });
       if (rinde !== b.rinde) h.getRange(b.fila, 14).setValue(rinde);
       if (pc !== b.presCompra) h.getRange(b.fila, 26).setValue(pc);
       if (precio !== b.precioPres || rinde !== b.rinde)
@@ -2910,8 +2912,9 @@ function guardarPrecios(cred, cambios) {
     });
     _BOD = null;
   } finally { lock.releaseLock(); }
+  var avisados = []; try { avisados = avisaCambioPrecios(yo, hechos, 'Cambios de precios en bodega'); } catch (e) {}
   var r = listaPrecios(cred); r.ok = true;
-  r.mensaje = n === 1 ? 'Precio guardado.' : n + ' precios guardados.';
+  r.mensaje = (n === 1 ? 'Precio guardado.' : n + ' precios guardados.') + (avisados.length ? ' Se avisó por correo a ' + avisados.join(', ') + '.' : '');
   return r;
 }
 /** Enciende o apaga que los gerentes vean los precios de lo que reciben. */
@@ -4515,7 +4518,8 @@ var H_SOL = ['No. de solicitud', 'Sucursal', 'Enviada en', 'Enviada por', 'ID co
   'Vista en', 'Preparada en', 'Despachada en', 'Despachada por', 'Llegó en'];
 var H_SOLD = ['No. de solicitud', 'Sucursal', 'Código', 'Producto', 'Medida', 'Clave',
   'Existencia al contar', 'Sugerido', 'Base de la sugerencia', 'Pedido', 'Enviado',
-  'Recibido', 'Diferencia', 'Diferencia: estado', 'Resuelta por', 'Resuelta en'];
+  'Recibido', 'Diferencia', 'Diferencia: estado', 'Resuelta por', 'Resuelta en',
+  'Pendiente', 'Pendiente: llega', 'Pendiente: entregado', 'Pendiente: no se entrega (quién)', 'Pendiente: motivo'];
 var H_OC = ['No. de orden', 'Creada en', 'Creada por', 'Proveedor', 'Producto de compra',
   'Presentación', 'Sugerido', 'Pedido', 'Código', 'Producto de bodega', 'Rinde',
   'Estado', 'Recibido', 'Recibido en', 'Recibido por', 'Precio (cotización)', 'Subtotal'];
@@ -4579,6 +4583,8 @@ function hojaInv(nombre, ss) {
   if (h) {
     if (nombre === 'Inventario conteos' && h.getLastColumn() < H_CONTEOS.length)
       encabezaAlFinal(h, 12, ['Menores sueltos', 'Peso de lo abierto']);
+    if (nombre === 'Solicitudes detalle' && h.getLastColumn() < H_SOLD.length)
+      encabezaAlFinal(h, 17, ['Pendiente', 'Pendiente: llega', 'Pendiente: entregado', 'Pendiente: no se entrega (quién)', 'Pendiente: motivo']);
     return (_HINV[nombre] = h);
   }
   var x = INV_HOJAS.filter(function (y) { return y[0] === nombre; })[0];
@@ -5001,7 +5007,8 @@ function lineasSol(numero) {
       enviado: r[10] === '' || r[10] == null ? null : Number(r[10]),
       recibido: r[11] === '' || r[11] == null ? null : Number(r[11]),
       diferencia: Number(r[12]) || 0, difEstado: String(r[13] || ''),
-      resueltaPor: String(r[14] || '') });
+      resueltaPor: String(r[14] || ''),
+      pend: Number(r[16]) || 0, pendLlega: String(r[17] || ''), pendEntregado: Number(r[18]) || 0, pendCanPor: String(r[19] || ''), pendMotivo: String(r[20] || '') });
   });
   return out;
 }
@@ -5040,6 +5047,12 @@ function pantallaSolicitud(cred) {
   if (!sol.puede) return r;
   var sug = sugerenciaSucursal(unidadId, est, hoy);
   r.entrega = sug.entrega; r.siguiente = sug.siguiente; r.lineas = sug.lineas;
+  try {          // para que el gerente sepa en qué pide (caja de 20 unidades, saco de 50 libras…) y cuánto hay en bodega
+    var exB = estadoInventario('bodega').existencia, porC = {}; filasBodega().forEach(function (b) { porC[b.codigo] = b; });
+    r.lineas.forEach(function (l) { var b = porC[l.codigo]; if (!b) return; var qb = exB[l.codigo] || 0;
+      l.presentacion = presentacionTxt(b); l.enBodega = r3(qb); l.enBodegaTxt = textoCantidad(qb, b);
+      l.porUnidad = !l.suelto && b.suelto && b.porUnidad > 0 ? b.porUnidad : 0; l.sueltoNom = b.suelto || ''; });
+  } catch (e) {}
   r.conHistoria = sug.conHistoria; r.conteo = est.ultimo.id;
   r.contado = est.ultimo.sello;
   return r;
@@ -5073,7 +5086,7 @@ function enviarSolicitud(cred, d) {
       if (!(n > 0) && !(l.sugerido > 0)) return;
       if (n > 0) hay++;
       filas.push([numero, u.nombre, l.codigo, l.nombre, l.medida, l.clave,
-        l.suelto ? '' : l.existencia, l.sugerido, l.base, n, '', '', '', '', '', '']);
+        l.suelto ? '' : l.existencia, l.sugerido, l.base, n, '', '', '', '', '', '', '', '', '', '', '']);
     });
     if (!hay) throw new Error('No pidió nada. Si no necesita nada, no hace falta enviar.');
     var ahora = new Date();
@@ -5128,7 +5141,8 @@ function vistaSol(s, lineas) {
     aceptadaEn: s.aceptadaEn, aceptadaPor: s.aceptadaPor, recibidaEn: s.recibidaEn,
     recibidaPor: s.recibidaPor, traslado: s.traslado, nota: s.nota, motivo: s.motivo,
     productos: ls.filter(function (l) { return l.pedido > 0 || l.enviado > 0; }).length,
-    porAclarar: pend, despachadaEn: s.despachadaEn, avance: avanceSol(s) };
+    porAclarar: pend, despachadaEn: s.despachadaEn, avance: avanceSol(s),
+    pendientes: ls.filter(function (l) { return pendDeLinea(l) > 0.0005; }).length };
 }
 
 function listaSolicitudes(cred) {
@@ -5165,7 +5179,12 @@ function abrirSolicitud(cred, numero) {
   var exB = yo.rol === 'gerente' ? {} : estadoInventario('bodega').existencia;
   var verPrecio = veCostosTraslado(yo), ptr = {};
   if (verPrecio) productosTraslado().forEach(function (p) { ptr[p.key] = p; });
-  var ls = lineasSol(s.numero).filter(function (l) {
+  var lineasS = lineasSol(s.numero), ctxP = lineasS.some(function (l) { return l.pend > 0; }) ? contextoPend() : null, piden = {};
+  if (yo.rol === 'bodega' && (s.estado === SOL.ENV)) {          // lo que piden las otras sucursales del mismo producto (para repartir lo que hay)
+    var abiertasO = {}; filasSol().forEach(function (o) { if (o.estado === SOL.ENV && o.numero !== s.numero) abiertasO[o.numero] = o.sucursal; });
+    lineasSol().forEach(function (l) { if (abiertasO[l.numero] && l.pedido > 0) (piden[l.clave] = piden[l.clave] || []).push({ sucursal: abiertasO[l.numero], pedido: l.pedido }); });
+  }
+  var ls = lineasS.filter(function (l) {
     return l.pedido > 0 || l.enviado > 0 || l.sugerido > 0; })
     .map(function (l) {
       var b = cat[l.codigo] || {};
@@ -5178,6 +5197,9 @@ function abrirSolicitud(cred, numero) {
         x.enBodega = exB[b.codigo] || 0;
         x.enBodegaTxt = textoCantidad(x.enBodega, b);
       }
+      if (piden[l.clave]) x.otrosPiden = piden[l.clave].map(function (o) { return o.sucursal + ' ' + num(o.pedido); }).join(', ');
+      if (l.pend > 0 && ctxP) { var estP = estadoPend(l, ctxP); x.pendiente = pendDeLinea(l); x.pendTotal = l.pend; x.pendEntregado = l.pendEntregado; x.pendLlega = l.pendLlega;
+        x.pendEstado = estP; x.pendTxt = textoPend(estP, l, ctxP); x.pendMotivo = l.pendMotivo; }
       if (verPrecio) {
         var pp = ptr[l.clave], cant = l.recibido > 0 ? l.recibido : l.enviado > 0 ? l.enviado : l.pedido;
         x.precio = pp ? pp.costo : 0; x.monto = r2((pp ? pp.costo : 0) * (Number(cant) || 0));
@@ -5209,9 +5231,9 @@ function exigeSoloBodega(cred) {
   if (yo.rol !== 'bodega') throw new Error('Eso lo hace la bodega.');
   return yo;
 }
-function aceptarSolicitud(cred, numero, enviados) {
+function aceptarSolicitud(cred, numero, enviados, opciones) {
   var yo = exigeSoloBodega(cred);
-  enviados = enviados || {};
+  enviados = enviados || {}; opciones = opciones || {};
   var lock = LockService.getScriptLock();
   lock.waitLock(20000); _LEE = {};
   try {
@@ -5228,6 +5250,9 @@ function aceptarSolicitud(cred, numero, enviados) {
       if (!isFinite(n) || n < 0) throw new Error('La cantidad de «' + l.nombre + '» no es válida.');
       n = r3(n); total += n;
       h.getRange(l.fila, 11).setValue(n);
+      var falta = r3(l.pedido - n), op = opciones[l.clave] || {};          // lo que falta queda pendiente de entrega (salvo que Samuel diga que no se entrega)
+      if (falta > 0.0005 && op.pend !== 'no') h.getRange(l.fila, 17, 1, 2).setValues([[falta, String(op.llega || '').trim().slice(0, 40)]]);
+      else h.getRange(l.fila, 17, 1, 2).setValues([['', '']]);
     });
     if (!(total > 0)) throw new Error('No va a mandar nada. Si no se puede surtir, pida ' +
       'al administrador que anule la solicitud.');
@@ -5237,7 +5262,8 @@ function aceptarSolicitud(cred, numero, enviados) {
   }
   var r = abrirSolicitud(cred, numero);
   r.ok = true;
-  r.mensaje = 'Solicitud ' + numero + ' aceptada. Imprima la hoja para que se la firmen.';
+  var nPend = lineasSol(String(numero)).filter(function (l) { return pendDeLinea(l) > 0.0005; }).length;
+  r.mensaje = 'Solicitud ' + numero + ' aceptada. Imprima la hoja para que se la firmen.' + (nPend ? ' ' + nPend + (nPend === 1 ? ' producto queda pendiente de entrega' : ' productos quedan pendientes de entrega') + ': el gerente lo verá.' : '');
   return r;
 }
 
@@ -5521,7 +5547,10 @@ function listaOrdenes(cred) {
         pago: pg && pg.pagadaEn ? 'Pagada' : pg && pg.cotizadaEn ? 'Cotizada' : 'Por cotizar',
         pagadaPor: pg ? pg.pagadaPor : '', totalCotizado: montos && pg ? pg.total : 0,
         verMontos: montos, transporte: montos && pg ? pg.transporte : 0,
-        puedeCotizar: montos && (yo.rol === 'bodega' || yo.esAdmin) && !(pg && pg.pagadaEn) && o.estado !== 'Anulada' };
+        puedeCotizar: montos && (yo.rol === 'bodega' || yo.esAdmin) && !(pg && pg.pagadaEn) && o.estado !== 'Anulada' && !(pg && pg.devueltaEn),
+        archivo: pg ? pg.archivo : '',
+        devuelta: pg && pg.devueltaEn ? { en: pg.devueltaEn, por: pg.devueltaPor, motivo: pg.motivoDev } : null,
+        puedeCorregir: (yo.rol === 'bodega' || yo.esAdmin) && !!(pg && pg.devueltaEn) && !(pg && pg.pagadaEn) && o.estado === 'Pedida' };
       orden.push(por[o.numero]);
     }
     var ln = { codigo: o.codigo, nombre: o.nombre, compra: o.compra,
@@ -5535,7 +5564,7 @@ function listaOrdenes(cred) {
   orden.forEach(function (x) {
     var pg = pagos[x.numero] || {}, anul = x.estado === 'Anulada', rec = x.estado === 'Recibida';
     var cot = !!pg.cotizadaEn, pag = !!pg.pagadaEn;
-    x.paso = pasoOC({ estado: x.estado, pago: x.pago });
+    x.paso = pasoOC({ estado: x.estado, pago: x.pago, devueltaEn: x.devuelta ? x.devuelta.en : '' });
     x.diasAbierta = diasEntre(String(x.creadaEn).slice(0, 10), hoy);
     x.avance = [
       { n: 'Pedida', hecho: true, quien: x.creadaPor, en: x.creadaEn,
@@ -5940,6 +5969,13 @@ function notificaciones(cred, deCache) {
 function notificacionesCalc(cred) {
   var yo = quien(cred), out = [], hoy = hoyISO(), aj = ajustesInv();
   var desde = masDias(hoy, -10);
+  try { avisosEquipos(yo).forEach(function (a) { out.push(a); }); } catch (e) {}
+  try { avisosPendientes(yo).forEach(function (a) { out.push(a); }); } catch (e) {}
+  if (yo.rol === 'bodega' || yo.esAdmin) {          // órdenes de compra devueltas por contabilidad: se corrigen y se reenvían
+    try { var pgD = filasOCP(); Object.keys(pgD).forEach(function (n) { var p = pgD[n];
+      if (p.devueltaEn && !p.pagadaEn) out.push({ id: 'ocdev-' + n + '-' + p.devueltaEn, tipo: 'Compra devuelta', cuando: p.devueltaEn,
+        titulo: n + ' devuelta por ' + (p.devueltaPor || 'contabilidad'), texto: p.motivoDev, abrir: { tab: 'compras' } }); }); } catch (e) {}
+  }
   if (yo.rol === 'bodega') {
     filasSol().forEach(function (s) {
       if (s.estado === SOL.ENV)
@@ -6288,7 +6324,7 @@ function cortesFecha(iso, hhmm) {
 var H_KPI = ['ID', 'Indicador', 'Tipo', 'Unidad', 'Mínimo', 'Máximo', 'Frecuencia',
   'Centro', 'Almendras', 'Parque', 'Instrucciones', 'Estado', 'Categoría',
   'Creado por', 'Creado en', 'Actualizado por', 'Actualizado en', 'Enviado por', 'Enviado en',
-  'Primer envío', 'Contabilidad', 'Marketing', 'Tecnología'];
+  'Primer envío', 'Contabilidad', 'Marketing', 'Tecnología', 'Dirección operativa'];
 var H_KPIREG = ['Registrado en', 'Fecha', 'Turno', 'Sucursal', 'ID indicador', 'Indicador',
   'Valor', 'Unidad', 'Mínimo', 'Máximo', 'En rango', 'Registrado por', 'Nota', 'Periodo'];
 var KPI_TIPOS = ['Número', 'Sí / No', 'Texto'];
@@ -6299,7 +6335,7 @@ var KPI_CATS_MKT = ['Redes sociales', 'Campañas', 'Clientes y ventas', 'Marca y
 var KPI_EST = { BOR: 'Borrador', ENV: 'Enviado', DEL: 'Borrado' };
 var SUC_KPI = ['centro', 'almendras', 'parque'];
 /* A qué hora empieza el turno PM (así se sabe si ya toca medir el segundo turno). */
-var INICIO_PM = { centro: '13:00', almendras: '13:30', parque: '13:30', contabilidad: '13:00', marketing: '13:00', tecnologia: '13:00' };
+var INICIO_PM = { centro: '13:00', almendras: '13:30', parque: '13:30', contabilidad: '13:00', marketing: '13:00', tecnologia: '13:00', direccion: '13:00' };
 /* Las «áreas» que llevan indicadores: las tres sucursales (las decide el director
  * operativo y las anota cada gerente) y contabilidad (las decide el director
  * financiero y las anota el contador interno). */
@@ -6310,8 +6346,12 @@ var _KPI_MKT = false;           // true cuando el administrador trabaja los indi
 /* Y tecnología: los decide y los anota el administrador. */
 var AREA_TEC = 'tecnologia';
 var _KPI_TEC = false;           // true cuando el administrador trabaja los indicadores de tecnología
-function nombreArea(sid) { return sid === AREA_CONTA ? 'Contabilidad' : sid === AREA_MKT ? 'Marketing' : sid === AREA_TEC ? 'Tecnología' : nombreUnidad(sid); }
+/* Y la dirección operativa: los indicadores del director operativo. Los decide el administrador y los anota el director. */
+var AREA_COO = 'direccion';
+var _KPI_COO = false;           // true cuando se trabajan los indicadores del director operativo
+function nombreArea(sid) { return sid === AREA_CONTA ? 'Contabilidad' : sid === AREA_MKT ? 'Marketing' : sid === AREA_TEC ? 'Tecnología' : sid === AREA_COO ? 'Dirección operativa' : nombreUnidad(sid); }
 function areasDe(yo) {
+  if (_KPI_COO && (yo.esAdmin || yo.rol === 'operaciones')) return [AREA_COO];
   if (_KPI_TEC && yo.esAdmin) return [AREA_TEC];
   if (_KPI_MKT && yo.esAdmin) return [AREA_MKT];
   if (yo.rol === 'operaciones') return SUC_KPI.slice();
@@ -6321,6 +6361,7 @@ function areasDe(yo) {
 }
 /** Quién anota: el gerente su sucursal; el contador interno, contabilidad. */
 function areaQueAnota(yo) {
+  if (_KPI_COO && (yo.esAdmin || yo.rol === 'operaciones')) return AREA_COO;
   if (_KPI_TEC && yo.esAdmin) return AREA_TEC;
   if (yo.rol === 'gerente') return yo.sucursal;
   if (yo.rol === 'registro' && yo.recibe) return AREA_CONTA;
@@ -6515,6 +6556,7 @@ function hojasIndicadores(ss) {
   } else {
     if (h.getLastColumn() < 22) encabezaAlFinal(h, 22, ['Marketing']);      // el área de la CMO
     if (h.getLastColumn() < 23) encabezaAlFinal(h, 23, ['Tecnología']);     // el área de tecnología
+    if (h.getLastColumn() < 24) encabezaAlFinal(h, 24, ['Dirección operativa']);   // el área del director operativo
   }
   var r = ss.getSheetByName('Indicadores registros');
   if (!r) {
@@ -6539,7 +6581,7 @@ function filasKpi() {
       tipo: KPI_TIPOS.indexOf(String(r[2])) >= 0 ? String(r[2]) : 'Número',
       unidad: String(r[3] || ''), min: numONulo(r[4]), max: numONulo(r[5]),
       frec: KPI_FREC.indexOf(String(r[6])) >= 0 ? String(r[6]) : 'Diario',
-      suc: { centro: siNo(r[7]), almendras: siNo(r[8]), parque: siNo(r[9]), contabilidad: siNo(r[20]), marketing: siNo(r[21]), tecnologia: siNo(r[22]) },
+      suc: { centro: siNo(r[7]), almendras: siNo(r[8]), parque: siNo(r[9]), contabilidad: siNo(r[20]), marketing: siNo(r[21]), tecnologia: siNo(r[22]), direccion: siNo(r[23]) },
       instr: String(r[10] || ''), estado: String(r[11] || '') || KPI_EST.BOR,
       cat: String(r[12] || ''), creadoPor: String(r[13] || ''), creadoEn: fmtSello(r[14]),
       actPor: String(r[15] || ''), actEn: fmtSello(r[16]),
@@ -6573,7 +6615,7 @@ function exigeOperaciones(cred) {            // leer: los directores y el admini
 }
 function exigeDirector(cred) {               // cambiar: el director de esa área
   var yo = quien(cred);
-  if ((_KPI_MKT || _KPI_TEC) && yo.esAdmin) return yo;      // los de la CMO y los de tecnología los decide el administrador
+  if ((_KPI_MKT || _KPI_TEC || _KPI_COO) && yo.esAdmin) return yo;      // los de la CMO y los de tecnología los decide el administrador
   if (yo.rol !== 'operaciones' && yo.rol !== 'finanzas')
     throw new Error('Los indicadores los decide el director operativo. Usted los puede consultar.');
   return yo;
@@ -6590,12 +6632,12 @@ function listaKpis(cred) {
   var ks = filasKpi().filter(function (k) { return k.estado !== KPI_EST.DEL && kpiEnAreas(k, areas); });
   var nombres = {};
   ks.forEach(function (k) { nombres[sinAcentoS(k.nombre)] = true; });
-  var conta = yo.rol === 'finanzas', mkt = _KPI_MKT && yo.esAdmin, tec = _KPI_TEC && yo.esAdmin;
-  return { puedeCambiar: yo.rol === 'operaciones' || conta || mkt || tec, conta: conta, mkt: mkt, tec: tec, areas: areas.map(function (a) {
+  var conta = yo.rol === 'finanzas', mkt = _KPI_MKT && yo.esAdmin, tec = _KPI_TEC && yo.esAdmin, coo = _KPI_COO && yo.esAdmin;
+  return { puedeCambiar: yo.rol === 'operaciones' || conta || mkt || tec || coo, conta: conta, mkt: mkt, tec: tec, coo: coo, areas: areas.map(function (a) {
       return { id: a, nombre: nombreArea(a) }; }),
     indicadores: ks.map(kpiParaFuera), tipos: KPI_TIPOS, frecuencias: KPI_FREC,
-    categorias: tec ? KPI_CATS_TEC : mkt ? KPI_CATS_MKT : conta ? KPI_CATS_CONTA : KPI_CATS,
-    recomendados: (tec ? KPIS_TEC_RECOMENDADOS : mkt ? KPIS_MKT_RECOMENDADOS : conta ? KPIS_CONTA_RECOMENDADOS : KPIS_RECOMENDADOS).map(function (r, i) {
+    categorias: coo ? KPI_CATS_COO : tec ? KPI_CATS_TEC : mkt ? KPI_CATS_MKT : conta ? KPI_CATS_CONTA : KPI_CATS,
+    recomendados: (coo ? KPIS_COO_RECOMENDADOS : tec ? KPIS_TEC_RECOMENDADOS : mkt ? KPIS_MKT_RECOMENDADOS : conta ? KPIS_CONTA_RECOMENDADOS : KPIS_RECOMENDADOS).map(function (r, i) {
       return { clave: i, cat: r.c, nombre: r.n, tipo: r.t, unidad: r.u, min: r.min, max: r.max,
         frec: r.f, instr: r.i, porque: r.p, rango: rangoTxt({ tipo: r.t, unidad: r.u, min: r.min, max: r.max }),
         yaEsta: !!nombres[sinAcentoS(r.n)] }; }) };
@@ -6617,20 +6659,21 @@ function limpiaKpi(k, yo) {
   var max = tipo === 'Número' ? numONulo(k.max) : null;
   if (min != null && max != null && min > max) throw new Error('El mínimo no puede ser mayor que el máximo.');
   var suc = {}, areas = areasDe(yo);
-  SUC_KPI.concat([AREA_CONTA, AREA_MKT, AREA_TEC]).forEach(function (s) { suc[s] = areas.indexOf(s) >= 0 && !!(k.suc && k.suc[s]); });
+  SUC_KPI.concat([AREA_CONTA, AREA_MKT, AREA_TEC, AREA_COO]).forEach(function (s) { suc[s] = areas.indexOf(s) >= 0 && !!(k.suc && k.suc[s]); });
   if (yo.rol === 'finanzas') suc.contabilidad = true;
   if (_KPI_MKT && yo.esAdmin) suc.marketing = true;
   if (_KPI_TEC && yo.esAdmin) suc.tecnologia = true;
-  if (!suc.centro && !suc.almendras && !suc.parque && !suc.contabilidad && !suc.marketing && !suc.tecnologia) throw new Error('Escoja al menos una sucursal.');
+  if (_KPI_COO && yo.esAdmin) suc.direccion = true;
+  if (!suc.centro && !suc.almendras && !suc.parque && !suc.contabilidad && !suc.marketing && !suc.tecnologia && !suc.direccion) throw new Error('Escoja al menos una sucursal.');
   return { nombre: nombre, tipo: tipo, unidad: tipo === 'Número' ? String(k.unidad || '').trim().slice(0, 20) : '',
     min: min, max: max, frec: frec, suc: suc, instr: String(k.instr || '').trim().slice(0, 400),
-    cat: KPI_CATS.concat(KPI_CATS_CONTA, KPI_CATS_MKT, KPI_CATS_TEC).indexOf(k.cat) >= 0 ? k.cat : '' };
+    cat: KPI_CATS.concat(KPI_CATS_CONTA, KPI_CATS_MKT, KPI_CATS_TEC, KPI_CATS_COO).indexOf(k.cat) >= 0 ? k.cat : '' };
 }
 function filaKpi(id, v, estado, yo, creadoPor, creadoEn, ahora, envPor, envEn, desde) {
   return [id, v.nombre, v.tipo, v.unidad, v.min == null ? '' : v.min, v.max == null ? '' : v.max, v.frec,
     v.suc.centro ? 'Sí' : 'No', v.suc.almendras ? 'Sí' : 'No', v.suc.parque ? 'Sí' : 'No',
     v.instr, estado, v.cat, creadoPor, creadoEn, yo.nombre, ahora, envPor || '', envEn || '',
-    desde || '', v.suc.contabilidad ? 'Sí' : 'No', v.suc.marketing ? 'Sí' : 'No', v.suc.tecnologia ? 'Sí' : 'No'];
+    desde || '', v.suc.contabilidad ? 'Sí' : 'No', v.suc.marketing ? 'Sí' : 'No', v.suc.tecnologia ? 'Sí' : 'No', v.suc.direccion ? 'Sí' : 'No'];
 }
 function nuevoIdKpi() {
   return 'K' + Utilities.formatDate(new Date(), ZONA, 'yyyyMMddHHmmss') +
@@ -6702,7 +6745,7 @@ function enviarKpis(cred, ids) {
     if (!todos && !quiere[k.id]) return;
     h.getRange(k.fila, 12).setValue(KPI_EST.ENV);
     h.getRange(k.fila, 18, 1, 3).setValues([[yo.nombre, ahora, ahora]]);
-    SUC_KPI.concat([AREA_CONTA, AREA_MKT, AREA_TEC]).forEach(function (s) { if (k.suc[s]) sucs[nombreArea(s)] = true; });
+    SUC_KPI.concat([AREA_CONTA, AREA_MKT, AREA_TEC, AREA_COO]).forEach(function (s) { if (k.suc[s]) sucs[nombreArea(s)] = true; });
     n++;
   });
   if (!n) throw new Error('No hay nada nuevo por enviar.');
@@ -6711,21 +6754,22 @@ function enviarKpis(cred, ids) {
     Object.keys(sucs).join(', ') + '. Les aparece en la campanita.';
   if (yo.rol === 'finanzas') l.mensaje = (n === 1 ? 'Una tarea enviada' : n + ' tareas enviadas') + ' al contador interno.';
   if (_KPI_MKT && yo.esAdmin) l.mensaje = (n === 1 ? 'Un indicador enviado' : n + ' indicadores enviados') + ' a la CMO. Le aparecen en la campanita y en Indicadores.';
+  if (_KPI_COO && yo.esAdmin) l.mensaje = (n === 1 ? 'Un indicador enviado' : n + ' indicadores enviados') + ' al director operativo. Le aparecen en «Mis KPIs».';
   return l;
 }
 
 /** Agrega los recomendados escogidos, en borrador y para las tres sucursales. */
 function agregarRecomendados(cred, claves) {
   var yo = exigeDirector(cred);
-  var ya = {}, ahora = new Date(), n = 0, conta = yo.rol === 'finanzas', mkt = _KPI_MKT && yo.esAdmin, tec = _KPI_TEC && yo.esAdmin;
+  var ya = {}, ahora = new Date(), n = 0, conta = yo.rol === 'finanzas', mkt = _KPI_MKT && yo.esAdmin, tec = _KPI_TEC && yo.esAdmin, coo = _KPI_COO && yo.esAdmin;
   filasKpi().forEach(function (k) { if (k.estado !== KPI_EST.DEL) ya[sinAcentoS(k.nombre)] = true; });
-  var filas = [], lista = tec ? KPIS_TEC_RECOMENDADOS : mkt ? KPIS_MKT_RECOMENDADOS : conta ? KPIS_CONTA_RECOMENDADOS : KPIS_RECOMENDADOS;
+  var filas = [], lista = coo ? KPIS_COO_RECOMENDADOS : tec ? KPIS_TEC_RECOMENDADOS : mkt ? KPIS_MKT_RECOMENDADOS : conta ? KPIS_CONTA_RECOMENDADOS : KPIS_RECOMENDADOS;
   (claves || []).forEach(function (c) {
     var r = lista[Number(c)];
     if (!r || ya[sinAcentoS(r.n)]) return;
     ya[sinAcentoS(r.n)] = true;
     var v = { nombre: r.n, tipo: r.t, unidad: r.u, min: r.min, max: r.max, frec: r.f,
-      suc: tec ? { tecnologia: true } : mkt ? { marketing: true } : conta ? { contabilidad: true } : { centro: true, almendras: true, parque: true }, instr: r.i, cat: r.c };
+      suc: coo ? { direccion: true } : tec ? { tecnologia: true } : mkt ? { marketing: true } : conta ? { contabilidad: true } : { centro: true, almendras: true, parque: true }, instr: r.i, cat: r.c };
     if (tec) filas.push(filaKpi(nuevoIdKpi() + n, v, KPI_EST.ENV, yo, yo.nombre, ahora, ahora, yo.nombre, ahora, ahora));
     else filas.push(filaKpi(nuevoIdKpi() + n, v, KPI_EST.BOR, yo, yo.nombre, ahora, ahora, '', '', ''));
     n++;
@@ -6872,7 +6916,7 @@ function registrarKpis(cred, valores) {
     : (n === 1 ? 'Un indicador enviado' : n + ' indicadores enviados')) +
     (fuera ? ' · ' + fuera + (fuera === 1 ? ' con problema' : ' con problemas') +
       (sid === AREA_TEC ? '.' : ': le avisamos ' +
-      (sid === AREA_CONTA ? 'al director financiero.' : sid === AREA_MKT ? 'al administrador.' : 'al director operativo.')) : '.');
+      (sid === AREA_CONTA ? 'al director financiero.' : (sid === AREA_MKT || sid === AREA_COO) ? 'al administrador.' : 'al director operativo.')) : '.');
   return r;
 }
 
@@ -6996,7 +7040,7 @@ function avisosCajaKpi(yo, out, hoy) {
     });
     var regs = registrosKpi(3000);
     regs.forEach(function (x) {
-      if (x.enRango !== 'No' || x.fecha < ayer || x.sucursal === nombreArea(AREA_CONTA)) return;
+      if (x.enRango !== 'No' || x.fecha < ayer || x.sucursal === nombreArea(AREA_CONTA) || x.sucursal === nombreArea(AREA_COO)) return;
       out.push({ id: 'kpif-' + x.sucursal + '-' + x.id + '-' + x.per, tipo: 'Fuera de rango', cuando: x.en,
         titulo: x.sucursal + ': ' + x.nombre + ' ' + valorTxt(x), texto: (x.nota ? 'Qué hizo: ' + x.nota + ' · ' : '') + x.por,
         abrir: { pag: 'kpi', kt: 'res', fecha: x.fecha } });
@@ -7546,12 +7590,15 @@ function pantallaProduccion(cred) {
     var k = l.receta; if (!porRec[k]) porRec[k] = { receta: k, nombre: l.porcionNombre, usada: 0, esp: 0, obt: 0, lotes: 0, medida: l.medida };
     porRec[k].usada += l.usada; porRec[k].esp += l.esperadas; porRec[k].obt += l.obtenidas; porRec[k].lotes++;
   });
-  return { puede: yo.rol === 'produccion' || yo.esAdmin, recetas: recetas, lotes: lotes.slice(0, 40),
+  var eqL = filasLotesEtq();
+  lotes.forEach(function (l) { var e = eqL[l.numero]; if (e) { l.vence = e.vence; l.vida = e.vida; l.recetaNombre = e.nombre; l.sobrante = e.sobrante;
+    l.noUsado = e.ingredientes.filter(function (x, i) { return i > 0 && x.sobra > 0.05; }).map(function (x) { return { nombre: x.nombre, g: x.sobra }; }); } l.esMezcla = /^RM/.test(l.receta); });
+  return { puede: yo.rol === 'produccion' || yo.esAdmin, recetas: recetas, lotes: lotes.slice(0, 40), mezclas: mezclasPantalla(ex, idx, bod), etiquetas: configEtiquetas(), hojasEtq: HOJAS_ETQ,
     rendimiento: Object.keys(porRec).map(function (k) { var x = porRec[k];
       return { receta: x.receta, nombre: x.nombre, lotes: x.lotes, usada: r3(x.usada), medida: x.medida,
         esperadas: r3(x.esp), obtenidas: r3(x.obt), pct: x.esp ? Math.round(x.obt / x.esp * 1000) / 10 : null }; }),
-    insumos: productosInv().map(function (b) { return { codigo: b.codigo, nombre: b.nombre, unidad: b.unidad,
-      hay: textoCantidad(ex[b.codigo] || 0, b) }; }),
+    insumos: productosInv().map(function (b) { var pu = pesoUnidadDe(b); return { codigo: b.codigo, nombre: b.nombre, unidad: b.unidad,
+      hay: textoCantidad(ex[b.codigo] || 0, b), peso: pu ? pu.peso : 0, pesoEn: pu ? pu.medida : '', porPeso: b.medida === 'peso' }; }),
     medidas: ['libra', 'onza', 'kilo', 'gramo', 'unidad', 'litro'], hoy: hoyISO() };
 }
 
@@ -7655,12 +7702,13 @@ function registrarLote(cred, d) {
  * al inventario. Se puede recibir antes de pagar (crédito): queda «recibida sin pagar». */
 var H_OCP = ['No. de orden', 'Proveedor', 'No. de cotización', 'Total cotizado', 'Cotizada en', 'Cotizada por',
   'Pagada en', 'Pagada por', 'Monto pagado', 'Forma de pago', 'Referencia', 'No. de factura', 'Fecha de pago',
-  'ID gasto', 'Nota', 'Cotización (archivo)', 'Costo de transporte'];
+  'ID gasto', 'Nota', 'Cotización (archivo)', 'Costo de transporte', 'Devuelta en', 'Devuelta por', 'Motivo de devolución', 'Factura impresa con NIT'];
 var FORMAS_PAGO = ['Transferencia', 'Cheque', 'Depósito', 'Efectivo', 'Tarjeta'];
 function hojaOCP(ss) {
   ss = ss || libro();
   var h = ss.getSheetByName('Órdenes de compra pagos');
-  if (h && h.getLastColumn() < H_OCP.length) { encabezaAlFinal(h, H_OCP.length, ['Costo de transporte']); h.getRange('Q:Q').setNumberFormat('"Q"#,##0.00'); }
+  if (h && h.getLastColumn() < 17) { encabezaAlFinal(h, 17, ['Costo de transporte']); h.getRange('Q:Q').setNumberFormat('"Q"#,##0.00'); }
+  if (h && h.getLastColumn() < 21) { encabezaAlFinal(h, 18, ['Devuelta en', 'Devuelta por', 'Motivo de devolución', 'Factura impresa con NIT']); h.getRange('R:R').setNumberFormat('dd/mm/yyyy hh:mm'); }
   if (!h) { h = hojaLimpia(ss, 'Órdenes de compra pagos', H_OCP); h.getRange('D:D').setNumberFormat('"Q"#,##0.00');
     h.getRange('E:E').setNumberFormat('dd/mm/yyyy hh:mm'); h.getRange('G:G').setNumberFormat('dd/mm/yyyy hh:mm');
     h.getRange('I:I').setNumberFormat('"Q"#,##0.00'); h.getRange('M:M').setNumberFormat('@'); }
@@ -7674,7 +7722,8 @@ function filasOCP() {
       total: Number(r[3]) || 0, cotizadaEn: fmtSello(r[4]), cotizadaPor: String(r[5] || ''),
       pagadaEn: fmtSello(r[6]), pagadaPor: String(r[7] || ''), monto: Number(r[8]) || 0, forma: String(r[9] || ''),
       referencia: String(r[10] || ''), factura: String(r[11] || ''), fechaPago: fmtDia(r[12]), gasto: String(r[13] || ''),
-      nota: String(r[14] || ''), archivo: String(r[15] || ''), transporte: Number(r[16]) || 0 };
+      nota: String(r[14] || ''), archivo: String(r[15] || ''), transporte: Number(r[16]) || 0,
+      devueltaEn: fmtSello(r[17]), devueltaPor: String(r[18] || ''), motivoDev: String(r[19] || ''), facturaNit: String(r[20] || '').trim().toLowerCase() === 'sí' };
   });
   return o;
 }
@@ -7691,7 +7740,8 @@ function ordenesAgrupadas() {
         cotizacion: p ? p.cotizacion : '', cotizadaEn: p ? p.cotizadaEn : '', cotizadaPor: p ? p.cotizadaPor : '',
         totalCotizado: p ? p.total : 0, pagadaEn: p ? p.pagadaEn : '', pagadaPor: p ? p.pagadaPor : '',
         monto: p ? p.monto : 0, forma: p ? p.forma : '', referencia: p ? p.referencia : '', factura: p ? p.factura : '',
-        fechaPago: p ? p.fechaPago : '', gasto: p ? p.gasto : '', archivo: p ? p.archivo : '', transporte: p ? p.transporte : 0 };
+        fechaPago: p ? p.fechaPago : '', gasto: p ? p.gasto : '', archivo: p ? p.archivo : '', transporte: p ? p.transporte : 0,
+        devueltaEn: p ? p.devueltaEn : '', devueltaPor: p ? p.devueltaPor : '', motivoDev: p ? p.motivoDev : '', facturaNit: p ? p.facturaNit : false };
       orden.push(por[o.numero]);
     }
     por[o.numero].lineas.push({ codigo: o.codigo, nombre: o.nombre, compra: o.compra, presentacion: o.presentacion,
@@ -7705,6 +7755,7 @@ function ordenesAgrupadas() {
 }
 function pasoOC(o) {
   if (o.estado === 'Anulada') return 'Anulada';
+  if (o.devueltaEn && o.pago !== 'Pagada' && o.estado !== 'Recibida') return 'Devuelta a bodega';
   if (o.pago === 'Pagada' && o.estado === 'Recibida') return 'Completa';
   if (o.estado === 'Recibida') return 'Recibida sin pagar';
   if (o.pago === 'Pagada') return 'Pagada, por recibir';
@@ -7723,8 +7774,9 @@ function ordenesPago(cred, mes) {
   var lista = todas.filter(function (o) { var abierta = pasoOC(o) !== 'Completa' && o.estado !== 'Anulada';
     return abierta || o.creadaEn.slice(0, 10) >= desde; }).map(function (o) {
     o.paso = pasoOC(o);
-    o.puedeCotizar = puedeCot && o.pago !== 'Pagada' && o.estado !== 'Anulada';
-    o.puedePagar = puedePag && o.pago === 'Cotizada' && o.estado !== 'Anulada';
+    o.puedeCotizar = puedeCot && o.pago !== 'Pagada' && o.estado !== 'Anulada' && !o.devueltaEn;
+    o.puedePagar = puedePag && o.pago === 'Cotizada' && o.estado !== 'Anulada' && !o.devueltaEn;
+    o.puedeDevolver = (esContador(yo) || yo.esAdmin || yo.rol === 'finanzas') && o.pago !== 'Pagada' && o.estado === 'Pedida' && !o.devueltaEn;
     o.diasAbierta = diasEntre(o.creadaEn.slice(0, 10), hoy);
     return o; }).reverse();
   var prov = {}, tot = { pagado: 0, ordenes: 0, porPagar: 0, recibidoSinPagar: 0 };
@@ -7759,10 +7811,12 @@ function cotizarOrden(cred, numero, d) {
   if (ls[0].estado === 'Anulada') throw new Error('Esa orden está anulada.');
   var pagos = filasOCP();
   if (pagos[numero] && pagos[numero].pagadaEn) throw new Error('Esa orden ya se pagó; la cotización ya no se cambia.');
+  if (pagos[numero] && pagos[numero].devueltaEn) throw new Error('Esa orden está devuelta a bodega: primero se corrige y se reenvía.');
   var precios = d.precios || {}, total = 0, h = hojaOC();
   var transp = Number(String(d.transporte == null ? '' : d.transporte).replace(/[Q,\s]/g, '')) || 0;
   if (transp < 0 || !isFinite(transp)) throw new Error('El costo de transporte no es válido.');
   transp = r2(transp);
+  if (!(d.archivo && d.archivo.datos) && !(pagos[numero] && pagos[numero].archivo)) throw new Error('Adjunte la cotización del proveedor (PDF o foto): contabilidad la recibe en línea.');
   var arch0 = d.archivo && d.archivo.datos ? guardaArchivo(d.archivo, numero + ' cotización ' + ls[0].proveedor).url : '';   // fuera del candado
   var lock = LockService.getScriptLock();
   lock.waitLock(15000); _LEE = {};
@@ -7781,6 +7835,7 @@ function cotizarOrden(cred, numero, d) {
     var hp = hojaOCP(), arch = pagos[numero] ? pagos[numero].archivo : '';
     if (arch0) arch = arch0;
     fila.push(arch); fila.push(transp);
+    fila.push('', '', '', pagos[numero] && pagos[numero].facturaNit ? 'Sí' : '');      // sin devolución pendiente
     if (pagos[numero]) hp.getRange(pagos[numero].fila, 1, 1, H_OCP.length).setValues([fila]); else hp.appendRow(fila);
   } finally { lock.releaseLock(); }
   var r = ordenesPago(cred); r.ok = true; r.mensaje = numero + ' cotizada: ' + dinero(total) + '. Ahora el contador la paga.';
@@ -7815,6 +7870,8 @@ function pagarOrden(cred, numero, d) {
   if (o.estado === 'Anulada') throw new Error('Esa orden está anulada.');
   if (o.pago === 'Pagada') throw new Error('Esa orden ya la pagó ' + o.pagadaPor + '.');
   if (o.pago !== 'Cotizada') throw new Error('Primero anote la cotización del proveedor.');
+  if (o.devueltaEn) throw new Error('Esa orden está devuelta a bodega.');
+  if (d.facturaNit !== true) throw new Error('Confirme que ya tiene la factura impresa con el NIT de CAIX, S.A.: sin ella no se paga.');
   var monto = r2(String(d.monto == null ? '' : d.monto).replace(/[Q,\s]/g, ''));
   if (!(monto > 0)) monto = o.totalCotizado;
   if (Math.abs(monto - o.totalCotizado) > 1)
@@ -7841,6 +7898,7 @@ function pagarOrden(cred, numero, d) {
   var hp = hojaOCP(), pagos = filasOCP(), fila = pagos[numero].fila;
   // se marca antes de escribir el gasto: si alguien aprieta dos veces, no se paga dos veces
   hp.getRange(fila, 7, 1, 2).setValues([[new Date(), yo.nombre]]);
+  hp.getRange(fila, 21).setValue('Sí');                    // factura impresa con NIT de CAIX recibida
   var r;
   try {
     r = escribeGasto(v, yo.nombre, new Date(), null);
@@ -8516,14 +8574,14 @@ function avisosPresupuestoDatos(out, p) {
 var H_FONDOS = ['No.', 'Pedida en', 'Pedida por', 'Tipo', 'Unidad', 'Qué se necesita', 'Proveedor', 'Monto',
   'Urgencia', 'Estado', 'Aprobada por', 'Aprobada en', 'Comentario', 'Pagada por', 'Pagada en', 'Monto pagado',
   'Forma de pago', 'Referencia', 'Factura', 'ID gasto', 'Terminada en', 'Nota final', 'Cotización (archivo)', 'Nombre del archivo',
-  'Verificada por', 'Verificada en', 'Comentario de verificación'];
+  'Verificada por', 'Verificada en', 'Comentario de verificación', 'Devuelta por', 'Devuelta en', 'Motivo de devolución', 'Monto antes de devolver'];
 var FONDO_TIPOS = { 'Equipo': 'Equipo y mobiliario', 'Reparación': 'Mantenimiento y reparaciones',
   'Visita técnica': 'Mantenimiento y reparaciones', 'Otro': 'Otros gastos' };
 /* Lo que la CMO puede pedir pagar (con su factura): cada tipo cae en su rubro del estado de resultados. */
 var FONDO_TIPOS_CMO = { 'Sueldo': 'Nómina y bonificaciones', 'Renta': 'Renta', 'Internet': 'Internet y teléfono', 'Luz': 'Energía eléctrica',
   'Suscripción': 'Mercadeo y publicidad', 'Publicidad': 'Mercadeo y publicidad', 'Papelería e impresiones': 'Papelería y administración',
   'Servicio o proveedor': 'Otros gastos', 'Otro': 'Otros gastos' };
-function rubroDeFondo(tipo) { return FONDO_TIPOS[tipo] || FONDO_TIPOS_CMO[tipo] || 'Otros gastos'; }
+function rubroDeFondo(tipo) { return FONDO_TIPOS[tipo] || FONDO_TIPOS_CMO[tipo] || FONDO_TIPOS_BODEGA[tipo] || 'Otros gastos'; }
 var FONDO_EST = { VER: 'Por verificar', PED: 'Pedida', APR: 'Aprobada', RECH: 'Rechazada', PAG: 'Pagada', FIN: 'Terminada' };
 function hojaFondos(ss) {
   ss = ss || libro();
@@ -8532,6 +8590,7 @@ function hojaFondos(ss) {
   if (!h) { h = hojaLimpia(ss, 'Requisiciones', H_FONDOS); h.getRange('B:B').setNumberFormat('dd/mm/yyyy hh:mm');
     h.getRange('H:H').setNumberFormat('"Q"#,##0.00'); h.getRange('P:P').setNumberFormat('"Q"#,##0.00'); h.setColumnWidth(6, 320); }
   if (h.getLastColumn() < 27) encabezaAlFinal(h, 25, ['Verificada por', 'Verificada en', 'Comentario de verificación']);
+  if (h.getLastColumn() < 31) { encabezaAlFinal(h, 28, ['Devuelta por', 'Devuelta en', 'Motivo de devolución', 'Monto antes de devolver']); h.getRange('AC:AC').setNumberFormat('dd/mm/yyyy hh:mm'); }
   return h;
 }
 function filasFondos() {
@@ -8542,44 +8601,56 @@ function filasFondos() {
       comentario: String(r[12] || ''), pagPor: String(r[13] || ''), pagEn: fmtSello(r[14]), pagado: Number(r[15]) || 0,
       forma: String(r[16] || ''), referencia: String(r[17] || ''), factura: String(r[18] || ''), gasto: String(r[19] || ''),
       finEn: fmtSello(r[20]), notaFin: String(r[21] || ''), archivo: String(r[22] || ''), archivoNombre: String(r[23] || ''),
-      verPor: String(r[24] || ''), verEn: fmtSello(r[25]), verCom: String(r[26] || '') };
+      verPor: String(r[24] || ''), verEn: fmtSello(r[25]), verCom: String(r[26] || ''),
+      devPor: String(r[27] || ''), devEn: fmtSello(r[28]), devMotivo: String(r[29] || ''), montoAntes: Number(r[30]) || 0 };
   }).filter(function (x) { return x.numero; });
 }
-function veFondos(yo) { return yo.cmo || yo.esAdmin || yo.rol === 'operaciones' || yo.rol === 'finanzas' || esContador(yo) || yo.rol === 'dueno' || yo.rol === 'gerente'; }
+/* El equipo de bodega y producción (Samuel y Paulino) pide sus gastos: los aprueba el director operativo (sin pasar por el director financiero)
+ * y los paga contabilidad. El pago queda como gasto de Bodega Central, en el rubro que corresponde. */
+function esEquipoBodega(yo) { return !!yo && (yo.rol === 'bodega' || yo.rol === 'produccion'); }
+var FONDO_TIPOS_BODEGA = { 'Combustible y transporte': 'Combustible y transporte', 'Insumos de cocina': 'Insumos de cocina', 'Empaque y desechables': 'Empaque y desechables',
+  'Limpieza y químicos': 'Limpieza y químicos', 'Reparación': 'Mantenimiento y reparaciones', 'Equipo': 'Equipo y mobiliario', 'Otro': 'Otros gastos' };
+function veFondos(yo) { return yo.cmo || yo.esAdmin || yo.rol === 'operaciones' || yo.rol === 'finanzas' || esContador(yo) || yo.rol === 'dueno' || yo.rol === 'gerente' || esEquipoBodega(yo); }
 function rolDe(nombre) { var r = ''; usuariosCache().forEach(function (u) { if (u.nombre === nombre) r = u.rol; }); return r; }
 function listaFondos(cred) {
   permiteCmo();
   var yo = quien(cred);
   if (!veFondos(yo)) throw new Error('Su usuario no ve las solicitudes.');
   var mes = hoyISO().slice(0, 7), ls = filasFondos().reverse();
-  if (yo.rol === 'gerente' || yo.cmo) ls = ls.filter(function (x) { return x.por === yo.nombre; });   // el gerente y la CMO ven las suyas
+  if (yo.rol === 'gerente' || yo.cmo || esEquipoBodega(yo)) ls = ls.filter(function (x) { return x.por === yo.nombre; });   // el gerente, la CMO y el equipo de bodega ven las suyas
   var p = null;
-  if (yo.rol !== 'gerente' && !yo.cmo) { try { p = presupuestoMes({ usuario: yo.nombre, pin: cred.pin }, mes); } catch (e) {} }
+  if (yo.rol !== 'gerente' && !yo.cmo && !esEquipoBodega(yo)) { try { p = presupuestoMes({ usuario: yo.nombre, pin: cred.pin }, mes); } catch (e) {} }
   return { solicitudes: ls.slice(0, 60).map(function (x) {
-      x.deGerente = !!x.verPor || x.estado === FONDO_EST.VER || rolDe(x.por) === 'gerente';
+      x.deBodega = esEquipoBodega({ rol: rolDe(x.por) });         // lo pidió bodega o producción: lo aprueba el director operativo y lo paga contabilidad
+      x.deGerente = !x.deBodega && (!!x.verPor || x.estado === FONDO_EST.VER || rolDe(x.por) === 'gerente');
       x.deCmo = rolDe(x.por) === 'cmo';                 // pagos de la CMO: llevan factura y no hay «ya se hizo»
       x.puedeVerificar = (yo.rol === 'operaciones' || yo.esAdmin) && x.estado === FONDO_EST.VER;
       x.puedeAprobar = (yo.rol === 'finanzas' || yo.esAdmin) && x.estado === FONDO_EST.PED;
       x.puedePagar = (esContador(yo) || yo.esAdmin) && x.estado === FONDO_EST.APR;
-      x.puedeTerminar = (yo.rol === 'operaciones' || yo.esAdmin) && x.estado === FONDO_EST.PAG && !x.deCmo;
-      x.puedeAdjuntar = (yo.rol === 'operaciones' || yo.esAdmin || esContador(yo) || ((yo.rol === 'gerente' || yo.cmo) && x.por === yo.nombre && (x.estado === FONDO_EST.VER || (yo.cmo && x.estado === FONDO_EST.PED)))) && x.estado !== FONDO_EST.FIN && x.estado !== FONDO_EST.RECH;
+      x.puedeDevolver = (esContador(yo) || yo.esAdmin) && x.estado === FONDO_EST.APR;
+      x.puedeCorregir = x.por === yo.nombre && x.estado === FONDO_DEV;
+      x.devuelta = x.devEn && x.estado === FONDO_DEV ? { por: x.devPor, en: x.devEn, motivo: x.devMotivo, montoAntes: x.montoAntes } : null;
+      x.corregida = !!(x.devEn && x.estado !== FONDO_DEV && x.montoAntes && x.montoAntes !== x.monto);
+      x.puedeTerminar = (yo.rol === 'operaciones' || yo.esAdmin) && x.estado === FONDO_EST.PAG && !x.deCmo && !x.deBodega;
+      x.puedeAdjuntar = (yo.rol === 'operaciones' || yo.esAdmin || esContador(yo) || ((yo.rol === 'gerente' || yo.cmo || esEquipoBodega(yo)) && x.por === yo.nombre && (x.estado === FONDO_EST.VER || (yo.cmo && x.estado === FONDO_EST.PED)))) && x.estado !== FONDO_EST.FIN && x.estado !== FONDO_EST.RECH;
       if (p) { var u = p.unidades.filter(function (y) { return y.nombre === x.unidad; })[0];
         var rb = u && u.rubros.filter(function (r) { return r.rubro === rubroDeFondo(x.tipo); })[0];
         if (rb) x.presupuesto = { rubro: rb.rubro, presupuesto: rb.presupuesto, gastado: rb.gastado }; }
       return x; }),
-    tipos: yo.cmo ? Object.keys(FONDO_TIPOS_CMO) : Object.keys(FONDO_TIPOS),
-    unidades: (yo.rol === 'gerente' || yo.cmo) ? [nombreUnidad(yo.sucursal)] : UNIDADES.map(function (u) { return u.nombre; }),
-    formas: FORMAS_PAGO, puedePedir: yo.rol === 'operaciones' || yo.esAdmin || yo.rol === 'gerente' || yo.cmo, esGerente: yo.rol === 'gerente', esCmo: !!yo.cmo,
-    pendientes: { verificar: ls.filter(function (x) { return x.estado === FONDO_EST.VER; }).length, aprobar: ls.filter(function (x) { return x.estado === FONDO_EST.PED; }).length,
+    tipos: yo.cmo ? Object.keys(FONDO_TIPOS_CMO) : esEquipoBodega(yo) ? Object.keys(FONDO_TIPOS_BODEGA) : Object.keys(FONDO_TIPOS),
+    unidades: (yo.rol === 'gerente' || yo.cmo) ? [nombreUnidad(yo.sucursal)] : esEquipoBodega(yo) ? [nombreUnidad('bodega')] : UNIDADES.map(function (u) { return u.nombre; }),
+    formas: FORMAS_PAGO, puedePedir: yo.rol === 'operaciones' || yo.esAdmin || yo.rol === 'gerente' || yo.cmo || esEquipoBodega(yo), esGerente: yo.rol === 'gerente', esCmo: !!yo.cmo, esBodega: esEquipoBodega(yo),
+    pendientes: { devueltas: ls.filter(function (x) { return x.estado === FONDO_DEV; }).length, verificar: ls.filter(function (x) { return x.estado === FONDO_EST.VER; }).length, aprobar: ls.filter(function (x) { return x.estado === FONDO_EST.PED; }).length,
       pagar: ls.filter(function (x) { return x.estado === FONDO_EST.APR; }).length } };
 }
 function pedirFondos(cred, d) {
   permiteCmo();
   var yo = quien(cred);
-  if (yo.rol !== 'operaciones' && !yo.esAdmin && yo.rol !== 'gerente' && !yo.cmo) throw new Error('Las solicitudes las hacen los gerentes, la CMO y el director operativo.');
+  if (yo.rol !== 'operaciones' && !yo.esAdmin && yo.rol !== 'gerente' && !yo.cmo && !esEquipoBodega(yo)) throw new Error('Las solicitudes las hacen los gerentes, la bodega, producción, la CMO y el director operativo.');
   d = d || {};
-  if (!(yo.cmo ? FONDO_TIPOS_CMO[d.tipo] : FONDO_TIPOS[d.tipo])) throw new Error('Escoja qué tipo de solicitud es.');
+  if (!(yo.cmo ? FONDO_TIPOS_CMO[d.tipo] : esEquipoBodega(yo) ? FONDO_TIPOS_BODEGA[d.tipo] : FONDO_TIPOS[d.tipo])) throw new Error('Escoja qué tipo de solicitud es.');
   if (yo.rol === 'gerente' || yo.cmo) d.unidad = nombreUnidad(yo.sucursal);   // el gerente y la CMO solo piden para su lugar
+  if (esEquipoBodega(yo)) d.unidad = nombreUnidad('bodega');                 // bodega y producción piden para Bodega Central
   if (yo.cmo && d.tipo !== 'Sueldo' && !(d.archivo && d.archivo.datos)) throw new Error('Adjunte la factura (PDF o foto): contabilidad la necesita para pagar.');
   var u = null; UNIDADES.forEach(function (x) { if (x.nombre === d.unidad) u = x; });
   if (!u) throw new Error('Escoja la sucursal.');
@@ -8598,10 +8669,10 @@ function pedirFondos(cred, d) {
     filasFondos().forEach(function (x) { var m = /^(?:SD|RQ|SO)-(\d+)$/.exec(x.numero); if (m) max = Math.max(max, +m[1]); });
     numero = 'SO-' + ('0000' + (max + 1)).slice(-4);
     hojaFondos().appendRow([numero, new Date(), yo.nombre, d.tipo, u.nombre, que, String(d.proveedor || '').slice(0, 60), monto, urg,
-      yo.rol === 'gerente' ? FONDO_EST.VER : FONDO_EST.PED, '', '', '', '', '', '', '', '', '', '', '', '', arch.url, arch.nombre, '', '', '']);
+      (yo.rol === 'gerente' || esEquipoBodega(yo)) ? FONDO_EST.VER : FONDO_EST.PED, '', '', '', '', '', '', '', '', '', '', '', '', arch.url, arch.nombre, '', '', '']);
   } finally { lock.releaseLock(); }
   var r = listaFondos(cred); r.ok = true;
-  r.mensaje = numero + (yo.rol === 'gerente' ? ' enviada al director operativo para que la verifique: ' : ' enviada a contabilidad para aprobar: ') + dinero(monto) + '.';
+  r.mensaje = numero + (esEquipoBodega(yo) ? ' enviada al director operativo para que la apruebe: ' : yo.rol === 'gerente' ? ' enviada al director operativo para que la verifique: ' : ' enviada a contabilidad para aprobar: ') + dinero(monto) + '.';
   return r;
 }
 function buscaFondo(numero) {
@@ -8619,10 +8690,12 @@ function verificarFondos(cred, numero, confirmar, comentario) {
   if (!confirmar && comentario.length < 4) throw new Error('Escriba por qué se rechaza.');
   var h = hojaFondos();
   h.getRange(x.fila, 25, 1, 3).setValues([[yo.nombre, new Date(), comentario]]);
-  if (confirmar) h.getRange(x.fila, 10).setValue(FONDO_EST.PED);
+  var deBodega = esEquipoBodega({ rol: rolDe(x.por) });         // lo de bodega y producción lo aprueba el director operativo y pasa directo a contabilidad para pagar
+  if (confirmar && deBodega) h.getRange(x.fila, 10, 1, 4).setValues([[FONDO_EST.APR, yo.nombre, new Date(), comentario]]);
+  else if (confirmar) h.getRange(x.fila, 10).setValue(FONDO_EST.PED);
   else h.getRange(x.fila, 10, 1, 4).setValues([[FONDO_EST.RECH, yo.nombre, new Date(), comentario]]);
   var r = listaFondos(cred); r.ok = true;
-  r.mensaje = numero + (confirmar ? ' confirmada. Ya está en contabilidad para aprobarla.' : ' rechazada. ' + x.por + ' lo verá en su campanita.');
+  r.mensaje = numero + (confirmar ? (deBodega ? ' aprobada. Contabilidad la paga.' : ' confirmada. Ya está en contabilidad para aprobarla.') : ' rechazada. ' + x.por + ' lo verá en su campanita.');
   return r;
 }
 function aprobarFondos(cred, numero, aprobar, comentario) {
@@ -8669,7 +8742,7 @@ function adjuntarCotizacion(cred, numero, archivo) {
   permiteCmo();
   var yo = quien(cred);
   var x = buscaFondo(numero);
-  var suya = (yo.rol === 'gerente' || yo.cmo) && x.por === yo.nombre && (x.estado === FONDO_EST.VER || (yo.cmo && x.estado === FONDO_EST.PED));
+  var suya = (yo.rol === 'gerente' || yo.cmo || esEquipoBodega(yo)) && x.por === yo.nombre && (x.estado === FONDO_EST.VER || (yo.cmo && x.estado === FONDO_EST.PED));
   if (!(yo.rol === 'operaciones' || yo.esAdmin || esContador(yo) || suya)) throw new Error('La cotización la sube quien pidió, el director operativo o el contador.');
   if (x.estado === FONDO_EST.FIN || x.estado === FONDO_EST.RECH) throw new Error('Esa solicitud ya está ' + x.estado.toLowerCase() + '.');
   var a = guardaArchivo(archivo, numero + ' cotización');
@@ -9357,6 +9430,9 @@ function avisosNuevos(yo, out, cred) {
   // solicitudes de dinero
   try {
     filasFondos().forEach(function (x) {
+      if (x.estado === FONDO_DEV && x.por === yo.nombre)
+        out.push({ id: 'sd-dev-' + x.numero + '-' + x.devEn, tipo: 'Solicitud devuelta', cuando: x.devEn, titulo: x.numero + ' devuelta por ' + (x.devPor || 'contabilidad'),
+          texto: x.devMotivo, abrir: { pag: 'fondos' } });
       if (x.estado === FONDO_EST.PED && (yo.rol === 'finanzas'))
         out.push({ id: 'sd-apr-' + x.numero, tipo: 'Solicitud por aprobar', cuando: x.en, titulo: x.numero + ' · ' + x.tipo + ' · ' + dinero(x.monto),
           texto: x.unidad + ' · ' + x.que.slice(0, 80) + (x.urgencia === 'Urgente' ? ' · URGENTE' : ''), abrir: { pag: 'conta', ct: 'fondos' } });
@@ -9366,7 +9442,7 @@ function avisosNuevos(yo, out, cred) {
       if (x.estado === FONDO_EST.VER && (yo.rol === 'operaciones'))
         out.push({ id: 'sd-ver-' + x.numero, tipo: 'Solicitud por verificar', cuando: x.en, titulo: x.numero + ' · ' + x.por + ' · ' + dinero(x.monto),
           texto: x.unidad + ' · ' + x.que.slice(0, 80) + (x.urgencia === 'Urgente' ? ' · URGENTE' : ''), abrir: { pag: 'fondos' } });
-      if ((yo.rol === 'gerente' || yo.cmo) && x.por === yo.nombre && x.estado !== FONDO_EST.VER && x.estado !== FONDO_EST.PED &&
+      if ((yo.rol === 'gerente' || yo.cmo || esEquipoBodega(yo)) && x.por === yo.nombre && x.estado !== FONDO_EST.VER && x.estado !== FONDO_EST.PED && x.estado !== FONDO_DEV &&
           (x.pagEn || x.aprEn || x.verEn).slice(0, 10) >= desde)
         out.push({ id: 'sd-g-' + x.estado + '-' + x.numero, tipo: 'Solicitud ' + x.estado.toLowerCase(), cuando: x.pagEn || x.aprEn || x.verEn,
           titulo: x.numero + ' ' + x.estado.toLowerCase(), texto: x.estado === FONDO_EST.RECH ? ((x.aprPor || x.verPor) + ': ' + (x.comentario || x.verCom)) :
@@ -9885,7 +9961,7 @@ function datosAtrasos() {
         x.tipo + ' · ' + x.unidad + ' · ' + dinero(x.monto), h, { pag: 'conta', ct: 'fondos' }); }
     if (x.estado === FONDO_EST.APR) { var h2 = horasEntre(x.aprEn, ahoraS);
       if (h2 >= 48) pon(con, 'finanzas', 'rq-pag-' + x.numero, x.numero + ' aprobada y sin pagar', x.tipo + ' · ' + x.unidad + ' · ' + dinero(x.monto), h2, { pag: 'conta', ct: 'fondos' }); }
-    if (x.estado === FONDO_EST.PAG) { var h3 = horasEntre(x.pagEn, ahoraS);
+    if (x.estado === FONDO_EST.PAG && !esEquipoBodega({ rol: rolDe(x.por) })) { var h3 = horasEntre(x.pagEn, ahoraS);
       if (h3 >= 24 * 7) pon(ope, 'operaciones', 'rq-fin-' + x.numero, x.numero + ' pagada hace ' + Math.round(h3 / 24) + ' días y sin marcar hecha', x.que.slice(0, 80), h3, { pag: 'fondos' }); }
   }); } catch (e) {}
   // presupuesto
@@ -11291,9 +11367,9 @@ function pantallaPedidosBodega(cred) {
     lineas: out, faltan: out.filter(function (x) { return !x.alcanza; }).length };
 }
 /** envios = { clave: { centro: 3, almendras: 2 } }. Acepta y deja preparados todos los pedidos abiertos. */
-function aceptarYPreparar(cred, envios) {
+function aceptarYPreparar(cred, envios, opciones) {
   var yo = exigeSoloBodega(cred);
-  envios = envios || {};
+  envios = envios || {}; opciones = opciones || {};
   var sucs = sucursalesDestino(), porNombre = {};
   sucs.forEach(function (s) { porNombre[s.nombre] = s.id; });
   var catT = {}; productosTraslado().forEach(function (p) { catT[p.key] = p; });
@@ -11316,6 +11392,9 @@ function aceptarYPreparar(cred, envios) {
         var e = envios[l.clave] || {}, n = lee(e[sid], l.nombre);
         if (n == null) n = l.pedido;
         h.getRange(l.fila, 11).setValue(n); x.n += n; total += n;
+        var falta = r3(l.pedido - n);
+        if (falta > 0.0005 && !(opciones.no && opciones.no[l.clave])) h.getRange(l.fila, 17, 1, 2).setValues([[falta, String((opciones.llega || {})[l.clave] || '').trim().slice(0, 40)]]);
+        else h.getRange(l.fila, 17, 1, 2).setValues([['', '']]);
       });
       // lo que la bodega manda sin que la sucursal lo haya pedido
       var nuevas = [];
@@ -11324,14 +11403,14 @@ function aceptarYPreparar(cred, envios) {
         var p = catT[k]; if (!p) return;
         var n = lee((envios[k] || {})[sid], p.nombre);
         if (!(n > 0)) return;
-        nuevas.push([x.s.numero, x.s.sucursal, p.codigo, p.nombre, p.unidad, k, '', 0, 'lo agregó la bodega', 0, n, '', '', '', '', '']);
+        nuevas.push([x.s.numero, x.s.sucursal, p.codigo, p.nombre, p.unidad, k, '', 0, 'lo agregó la bodega', 0, n, '', '', '', '', '', '', '', '', '', '']);
         x.n += n; total += n;
       });
       if (nuevas.length) h.getRange(h.getLastRow() + 1, 1, nuevas.length, H_SOLD.length).setValues(nuevas);
     });
     Object.keys(porSol).forEach(function (num0) {
       var x = porSol[num0];
-      if (!(x.n > 0)) return;          // a esa sucursal no se le pudo mandar nada: queda pendiente
+      if (!(x.n > 0)) return;          // a esa sucursal no se le pudo mandar nada: queda pendiente (y sigue «Enviada» hasta que haya)
       hojaSol().getRange(x.s.fila, 7, 1, 3).setValues([[SOL.ACE, ahora, yo.nombre]]);
       hojaSol().getRange(x.s.fila, 17).setValue(ahora);
       hechas.push(x.s.numero + ' ' + x.s.sucursal);
@@ -12310,7 +12389,7 @@ function resumenAreas(cred, fresco) {
 /** Solo lo que sale de los indicadores: rápido. Las «señales» (inventario, impuestos, presupuesto…) van aparte, en resumenAreasSenales. */
 function resumenAreasCalc() {
   var t0 = Date.now(), hoy = hoyISO(), desde7 = masDias(hoy, -6);
-  var tb = tableroKpiAreas(SUC_KPI.concat([AREA_CONTA, AREA_MKT, AREA_TEC]), 14);
+  var tb = tableroKpiAreas(SUC_KPI.concat([AREA_CONTA, AREA_MKT, AREA_TEC, AREA_COO]), 14);
   var regs = registrosKpi(5000, true), activos = filasKpi().filter(function (k) { return k.estado === KPI_EST.ENV; });
   var prom = function (l) {
     l = l.filter(function (x) { return x != null; });
@@ -12334,7 +12413,8 @@ function resumenAreasCalc() {
     armar('operaciones', 'Operaciones', SUC_KPI, detOps),
     armar('finanzas', 'Finanzas', [AREA_CONTA]),
     armar('marketing', 'Marketing', [AREA_MKT]),
-    armar('tecnologia', 'Tecnología', [AREA_TEC])
+    armar('tecnologia', 'Tecnología', [AREA_TEC]),
+    armar('direccion', 'Dirección operativa', [AREA_COO])
   ] };
 }
 
@@ -12452,7 +12532,7 @@ function exportarIndicadores(q) {
 /* ════════════ COPIA COMPLETA PARA EL SERVIDOR PROPIO ════════════
  * El servidor propio guarda una copia de TODAS las pestañas y corre este mismo código sobre ella para contestar las lecturas.
  * Cada cambio que pasa por aquí avisa qué pestañas tocó («tocadas»), y el servidor solo vuelve a traer esas. */
-var VERSION_CODIGO = '2026-10-04-a';       // se cambia a mano cada vez que se cambia este archivo; el servidor compara que coincida con la suya
+var VERSION_CODIGO = '2026-10-07-d';       // se cambia a mano cada vez que se cambia este archivo; el servidor compara que coincida con la suya
 function versionCodigo() { return VERSION_CODIGO; }
 function huellaTexto(t) { return Utilities.base64Encode(Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, t)).slice(0, 22); }
 /** Un resumen barato de cada pestaña: cuántas filas y columnas tiene y una huella de sus últimas 25 filas. */
@@ -12484,4 +12564,817 @@ function disparadoresActivos() { try { return ScriptApp.getProjectTriggers().map
 /** Las propiedades del script (marcas como «ya se corrigió tal cosa»), sin la clave secreta. El servidor las necesita para correr este código igual que aquí. */
 function propiedadesVisibles() {
   try { var p = PropertiesService.getScriptProperties().getProperties(); delete p.SERVER_TOKEN; return p; } catch (e) { return {}; }
+}
+
+/* ════════════ INDICADORES DEL DIRECTOR OPERATIVO ════════════
+ * Los decide el administrador (como los de la CMO: quedan en borrador hasta que los envía) y los anota el director operativo en
+ * «Mis KPIs». El director sigue decidiendo y enviando los de sus gerentes por su lado. */
+var KPI_CATS_COO = ['Bodega central', 'Producción', 'Sucursales', 'Equipo'];
+var KPIS_COO_RECOMENDADOS = [
+  { c: 'Sucursales', n: 'Sucursales con todos sus indicadores anotados en la semana', t: 'Número', u: '%', min: 90, max: null, f: 'Semanal',
+    i: 'De los indicadores que tocaban en la semana, el porcentaje que los gerentes sí anotaron (lo ve en Resultados).', p: 'Si no anotan, no se sabe cómo va la operación.' },
+  { c: 'Sucursales', n: 'Cierres de caja validados el mismo día', t: 'Número', u: '%', min: 95, max: null, f: 'Semanal',
+    i: 'De los cierres de la semana, el porcentaje que validó el mismo día en que se reportó.', p: 'Un cierre sin validar esconde diferencias de efectivo.' },
+  { c: 'Sucursales', n: 'Mantenimientos vencidos en las sucursales', t: 'Número', u: 'equipos', min: null, max: 0, f: 'Semanal',
+    i: 'Cuántos equipos tienen el mantenimiento vencido al cerrar la semana (lo ve en Mantenimiento).', p: 'Un equipo sin mantenimiento termina parando el servicio.' },
+  { c: 'Sucursales', n: 'Faltantes de producto en sucursales (veces en la semana)', t: 'Número', u: 'veces', min: null, max: 3, f: 'Semanal',
+    i: 'Cuántas veces una sucursal se quedó sin un producto importante, según lo que reportaron los gerentes.', p: 'Los faltantes son ventas que se pierden.' },
+  { c: 'Bodega central', n: 'Solicitudes de sucursales atendidas a tiempo por bodega', t: 'Número', u: '%', min: 95, max: null, f: 'Semanal',
+    i: 'De las solicitudes de la semana, el porcentaje que bodega entregó en el plazo acordado.', p: 'Si bodega se atrasa, las sucursales piden emergencias.' },
+  { c: 'Bodega central', n: 'Diferencias de bodega sin aclarar', t: 'Número', u: 'diferencias', min: null, max: 0, f: 'Semanal',
+    i: 'Cuántas diferencias de inventario de bodega siguen sin explicación al cerrar la semana (lo ve en Diferencias).', p: 'Lo que no se aclara se repite.' },
+  { c: 'Bodega central', n: 'Compras recibidas completas', t: 'Número', u: '%', min: 95, max: null, f: 'Semanal',
+    i: 'De las órdenes recibidas en la semana, el porcentaje que llegó completo y en buen estado.', p: 'Una compra incompleta afecta a todas las sucursales.' },
+  { c: 'Producción', n: 'Lotes con rendimiento dentro de lo esperado', t: 'Número', u: '%', min: 90, max: null, f: 'Semanal',
+    i: 'De los lotes de la semana, el porcentaje cuyo rendimiento quedó dentro de la receta (lo ve en Producción).', p: 'Un mal rendimiento es dinero que se pierde en el insumo.' },
+  { c: 'Producción', n: 'Merma de producción en la semana', t: 'Número', u: '%', min: null, max: 5, f: 'Semanal',
+    i: 'Lo que se perdió de los insumos producidos, como porcentaje de lo producido.', p: 'Ayuda a ver si la producción cuida los insumos.' },
+  { c: 'Equipo', n: 'Reunión semanal con los gerentes realizada', t: 'Sí / No', u: '', min: null, max: null, f: 'Semanal',
+    i: 'Marque «Sí» si se reunió con los tres gerentes esta semana.', p: 'La reunión es donde se corrigen los problemas antes de que crezcan.' },
+  { c: 'Equipo', n: 'Indicadores enviados a los gerentes al día', t: 'Sí / No', u: '', min: null, max: null, f: 'Semanal',
+    i: 'Marque «Sí» si los indicadores nuevos o cambiados ya se enviaron a los gerentes.', p: 'Un indicador sin enviar es una orden que nadie recibió.' }
+];
+function exigeAdminCoo(cred) { var yo = exigeAdmin(cred); _KPI_COO = true; return yo; }
+function listaKpisCoo(cred) { exigeAdminCoo(cred); return listaKpis(cred); }
+function guardarKpiCoo(cred, k) { exigeAdminCoo(cred); return guardarKpi(cred, k); }
+function borrarKpiCoo(cred, id) { exigeAdminCoo(cred); return borrarKpi(cred, id); }
+function enviarKpisCoo(cred, ids) { exigeAdminCoo(cred); return enviarKpis(cred, ids); }
+function agregarRecomendadosCoo(cred, claves) { exigeAdminCoo(cred); return agregarRecomendados(cred, claves); }
+function resultadosKpiCoo(cred, desde, hasta) { exigeAdminCoo(cred); return resultadosKpiRango(cred, desde, hasta, ''); }
+/** Lo que anota el director operativo: sus propios indicadores. */
+function exigeCoo(cred) {
+  var yo = quien(cred);
+  if (yo.rol !== 'operaciones') throw new Error('Esto es para el director operativo.');
+  _KPI_COO = true;
+  return yo;
+}
+function pantallaKpiCoo(cred) { exigeCoo(cred); return pantallaKpi(cred); }
+function registrarKpisCoo(cred, valores) { exigeCoo(cred); return registrarKpis(cred, valores); }
+
+/* ════════════ RECETAS POR PORCENTAJE (MEZCLAS) Y ETIQUETAS ════════════
+ * Una receta de varios ingredientes (masa de pizza: harina, levadura, sal, pimienta). La base (la harina) es el 100 %; cada
+ * ingrediente es un % de su peso. Paulino dice cuántas unidades de la base usa (15 sacos) y la app calcula cuánto sale de
+ * bodega de cada ingrediente, cuántas porciones deben salir (8 bolsas por saco = 120) y arma las etiquetas de cada porción. */
+var H_MEZ = ['ID', 'Nombre', 'Base (código)', 'Base', 'Peso de cada unidad de la base', 'Medida del peso', 'Producto que sale (código)',
+  'Producto que sale', 'Presentaciones por unidad de base', 'Vida útil (días)', 'Activa', 'Creada por', 'Creada en', 'Nota', 'Ingredientes (JSON)', 'Porciones por presentación'];
+var H_LOTEQ = ['No. de lote', 'Receta', 'Nombre', 'Fecha de producción', 'Vida útil (días)', 'Vence', 'Peso por porción (g)', 'Ingredientes (JSON)', 'Sobrante de la base (g)'];
+var GRAMOS = { libra: 453.59237, onza: 28.349523125, kilo: 1000, gramo: 1 };
+var ETQ_DEF = { hoja: 'carta', ancho: 6.67, alto: 2.54, margenSup: 1.27, margenIzq: 0.48, sepH: 0.32, sepV: 0, bordes: false, barras: true };
+var HOJAS_ETQ = { carta: { ancho: 21.59, alto: 27.94 }, oficio: { ancho: 21.59, alto: 33.02 } };
+
+function hojasMezcla(ss) {
+  ss = ss || libro();
+  var m = ss.getSheetByName('Recetas por porcentaje');
+  if (!m) { m = hojaLimpia(ss, 'Recetas por porcentaje', H_MEZ); m.getRange('M:M').setNumberFormat('dd/mm/yyyy hh:mm'); m.setColumnWidth(2, 240); m.setColumnWidth(15, 420); }
+  else if (m.getLastColumn() < 16) encabezaAlFinal(m, 16, ['Porciones por presentación']);
+  var e = ss.getSheetByName('Producción lotes · etiquetas');
+  if (!e) { e = hojaLimpia(ss, 'Producción lotes · etiquetas', H_LOTEQ); e.getRange('D:D').setNumberFormat('@'); e.getRange('F:F').setNumberFormat('@'); e.setColumnWidth(8, 420); }
+  else if (e.getLastColumn() < 9) encabezaAlFinal(e, 9, ['Sobrante de la base (g)']);
+  return { rec: m, eq: e };
+}
+function jsonSeguro(t) { try { var v = JSON.parse(String(t || '')); return Array.isArray(v) ? v : []; } catch (e) { return []; } }
+function filasMezclas() {
+  return leeTodo(hojasMezcla().rec, H_MEZ.length).map(function (r, i) {
+    return { fila: i + 2, id: String(r[0] || ''), nombre: String(r[1] || ''), base: String(r[2] || ''), baseNombre: String(r[3] || ''),
+      basePeso: Number(r[4]) || 0, baseMedida: String(r[5] || '').trim().toLowerCase() || 'libra', salida: String(r[6] || ''), salidaNombre: String(r[7] || ''),
+      porciones: Number(r[8]) || 0, vida: Number(r[9]) || 0, activa: String(r[10]).trim().toLowerCase() !== 'no',
+      creadaPor: String(r[11] || ''), creadaEn: fmtSello(r[12]), nota: String(r[13] || ''), ingredientes: jsonSeguro(r[14]), porPres: Number(r[15]) > 0 ? Number(r[15]) : 1 };
+  }).filter(function (x) { return x.id; });
+}
+function filasLotesEtq() {
+  var o = {};
+  leeTodo(hojasMezcla().eq, H_LOTEQ.length).forEach(function (r, i) {
+    var n = String(r[0] || ''); if (!n) return;
+    o[n] = { fila: i + 2, numero: n, receta: String(r[1] || ''), nombre: String(r[2] || ''), fecha: fmtDia(r[3]), vida: Number(r[4]) || 0,
+      vence: fmtDia(r[5]), pesoPorcion: Number(r[6]) || 0, ingredientes: jsonSeguro(r[7]), sobrante: Number(r[8]) || 0 };
+  });
+  return o;
+}
+/** Cuánto pesa una unidad de bodega de un producto (si se sabe): {peso, medida}. */
+function pesoUnidadDe(b) {
+  if (!b) return null;
+  if (b.medida === 'peso' && GRAMOS[b.unidad]) return { peso: 1, medida: b.unidad };
+  if (b.pesoCada > 0 && GRAMOS[b.pesoEn]) {          // «cada una cerrada pesa»: se refiere a la unidad más pequeña que se cuenta
+    var k = (b.menor && b.porSuelto >= 2 && b.suelto && b.porUnidad >= 2) ? b.porUnidad * b.porSuelto : (b.suelto && b.porUnidad >= 2) ? b.porUnidad : 1;
+    return { peso: r3(b.pesoCada * k), medida: b.pesoEn };
+  }
+  return null;
+}
+function numPos(v) { var n = Number(String(v == null ? '' : v).replace(',', '.')); return isFinite(n) ? n : 0; }
+/** Lo que pide una receta para `unidades` de la base. */
+function calculoMezcla(m, unidades, bod) {
+  var gBase = unidades * m.basePeso * GRAMOS[m.baseMedida];
+  var ings = m.ingredientes.map(function (x) {
+    var g = gBase * x.pct / 100, gU = x.peso * GRAMOS[x.medida], b = bod[x.codigo] || {};
+    return { codigo: x.codigo, nombre: b.nombre || x.nombre, pct: x.pct, g: Math.round(g * 100) / 100, unidades: gU > 0 ? Math.round(g / gU * 10000) / 10000 : 0,
+      unidad: b.unidad || x.unidad || 'unidad' };
+  });
+  var esperadas = Math.round(unidades * m.porciones * 1000) / 1000;
+  var gTot = gBase + ings.reduce(function (a, x) { return a + x.g; }, 0);
+  return { gBase: Math.round(gBase * 10) / 10, ingredientes: ings, esperadas: esperadas, pesoPorcion: esperadas > 0 ? Math.round(gTot / esperadas * 10) / 10 : 0 };
+}
+function mezclasPantalla(ex, idx, bod) {
+  return filasMezclas().filter(function (m) { return m.activa; }).map(function (m) {
+    var b = bod[m.base] || {}, s = bod[m.salida] || {}, uno = calculoMezcla(m, 1, bod);
+    var costo = (b.codigo ? costoBodega(b, idx).costo : 0) + uno.ingredientes.reduce(function (a, x) { var y = bod[x.codigo]; return a + (y ? costoBodega(y, idx).costo * x.unidades : 0); }, 0);
+    return { id: m.id, nombre: m.nombre, base: m.base, baseNombre: b.nombre || m.baseNombre, baseUnidad: b.unidad || 'unidad', basePeso: m.basePeso, baseMedida: m.baseMedida,
+      salida: m.salida, salidaNombre: s.nombre || m.salidaNombre, salidaUnidad: s.unidad || 'bolsa', porciones: m.porciones, porPres: m.porPres, vida: m.vida, nota: m.nota,
+      hayBase: r3(ex[m.base] || 0), hayBaseTxt: b.codigo ? textoCantidad(ex[m.base] || 0, b) : '—',
+      ingredientes: m.ingredientes.map(function (x) { var y = bod[x.codigo] || {};
+        return { codigo: x.codigo, nombre: y.nombre || x.nombre, pct: x.pct, peso: x.peso, medida: x.medida, unidad: y.unidad || x.unidad || 'unidad',
+          hay: r3(ex[x.codigo] || 0), hayTxt: y.codigo ? textoCantidad(ex[x.codigo] || 0, y) : '—' }; }),
+      porUnidad: uno, costoPorUnidad: Math.round(costo * 100) / 100,
+      costoPorcion: uno.esperadas > 0 ? Math.round(costo / uno.esperadas * 10000) / 10000 : 0 };
+  });
+}
+/** Receta por % nueva o cambiada. r = {id, nombre, base, basePeso, baseMedida, salida, salidaNombre, porciones, vida, nota, ingredientes:[{codigo, pct, peso, medida}]} */
+function guardarMezcla(cred, r) {
+  var yo = exigeProduccion(cred);
+  r = r || {};
+  var bod = {}; filasBodega().forEach(function (b) { bod[b.codigo] = b; });
+  var nombre = String(r.nombre || '').trim().replace(/\s+/g, ' ').slice(0, 70);
+  if (nombre.length < 3) throw new Error('Escriba el nombre de la receta (por ejemplo «Mezcla para masa de pizza»).');
+  var base = bod[String(r.base || '')];
+  if (!base) throw new Error('Escoja el ingrediente base (el 100 %, por ejemplo la harina).');
+  var basePeso = numPos(r.basePeso), baseMedida = String(r.baseMedida || '').toLowerCase();
+  if (!(basePeso > 0) || !GRAMOS[baseMedida]) throw new Error('Diga cuánto pesa cada ' + base.unidad + ' de ' + base.nombre + ' (por ejemplo 50 libras).');
+  var porciones = numPos(r.porciones);          // presentaciones (bolsas con etiqueta) que salen de cada unidad de la base
+  if (!(porciones > 0 && porciones <= 10000)) throw new Error('Diga cuánto lleva cada porción de la base (por ejemplo 500 g).');
+  var porPres = Math.round(numPos(r.porPres)) || 1;
+  if (!(porPres >= 1 && porPres <= 1000)) throw new Error('Las porciones por presentación van de 1 a 1000.');
+  var vida = Math.round(numPos(r.vida));
+  if (!(vida >= 1 && vida <= 730)) throw new Error('Diga cuántos días dura el producto (entre 1 y 730).');
+  var lista = Array.isArray(r.ingredientes) ? r.ingredientes : [];
+  if (!lista.length) throw new Error('Agregue al menos un ingrediente además de la base.');
+  if (lista.length > 20) throw new Error('Una receta puede tener hasta 20 ingredientes.');
+  var vistos = {}; vistos[base.codigo] = true;
+  var ings = lista.map(function (x) {
+    var b = bod[String(x.codigo || '')];
+    if (!b) throw new Error('Hay un ingrediente sin escoger.');
+    if (vistos[b.codigo]) throw new Error(b.codigo === base.codigo ? b.nombre + ' ya es la base de la receta.' : b.nombre + ' está dos veces.');
+    vistos[b.codigo] = true;
+    var pct = Math.round(numPos(x.pct) * 100000) / 100000;
+    if (!(pct > 0 && pct <= 500)) throw new Error('Revise el porcentaje de ' + b.nombre + '.');
+    var peso = numPos(x.peso), medida = String(x.medida || '').toLowerCase();
+    if (!(peso > 0) || !GRAMOS[medida]) throw new Error('Diga cuánto pesa cada ' + b.unidad + ' de ' + b.nombre + ' (lo que sale de bodega se descuenta en ' + plur(2, b.unidad) + ').');
+    return { codigo: b.codigo, nombre: b.nombre, unidad: b.unidad, pct: pct, peso: peso, medida: medida };
+  });
+  var codigo = String(r.salida || '').trim().toUpperCase(), nombreS = String(r.salidaNombre || '').trim().replace(/\s+/g, ' ').slice(0, 70);
+  if (vistos[codigo]) throw new Error('Lo que sale no puede ser uno de los ingredientes.');
+  var lock = LockService.getScriptLock(); lock.waitLock(15000); _LEE = {};
+  var id;
+  try {
+    if (!bod[codigo]) {
+      if (nombreS.length < 3) throw new Error('Escriba el nombre de lo que sale (por ejemplo «Bolsa de mezcla para masa»).');
+      codigo = codigoNuevo(nombreS, bod);
+      hojaBodega().appendRow([codigo, nombreS.toUpperCase(), 'Cocina', 'Producción', 'Sí', 'Sí', 'Sí', 'Insumos de cocina',
+        'bolsa', '', '', '', '', 1, '', 'Sí', new Date(), yo.nombre, almacenDe('Producción'), '', '', '', '', '', 'No', '']);
+      _BOD = null; filasBodega().forEach(function (b) { bod[b.codigo] = b; });
+    }
+    var h = hojasMezcla().rec, x = null;
+    filasMezclas().forEach(function (y) { if (y.id === String(r.id || '')) x = y; });
+    id = x ? x.id : 'RM' + Utilities.formatDate(new Date(), ZONA, 'yyyyMMddHHmmss');
+    var fila = [id, nombre, base.codigo, base.nombre, basePeso, baseMedida, codigo, bod[codigo] ? bod[codigo].nombre : nombreS.toUpperCase(), porciones, vida,
+      r.activa === false ? 'No' : 'Sí', x ? x.creadaPor : yo.nombre, x ? x.creadaEn : new Date(), String(r.nota || '').slice(0, 200), JSON.stringify(ings), porPres];
+    if (x) h.getRange(x.fila, 1, 1, H_MEZ.length).setValues([fila]); else h.appendRow(fila);
+  } finally { lock.releaseLock(); }
+  var d = pantallaProduccion(cred); d.ok = true; d.mensaje = 'Receta «' + nombre + '» guardada.'; d.mezcla = id;
+  return d;
+}
+function gramosTxt(g) { return g >= 1000 ? num(Math.round(g / 10) / 100) + ' kg' : num(Math.round(g * 10) / 10) + ' g'; }
+/** Un lote de una receta por %: d = {receta, unidades (los sacos), vida, nota, sinExistencia}.
+ *  Salen solo las presentaciones COMPLETAS. Los sacos salen enteros de bodega y la harina que sobra queda anotada (en gramos) en el lote.
+ *  Los demás ingredientes salen de bodega solo por lo que llevan las presentaciones completas; lo de la parte incompleta también se anota. */
+function registrarLoteMezcla(cred, d) {
+  var yo = exigeProduccion(cred);
+  d = d || {};
+  var m = null; filasMezclas().forEach(function (y) { if (y.id === String(d.receta)) m = y; });
+  if (!m || !m.activa) throw new Error('Escoja la receta.');
+  var bod = {}; filasBodega().forEach(function (b) { bod[b.codigo] = b; });
+  var base = bod[m.base], sal = bod[m.salida];
+  if (!base || !sal) throw new Error('La base o lo que sale ya no están en el catálogo de bodega.');
+  var sacos = Math.round(numPos(d.unidades) * 100000) / 100000;
+  if (!(sacos > 0)) throw new Error('Escriba cuántas ' + plur(2, base.unidad) + ' de ' + base.nombre + ' va a usar.');
+  var exactas = sacos * m.porciones, completas = Math.floor(exactas + 0.001);          // 11.9998 (por redondeo de los sacos) cuenta como 12
+  if (completas < 1) throw new Error('Con ' + num(sacos) + ' ' + plur(sacos, base.unidad) + ' no alcanza para una ' + sal.nombre + ' completa (salen ' + num(Math.round(exactas * 100) / 100) + '). Use más ' + plur(2, base.unidad) + '.');
+  var usado = completas / m.porciones;                                     // la parte de los sacos que entra en las presentaciones completas
+  var c = calculoMezcla(m, usado, bod), todo = calculoMezcla(m, sacos, bod);
+  var sobranteG = Math.max(0, Math.round((todo.gBase - c.gBase) * 10) / 10);
+  var vida = String(d.vida == null ? '' : d.vida).trim() === '' ? m.vida : Math.round(numPos(d.vida));
+  if (!(vida >= 1 && vida <= 730)) throw new Error('La vida útil va de 1 a 730 días.');
+  var nota = String(d.nota || '').trim().slice(0, 200);
+  var ex = estadoInventario('bodega').existencia, falta = [];
+  [{ codigo: base.codigo, unidades: sacos }].concat(c.ingredientes).forEach(function (x) {
+    var b = bod[x.codigo]; if (b && (ex[x.codigo] || 0) < x.unidades - 0.0005) falta.push(b.nombre + ': hay ' + textoCantidad(ex[x.codigo] || 0, b) + ' y se usan ' + textoCantidad(x.unidades, b));
+  });
+  if (falta.length && !d.sinExistencia) throw new Error('No alcanza en bodega. ' + falta.join(' · ') + '. Revise las cantidades o pida que cuenten la bodega.');
+  var idx = indiceCompras(), costo = costoBodega(base, idx).costo * sacos;           // los sacos salen enteros: su costo completo va a este lote
+  c.ingredientes.forEach(function (x) { var b = bod[x.codigo]; if (b) costo += costoBodega(b, idx).costo * x.unidades; });
+  costo = Math.round(costo * 100) / 100;
+  var costoPor = Math.round(costo / completas * 10000) / 10000;
+  var pesoPres = Math.round((c.gBase + c.ingredientes.reduce(function (a, x) { return a + x.g; }, 0)) / completas * 10) / 10;
+  var hoy = hoyISO(), vence = masDias(hoy, vida), lock = LockService.getScriptLock(); lock.waitLock(15000); _LEE = {};
+  var numero;
+  try {
+    var max = 0;
+    leeTodo(hojasProduccion().lote, 1).forEach(function (r) { var mm = /^PR-(\d+)$/.exec(String(r[0])); if (mm) max = Math.max(max, +mm[1]); });
+    numero = 'PR-' + ('0000' + (max + 1)).slice(-4);
+    var ahora = new Date(), hl = hojasProduccion().lote;
+    hl.appendRow([numero, ahora, hoy, m.id, base.codigo, base.nombre, sacos, base.unidad, sacos, sal.codigo, sal.nombre, completas, completas, 100, costo, costoPor, yo.nombre, nota]);
+    hl.getRange(hl.getLastRow(), 3).setNumberFormat('@').setValue(hoy);
+    var he = hojasMezcla().eq;
+    he.appendRow([numero, m.id, m.nombre, hoy, vida, vence, pesoPres, JSON.stringify([{ codigo: base.codigo, nombre: base.nombre, g: c.gBase, sobra: sobranteG }].concat(c.ingredientes.map(function (x, i) {
+      return { codigo: x.codigo, nombre: x.nombre, g: x.g, sobra: Math.round((todo.ingredientes[i].g - x.g) * 10) / 10 }; }))), sobranteG]);
+    he.getRange(he.getLastRow(), 4).setNumberFormat('@').setValue(hoy); he.getRange(he.getLastRow(), 6).setNumberFormat('@').setValue(vence);
+    escribeKardex([[ahora, nombreBodega(), base.codigo, base.nombre, MOV.SAL_PROD, -sacos, numero, yo.nombre, m.nombre + (sobranteG > 0.5 ? ' · sobran ' + gramosTxt(sobranteG) : '')]]
+      .concat(c.ingredientes.map(function (x) { return [ahora, nombreBodega(), x.codigo, x.nombre, MOV.SAL_PROD, -x.unidades, numero, yo.nombre, m.nombre + ' · ' + num(x.g) + ' g']; }))
+      .concat([[ahora, nombreBodega(), sal.codigo, sal.nombre, MOV.ENT_PROD, completas, numero, yo.nombre, num(completas * m.porPres) + ' porciones']]));
+    if (costoPor > 0) { hojaBodega().getRange(sal.fila, 15).setValue(costoPor); _BOD = null; }
+  } finally { lock.releaseLock(); }
+  var r = pantallaProduccion(cred); r.ok = true; r.lote = numero; r.sobrante = sobranteG;
+  r.mensaje = numero + ': ' + num(completas) + ' ' + plur(completas, sal.unidad) + ' de ' + sal.nombre + (m.porPres > 1 ? ' (' + num(completas * m.porPres) + ' porciones)' : '') +
+    (sobranteG > 0.5 ? '. Sobran ' + gramosTxt(sobranteG) + ' de ' + base.nombre + ' (anotados en el lote)' : '') + '. Vence el ' + dia(vence) + '.';
+  return r;
+}
+/** Lo que va en las etiquetas de un lote (de receta por % o de porcionar). Con `dias`, se cambia su vida útil. */
+function etiquetasLote(cred, numero, dias) {
+  var yo = quien(cred);
+  if (!veProduccion(yo)) throw new Error('Su usuario no ve producción.');
+  var l = null; filasLotes().forEach(function (x) { if (x.numero === String(numero)) l = x; });
+  if (!l) throw new Error('No se encontró el lote ' + numero + '.');
+  var bod = {}; filasBodega().forEach(function (b) { bod[b.codigo] = b; });
+  var eq = filasLotesEtq()[l.numero], sal = bod[l.porcion] || {};
+  var vida = eq ? eq.vida : 0, fecha = eq ? eq.fecha : l.fecha, ings = eq ? eq.ingredientes : [{ codigo: l.insumo, nombre: l.insumoNombre, g: GRAMOS[l.medida] ? l.usada * GRAMOS[l.medida] : 0 }];
+  var peso = eq ? eq.pesoPorcion : (GRAMOS[l.medida] && l.obtenidas > 0 ? Math.round(l.usada * GRAMOS[l.medida] / l.obtenidas * 10) / 10 : 0);
+  if (!vida) { var mz = null; filasMezclas().forEach(function (y) { if (y.id === l.receta) mz = y; }); vida = mz ? mz.vida : 0; }
+  var nueva = String(dias == null ? '' : dias).trim() === '' ? 0 : Math.round(numPos(dias));
+  if (nueva && !(nueva >= 1 && nueva <= 730)) throw new Error('La vida útil va de 1 a 730 días.');
+  if (nueva && nueva !== vida) {
+    if (yo.rol !== 'produccion' && !yo.esAdmin) throw new Error('La vida útil la cambia producción.');
+    vida = nueva;
+    var he = hojasMezcla().eq, vence = masDias(fecha, vida);
+    if (eq) { he.getRange(eq.fila, 5).setValue(vida); he.getRange(eq.fila, 6).setNumberFormat('@').setValue(vence); }
+    else { he.appendRow([l.numero, l.receta, l.porcionNombre, fecha, vida, vence, peso, JSON.stringify(ings)]);
+      he.getRange(he.getLastRow(), 4).setNumberFormat('@').setValue(fecha); he.getRange(he.getLastRow(), 6).setNumberFormat('@').setValue(vence); }
+  }
+  // La receta es confidencial: a la etiqueta (y a quien la imprime) solo le llega el nombre de la porción, el lote y las fechas.
+  return { numero: l.numero, producto: sal.nombre || l.porcionNombre, sku: l.porcion, fecha: fecha, vida: vida, vence: vida ? masDias(fecha, vida) : '',
+    cantidad: Math.round(l.obtenidas), elaboro: l.por, empresa: 'REY PIZZA · CAIX, S.A.', config: configEtiquetas(), hojas: HOJAS_ETQ, puedeCambiar: yo.rol === 'produccion' || !!yo.esAdmin };
+}
+function configEtiquetas() {
+  var c = {}; try { c = JSON.parse(ajusteCrudo('etiquetas_config') || '{}') || {}; } catch (e) { c = {}; }
+  var o = {}; Object.keys(ETQ_DEF).forEach(function (k) { o[k] = c[k] != null ? c[k] : ETQ_DEF[k]; });
+  return o;
+}
+/** Se guarda el tamaño de las etiquetas para la próxima vez (en cm). */
+function guardarConfigEtiquetas(cred, c) {
+  var yo = quien(cred);
+  if (yo.rol !== 'produccion' && !yo.esAdmin) throw new Error('El tamaño de las etiquetas lo configura producción.');
+  c = c || {};
+  var hoja = HOJAS_ETQ[c.hoja] ? c.hoja : 'carta', H = HOJAS_ETQ[hoja];
+  var n = function (k, min, max) { var v = Math.round(numPos(c[k]) * 100) / 100; if (!(v >= min && v <= max)) throw new Error('Revise la medida «' + k + '» (entre ' + min + ' y ' + max + ' cm).'); return v; };
+  var o = { hoja: hoja, ancho: n('ancho', 1, H.ancho), alto: n('alto', 1, H.alto), margenSup: n('margenSup', 0, 10), margenIzq: n('margenIzq', 0, 10),
+    sepH: n('sepH', 0, 5), sepV: n('sepV', 0, 5), bordes: !!c.bordes, barras: !!c.barras };
+  if (o.margenIzq + o.ancho > H.ancho + 0.001 || o.margenSup + o.alto > H.alto + 0.001) throw new Error('Con esas medidas no cabe ni una etiqueta en la hoja.');
+  ponAjusteCrudo('etiquetas_config', JSON.stringify(o), 'Tamaño de las etiquetas de producción (cm)');
+  return { ok: true, config: o, mensaje: 'Tamaño de etiquetas guardado.' };
+}
+
+/* ════════════ COMPRAS: devolver y corregir una orden ════════════
+ * Contabilidad devuelve la orden a bodega (con el motivo) cuando la cotización no cuadra con lo pedido; Samuel corrige las cantidades y la
+ * reenvía: vuelve a «Por cotizar» y se cotiza de nuevo, con la cotización en línea. */
+function devolverOrden(cred, numero, motivo) {
+  var yo = quien(cred);
+  if (!(esContador(yo) || yo.esAdmin || yo.rol === 'finanzas')) throw new Error('Las órdenes las devuelve contabilidad.');
+  motivo = String(motivo || '').trim();
+  if (motivo.length < 5) throw new Error('Escriba por qué se devuelve (por ejemplo: la cotización no cuadra con la cantidad pedida).');
+  var o = null; ordenesAgrupadas().forEach(function (x) { if (x.numero === String(numero)) o = x; });
+  if (!o) throw new Error('No se encontró la orden ' + numero + '.');
+  if (o.estado === 'Anulada') throw new Error('Esa orden está anulada.');
+  if (o.estado !== 'Pedida') throw new Error('Esa orden ya se recibió en bodega.');
+  if (o.pago === 'Pagada') throw new Error('Esa orden ya se pagó.');
+  if (o.devueltaEn) throw new Error('Esa orden ya está devuelta a bodega.');
+  var lock = LockService.getScriptLock(); lock.waitLock(15000); _LEE = {};
+  try {
+    var hp = hojaOCP(), pagos = filasOCP();
+    if (pagos[o.numero]) hp.getRange(pagos[o.numero].fila, 18, 1, 3).setValues([[new Date(), yo.nombre, motivo.slice(0, 300)]]);
+    else hp.appendRow([o.numero, o.proveedor, '', 0, '', '', '', '', '', '', '', '', '', '', '', '', 0, new Date(), yo.nombre, motivo.slice(0, 300), '']);
+  } finally { lock.releaseLock(); }
+  var r = ordenesPago(cred); r.ok = true; r.mensaje = o.numero + ' devuelta a bodega. Samuel la corrige y la reenvía.';
+  return r;
+}
+/** Samuel corrige las cantidades de una orden devuelta y la reenvía. cantidades = { código: cantidad } */
+function corregirOrden(cred, numero, cantidades) {
+  var yo = quien(cred);
+  if (!(yo.rol === 'bodega' || yo.esAdmin)) throw new Error('La orden la corrige la bodega.');
+  var ls = filasOC().filter(function (o) { return o.numero === String(numero); });
+  if (!ls.length) throw new Error('No se encontró la orden ' + numero + '.');
+  if (ls[0].estado !== 'Pedida') throw new Error('Solo se corrige una orden que todavía no llega.');
+  var pg = filasOCP()[String(numero)];
+  if (!pg || !pg.devueltaEn) throw new Error('Esa orden no está devuelta: no hace falta corregirla.');
+  if (pg.pagadaEn) throw new Error('Esa orden ya se pagó.');
+  cantidades = cantidades || {};
+  var lock = LockService.getScriptLock(); lock.waitLock(15000); _LEE = {};
+  var cambios = 0;
+  try {
+    var h = hojaOC();
+    ls.forEach(function (o) {
+      var t = cantidades[o.codigo], v = t == null || String(t).trim() === '' ? o.pedido : Number(String(t).replace(',', '.'));
+      if (!(v > 0) || !isFinite(v)) throw new Error('La cantidad de «' + (o.compra || o.nombre) + '» debe ser mayor que cero.');
+      v = r3(v);
+      if (v !== o.pedido) { h.getRange(o.fila, 8).setValue(v); cambios++; }
+      h.getRange(o.fila, 16, 1, 2).setValues([['', '']]);              // la cotización anterior ya no vale
+    });
+    var hp = hojaOCP();
+    hp.getRange(pg.fila, 3, 1, 4).setValues([['', '', '', '']]);      // no. de cotización, total, cotizada en, cotizada por
+    hp.getRange(pg.fila, 16).setValue('');                            // el archivo de la cotización anterior
+    hp.getRange(pg.fila, 18, 1, 3).setValues([['', '', '']]);         // ya no está devuelta
+  } finally { lock.releaseLock(); }
+  var r = listaOrdenes(cred); r.ok = true;
+  r.mensaje = String(numero) + ' corregida' + (cambios ? ' (' + cambios + (cambios === 1 ? ' cantidad' : ' cantidades') + ')' : '') + ' y reenviada: ahora se cotiza de nuevo.';
+  return r;
+}
+
+/* ════════════ PRECIOS: un solo correo con los cambios, y reiniciar todos ════════════ */
+function avisaCambioPrecios(yo, hechos, titulo) {
+  if (!hechos || !hechos.length) return [];
+  var para = usuariosCache().filter(function (u) { return u.activo && correoValido(u.correo) && u.nombre !== yo.nombre &&
+    (u.rol === 'operaciones' || u.rol === 'finanzas' || (u.rol === 'registro' && u.confirma)); });
+  if (!para.length) return [];
+  var td = 'padding:6px 8px;border-top:1px solid #eef0f3';
+  var filas = hechos.slice(0, 300).map(function (h) { return '<tr><td style="' + td + '">' + esHtml(h.nombre) + '<div style="font-size:11px;color:#6c7079">por ' + esHtml(h.pres) + '</div></td>' +
+    '<td style="' + td + ';text-align:right;color:#6c7079">' + (h.antes > 0 ? dinero(h.antes) : '—') + '</td><td style="' + td + ';text-align:right;font-weight:bold">' + (h.ahora > 0 ? dinero(h.ahora) : 'sin precio') + '</td></tr>'; }).join('');
+  var html = htmlCorreo(titulo, '<p>' + esHtml(yo.nombre) + ' ' + (hechos.length === 1 ? 'cambió 1 precio' : 'cambió ' + hechos.length + ' precios') + ' el ' +
+    Utilities.formatDate(new Date(), ZONA, 'dd/MM/yyyy HH:mm') + '.</p><table style="width:100%;border-collapse:collapse;font-size:13px"><tr><th align="left" style="padding:6px 8px">Producto</th>' +
+    '<th align="right" style="padding:6px 8px">Antes</th><th align="right" style="padding:6px 8px">Ahora</th></tr>' + filas + '</table>' + (hechos.length > 300 ? '<p>…y ' + (hechos.length - 300) + ' más.</p>' : ''));
+  var ok = [];
+  para.forEach(function (u) { try { if (enviaCorreo(u.correo, 'Rey Pizza · ' + titulo + ' (' + hechos.length + ')', html)) ok.push(u.nombre); } catch (e) {} });
+  return ok;
+}
+/** Borra todos los precios de bodega para registrarlos de nuevo. Solo el administrador, escribiendo REINICIAR. */
+function reiniciarPrecios(cred, confirmacion) {
+  var yo = exigeAdmin(cred);
+  if (String(confirmacion || '').trim().toUpperCase() !== 'REINICIAR') throw new Error('Para borrar todos los precios, escriba REINICIAR.');
+  var lock = LockService.getScriptLock(); lock.waitLock(15000); _LEE = {};
+  var hechos = [];
+  try {
+    var h = hojaBodega(), ahora = new Date();
+    filasBodega().forEach(function (b) {
+      if (!(b.precioPres > 0)) return;
+      hechos.push({ nombre: b.nombre, pres: b.presCompra || b.unidad, antes: b.precioPres, ahora: 0 });
+      h.getRange(b.fila, 35, 1, 3).setValues([['', ahora, yo.nombre + ' (reinicio)']]);
+    });
+    _BOD = null;
+  } finally { lock.releaseLock(); }
+  var avisados = []; try { avisados = avisaCambioPrecios(yo, hechos, 'Se reiniciaron los precios de bodega'); } catch (e) {}
+  var r = listaPrecios(cred); r.ok = true;
+  r.mensaje = hechos.length + (hechos.length === 1 ? ' precio borrado' : ' precios borrados') + '. Ya se pueden registrar de nuevo.' + (avisados.length ? ' Se avisó por correo a ' + avisados.join(', ') + '.' : '');
+  return r;
+}
+
+/* ════════════ EQUIPOS: inventario, responsables, revisión de cada mes y pedidos ════════════
+ * El director operativo registra los equipos de cada lugar (sucursales y bodega/producción) y quién responde por ellos.
+ * Cada mes los revisa con el responsable: está, falta o está dañado. El responsable confirma la revisión; lo que falta se reporta.
+ * Paulino y los gerentes piden equipo; el director decide: asignar uno que ya existe, comprarlo (pasa a pagos) o rechazarlo. */
+var H_EQA = ['No.', 'Lugar', 'Equipo', 'Detalle (marca, serie)', 'Cantidad', 'Responsable', 'A cargo desde', 'Estado', 'Activo', 'Agregado por', 'Agregado en', 'Nota'];
+var H_EQI = ['No.', 'Lugar', 'Fecha', 'Hecho por', 'Responsable', 'Equipos', 'Están', 'Faltan', 'Dañados', 'Confirmado por', 'Confirmado en', 'Nota', 'Detalle (JSON)'];
+var H_EQS = ['No.', 'Pedido en', 'Pedido por', 'Lugar', 'Qué necesita', 'Para qué', 'Estado', 'Resuelto por', 'Resuelto en', 'Cómo', 'Equipo asignado', 'Solicitud de pago', 'Nota', 'Recibido en'];
+var EQA_ESTADOS = ['Bueno', 'Dañado', 'En reparación'];
+var EQS_EST = { PED: 'Pedido', ASIG: 'Asignado, por recibir', COMPRA: 'En compra', REC: 'Recibido', RECH: 'Rechazado' };
+var DIAS_REV_EQ = 30;
+function hojasEquipos(ss) {
+  ss = ss || libro();
+  var a = ss.getSheetByName('Equipos');
+  if (!a) { a = hojaLimpia(ss, 'Equipos', H_EQA); a.getRange('G:G').setNumberFormat('@'); a.getRange('K:K').setNumberFormat('dd/mm/yyyy hh:mm'); a.setColumnWidth(3, 220); }
+  var i = ss.getSheetByName('Equipos revisiones');
+  if (!i) { i = hojaLimpia(ss, 'Equipos revisiones', H_EQI); i.getRange('C:C').setNumberFormat('@'); i.getRange('K:K').setNumberFormat('dd/mm/yyyy hh:mm'); i.setColumnWidth(13, 400); }
+  var s = ss.getSheetByName('Equipos pedidos');
+  if (!s) { s = hojaLimpia(ss, 'Equipos pedidos', H_EQS); s.getRange('B:B').setNumberFormat('dd/mm/yyyy hh:mm'); s.getRange('I:I').setNumberFormat('dd/mm/yyyy hh:mm'); s.getRange('N:N').setNumberFormat('dd/mm/yyyy hh:mm'); }
+  return { a: a, i: i, s: s };
+}
+function filasEqA() {
+  return leeTodo(hojasEquipos().a, H_EQA.length).map(function (r, k) {
+    return { fila: k + 2, numero: String(r[0] || ''), lugar: String(r[1] || ''), equipo: String(r[2] || ''), detalle: String(r[3] || ''), cantidad: Number(r[4]) || 1,
+      responsable: String(r[5] || ''), desde: fmtDia(r[6]), estado: String(r[7] || 'Bueno'), activo: String(r[8]).trim().toLowerCase() !== 'no',
+      agregadoPor: String(r[9] || ''), agregadoEn: fmtSello(r[10]), nota: String(r[11] || '') };
+  }).filter(function (x) { return x.numero; });
+}
+function filasEqI() {
+  return leeTodo(hojasEquipos().i, H_EQI.length).map(function (r, k) {
+    var det = []; try { det = JSON.parse(String(r[12] || '[]')) || []; } catch (e) {}
+    return { fila: k + 2, numero: String(r[0] || ''), lugar: String(r[1] || ''), fecha: fmtDia(r[2]), por: String(r[3] || ''), responsable: String(r[4] || ''),
+      total: Number(r[5]) || 0, estan: Number(r[6]) || 0, faltan: Number(r[7]) || 0, danados: Number(r[8]) || 0,
+      confirmadoPor: String(r[9] || ''), confirmadoEn: fmtSello(r[10]), nota: String(r[11] || ''), detalle: det };
+  }).filter(function (x) { return x.numero; });
+}
+function filasEqS() {
+  return leeTodo(hojasEquipos().s, H_EQS.length).map(function (r, k) {
+    return { fila: k + 2, numero: String(r[0] || ''), en: fmtSello(r[1]), por: String(r[2] || ''), lugar: String(r[3] || ''), que: String(r[4] || ''), para: String(r[5] || ''),
+      estado: String(r[6] || ''), resueltoPor: String(r[7] || ''), resueltoEn: fmtSello(r[8]), como: String(r[9] || ''), equipo: String(r[10] || ''),
+      solicitud: String(r[11] || ''), nota: String(r[12] || ''), recibidoEn: fmtSello(r[13]) };
+  }).filter(function (x) { return x.numero; });
+}
+function jefeEquipos(yo) { return !!yo && (yo.esAdmin || yo.rol === 'operaciones'); }
+/** El lugar de cada persona: su sucursal; bodega y producción, la Bodega Central. */
+function lugarDe(yo) { return yo.rol === 'gerente' ? yo.sucursal : (yo.rol === 'bodega' || yo.rol === 'produccion') ? 'bodega' : ''; }
+function veEquipo(yo, x) { return jefeEquipos(yo) || yo.rol === 'finanzas' || yo.rol === 'dueno' || x.responsable === yo.nombre || (lugarDe(yo) && x.lugar === lugarDe(yo)); }
+function lugaresEq() { return UNIDADES.filter(function (u) { return u.vende || u.id === 'bodega'; }).map(function (u) { return { id: u.id, nombre: u.nombre }; }); }
+/** El responsable que se propone para un lugar: el gerente de la sucursal (o nadie, en bodega). */
+function responsablePorDefecto(lugar) {
+  var g = usuariosCache().filter(function (u) { return u.activo && u.rol === 'gerente' && u.sucursal === lugar; })[0];
+  return g ? g.nombre : '';
+}
+function pantallaEquipos(cred) {
+  var yo = quien(cred);
+  if (!jefeEquipos(yo) && ['gerente', 'bodega', 'produccion', 'finanzas', 'dueno'].indexOf(yo.rol) < 0) throw new Error('Su usuario no ve los equipos.');
+  var hoy = hoyISO(), eqs = filasEqA().filter(function (x) { return x.activo && veEquipo(yo, x); });
+  var revs = filasEqI(), ult = {};
+  revs.forEach(function (r) { if (!ult[r.lugar] || r.fecha >= ult[r.lugar].fecha) ult[r.lugar] = r; });
+  var lugares = lugaresEq().filter(function (l) { return jefeEquipos(yo) || yo.rol === 'finanzas' || yo.rol === 'dueno' || l.id === lugarDe(yo) || eqs.some(function (x) { return x.lugar === l.id; }); })
+    .map(function (l) { var u = ult[l.id], n = eqs.filter(function (x) { return x.lugar === l.id; }).length;
+      return { id: l.id, nombre: l.nombre, equipos: n, ultima: u ? u.fecha : '', faltan: u ? u.faltan : 0,
+        toca: n > 0 && (!u || diasEntre(u.fecha, hoy) >= DIAS_REV_EQ), responsable: responsablePorDefecto(l.id) }; });
+  var faltantes = [];
+  Object.keys(ult).forEach(function (k) { var r = ult[k]; r.detalle.forEach(function (d) { if (d.falta > 0) faltantes.push({ lugar: nombreUnidad(r.lugar), equipo: d.equipo, falta: d.falta,
+    responsable: r.responsable, fecha: r.fecha, revision: r.numero, nota: d.nota || '' }); }); });
+  var peds = filasEqS().filter(function (p) { return jefeEquipos(yo) || p.por === yo.nombre; }).reverse().slice(0, 40);
+  var misRev = revs.filter(function (r) { return !r.confirmadoEn && r.responsable === yo.nombre; });
+  return { hoy: hoy, yo: { nombre: yo.nombre, rol: yo.rol }, jefe: jefeEquipos(yo), lugarPropio: lugarDe(yo), estados: EQA_ESTADOS,
+    lugares: lugares, equipos: eqs.map(function (x) { x.lugarNombre = nombreUnidad(x.lugar); return x; }),
+    revisiones: revs.filter(function (r) { return jefeEquipos(yo) || yo.rol === 'finanzas' || yo.rol === 'dueno' || r.responsable === yo.nombre || r.lugar === lugarDe(yo); }).reverse().slice(0, 30)
+      .map(function (r) { r.lugarNombre = nombreUnidad(r.lugar); return r; }),
+    porConfirmar: misRev.map(function (r) { r.lugarNombre = nombreUnidad(r.lugar); return r; }),
+    faltantes: jefeEquipos(yo) || yo.rol === 'finanzas' || yo.rol === 'dueno' ? faltantes : faltantes.filter(function (f) { return f.responsable === yo.nombre; }),
+    pedidos: peds.map(function (p) { p.lugarNombre = nombreUnidad(p.lugar); return p; }),
+    puedePedir: !!lugarDe(yo) || yo.rol === 'operaciones',
+    personas: jefeEquipos(yo) ? usuariosCache().filter(function (u) { return u.activo && ['gerente', 'bodega', 'produccion', 'operaciones'].indexOf(u.rol) >= 0; }).map(function (u) { return u.nombre; }).sort() : [] };
+}
+/** Agregar o cambiar un equipo (el director operativo o el administrador). */
+function guardarEquipoA(cred, d) {
+  var yo = quien(cred);
+  if (!jefeEquipos(yo)) throw new Error('Los equipos los registra el director operativo.');
+  d = d || {};
+  var equipo = String(d.equipo || '').trim().replace(/\s+/g, ' ').slice(0, 70);
+  if (equipo.length < 3) throw new Error('Escriba el equipo (por ejemplo «Estufa industrial 4 hornillas»).');
+  var lugar = String(d.lugar || '');
+  if (!lugaresEq().some(function (l) { return l.id === lugar; })) throw new Error('Escoja dónde está el equipo.');
+  var cant = Math.round(Number(String(d.cantidad == null ? 1 : d.cantidad).replace(',', '.')));
+  if (!(cant >= 1 && cant <= 999)) throw new Error('La cantidad va de 1 a 999.');
+  var resp = String(d.responsable || '').trim() || responsablePorDefecto(lugar);
+  if (resp && !usuariosCache().some(function (u) { return u.activo && u.nombre === resp; })) throw new Error('El responsable «' + resp + '» no es un usuario activo.');
+  var estado = EQA_ESTADOS.indexOf(d.estado) >= 0 ? d.estado : 'Bueno';
+  var lock = LockService.getScriptLock(); lock.waitLock(15000); _LEE = {};
+  var numero, x = null;
+  try {
+    var h = hojasEquipos().a, todos = filasEqA();
+    todos.forEach(function (y) { if (y.numero === String(d.numero || '')) x = y; });
+    if (x) {
+      var desde = x.responsable !== resp || x.lugar !== lugar ? hoyISO() : x.desde;
+      h.getRange(x.fila, 2, 1, 7).setValues([[lugar, equipo, String(d.detalle || '').slice(0, 120), cant, resp, desde, estado]]);
+      h.getRange(x.fila, 7).setNumberFormat('@').setValue(desde);
+      h.getRange(x.fila, 12).setValue(String(d.nota || '').slice(0, 200));
+      numero = x.numero;
+    } else {
+      numero = numeroSiguiente(todos, 'EQP');
+      h.appendRow([numero, lugar, equipo, String(d.detalle || '').slice(0, 120), cant, resp, hoyISO(), estado, 'Sí', yo.nombre, new Date(), String(d.nota || '').slice(0, 200)]);
+      h.getRange(h.getLastRow(), 7).setNumberFormat('@').setValue(hoyISO());
+    }
+  } finally { lock.releaseLock(); }
+  var r = pantallaEquipos(cred); r.ok = true; r.numero = numero;
+  r.mensaje = equipo + (x ? ' actualizado.' : ' registrado en ' + nombreUnidad(lugar) + (resp ? ', a cargo de ' + resp : '') + '.');
+  return r;
+}
+/** Dar de baja un equipo (ya no existe, se vendió, se botó): sale del inventario. */
+function bajaEquipo(cred, numero, motivo) {
+  var yo = quien(cred);
+  if (!jefeEquipos(yo)) throw new Error('Los equipos los da de baja el director operativo.');
+  motivo = String(motivo || '').trim();
+  if (motivo.length < 4) throw new Error('Escriba por qué se da de baja.');
+  var x = null; filasEqA().forEach(function (y) { if (y.numero === String(numero)) x = y; });
+  if (!x) throw new Error('No se encontró ese equipo.');
+  var h = hojasEquipos().a; h.getRange(x.fila, 9).setValue('No'); h.getRange(x.fila, 12).setValue(('Baja: ' + motivo + ' (' + yo.nombre + ', ' + hoyISO() + ')').slice(0, 200));
+  var r = pantallaEquipos(cred); r.ok = true; r.mensaje = x.equipo + ' dado de baja.'; return r;
+}
+/** La revisión de cada mes: d = { lugar, items: [{ numero, encontrados, estado, nota }], nota } */
+function revisarEquipos(cred, d) {
+  var yo = quien(cred);
+  if (!jefeEquipos(yo)) throw new Error('La revisión de equipos la hace el director operativo con el responsable.');
+  d = d || {};
+  var lugar = String(d.lugar || ''), eqs = filasEqA().filter(function (x) { return x.activo && x.lugar === lugar; });
+  if (!eqs.length) throw new Error('Ese lugar no tiene equipos registrados.');
+  var porNum = {}; (d.items || []).forEach(function (i) { porNum[String(i.numero)] = i; });
+  var falta = eqs.filter(function (x) { return !porNum[x.numero]; });
+  if (falta.length) throw new Error('Falta revisar: ' + falta.slice(0, 3).map(function (x) { return x.equipo; }).join(', ') + (falta.length > 3 ? ' y ' + (falta.length - 3) + ' más' : '') + '.');
+  var det = [], estan = 0, faltan = 0, danados = 0;
+  eqs.forEach(function (x) {
+    var i = porNum[x.numero], enc = Math.round(Number(String(i.encontrados == null ? '' : i.encontrados).replace(',', '.')));
+    if (!(enc >= 0 && enc <= 999)) throw new Error('Diga cuántos hay de «' + x.equipo + '».');
+    var est = EQA_ESTADOS.indexOf(i.estado) >= 0 ? i.estado : x.estado, fl = Math.max(0, x.cantidad - enc), nota = String(i.nota || '').trim().slice(0, 150);
+    if (fl > 0 && nota.length < 3) throw new Error('Escriba qué pasó con «' + x.equipo + '» (faltan ' + fl + ').');
+    if (est !== 'Bueno' && enc > 0) danados++;
+    if (fl > 0) faltan += fl; else estan++;
+    det.push({ numero: x.numero, equipo: x.equipo, esperado: x.cantidad, encontrados: enc, falta: fl, estado: est, nota: nota });
+  });
+  var resp = (eqs.map(function (x) { return x.responsable; }).filter(Boolean)[0]) || responsablePorDefecto(lugar);
+  var lock = LockService.getScriptLock(); lock.waitLock(15000); _LEE = {};
+  var numero;
+  try {
+    var hs = hojasEquipos(), todos = filasEqI();
+    numero = numeroSiguiente(todos, 'REQ');
+    hs.i.appendRow([numero, lugar, hoyISO(), yo.nombre, resp, eqs.length, estan, faltan, danados, '', '', String(d.nota || '').slice(0, 200), JSON.stringify(det)]);
+    hs.i.getRange(hs.i.getLastRow(), 3).setNumberFormat('@').setValue(hoyISO());
+    var porFila = {}; eqs.forEach(function (x) { porFila[x.numero] = x; });
+    det.forEach(function (z) { var x = porFila[z.numero]; if (x && z.estado !== x.estado) hs.a.getRange(x.fila, 8).setValue(z.estado); });
+  } finally { lock.releaseLock(); }
+  var r = pantallaEquipos(cred); r.ok = true; r.numero = numero;
+  r.mensaje = 'Revisión de ' + nombreUnidad(lugar) + ': ' + (faltan ? faltan + (faltan === 1 ? ' equipo falta' : ' equipos faltan') + ' (se reporta)' : 'están todos') +
+    (danados ? ' · ' + danados + (danados === 1 ? ' dañado' : ' dañados') : '') + '.' + (resp ? ' ' + resp + ' la confirma en su app.' : '');
+  return r;
+}
+/** El responsable confirma la revisión (como firmar). */
+function confirmarRevisionEq(cred, numero) {
+  var yo = quien(cred);
+  var x = null; filasEqI().forEach(function (y) { if (y.numero === String(numero)) x = y; });
+  if (!x) throw new Error('No se encontró esa revisión.');
+  if (x.responsable !== yo.nombre) throw new Error('La confirma ' + (x.responsable || 'el responsable del lugar') + '.');
+  if (x.confirmadoEn) throw new Error('Ya la confirmó.');
+  hojasEquipos().i.getRange(x.fila, 10, 1, 2).setValues([[yo.nombre, new Date()]]);
+  var r = pantallaEquipos(cred); r.ok = true; r.mensaje = 'Revisión ' + x.numero + ' confirmada.'; return r;
+}
+/** Pedir equipo: d = { que, para } (para su lugar). El director operativo decide. */
+function pedirEquipo(cred, d) {
+  var yo = quien(cred), lugar = lugarDe(yo) || (yo.rol === 'operaciones' ? String((d || {}).lugar || '') : '');
+  if (!lugar) throw new Error('Los equipos los piden los gerentes, la bodega y producción.');
+  d = d || {};
+  var que = String(d.que || '').trim().slice(0, 120), para = String(d.para || '').trim().slice(0, 200);
+  if (que.length < 4) throw new Error('Escriba qué equipo necesita (por ejemplo «Tanque de gas de 100 lb»).');
+  if (para.length < 4) throw new Error('Escriba para qué lo necesita.');
+  var lock = LockService.getScriptLock(); lock.waitLock(15000); _LEE = {};
+  var numero;
+  try { var h = hojasEquipos().s; numero = numeroSiguiente(filasEqS(), 'PEQ'); h.appendRow([numero, new Date(), yo.nombre, lugar, que, para, EQS_EST.PED, '', '', '', '', '', '', '']); }
+  finally { lock.releaseLock(); }
+  var r = pantallaEquipos(cred); r.ok = true; r.mensaje = numero + ' enviado al director operativo: ' + que + '.'; return r;
+}
+/** El director decide: d = { como: 'asignar' | 'comprar' | 'rechazar', equipo (no. del que se asigna), monto, nota } */
+function resolverPedidoEq(cred, numero, d) {
+  var yo = quien(cred);
+  if (!jefeEquipos(yo)) throw new Error('Los pedidos de equipo los decide el director operativo.');
+  d = d || {};
+  var p = null; filasEqS().forEach(function (y) { if (y.numero === String(numero)) p = y; });
+  if (!p) throw new Error('No se encontró ese pedido.');
+  if (p.estado !== EQS_EST.PED) throw new Error('Ese pedido ya se resolvió (' + p.estado.toLowerCase() + ').');
+  var hs = hojasEquipos(), nota = String(d.nota || '').trim().slice(0, 200), msg;
+  if (d.como === 'rechazar') {
+    if (nota.length < 4) throw new Error('Escriba por qué no se da.');
+    hs.s.getRange(p.fila, 7, 1, 4).setValues([[EQS_EST.RECH, yo.nombre, new Date(), 'Rechazado']]); hs.s.getRange(p.fila, 13).setValue(nota);
+    msg = numero + ' rechazado. ' + p.por + ' lo verá en su campanita.';
+  } else if (d.como === 'asignar') {
+    var x = null; filasEqA().forEach(function (y) { if (y.numero === String(d.equipo || '') && y.activo) x = y; });
+    if (!x) throw new Error('Escoja el equipo que se le asigna.');
+    hs.a.getRange(x.fila, 2).setValue(p.lugar); hs.a.getRange(x.fila, 6).setValue(p.por); hs.a.getRange(x.fila, 7).setNumberFormat('@').setValue(hoyISO());
+    hs.s.getRange(p.fila, 7, 1, 5).setValues([[EQS_EST.ASIG, yo.nombre, new Date(), 'Asignar uno que ya existe', x.numero]]); if (nota) hs.s.getRange(p.fila, 13).setValue(nota);
+    msg = numero + ': se le asigna ' + x.equipo + ' (' + x.numero + '). Queda a cargo de ' + p.por + ' cuando confirme que lo recibió.';
+  } else if (d.como === 'comprar') {
+    var so = pedirFondos(cred, { tipo: 'Equipo', unidad: nombreUnidad(p.lugar), que: 'Para ' + p.por + ': ' + p.que + (p.para ? ' (' + p.para + ')' : ''), monto: d.monto, urgencia: d.urgencia || 'Normal', archivo: d.archivo });
+    var sn = (/SO-\d+/.exec(so.mensaje || '') || [''])[0];
+    hs.s.getRange(p.fila, 7, 1, 6).setValues([[EQS_EST.COMPRA, yo.nombre, new Date(), 'Comprar', '', sn]]); if (nota) hs.s.getRange(p.fila, 13).setValue(nota);
+    msg = numero + ': se compra. Va a contabilidad como solicitud ' + sn + '. Cuando llegue, regístrelo a cargo de ' + p.por + '.';
+  } else throw new Error('Escoja qué hacer con el pedido.');
+  var r = pantallaEquipos(cred); r.ok = true; r.mensaje = msg; return r;
+}
+/** Un equipo comprado ya llegó: se registra a cargo de quien lo pidió. */
+function entregarCompraEq(cred, numero, d) {
+  var yo = quien(cred);
+  if (!jefeEquipos(yo)) throw new Error('Lo registra el director operativo.');
+  var p = null; filasEqS().forEach(function (y) { if (y.numero === String(numero)) p = y; });
+  if (!p || p.estado !== EQS_EST.COMPRA) throw new Error('Ese pedido no está en compra.');
+  d = d || {};
+  var r0 = guardarEquipoA(cred, { lugar: p.lugar, equipo: d.equipo || p.que, detalle: d.detalle || '', cantidad: d.cantidad || 1, responsable: p.por, estado: 'Bueno', nota: 'Pedido ' + p.numero });
+  hojasEquipos().s.getRange(p.fila, 7).setValue(EQS_EST.ASIG); hojasEquipos().s.getRange(p.fila, 11).setValue(r0.numero);
+  var r = pantallaEquipos(cred); r.ok = true; r.mensaje = (d.equipo || p.que) + ' registrado. ' + p.por + ' confirma que lo recibió.'; return r;
+}
+/** Quien pidió confirma que lo recibió: desde hoy queda a su cargo. */
+function recibirEquipo(cred, numero) {
+  var yo = quien(cred);
+  var p = null; filasEqS().forEach(function (y) { if (y.numero === String(numero)) p = y; });
+  if (!p) throw new Error('No se encontró ese pedido.');
+  if (p.por !== yo.nombre) throw new Error('Lo confirma ' + p.por + '.');
+  if (p.estado !== EQS_EST.ASIG) throw new Error('Ese pedido no tiene un equipo por recibir.');
+  var hs = hojasEquipos(); hs.s.getRange(p.fila, 7).setValue(EQS_EST.REC); hs.s.getRange(p.fila, 14).setValue(new Date());
+  var x = null; filasEqA().forEach(function (y) { if (y.numero === p.equipo) x = y; });
+  if (x) hs.a.getRange(x.fila, 7).setNumberFormat('@').setValue(hoyISO());
+  var r = pantallaEquipos(cred); r.ok = true; r.mensaje = 'Recibido: ' + (x ? x.equipo : p.que) + ' queda a su cargo desde hoy.'; return r;
+}
+/** Los avisos de equipos (para la campanita). */
+function avisosEquipos(yo) {
+  var out = [], hoy = hoyISO();
+  try {
+    if (jefeEquipos(yo)) {
+      filasEqS().forEach(function (p) { if (p.estado === EQS_EST.PED) out.push({ id: 'peq-' + p.numero, tipo: 'Pedido de equipo', cuando: p.en, titulo: p.por + ' pide: ' + p.que, texto: p.para, abrir: { pag: 'equipos' } }); });
+      var eqs = filasEqA().filter(function (x) { return x.activo; }), ult = {};
+      filasEqI().forEach(function (r) { if (!ult[r.lugar] || r.fecha >= ult[r.lugar].fecha) ult[r.lugar] = r; });
+      lugaresEq().forEach(function (l) { if (!eqs.some(function (x) { return x.lugar === l.id; })) return; var u = ult[l.id];
+        if (!u || diasEntre(u.fecha, hoy) >= DIAS_REV_EQ) out.push({ id: 'revq-' + l.id + '-' + hoy.slice(0, 7), tipo: 'Revisión de equipos', cuando: '', titulo: 'Toca revisar los equipos de ' + l.nombre,
+          texto: u ? 'La última fue el ' + dia(u.fecha) + '.' : 'Todavía no se han revisado.', abrir: { pag: 'equipos' } }); });
+      Object.keys(ult).forEach(function (k) { var r = ult[k]; if (r.faltan > 0) out.push({ id: 'faleq-' + r.numero, tipo: 'Faltan equipos', cuando: r.fecha, titulo: (r.faltan === 1 ? 'Falta 1 equipo' : 'Faltan ' + r.faltan + ' equipos') + ' en ' + nombreUnidad(r.lugar),
+        texto: r.detalle.filter(function (d) { return d.falta > 0; }).map(function (d) { return d.equipo + ' (' + d.falta + ')'; }).join(', '), abrir: { pag: 'equipos' } }); });
+    }
+    filasEqI().forEach(function (r) { if (!r.confirmadoEn && r.responsable === yo.nombre) out.push({ id: 'confeq-' + r.numero, tipo: 'Revisión de equipos', cuando: r.fecha,
+      titulo: 'Confirme la revisión de equipos de ' + nombreUnidad(r.lugar), texto: r.faltan ? 'Faltan ' + r.faltan + '.' : 'Están todos.', abrir: { pag: 'equipos' } }); });
+    filasEqS().forEach(function (p) { if (p.por !== yo.nombre) return;
+      if (p.estado === EQS_EST.ASIG) out.push({ id: 'asigeq-' + p.numero, tipo: 'Equipo', cuando: p.resueltoEn, titulo: 'Le asignaron: ' + p.que, texto: 'Confirme cuando lo reciba.', abrir: { pag: 'equipos' } });
+      if (p.estado === EQS_EST.RECH) out.push({ id: 'recheq-' + p.numero, tipo: 'Equipo', cuando: p.resueltoEn, titulo: 'No se aprobó: ' + p.que, texto: p.nota, abrir: { pag: 'equipos' } });
+      if (p.estado === EQS_EST.COMPRA) out.push({ id: 'compeq-' + p.numero, tipo: 'Equipo', cuando: p.resueltoEn, titulo: 'Se va a comprar: ' + p.que, texto: p.solicitud ? 'Solicitud ' + p.solicitud : '', abrir: { pag: 'equipos' } });
+    });
+  } catch (e) {}
+  return out;
+}
+
+/* ════════════ SOLICITUDES DE PAGO: contabilidad puede devolverlas ════════════
+ * Si la factura o la cotización no tiene la misma cantidad que el dinero que se pide, contabilidad la devuelve a quien la pidió (con el motivo).
+ * Esa persona corrige el monto (o cambia el archivo) y la reenvía: vuelve a empezar su camino de aprobación, porque el monto cambió. */
+var FONDO_DEV = 'Devuelta';
+function devolverFondo(cred, numero, motivo) {
+  var yo = quien(cred);
+  if (!(esContador(yo) || yo.esAdmin || yo.rol === 'finanzas')) throw new Error('Las solicitudes las devuelve contabilidad.');
+  var x = buscaFondo(numero);
+  if (x.estado !== FONDO_EST.APR && x.estado !== FONDO_EST.PED) throw new Error('Esa solicitud ya está ' + x.estado.toLowerCase() + '.');
+  motivo = String(motivo || '').trim().slice(0, 300);
+  if (motivo.length < 5) throw new Error('Escriba por qué se devuelve (por ejemplo: la factura no tiene la misma cantidad que el dinero que se solicita).');
+  var h = hojaFondos();
+  h.getRange(x.fila, 10).setValue(FONDO_DEV);
+  h.getRange(x.fila, 28, 1, 4).setValues([[yo.nombre, new Date(), motivo, x.monto]]);
+  var r = listaFondos(cred); r.ok = true;
+  r.mensaje = numero + ' devuelta a ' + x.por + '. Corrige el monto o el archivo y la reenvía.';
+  return r;
+}
+/** Quien la pidió corrige: d = { monto, que, archivo }. Vuelve al inicio de su camino de aprobación. */
+function corregirFondo(cred, numero, d) {
+  permiteCmo();
+  var yo = quien(cred);
+  var x = buscaFondo(numero);
+  if (x.por !== yo.nombre) throw new Error('La corrige ' + x.por + ', quien la pidió.');
+  if (x.estado !== FONDO_DEV) throw new Error('Esa solicitud no está devuelta.');
+  d = d || {};
+  var monto = d.monto == null || String(d.monto).trim() === '' ? x.monto : r2(String(d.monto).replace(/[Q,\s]/g, ''));
+  if (!(monto > 0)) throw new Error('Escriba cuánto dinero se necesita.');
+  var que = d.que == null || String(d.que).trim() === '' ? x.que : String(d.que).trim().slice(0, 300);
+  if (que.length < 8) throw new Error('Describa qué se necesita y por qué.');
+  var arch = d.archivo && d.archivo.datos ? guardaArchivo(d.archivo, 'Solicitud de ' + yo.nombre + (rolDe(yo.nombre) === 'cmo' ? ' · factura' : ' · cotización'), rolDe(yo.nombre) === 'cmo' ? 'La factura' : '') : null;
+  if (monto === x.monto && !arch && que === x.que) throw new Error('Cambie el monto o suba el archivo correcto; si todo está bien, contabilidad la puede pagar como está.');
+  var rol = rolDe(yo.nombre), vuelveA = (rol === 'gerente' || esEquipoBodega({ rol: rol })) ? FONDO_EST.VER : FONDO_EST.PED;
+  var lock = LockService.getScriptLock(); lock.waitLock(15000); _LEE = {};
+  try {
+    var h = hojaFondos();
+    h.getRange(x.fila, 6).setValue(que); h.getRange(x.fila, 8).setValue(monto);
+    if (arch) h.getRange(x.fila, 23, 1, 2).setValues([[arch.url, arch.nombre]]);
+    h.getRange(x.fila, 10, 1, 4).setValues([[vuelveA, '', '', '']]);          // vuelve a empezar: nadie la ha aprobado con este monto
+    h.getRange(x.fila, 25, 1, 3).setValues([['', '', '']]);
+  } finally { lock.releaseLock(); }
+  var r = listaFondos(cred); r.ok = true;
+  r.mensaje = numero + ' corregida' + (monto !== x.monto ? ' (' + dinero(x.monto) + ' → ' + dinero(monto) + ')' : '') + ' y reenviada ' + (vuelveA === FONDO_EST.VER ? 'al director operativo.' : 'a contabilidad para aprobar.');
+  return r;
+}
+
+/* ════════════ PENDIENTE DE ENTREGA ════════════
+ * Si Samuel manda menos de lo que pidió una sucursal (porque no hay en bodega), lo que falta queda PENDIENTE DE ENTREGA en el pedido, no se pierde.
+ * Se respalda con una orden de compra abierta: sin orden, el pendiente sale marcado «Sin orden de compra» (hay que pedirlo al proveedor).
+ * Cuando llega a bodega (la orden se recibe), pasa a «Listo para despachar» y Samuel lo manda en un pedido nuevo derivado del original.
+ * El gerente ve en su pedido qué le falta y en qué va: orden de compra hecha, por entrar a bodega, o ya listo. */
+var PEND_EST = { SIN: 'Sin orden de compra', OC: 'En orden de compra', LISTO: 'Listo para despachar', ENT: 'Entregado', CAN: 'No se entrega' };
+function pendDeLinea(l) { return l.pendCanPor || !(l.pend > 0) ? 0 : Math.max(0, r3(l.pend - l.pendEntregado)); }
+/** Lo que hace falta saber de bodega para juzgar cada pendiente: órdenes abiertas, existencia libre (sin lo ya comprometido) y factores. */
+function contextoPend() {
+  var ocs = {}; filasOC().forEach(function (o) { if (o.estado === 'Pedida' && o.codigo && !ocs[o.codigo]) ocs[o.codigo] = o.numero; });
+  var catT = {}; productosTraslado().forEach(function (p) { catT[p.key] = p; });
+  var ex = {}; try { ex = estadoInventario('bodega').existencia || {}; } catch (e) {}
+  var comp = {}, abiertas = {};
+  filasSol().forEach(function (s) { if (s.estado === SOL.ACE || s.estado === SOL.CAM) abiertas[s.numero] = true; });
+  lineasSol().forEach(function (l) { if (!abiertas[l.numero]) return; var f = catT[l.clave] ? catT[l.clave].factor : 1; comp[l.codigo] = (comp[l.codigo] || 0) + (l.enviado != null ? l.enviado : l.pedido) * f; });
+  return { ocs: ocs, catT: catT, ex: ex, comp: comp };
+}
+/** Cuánto hay libre en bodega de esta línea, en la unidad en que se pidió (cajas, unidades sueltas…). */
+function libreDeLinea(l, ctx) {
+  var f = ctx.catT[l.clave] ? ctx.catT[l.clave].factor : 1;
+  return f > 0 ? Math.max(0, r3(((ctx.ex[l.codigo] || 0) - (ctx.comp[l.codigo] || 0)) / f)) : 0;
+}
+function estadoPend(l, ctx) {
+  if (!(l.pend > 0)) return '';
+  if (l.pendCanPor) return PEND_EST.CAN;
+  var deb = pendDeLinea(l);
+  if (deb <= 0.0005) return PEND_EST.ENT;
+  if (libreDeLinea(l, ctx) >= deb - 1e-9) return PEND_EST.LISTO;
+  return ctx.ocs[l.codigo] ? PEND_EST.OC : PEND_EST.SIN;
+}
+function textoPend(est, l, ctx) {
+  var ll = l.pendLlega ? ' · llega ' + l.pendLlega : '';
+  if (est === PEND_EST.LISTO) return 'Ya hay en bodega: sale en la próxima entrega';
+  if (est === PEND_EST.OC) return 'Orden de compra ' + ctx.ocs[l.codigo] + ' hecha: por entrar a bodega central' + ll;
+  if (est === PEND_EST.SIN) return 'Todavía no hay orden de compra: bodega lo está viendo' + ll;
+  if (est === PEND_EST.CAN) return 'No se entrega' + (l.pendMotivo ? ': ' + l.pendMotivo : '');
+  return est === PEND_EST.ENT ? 'Entregado' : '';
+}
+/** La lista de lo pendiente: la bodega y el director ven todo; el gerente, lo de su sucursal. */
+function listaPendientes(cred) {
+  var yo = quien(cred), esBod = yo.rol === 'bodega';
+  if (!esBod && yo.rol !== 'gerente' && !veInv(yo)) throw new Error('Su usuario no ve los pendientes de entrega.');
+  var mias = yo.rol === 'gerente' ? nombreUnidad(yo.sucursal) : '';
+  var sols = {}; filasSol().forEach(function (s) { sols[s.numero] = s; });
+  var ls = lineasSol().filter(function (l) { return l.pend > 0 && pendDeLinea(l) > 0.0005 && sols[l.numero] && sols[l.numero].estado !== SOL.ANU && (!mias || sols[l.numero].sucursal === mias); });
+  var out = [], ctx = ls.length ? contextoPend() : null, cat = {};
+  if (ls.length) productosInv().forEach(function (b) { cat[b.codigo] = b; });
+  var orden = {}; orden[PEND_EST.LISTO] = 0; orden[PEND_EST.SIN] = 1; orden[PEND_EST.OC] = 2;
+  ls.forEach(function (l) {
+    var s = sols[l.numero], est = estadoPend(l, ctx), deb = pendDeLinea(l), b = cat[l.codigo] || {};
+    out.push({ numero: l.numero, sucursal: s.sucursal, enviadaEn: s.enviadaEn, clave: l.clave, codigo: l.codigo, nombre: l.nombre, medida: l.medida, pedido: l.pedido, enviado: l.enviado,
+      pendiente: deb, pendTotal: l.pend, entregado: l.pendEntregado, estado: est, orden: est === PEND_EST.OC ? ctx.ocs[l.codigo] : '', llega: l.pendLlega,
+      libre: libreDeLinea(l, ctx), enBodegaTxt: b.codigo ? textoCantidad(ctx.ex[l.codigo] || 0, b) : '', texto: textoPend(est, l, ctx),
+      puedeDespachar: esBod && est === PEND_EST.LISTO, puedeGestionar: esBod });
+  });
+  out.sort(function (a, b) { return (orden[a.estado] - orden[b.estado]) || a.sucursal.localeCompare(b.sucursal, 'es') || a.nombre.localeCompare(b.nombre, 'es'); });
+  var cuenta = function (e) { return out.filter(function (x) { return x.estado === e; }).length; };
+  return { pendientes: out, resumen: { listos: cuenta(PEND_EST.LISTO), sinOrden: cuenta(PEND_EST.SIN), enOrden: cuenta(PEND_EST.OC) }, puedeGestionar: esBod, esGerente: yo.rol === 'gerente' };
+}
+function lineaPend(numero, clave) {
+  var x = null; lineasSol(String(numero)).forEach(function (l) { if (l.clave === String(clave)) x = l; });
+  if (!x || !(x.pend > 0)) throw new Error('Ese producto no está pendiente en ' + numero + '.');
+  return x;
+}
+/** Samuel avisa cuándo llega: «el jueves», «mañana». Es lo que ve el gerente. */
+function llegaPendiente(cred, numero, clave, texto) {
+  var yo = exigeSoloBodega(cred), l = lineaPend(numero, clave);
+  texto = String(texto || '').trim().slice(0, 40);
+  hojaSolD().getRange(l.fila, 18).setValue(texto);
+  var r = listaPendientes(cred); r.ok = true; r.mensaje = texto ? l.nombre + ': el gerente verá que llega ' + texto + '.' : 'Se quitó la fecha de llegada.'; return r;
+}
+/** No se va a entregar (se descontinuó, ya no hace falta): sale de pendientes, con el motivo. */
+function cancelarPendiente(cred, numero, clave, motivo) {
+  var yo = exigeSoloBodega(cred), l = lineaPend(numero, clave);
+  motivo = String(motivo || '').trim().slice(0, 150);
+  if (motivo.length < 4) throw new Error('Escriba por qué no se va a entregar.');
+  if (pendDeLinea(l) <= 0.0005) throw new Error('Eso ya no está pendiente.');
+  hojaSolD().getRange(l.fila, 20, 1, 2).setValues([[yo.nombre, motivo]]);
+  var r = listaPendientes(cred); r.ok = true; r.mensaje = l.nombre + ' ya no se entrega a ' + numero + '. El gerente verá el motivo.'; return r;
+}
+/** Samuel despacha lo pendiente que ya hay en bodega. items = [{ numero, clave, cantidad? }]. Por cada sucursal se arma un pedido nuevo, ya aceptado, que sigue el camino de siempre (camión, recibir, diferencias). */
+function despacharPendientes(cred, items) {
+  var yo = exigeSoloBodega(cred);
+  items = items || [];
+  if (!items.length) throw new Error('Escoja qué se va a despachar.');
+  var sols = {}; filasSol().forEach(function (s) { sols[s.numero] = s; });
+  var ctx = contextoPend(), queda = {}, porSuc = {}, usadas = {};
+  items.forEach(function (it) {
+    var l = lineaPend(it.numero, it.clave), s = sols[l.numero];
+    if (!s || s.estado === SOL.ANU) throw new Error('El pedido ' + l.numero + ' está anulado.');
+    var key = l.numero + '|' + l.clave; if (usadas[key]) return; usadas[key] = true;
+    var deb = pendDeLinea(l); if (deb <= 0.0005) throw new Error(l.nombre + ' ya no está pendiente.');
+    var cant = it.cantidad == null || String(it.cantidad).trim() === '' ? deb : r3(Number(String(it.cantidad).replace(',', '.')));
+    if (!(cant > 0) || !isFinite(cant)) throw new Error('La cantidad de «' + l.nombre + '» no es válida.');
+    if (cant > deb + 0.0005) throw new Error('De «' + l.nombre + '» solo falta entregar ' + num(deb) + ' ' + plur(deb, l.medida) + '.');
+    var f = ctx.catT[l.clave] ? ctx.catT[l.clave].factor : 1;
+    if (queda[l.codigo] == null) queda[l.codigo] = Math.max(0, (ctx.ex[l.codigo] || 0) - (ctx.comp[l.codigo] || 0));
+    if (cant * f > queda[l.codigo] + 1e-9) throw new Error('De «' + l.nombre + '» no hay suficiente en bodega: libre ' + num(libreDeLinea(l, ctx)) + ' ' + plur(libreDeLinea(l, ctx), l.medida) + '.');
+    queda[l.codigo] = r3(queda[l.codigo] - cant * f);
+    (porSuc[s.sucursal] = porSuc[s.sucursal] || { s: s, lineas: [], origenes: {} }).lineas.push({ l: l, cant: cant });
+    porSuc[s.sucursal].origenes[l.numero] = true;
+  });
+  var hechas = [], lock = LockService.getScriptLock(); lock.waitLock(25000); _LEE = {};
+  try {
+    var hs = hojaSol(), hd = hojaSolD(), ahora = new Date(), hoy = hoyISO();
+    Object.keys(porSuc).forEach(function (suc) {
+      var g = porSuc[suc], numero = siguienteSol(), orig = Object.keys(g.origenes).join(', ');
+      hs.appendRow([numero, suc, ahora, g.s.enviadaPor, '', hoy, SOL.ACE, ahora, yo.nombre, '', '', '', 'Pendiente de ' + orig, '', '', ahora, ahora, '', '', '']);
+      hs.getRange(hs.getLastRow(), 6).setNumberFormat('@').setValue(hoy);
+      var filas = g.lineas.map(function (x) { return [numero, suc, x.l.codigo, x.l.nombre, x.l.medida, x.l.clave, '', 0, 'Pendiente de ' + x.l.numero, x.cant, x.cant, '', '', '', '', '', '', '', '', '', '']; });
+      hd.getRange(hd.getLastRow() + 1, 1, filas.length, H_SOLD.length).setValues(filas);
+      g.lineas.forEach(function (x) { hd.getRange(x.l.fila, 19).setValue(r3(x.l.pendEntregado + x.cant)); });      // lo que ya se entregó del pendiente
+      hechas.push(numero + ' para ' + suc + ' (' + g.lineas.length + (g.lineas.length === 1 ? ' producto' : ' productos') + ')');
+    });
+  } finally { lock.releaseLock(); }
+  var r = listaPendientes(cred); r.ok = true;
+  r.mensaje = 'Listo: ' + hechas.join(' · ') + '. Ya está aceptado; imprima la hoja y márquelo «Salió el camión» cuando salga.';
+  return r;
+}
+/** Avisos de pendientes: la bodega (ya hay en bodega / falta ordenar), el gerente (ya hay en bodega) y el director (sin orden de compra). */
+function avisosPendientes(yo) {
+  var out = [];
+  var ls = lineasSol().filter(function (l) { return l.pend > 0 && pendDeLinea(l) > 0.0005; });
+  if (!ls.length) return out;
+  var sols = {}; filasSol().forEach(function (s) { sols[s.numero] = s; });
+  var ctx = contextoPend(), sinOrden = 0;
+  ls.forEach(function (l) {
+    var s = sols[l.numero]; if (!s || s.estado === SOL.ANU) return;
+    var est = estadoPend(l, ctx), deb = pendDeLinea(l), que = num(deb) + ' ' + plur(deb, l.medida);
+    if (yo.rol === 'bodega' && est === PEND_EST.LISTO)
+      out.push({ id: 'pendl-' + l.numero + '-' + l.clave, tipo: 'Pendiente listo', cuando: '', titulo: 'Ya hay en bodega: ' + l.nombre, texto: 'Falta entregar ' + que + ' a ' + s.sucursal + ' (' + l.numero + ').', abrir: { tab: 'pend' } });
+    if (yo.rol === 'bodega' && est === PEND_EST.SIN)
+      out.push({ id: 'pendso-' + l.numero + '-' + l.clave, tipo: 'Falta ordenar', cuando: '', titulo: 'Sin orden de compra: ' + l.nombre, texto: s.sucursal + ' espera ' + que + ' (' + l.numero + ').', abrir: { tab: 'compras' } });
+    if (est === PEND_EST.SIN) sinOrden++;
+    if (yo.rol === 'gerente' && s.sucursal === nombreUnidad(yo.sucursal) && est === PEND_EST.LISTO)
+      out.push({ id: 'pendg-' + l.numero + '-' + l.clave, tipo: 'Pendiente de entrega', cuando: '', titulo: 'Ya hay en bodega: ' + l.nombre, texto: 'Le faltaba ' + que + ' de ' + l.numero + '. Sale en la próxima entrega.', abrir: { tab: 'pend' } });
+  });
+  if ((yo.rol === 'operaciones' || yo.esAdmin) && sinOrden)
+    out.push({ id: 'pendsin-' + hoyISO(), tipo: 'Pendientes de entrega', cuando: '', titulo: sinOrden + (sinOrden === 1 ? ' producto pendiente sin orden de compra' : ' productos pendientes sin orden de compra'),
+      texto: 'Las sucursales los esperan y bodega todavía no los pidió al proveedor.', abrir: { tab: 'pend' } });
+  return out;
 }

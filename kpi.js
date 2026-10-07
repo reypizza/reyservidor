@@ -3,10 +3,10 @@
  * Las pruebas comparan los dos con los mismos datos y exigen resultados idénticos. */
 
 export const SUC_KPI = ['centro', 'almendras', 'parque'];
-export const AREA_CONTA = 'contabilidad', AREA_MKT = 'marketing', AREA_TEC = 'tecnologia';
-const NOMBRES = { centro: 'Centro', almendras: 'Almendras', parque: 'Parque', contabilidad: 'Contabilidad', marketing: 'Marketing', tecnologia: 'Tecnología' };
+export const AREA_CONTA = 'contabilidad', AREA_MKT = 'marketing', AREA_TEC = 'tecnologia', AREA_COO = 'direccion';
+const NOMBRES = { centro: 'Centro', almendras: 'Almendras', parque: 'Parque', contabilidad: 'Contabilidad', marketing: 'Marketing', tecnologia: 'Tecnología', direccion: 'Dirección operativa' };
 export const nombreArea = (sid) => (Object.prototype.hasOwnProperty.call(NOMBRES, sid) ? NOMBRES[sid] : sid);
-const INICIO_PM = { centro: '13:00', almendras: '13:30', parque: '13:30', contabilidad: '13:00', marketing: '13:00', tecnologia: '13:00' };
+const INICIO_PM = { centro: '13:00', almendras: '13:30', parque: '13:30', contabilidad: '13:00', marketing: '13:00', tecnologia: '13:00', direccion: '13:00' };
 const ENVIADO = 'Enviado';
 
 /* Fechas «yyyy-MM-dd» sin zona horaria: Guatemala no cambia de hora, así que basta con calendario puro. */
@@ -93,7 +93,7 @@ const nivelPct = (p) => (p == null ? 'sin' : p >= 90 ? 'ok' : p >= 70 ? 'alerta'
 /** Lo que muestran las tarjetas de Inicio del administrador (sin las «señales», que salen de inventario, impuestos, etc.). */
 export function resumenAreasCalc({ hoy, hora, indicadores, registros, ultimaFila }) {
   const desde7 = masDias(hoy, -6);
-  const tb = tableroKpiAreas({ areas: SUC_KPI.concat([AREA_CONTA, AREA_MKT, AREA_TEC]), dias: 14, hoy, hora, indicadores, registros });
+  const tb = tableroKpiAreas({ areas: SUC_KPI.concat([AREA_CONTA, AREA_MKT, AREA_TEC, AREA_COO]), dias: 14, hoy, hora, indicadores, registros });
   const primera5000 = Math.max(2, ultimaFila - 5000 + 1);
   const regs = registros.filter((x) => x.fila >= primera5000);
   const activos = indicadores.filter((k) => k.estado === ENVIADO);
@@ -112,5 +112,6 @@ export function resumenAreasCalc({ hoy, hora, indicadores, registros, ultimaFila
     armar('finanzas', 'Finanzas', [AREA_CONTA]),
     armar('marketing', 'Marketing', [AREA_MKT]),
     armar('tecnologia', 'Tecnología', [AREA_TEC]),
+    armar('direccion', 'Dirección operativa', [AREA_COO]),
   ] };
 }
