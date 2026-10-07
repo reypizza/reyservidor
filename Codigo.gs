@@ -6033,6 +6033,7 @@ function notificacionesCalc(cred) {
   try { avisosCajaKpi(yo, out, hoy); } catch (e) {}
   try { avisosMuestreoCompras(yo, out); } catch (e) {}
   try { avisosNuevos(yo, out, cred); } catch (e) {}
+  out.forEach(function (a) { var t = tareaDeAviso(a); if (t) { a.tarea = true; a.accion = t.accion; a.prio = t.prio; a.urgente = /URGENTE/.test(String(a.texto || '')); } });
   out.sort(function (a, b) { return (b.cuando || '9') < (a.cuando || '9') ? -1 : 1; });
   return { avisos: out };
 }
@@ -8625,7 +8626,8 @@ function listaFondos(cred) {
       x.deGerente = !x.deBodega && (!!x.verPor || x.estado === FONDO_EST.VER || rolDe(x.por) === 'gerente');
       x.deCmo = rolDe(x.por) === 'cmo';                 // pagos de la CMO: llevan factura y no hay «ya se hizo»
       x.puedeVerificar = (yo.rol === 'operaciones' || yo.esAdmin) && x.estado === FONDO_EST.VER;
-      x.puedeAprobar = (yo.rol === 'finanzas' || yo.esAdmin) && x.estado === FONDO_EST.PED;
+      x.aprobador = aprobadorDe(x.por);          // quién la aprueba depende del rango de quien la pidió
+      x.puedeAprobar = (x.aprobador === 'admin' ? !!yo.esAdmin : (yo.rol === 'finanzas' || !!yo.esAdmin)) && x.estado === FONDO_EST.PED;
       x.puedePagar = (esContador(yo) || yo.esAdmin) && x.estado === FONDO_EST.APR;
       x.puedeDevolver = (esContador(yo) || yo.esAdmin) && x.estado === FONDO_EST.APR;
       x.puedeCorregir = x.por === yo.nombre && x.estado === FONDO_DEV;
@@ -8639,7 +8641,7 @@ function listaFondos(cred) {
       return x; }),
     tipos: yo.cmo ? Object.keys(FONDO_TIPOS_CMO) : esEquipoBodega(yo) ? Object.keys(FONDO_TIPOS_BODEGA) : Object.keys(FONDO_TIPOS),
     unidades: (yo.rol === 'gerente' || yo.cmo) ? [nombreUnidad(yo.sucursal)] : esEquipoBodega(yo) ? [nombreUnidad('bodega')] : UNIDADES.map(function (u) { return u.nombre; }),
-    formas: FORMAS_PAGO, puedePedir: yo.rol === 'operaciones' || yo.esAdmin || yo.rol === 'gerente' || yo.cmo || esEquipoBodega(yo), esGerente: yo.rol === 'gerente', esCmo: !!yo.cmo, esBodega: esEquipoBodega(yo),
+    formas: FORMAS_PAGO, puedePedir: yo.rol === 'operaciones' || yo.esAdmin || yo.rol === 'gerente' || yo.cmo || esEquipoBodega(yo), esGerente: yo.rol === 'gerente', esCmo: !!yo.cmo, esDirector: yo.rol === 'operaciones', esBodega: esEquipoBodega(yo),
     pendientes: { devueltas: ls.filter(function (x) { return x.estado === FONDO_DEV; }).length, verificar: ls.filter(function (x) { return x.estado === FONDO_EST.VER; }).length, aprobar: ls.filter(function (x) { return x.estado === FONDO_EST.PED; }).length,
       pagar: ls.filter(function (x) { return x.estado === FONDO_EST.APR; }).length } };
 }
@@ -8672,7 +8674,7 @@ function pedirFondos(cred, d) {
       (yo.rol === 'gerente' || esEquipoBodega(yo)) ? FONDO_EST.VER : FONDO_EST.PED, '', '', '', '', '', '', '', '', '', '', '', '', arch.url, arch.nombre, '', '', '']);
   } finally { lock.releaseLock(); }
   var r = listaFondos(cred); r.ok = true;
-  r.mensaje = numero + (esEquipoBodega(yo) ? ' enviada al director operativo para que la apruebe: ' : yo.rol === 'gerente' ? ' enviada al director operativo para que la verifique: ' : ' enviada a contabilidad para aprobar: ') + dinero(monto) + '.';
+  r.mensaje = numero + (esEquipoBodega(yo) ? ' enviada al director operativo para que la apruebe: ' : yo.rol === 'gerente' ? ' enviada al director operativo para que la verifique: ' : yo.rol === 'operaciones' ? ' enviada al administrador para que la apruebe: ' : ' enviada a contabilidad para aprobar: ') + dinero(monto) + '.';
   return r;
 }
 function buscaFondo(numero) {
@@ -8702,6 +8704,7 @@ function aprobarFondos(cred, numero, aprobar, comentario) {
   var yo = quien(cred);
   if (yo.rol !== 'finanzas' && !yo.esAdmin) throw new Error('Las solicitudes las aprueba el director financiero.');
   var x = buscaFondo(numero);
+  if (aprobadorDe(x.por) === 'admin' && !yo.esAdmin) throw new Error('La solicitud de ' + x.por + ' la aprueba el administrador.');
   if (x.estado !== FONDO_EST.PED) throw new Error('Esa solicitud ya está ' + x.estado.toLowerCase() + '.');
   comentario = String(comentario || '').trim().slice(0, 200);
   if (!aprobar && comentario.length < 4) throw new Error('Escriba por qué se rechaza.');
@@ -9433,7 +9436,7 @@ function avisosNuevos(yo, out, cred) {
       if (x.estado === FONDO_DEV && x.por === yo.nombre)
         out.push({ id: 'sd-dev-' + x.numero + '-' + x.devEn, tipo: 'Solicitud devuelta', cuando: x.devEn, titulo: x.numero + ' devuelta por ' + (x.devPor || 'contabilidad'),
           texto: x.devMotivo, abrir: { pag: 'fondos' } });
-      if (x.estado === FONDO_EST.PED && (yo.rol === 'finanzas'))
+      if (x.estado === FONDO_EST.PED && (aprobadorDe(x.por) === 'admin' ? !!yo.esAdmin : yo.rol === 'finanzas'))
         out.push({ id: 'sd-apr-' + x.numero, tipo: 'Solicitud por aprobar', cuando: x.en, titulo: x.numero + ' · ' + x.tipo + ' · ' + dinero(x.monto),
           texto: x.unidad + ' · ' + x.que.slice(0, 80) + (x.urgencia === 'Urgente' ? ' · URGENTE' : ''), abrir: { pag: 'conta', ct: 'fondos' } });
       if (x.estado === FONDO_EST.APR && esContador(yo))
@@ -12532,7 +12535,7 @@ function exportarIndicadores(q) {
 /* ════════════ COPIA COMPLETA PARA EL SERVIDOR PROPIO ════════════
  * El servidor propio guarda una copia de TODAS las pestañas y corre este mismo código sobre ella para contestar las lecturas.
  * Cada cambio que pasa por aquí avisa qué pestañas tocó («tocadas»), y el servidor solo vuelve a traer esas. */
-var VERSION_CODIGO = '2026-10-07-d';       // se cambia a mano cada vez que se cambia este archivo; el servidor compara que coincida con la suya
+var VERSION_CODIGO = '2026-10-08-a';       // se cambia a mano cada vez que se cambia este archivo; el servidor compara que coincida con la suya
 function versionCodigo() { return VERSION_CODIGO; }
 function huellaTexto(t) { return Utilities.base64Encode(Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, t)).slice(0, 22); }
 /** Un resumen barato de cada pestaña: cuántas filas y columnas tiene y una huella de sus últimas 25 filas. */
@@ -13378,3 +13381,23 @@ function avisosPendientes(yo) {
       texto: 'Las sucursales los esperan y bodega todavía no los pidió al proveedor.', abrir: { tab: 'pend' } });
   return out;
 }
+
+/* ════════════ LO QUE HAY QUE HACER HOY ════════════
+ * Cada aviso que pide una acción (aprobar, pagar, aceptar, contar…) se marca como TAREA, con su verbo y su prioridad (1 dinero · 2 operación · 3 rutina).
+ * El Inicio de cada persona los muestra primero; la campanita sigue recordando que hay algo pendiente. Lo demás (ya se pagó, ya llegó…) es solo información. */
+var TAREA_DE = [
+  ['em-rech-', null], ['recheq-', null],
+  ['sd-apr-', 'Aprobar', 1], ['sd-ver-', 'Aprobar', 1], ['sd-pag-', 'Pagar', 1], ['sd-dev-', 'Corregir', 1], ['val-', 'Validar', 1], ['rec-', 'Recibir efectivo', 1], ['banco-', 'Confirmar', 1],
+  ['rech-', 'Corregir', 1], ['ocdev-', 'Corregir', 1], ['oc-cot-', 'Cotizar', 1], ['oc-pagar-', 'Pagar', 1], ['pres-por-', 'Aprobar', 1], ['rep-', 'Pagar', 1], ['dif-caja-', 'Revisar', 1],
+  ['peq-', 'Decidir', 2], ['confeq-', 'Confirmar', 2], ['revq-', 'Revisar', 2], ['asigeq-', 'Confirmar', 2], ['pendl-', 'Despachar', 2], ['pendso-', 'Ordenar', 2], ['pendsin-', 'Revisar', 2],
+  ['nueva-', 'Aceptar', 2], ['cargar-', 'Despachar', 2], ['cam-', 'Recibir', 2], ['dif-', 'Aclarar', 2], ['de-', 'Decidir', 2], ['perm-r-', 'Decidir', 2], ['cq-', 'Responder', 2],
+  ['em-env-', 'Recibir', 2], ['em-', 'Enviar', 2],
+  ['contar-', 'Contar', 3], ['kpifalta-', 'Anotar', 3], ['ace-falta-', 'Medir', 3], ['sg-', 'Leer', 3]
+];
+function tareaDeAviso(a) {
+  var id = String(a.id || '');
+  for (var i = 0; i < TAREA_DE.length; i++) if (id.indexOf(TAREA_DE[i][0]) === 0) return TAREA_DE[i][1] ? { accion: TAREA_DE[i][1], prio: TAREA_DE[i][2] } : null;
+  return null;
+}
+/** Quién aprueba una solicitud de pago, según el rango de quien la pidió: el administrador aprueba lo de Álvaro y lo de Daniel; el director financiero, lo demás. */
+function aprobadorDe(nombreSolicitante) { var r = rolDe(nombreSolicitante); return r === 'operaciones' || r === 'finanzas' ? 'admin' : 'finanzas'; }
