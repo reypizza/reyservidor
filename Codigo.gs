@@ -22,9 +22,10 @@ var _SS = null;
  * 10 veces. Dentro de una sola ejecución, lo que ya se leyó se reutiliza hasta que alguien escriba en esa pestaña
  * (el envoltorio lo detecta solo) o se tome el candado (otra ejecución pudo haber escrito). */
 var _LEE = {};
-var _TOCADAS = {};              // las pestañas que esta ejecución cambió (se le avisa al servidor propio para que actualice su copia)
+var _TOCADAS = {};
+var _MEMO = {};                 // lo ya calculado en esta ejecución (pedidos, inventario, movimientos); se borra apenas algo se guarda              // las pestañas que esta ejecución cambió (se le avisa al servidor propio para que actualice su copia)
 var ESCRIBE_HOJA = /^(append|set|clear|insert|delete|remove|copy|move|merge|sort|break|activate|check|uncheck|trim|randomize|create|add|protect|hide|show|resize|update|apply|split|flatten|fill|auto|unmerge|expand|collapse|group|ungroup|transpose|cut|paste)/i;
-function olvidaLectura(nombre) { if (nombre) { delete _LEE[nombre]; _TOCADAS[nombre] = 1; } else _LEE = {}; }
+function olvidaLectura(nombre) { _MEMO = {}; if (nombre) { delete _LEE[nombre]; _TOCADAS[nombre] = 1; } else _LEE = {}; }
 function envuelveRango(r, nombre) {
   if (typeof Proxy === 'undefined' || !r) return r;
   return new Proxy(r, { get: function (t, k) {
@@ -926,7 +927,7 @@ function doGet() {
  * mismo proyecto por POST. Solo se pueden llamar las funciones de esta lista (las mismas
  * que usa la pantalla), y cada una revisa el código de quien pregunta, igual que antes.
  * La lista la pone sola el armado; no hace falta tocarla. */
-/*API_INI*/var API_PERMITIDAS = ['abrirSolicitud', 'abrirTraslado', 'aceptarSolicitud', 'aceptarYPreparar', 'aclararDiferencia', 'activarCorreos', 'activarObligacion', 'activarProducto', 'activarProductoSucursal', 'adjuntarCotizacion', 'agregarEquipo', 'agregarProducto', 'agregarRecomendados', 'agregarRecomendadosCmo', 'agregarRubro', 'anclarProducto', 'anular', 'anularOrden', 'anularPagoImpuesto', 'anularSolicitud', 'aprobarFondos', 'aprobarPresupuesto', 'aprobarPresupuestoArea', 'asignarDescanso', 'borrarKpi', 'borrarKpiCmo', 'borrarSolicitud', 'cambiarEquipo', 'cambiarMiPin', 'cambiarPermiso', 'cancelarPermiso', 'confirmarPlanilla', 'confirmarRegistro', 'consolidado', 'copiarPresupuesto', 'costosTraslados', 'cotizarOrden', 'darDeBaja', 'datos', 'despacharSolicitudes', 'detalleGasto', 'editarProducto', 'eliminarPersonaCal', 'entrar', 'enviarEmergencia', 'enviarKpis', 'enviarKpisCmo', 'enviarSolicitud', 'enviarSugerencia', 'estadoCorreos', 'evaluarMerma', 'existencias', 'existenciasEmergencia', 'firmarTraslado', 'guardarAjustesInv', 'guardarBonoGeneral', 'guardarBonosCal', 'guardarBorradorCal', 'guardarComision', 'guardarConfigCal', 'guardarConteo', 'guardarEstudio', 'guardarHorario', 'guardarHorasApoyo', 'guardarHorasReales', 'guardarKpi', 'guardarKpiCmo', 'guardarLugar', 'guardarMando', 'guardarMedida', 'guardarMiCorreo', 'guardarMiPresupuesto', 'guardarObligacion', 'guardarOrden', 'guardarPersonaCal', 'guardarPrecios', 'guardarPresupuesto', 'guardarProducto', 'guardarProductoBodega', 'guardarProveedor', 'guardarProveedorInv', 'guardarReceta', 'guardarRepartidor', 'guardarTraslado', 'guardarTurnos', 'guardarUsuario', 'habilita', 'habilitarConteo', 'historialTraslados', 'indicadoresConta', 'leerBonoGeneral', 'leerSugerencias', 'listaBodega', 'listaCatalogo', 'listaConsultas', 'listaDiferencias', 'listaEntrada', 'listaFondos', 'listaImpuestos', 'listaKpis', 'listaKpisCmo', 'listaLugares', 'listaOrdenes', 'listaPermisos', 'listaPrecios', 'listaRepartidores', 'listaReportes', 'listaSolicitudes', 'listaUsuarios', 'llegoSolicitud', 'marcarPreparadas', 'medirAceite', 'miAvance', 'miCorreo', 'miPanel', 'miPresupuesto', 'notificaciones', 'ordenesPago', 'pagarFondos', 'pagarOrden', 'pagarRepartidor', 'pantallaCalendarios', 'pantallaConteo', 'pantallaEmergencias', 'pantallaFirmas', 'pantallaHorarios', 'pantallaKpi', 'pantallaMando', 'pantallaMant', 'pantallaMerma', 'pantallaMuestreo', 'pantallaPedidosBodega', 'pantallaProduccion', 'pantallaSolicitud', 'pantallaSugerencias', 'pdfCalendario', 'pdfOrden', 'pedirDescanso', 'pedirEmergencia', 'pedirFondos', 'pedirPermiso', 'ping', 'planillasPorPagar', 'ponPreciosGerentes', 'porConfirmar', 'preguntar', 'presupuestoMes', 'presupuestosAreas', 'probarCorreo', 'productosConfig', 'productosParaAnclar', 'productosSucursal', 'reabrirPlanilla', 'rechazarRegistro', 'recibirEfectivo', 'recibirEmergencia', 'recibirOrden', 'recibirSolicitud', 'registrarGasto', 'registrarIngreso', 'registrarKpis', 'registrarLote', 'registrarMant', 'registrarMerma', 'registrarObservacion', 'registrarPagoImpuesto', 'renombrarCategoria', 'reporteDiario', 'reporteTraslados', 'resolverDescanso', 'responderConsulta', 'responderMerma', 'resultadosKpi', 'resultadosKpiCmo', 'resultadosKpiRango', 'resultadosMuestreo', 'resumenInventario', 'resumenMes', 'revisarPermiso', 'seguimiento', 'sugerenciaCompra', 'tableroFinanzas', 'tableroKpi', 'terminarFondos', 'validarRegistro', 'ventas', 'verTraslado', 'verificarFondos', 'listaPendientes', 'llegaPendiente', 'cancelarPendiente', 'despacharPendientes', 'devolverFondo', 'corregirFondo', 'pantallaEquipos', 'guardarEquipoA', 'bajaEquipo', 'revisarEquipos', 'confirmarRevisionEq', 'pedirEquipo', 'resolverPedidoEq', 'entregarCompraEq', 'recibirEquipo', 'devolverOrden', 'corregirOrden', 'reiniciarPrecios', 'guardarMezcla', 'registrarLoteMezcla', 'etiquetasLote', 'guardarConfigEtiquetas', 'listaKpisCoo', 'guardarKpiCoo', 'borrarKpiCoo', 'enviarKpisCoo', 'agregarRecomendadosCoo', 'resultadosKpiCoo', 'pantallaKpiCoo', 'registrarKpisCoo', 'resumenAreas', 'resumenAreasSenales', 'pantallaZonas', 'guardarZonas', 'listaKpisTec', 'guardarKpiTec', 'borrarKpiTec', 'enviarKpisTec', 'agregarRecomendadosTec', 'resultadosKpiTec', 'pantallaKpiTec', 'registrarKpisTec'];/*API_FIN*/
+/*API_INI*/var API_PERMITIDAS = ['abrirSolicitud', 'abrirTraslado', 'aceptarSolicitud', 'aceptarYPreparar', 'aclararDiferencia', 'activarCorreos', 'activarObligacion', 'activarProducto', 'activarProductoSucursal', 'adjuntarCotizacion', 'agregarEquipo', 'agregarProducto', 'agregarRecomendados', 'agregarRecomendadosCmo', 'agregarRubro', 'anclarProducto', 'anular', 'anularOrden', 'anularPagoImpuesto', 'anularSolicitud', 'aprobarFondos', 'aprobarPresupuesto', 'aprobarPresupuestoArea', 'asignarDescanso', 'borrarKpi', 'borrarKpiCmo', 'borrarSolicitud', 'cambiarEquipo', 'cambiarMiPin', 'cambiarPermiso', 'cancelarPermiso', 'confirmarPlanilla', 'confirmarRegistro', 'consolidado', 'copiarPresupuesto', 'costosTraslados', 'cotizarOrden', 'darDeBaja', 'datos', 'despacharSolicitudes', 'detalleGasto', 'editarProducto', 'eliminarPersonaCal', 'entrar', 'enviarEmergencia', 'enviarKpis', 'enviarKpisCmo', 'enviarSolicitud', 'enviarSugerencia', 'estadoCorreos', 'evaluarMerma', 'existencias', 'existenciasEmergencia', 'firmarTraslado', 'guardarAjustesInv', 'guardarBonoGeneral', 'guardarBonosCal', 'guardarBorradorCal', 'guardarComision', 'guardarConfigCal', 'guardarConteo', 'guardarEstudio', 'guardarHorario', 'guardarHorasApoyo', 'guardarHorasReales', 'guardarKpi', 'guardarKpiCmo', 'guardarLugar', 'guardarMando', 'guardarMedida', 'guardarMiCorreo', 'guardarMiPresupuesto', 'guardarObligacion', 'guardarOrden', 'guardarPersonaCal', 'guardarPrecios', 'guardarPresupuesto', 'guardarProducto', 'guardarProductoBodega', 'guardarProveedor', 'guardarProveedorInv', 'guardarReceta', 'guardarRepartidor', 'guardarTraslado', 'guardarTurnos', 'guardarUsuario', 'habilita', 'habilitarConteo', 'historialTraslados', 'indicadoresConta', 'leerBonoGeneral', 'leerSugerencias', 'listaBodega', 'listaCatalogo', 'listaConsultas', 'listaDiferencias', 'listaEntrada', 'listaFondos', 'listaImpuestos', 'listaKpis', 'listaKpisCmo', 'listaLugares', 'listaOrdenes', 'listaPermisos', 'listaPrecios', 'listaRepartidores', 'listaReportes', 'listaSolicitudes', 'listaUsuarios', 'llegoSolicitud', 'marcarPreparadas', 'medirAceite', 'miAvance', 'miCorreo', 'miPanel', 'miPresupuesto', 'notificaciones', 'ordenesPago', 'pagarFondos', 'pagarOrden', 'pagarRepartidor', 'pantallaCalendarios', 'pantallaConteo', 'pantallaEmergencias', 'pantallaFirmas', 'pantallaHorarios', 'pantallaKpi', 'pantallaMando', 'pantallaMant', 'pantallaMerma', 'pantallaMuestreo', 'pantallaPedidosBodega', 'pantallaProduccion', 'pantallaSolicitud', 'pantallaSugerencias', 'pdfCalendario', 'pdfOrden', 'pedirDescanso', 'pedirEmergencia', 'pedirFondos', 'pedirPermiso', 'ping', 'planillasPorPagar', 'ponPreciosGerentes', 'porConfirmar', 'preguntar', 'presupuestoMes', 'presupuestosAreas', 'probarCorreo', 'productosConfig', 'productosParaAnclar', 'productosSucursal', 'reabrirPlanilla', 'rechazarRegistro', 'recibirEfectivo', 'recibirEmergencia', 'recibirOrden', 'recibirSolicitud', 'registrarGasto', 'registrarIngreso', 'registrarKpis', 'registrarLote', 'registrarMant', 'registrarMerma', 'registrarObservacion', 'registrarPagoImpuesto', 'renombrarCategoria', 'reporteDiario', 'reporteTraslados', 'resolverDescanso', 'responderConsulta', 'responderMerma', 'resultadosKpi', 'resultadosKpiCmo', 'resultadosKpiRango', 'resultadosMuestreo', 'resumenInventario', 'resumenMes', 'revisarPermiso', 'seguimiento', 'sugerenciaCompra', 'tableroFinanzas', 'tableroKpi', 'terminarFondos', 'validarRegistro', 'ventas', 'verTraslado', 'verificarFondos', 'reiniciarPresupuestos', 'autorizarFondos', 'hechaFondos', 'listaPendientes', 'llegaPendiente', 'cancelarPendiente', 'despacharPendientes', 'devolverFondo', 'corregirFondo', 'pantallaEquipos', 'guardarEquipoA', 'bajaEquipo', 'revisarEquipos', 'confirmarRevisionEq', 'pedirEquipo', 'resolverPedidoEq', 'entregarCompraEq', 'recibirEquipo', 'devolverOrden', 'corregirOrden', 'reiniciarPrecios', 'guardarMezcla', 'registrarLoteMezcla', 'etiquetasLote', 'guardarConfigEtiquetas', 'listaKpisCoo', 'guardarKpiCoo', 'borrarKpiCoo', 'enviarKpisCoo', 'agregarRecomendadosCoo', 'resultadosKpiCoo', 'pantallaKpiCoo', 'registrarKpisCoo', 'resumenAreas', 'resumenAreasSenales', 'pantallaZonas', 'guardarZonas', 'listaKpisTec', 'guardarKpiTec', 'borrarKpiTec', 'enviarKpisTec', 'agregarRecomendadosTec', 'resultadosKpiTec', 'pantallaKpiTec', 'registrarKpisTec'];/*API_FIN*/
 /** Solo contesta «aquí estoy»: sirve para despertar el servidor y medir la velocidad. No lee ni guarda nada. */
 function ping() { return { ok: true }; }
 function doPost(e) {
@@ -1826,7 +1827,7 @@ function ocupadosDe(sucursal) {
 
 /** `max` es cuántos movimientos se devuelven. La app pide los últimos 300; el
  *  reporte del mes pide muchos más, porque tiene que traer el mes completo. */
-function movimientos(max) {
+function movimientosCalc(max) {
   max = Number(max) || 300;
   var ss = libro();
   var out = [];
@@ -1879,6 +1880,11 @@ function movimientos(max) {
     return x.sello < y.sello ? 1 : -1;
   });
   return out.slice(0, max);
+}
+/** Los últimos ingresos y gastos: se arma una vez por consulta (varias pantallas lo piden muchas veces). */
+function movimientos(max) {
+  var k = 'mov:' + (Number(max) || 300);
+  return _MEMO[k] || (_MEMO[k] = movimientosCalc(max));
 }
 
 function fmtSello(v) {
@@ -4712,7 +4718,7 @@ function textoCantidad(q, b) {
 
 /* ── lo que hay: último conteo + movimientos ── */
 
-function estadoInventario(unidadId) {
+function estadoInventarioCalc(unidadId) {
   var u = unidadPorId(unidadId);
   if (!u) throw new Error('No existe esa unidad.');
   var conteos = {}, orden = [];
@@ -4742,6 +4748,11 @@ function estadoInventario(unidadId) {
   });
   Object.keys(ex).forEach(function (c) { ex[c] = r3(ex[c]); });
   return { unidad: u, conteos: orden, ultimo: ultimo, movs: movs, existencia: ex };
+}
+/** El inventario de una unidad (conteos, movimientos y existencia): se calcula una vez por consulta. */
+function estadoInventario(unidadId) {
+  var k = 'inv:' + unidadId;
+  return _MEMO[k] || (_MEMO[k] = estadoInventarioCalc(unidadId));
 }
 
 /** Consumo por día de cada producto, o nada si todavía no hay historia suficiente.
@@ -4996,10 +5007,9 @@ function filasSol() {
       llegoEn: fmtSello(r[19]) };
   }).filter(function (x) { return x.numero; });
 }
-function lineasSol(numero) {
+function lineasSolTodas() {
   var out = [];
   leeTodo(hojaSolD(), H_SOLD.length).forEach(function (r, i) {
-    if (numero && String(r[0]) !== numero) return;
     out.push({ fila: i + 2, numero: String(r[0]), sucursal: String(r[1] || ''),
       codigo: String(r[2] || ''), nombre: String(r[3] || ''), medida: String(r[4] || ''),
       clave: String(r[5] || ''), existencia: Number(r[6]) || 0,
@@ -5011,6 +5021,13 @@ function lineasSol(numero) {
       pend: Number(r[16]) || 0, pendLlega: String(r[17] || ''), pendEntregado: Number(r[18]) || 0, pendCanPor: String(r[19] || ''), pendMotivo: String(r[20] || '') });
   });
   return out;
+}
+/** Las líneas de los pedidos (de uno solo, si se da el número). La hoja se recorre una vez por consulta. */
+function lineasSol(numero) {
+  var todas = _MEMO.lsol || (_MEMO.lsol = lineasSolTodas());
+  if (!numero) return todas;
+  numero = String(numero);
+  return todas.filter(function (l) { return l.numero === numero; });
 }
 function siguienteSol() {
   var max = 0;
@@ -7501,7 +7518,7 @@ function seguimientoCalc(cred) {
     pasados: [] };
     ps.unidades.forEach(function (u) { u.rubros.forEach(function (r) { if (r.presupuesto && r.pct >= 100) out.presupuesto.pasados.push(u.nombre + ' · ' + r.rubro + ' ' + r.pct + ' %'); }); });
   } catch (e) { out.presupuesto = null; }
-  try { var fs = filasFondos(); out.fondos = { aprobar: fs.filter(function (x) { return x.estado === FONDO_EST.PED; }).length,
+  try { var fs = filasFondos(); out.fondos = { autorizar: fs.filter(function (x) { return x.estado === FONDO_ADM; }).length, aprobar: fs.filter(function (x) { return x.estado === FONDO_EST.PED; }).length,
     pagar: fs.filter(function (x) { return x.estado === FONDO_EST.APR; }).length,
     mes: r2(fs.filter(function (x) { return x.pagEn.slice(0, 7) === hoy.slice(0, 7); }).reduce(function (a, x) { return a + x.pagado; }, 0)) }; } catch (e) { out.fondos = null; }
   try { var pm = listaPermisos(cred); out.permisos = { porAprobar: pm.porAprobar.length, fuera: pm.fuera.filter(function (x) { return x.desde <= hoy; }).map(function (x) { return x.por; }) }; } catch (e) { out.permisos = null; }
@@ -8575,7 +8592,8 @@ function avisosPresupuestoDatos(out, p) {
 var H_FONDOS = ['No.', 'Pedida en', 'Pedida por', 'Tipo', 'Unidad', 'Qué se necesita', 'Proveedor', 'Monto',
   'Urgencia', 'Estado', 'Aprobada por', 'Aprobada en', 'Comentario', 'Pagada por', 'Pagada en', 'Monto pagado',
   'Forma de pago', 'Referencia', 'Factura', 'ID gasto', 'Terminada en', 'Nota final', 'Cotización (archivo)', 'Nombre del archivo',
-  'Verificada por', 'Verificada en', 'Comentario de verificación', 'Devuelta por', 'Devuelta en', 'Motivo de devolución', 'Monto antes de devolver'];
+  'Verificada por', 'Verificada en', 'Comentario de verificación', 'Devuelta por', 'Devuelta en', 'Motivo de devolución', 'Monto antes de devolver',
+  'Requiere dinero', 'Autorizó (administrador)', 'Autorizó en', 'Comentario del administrador', 'Etapa del rechazo'];
 var FONDO_TIPOS = { 'Equipo': 'Equipo y mobiliario', 'Reparación': 'Mantenimiento y reparaciones',
   'Visita técnica': 'Mantenimiento y reparaciones', 'Otro': 'Otros gastos' };
 /* Lo que la CMO puede pedir pagar (con su factura): cada tipo cae en su rubro del estado de resultados. */
@@ -8592,6 +8610,7 @@ function hojaFondos(ss) {
     h.getRange('H:H').setNumberFormat('"Q"#,##0.00'); h.getRange('P:P').setNumberFormat('"Q"#,##0.00'); h.setColumnWidth(6, 320); }
   if (h.getLastColumn() < 27) encabezaAlFinal(h, 25, ['Verificada por', 'Verificada en', 'Comentario de verificación']);
   if (h.getLastColumn() < 31) { encabezaAlFinal(h, 28, ['Devuelta por', 'Devuelta en', 'Motivo de devolución', 'Monto antes de devolver']); h.getRange('AC:AC').setNumberFormat('dd/mm/yyyy hh:mm'); }
+  if (h.getLastColumn() < 36) { encabezaAlFinal(h, 32, ['Requiere dinero', 'Autorizó (administrador)', 'Autorizó en', 'Comentario del administrador', 'Etapa del rechazo']); h.getRange('AH:AH').setNumberFormat('dd/mm/yyyy hh:mm'); }
   return h;
 }
 function filasFondos() {
@@ -8603,7 +8622,8 @@ function filasFondos() {
       forma: String(r[16] || ''), referencia: String(r[17] || ''), factura: String(r[18] || ''), gasto: String(r[19] || ''),
       finEn: fmtSello(r[20]), notaFin: String(r[21] || ''), archivo: String(r[22] || ''), archivoNombre: String(r[23] || ''),
       verPor: String(r[24] || ''), verEn: fmtSello(r[25]), verCom: String(r[26] || ''),
-      devPor: String(r[27] || ''), devEn: fmtSello(r[28]), devMotivo: String(r[29] || ''), montoAntes: Number(r[30]) || 0 };
+      devPor: String(r[27] || ''), devEn: fmtSello(r[28]), devMotivo: String(r[29] || ''), montoAntes: Number(r[30]) || 0,
+      reqDinero: String(r[31] || '').trim().toLowerCase() !== 'no', autPor: String(r[32] || ''), autEn: fmtSello(r[33]), autCom: String(r[34] || ''), etapaRech: String(r[35] || '') };
   }).filter(function (x) { return x.numero; });
 }
 /* El equipo de bodega y producción (Samuel y Paulino) pide sus gastos: los aprueba el director operativo (sin pasar por el director financiero)
@@ -8613,111 +8633,18 @@ var FONDO_TIPOS_BODEGA = { 'Combustible y transporte': 'Combustible y transporte
   'Limpieza y químicos': 'Limpieza y químicos', 'Reparación': 'Mantenimiento y reparaciones', 'Equipo': 'Equipo y mobiliario', 'Otro': 'Otros gastos' };
 function veFondos(yo) { return yo.cmo || yo.esAdmin || yo.rol === 'operaciones' || yo.rol === 'finanzas' || esContador(yo) || yo.rol === 'dueno' || yo.rol === 'gerente' || esEquipoBodega(yo); }
 function rolDe(nombre) { var r = ''; usuariosCache().forEach(function (u) { if (u.nombre === nombre) r = u.rol; }); return r; }
-function listaFondos(cred) {
-  permiteCmo();
-  var yo = quien(cred);
-  if (!veFondos(yo)) throw new Error('Su usuario no ve las solicitudes.');
-  var mes = hoyISO().slice(0, 7), ls = filasFondos().reverse();
-  if (yo.rol === 'gerente' || yo.cmo || esEquipoBodega(yo)) ls = ls.filter(function (x) { return x.por === yo.nombre; });   // el gerente, la CMO y el equipo de bodega ven las suyas
-  var p = null;
-  if (yo.rol !== 'gerente' && !yo.cmo && !esEquipoBodega(yo)) { try { p = presupuestoMes({ usuario: yo.nombre, pin: cred.pin }, mes); } catch (e) {} }
-  return { solicitudes: ls.slice(0, 60).map(function (x) {
-      x.deBodega = esEquipoBodega({ rol: rolDe(x.por) });         // lo pidió bodega o producción: lo aprueba el director operativo y lo paga contabilidad
-      x.deGerente = !x.deBodega && (!!x.verPor || x.estado === FONDO_EST.VER || rolDe(x.por) === 'gerente');
-      x.deCmo = rolDe(x.por) === 'cmo';                 // pagos de la CMO: llevan factura y no hay «ya se hizo»
-      x.puedeVerificar = (yo.rol === 'operaciones' || yo.esAdmin) && x.estado === FONDO_EST.VER;
-      x.aprobador = aprobadorDe(x.por);          // quién la aprueba depende del rango de quien la pidió
-      x.puedeAprobar = (x.aprobador === 'admin' ? !!yo.esAdmin : (yo.rol === 'finanzas' || !!yo.esAdmin)) && x.estado === FONDO_EST.PED;
-      x.puedePagar = (esContador(yo) || yo.esAdmin) && x.estado === FONDO_EST.APR;
-      x.puedeDevolver = (esContador(yo) || yo.esAdmin) && x.estado === FONDO_EST.APR;
-      x.puedeCorregir = x.por === yo.nombre && x.estado === FONDO_DEV;
-      x.devuelta = x.devEn && x.estado === FONDO_DEV ? { por: x.devPor, en: x.devEn, motivo: x.devMotivo, montoAntes: x.montoAntes } : null;
-      x.corregida = !!(x.devEn && x.estado !== FONDO_DEV && x.montoAntes && x.montoAntes !== x.monto);
-      x.puedeTerminar = (yo.rol === 'operaciones' || yo.esAdmin) && x.estado === FONDO_EST.PAG && !x.deCmo && !x.deBodega;
-      x.puedeAdjuntar = (yo.rol === 'operaciones' || yo.esAdmin || esContador(yo) || ((yo.rol === 'gerente' || yo.cmo || esEquipoBodega(yo)) && x.por === yo.nombre && (x.estado === FONDO_EST.VER || (yo.cmo && x.estado === FONDO_EST.PED)))) && x.estado !== FONDO_EST.FIN && x.estado !== FONDO_EST.RECH;
-      if (p) { var u = p.unidades.filter(function (y) { return y.nombre === x.unidad; })[0];
-        var rb = u && u.rubros.filter(function (r) { return r.rubro === rubroDeFondo(x.tipo); })[0];
-        if (rb) x.presupuesto = { rubro: rb.rubro, presupuesto: rb.presupuesto, gastado: rb.gastado }; }
-      return x; }),
-    tipos: yo.cmo ? Object.keys(FONDO_TIPOS_CMO) : esEquipoBodega(yo) ? Object.keys(FONDO_TIPOS_BODEGA) : Object.keys(FONDO_TIPOS),
-    unidades: (yo.rol === 'gerente' || yo.cmo) ? [nombreUnidad(yo.sucursal)] : esEquipoBodega(yo) ? [nombreUnidad('bodega')] : UNIDADES.map(function (u) { return u.nombre; }),
-    formas: FORMAS_PAGO, puedePedir: yo.rol === 'operaciones' || yo.esAdmin || yo.rol === 'gerente' || yo.cmo || esEquipoBodega(yo), esGerente: yo.rol === 'gerente', esCmo: !!yo.cmo, esDirector: yo.rol === 'operaciones', esBodega: esEquipoBodega(yo),
-    pendientes: { devueltas: ls.filter(function (x) { return x.estado === FONDO_DEV; }).length, verificar: ls.filter(function (x) { return x.estado === FONDO_EST.VER; }).length, aprobar: ls.filter(function (x) { return x.estado === FONDO_EST.PED; }).length,
-      pagar: ls.filter(function (x) { return x.estado === FONDO_EST.APR; }).length } };
-}
-function pedirFondos(cred, d) {
-  permiteCmo();
-  var yo = quien(cred);
-  if (yo.rol !== 'operaciones' && !yo.esAdmin && yo.rol !== 'gerente' && !yo.cmo && !esEquipoBodega(yo)) throw new Error('Las solicitudes las hacen los gerentes, la bodega, producción, la CMO y el director operativo.');
-  d = d || {};
-  if (!(yo.cmo ? FONDO_TIPOS_CMO[d.tipo] : esEquipoBodega(yo) ? FONDO_TIPOS_BODEGA[d.tipo] : FONDO_TIPOS[d.tipo])) throw new Error('Escoja qué tipo de solicitud es.');
-  if (yo.rol === 'gerente' || yo.cmo) d.unidad = nombreUnidad(yo.sucursal);   // el gerente y la CMO solo piden para su lugar
-  if (esEquipoBodega(yo)) d.unidad = nombreUnidad('bodega');                 // bodega y producción piden para Bodega Central
-  if (yo.cmo && d.tipo !== 'Sueldo' && !(d.archivo && d.archivo.datos)) throw new Error('Adjunte la factura (PDF o foto): contabilidad la necesita para pagar.');
-  var u = null; UNIDADES.forEach(function (x) { if (x.nombre === d.unidad) u = x; });
-  if (!u) throw new Error('Escoja la sucursal.');
-  var que = String(d.que || '').trim().slice(0, 300);
-  if (que.length < 8) throw new Error('Describa qué se necesita y por qué.');
-  var monto = r2(String(d.monto || '').replace(/[Q,\s]/g, ''));
-  if (!(monto > 0)) throw new Error('Escriba cuánto dinero se necesita (aproximado).');
-  var urg = ['Normal', 'Urgente'].indexOf(d.urgencia) >= 0 ? d.urgencia : 'Normal';
-  // la subida a Drive tarda: se hace antes de pedir el candado, para no frenar a los demás
-  var arch = d.archivo && d.archivo.datos ? guardaArchivo(d.archivo, 'Solicitud de ' + yo.nombre + (yo.cmo ? ' · factura' : ' · cotización'), yo.cmo ? 'La factura' : '') : { url: '', nombre: '' };
-  var lock = LockService.getScriptLock();
-  lock.waitLock(15000); _LEE = {};
-  var numero;
-  try {
-    var max = 0;
-    filasFondos().forEach(function (x) { var m = /^(?:SD|RQ|SO)-(\d+)$/.exec(x.numero); if (m) max = Math.max(max, +m[1]); });
-    numero = 'SO-' + ('0000' + (max + 1)).slice(-4);
-    hojaFondos().appendRow([numero, new Date(), yo.nombre, d.tipo, u.nombre, que, String(d.proveedor || '').slice(0, 60), monto, urg,
-      (yo.rol === 'gerente' || esEquipoBodega(yo)) ? FONDO_EST.VER : FONDO_EST.PED, '', '', '', '', '', '', '', '', '', '', '', '', arch.url, arch.nombre, '', '', '']);
-  } finally { lock.releaseLock(); }
-  var r = listaFondos(cred); r.ok = true;
-  r.mensaje = numero + (esEquipoBodega(yo) ? ' enviada al director operativo para que la apruebe: ' : yo.rol === 'gerente' ? ' enviada al director operativo para que la verifique: ' : yo.rol === 'operaciones' ? ' enviada al administrador para que la apruebe: ' : ' enviada a contabilidad para aprobar: ') + dinero(monto) + '.';
-  return r;
-}
 function buscaFondo(numero) {
   var x = null; filasFondos().forEach(function (y) { if (y.numero === String(numero)) x = y; });
   if (!x) throw new Error('No se encontró la solicitud ' + numero + '.');
   return x;
 }
 /** El director operativo verifica la solicitud de un gerente: si la confirma pasa a contabilidad, si no se devuelve. */
-function verificarFondos(cred, numero, confirmar, comentario) {
-  var yo = quien(cred);
-  if (yo.rol !== 'operaciones' && !yo.esAdmin) throw new Error('Las solicitudes de los gerentes las verifica el director operativo.');
-  var x = buscaFondo(numero);
-  if (x.estado !== FONDO_EST.VER) throw new Error('Esa solicitud ya no está por verificar (' + x.estado.toLowerCase() + ').');
-  comentario = String(comentario || '').trim().slice(0, 200);
-  if (!confirmar && comentario.length < 4) throw new Error('Escriba por qué se rechaza.');
-  var h = hojaFondos();
-  h.getRange(x.fila, 25, 1, 3).setValues([[yo.nombre, new Date(), comentario]]);
-  var deBodega = esEquipoBodega({ rol: rolDe(x.por) });         // lo de bodega y producción lo aprueba el director operativo y pasa directo a contabilidad para pagar
-  if (confirmar && deBodega) h.getRange(x.fila, 10, 1, 4).setValues([[FONDO_EST.APR, yo.nombre, new Date(), comentario]]);
-  else if (confirmar) h.getRange(x.fila, 10).setValue(FONDO_EST.PED);
-  else h.getRange(x.fila, 10, 1, 4).setValues([[FONDO_EST.RECH, yo.nombre, new Date(), comentario]]);
-  var r = listaFondos(cred); r.ok = true;
-  r.mensaje = numero + (confirmar ? (deBodega ? ' aprobada. Contabilidad la paga.' : ' confirmada. Ya está en contabilidad para aprobarla.') : ' rechazada. ' + x.por + ' lo verá en su campanita.');
-  return r;
-}
-function aprobarFondos(cred, numero, aprobar, comentario) {
-  var yo = quien(cred);
-  if (yo.rol !== 'finanzas' && !yo.esAdmin) throw new Error('Las solicitudes las aprueba el director financiero.');
-  var x = buscaFondo(numero);
-  if (aprobadorDe(x.por) === 'admin' && !yo.esAdmin) throw new Error('La solicitud de ' + x.por + ' la aprueba el administrador.');
-  if (x.estado !== FONDO_EST.PED) throw new Error('Esa solicitud ya está ' + x.estado.toLowerCase() + '.');
-  comentario = String(comentario || '').trim().slice(0, 200);
-  if (!aprobar && comentario.length < 4) throw new Error('Escriba por qué se rechaza.');
-  hojaFondos().getRange(x.fila, 10, 1, 4).setValues([[aprobar ? FONDO_EST.APR : FONDO_EST.RECH, yo.nombre, new Date(), comentario]]);
-  var r = listaFondos(cred); r.ok = true; r.mensaje = numero + (aprobar ? ' aprobada. El contador entrega el dinero.' : ' rechazada.');
-  return r;
-}
 function pagarFondos(cred, numero, d) {
   var yo = quien(cred);
   if (!(esContador(yo) || yo.esAdmin)) throw new Error('El dinero lo entrega el contador.');
   d = d || {};
   var x = buscaFondo(numero);
-  if (x.estado !== FONDO_EST.APR) throw new Error(x.estado === FONDO_EST.PED ? 'Primero la aprueba el director financiero.' : 'Esa solicitud ya está ' + x.estado.toLowerCase() + '.');
+  if (x.estado !== FONDO_EST.APR) throw new Error(x.estado === FONDO_EST.PED ? 'Primero la aprueba el director financiero.' : (x.estado === FONDO_EST.VER || x.estado === FONDO_ADM) ? 'Todavía falta que la autoricen.' : 'Esa solicitud ya está ' + x.estado.toLowerCase() + '.');
   var monto = r2(String(d.monto == null || d.monto === '' ? x.monto : d.monto).replace(/[Q,\s]/g, ''));
   if (!(monto > 0)) throw new Error('Escriba cuánto se pagó.');
   var forma = FORMAS_PAGO.indexOf(d.forma) >= 0 ? d.forma : 'Transferencia';
@@ -8745,7 +8672,7 @@ function adjuntarCotizacion(cred, numero, archivo) {
   permiteCmo();
   var yo = quien(cred);
   var x = buscaFondo(numero);
-  var suya = (yo.rol === 'gerente' || yo.cmo || esEquipoBodega(yo)) && x.por === yo.nombre && (x.estado === FONDO_EST.VER || (yo.cmo && x.estado === FONDO_EST.PED));
+  var suya = x.por === yo.nombre && (x.estado === FONDO_EST.VER || x.estado === FONDO_ADM || (yo.cmo && x.estado === FONDO_EST.PED));
   if (!(yo.rol === 'operaciones' || yo.esAdmin || esContador(yo) || suya)) throw new Error('La cotización la sube quien pidió, el director operativo o el contador.');
   if (x.estado === FONDO_EST.FIN || x.estado === FONDO_EST.RECH) throw new Error('Esa solicitud ya está ' + x.estado.toLowerCase() + '.');
   var a = guardaArchivo(archivo, numero + ' cotización');
@@ -9433,28 +9360,28 @@ function avisosNuevos(yo, out, cred) {
   // solicitudes de dinero
   try {
     filasFondos().forEach(function (x) {
-      if (x.estado === FONDO_DEV && x.por === yo.nombre)
-        out.push({ id: 'sd-dev-' + x.numero + '-' + x.devEn, tipo: 'Solicitud devuelta', cuando: x.devEn, titulo: x.numero + ' devuelta por ' + (x.devPor || 'contabilidad'),
-          texto: x.devMotivo, abrir: { pag: 'fondos' } });
-      if (x.estado === FONDO_EST.PED && (aprobadorDe(x.por) === 'admin' ? !!yo.esAdmin : yo.rol === 'finanzas'))
-        out.push({ id: 'sd-apr-' + x.numero, tipo: 'Solicitud por aprobar', cuando: x.en, titulo: x.numero + ' · ' + x.tipo + ' · ' + dinero(x.monto),
-          texto: x.unidad + ' · ' + x.que.slice(0, 80) + (x.urgencia === 'Urgente' ? ' · URGENTE' : ''), abrir: { pag: 'conta', ct: 'fondos' } });
+      var cuando = x.pagEn || x.aprEn || x.autEn || x.verEn || x.en, urg = x.urgencia === 'Urgente' ? ' · URGENTE' : '';
+      if (x.estado === FONDO_EST.VER && yo.rol === 'operaciones')
+        out.push({ id: 'sd-ver-' + x.numero, tipo: 'Solicitud por verificar', cuando: x.en, titulo: x.numero + ' · ' + x.por + ' · ' + (x.reqDinero ? dinero(x.monto) : 'sin dinero'),
+          texto: x.unidad + ' · ' + x.que.slice(0, 80) + urg, abrir: { pag: 'fondos' } });
+      if (x.estado === FONDO_ADM && yo.esAdmin)
+        out.push({ id: 'sd-aut-' + x.numero, tipo: 'Solicitud por autorizar', cuando: x.verEn || x.en, titulo: x.numero + ' · ' + x.por + ' · ' + (x.reqDinero ? dinero(x.monto) : 'sin dinero'),
+          texto: x.unidad + ' · ' + x.que.slice(0, 80) + urg, abrir: { pag: 'fondos' } });
+      if (x.estado === FONDO_EST.PED && yo.rol === 'finanzas')
+        out.push({ id: 'sd-apr-' + x.numero, tipo: 'Solicitud por aprobar', cuando: x.autEn || x.en, titulo: x.numero + ' · ' + x.por + ' · ' + dinero(x.monto),
+          texto: x.unidad + ' · ' + x.que.slice(0, 80) + urg, abrir: { pag: 'conta', ct: 'fondos' } });
       if (x.estado === FONDO_EST.APR && esContador(yo))
-        out.push({ id: 'sd-pag-' + x.numero, tipo: 'Solicitud por pagar', cuando: x.aprEn, titulo: x.numero + ' · ' + dinero(x.monto) + ' · ' + x.unidad,
-          texto: 'Aprobó ' + x.aprPor + '. ' + x.que.slice(0, 60), abrir: { pag: 'conta', ct: 'fondos' } });
-      if (x.estado === FONDO_EST.VER && (yo.rol === 'operaciones'))
-        out.push({ id: 'sd-ver-' + x.numero, tipo: 'Solicitud por verificar', cuando: x.en, titulo: x.numero + ' · ' + x.por + ' · ' + dinero(x.monto),
-          texto: x.unidad + ' · ' + x.que.slice(0, 80) + (x.urgencia === 'Urgente' ? ' · URGENTE' : ''), abrir: { pag: 'fondos' } });
-      if ((yo.rol === 'gerente' || yo.cmo || esEquipoBodega(yo)) && x.por === yo.nombre && x.estado !== FONDO_EST.VER && x.estado !== FONDO_EST.PED && x.estado !== FONDO_DEV &&
-          (x.pagEn || x.aprEn || x.verEn).slice(0, 10) >= desde)
-        out.push({ id: 'sd-g-' + x.estado + '-' + x.numero, tipo: 'Solicitud ' + x.estado.toLowerCase(), cuando: x.pagEn || x.aprEn || x.verEn,
-          titulo: x.numero + ' ' + x.estado.toLowerCase(), texto: x.estado === FONDO_EST.RECH ? ((x.aprPor || x.verPor) + ': ' + (x.comentario || x.verCom)) :
-            x.estado === FONDO_EST.PAG ? 'Contabilidad entregó ' + dinero(x.pagado) + '.' : 'Aprobó ' + x.aprPor + '.', abrir: { pag: 'fondos' } });
-      if (yo.rol === 'operaciones' && x.por === yo.nombre && (x.estado === FONDO_EST.APR || x.estado === FONDO_EST.RECH || x.estado === FONDO_EST.PAG) &&
-          (x.pagEn || x.aprEn).slice(0, 10) >= desde)
-        out.push({ id: 'sd-' + x.estado + '-' + x.numero, tipo: 'Solicitud', cuando: x.pagEn || x.aprEn,
-          titulo: x.numero + ' ' + x.estado.toLowerCase(), texto: x.estado === FONDO_EST.RECH ? x.comentario : x.estado === FONDO_EST.PAG ?
-            'El contador entregó ' + dinero(x.pagado) + '.' : 'Aprobó ' + x.aprPor + '. Falta que el contador entregue el dinero.', abrir: { pag: 'fondos' } });
+        out.push({ id: 'sd-pag-' + x.numero, tipo: 'Solicitud por pagar', cuando: x.aprEn || x.autEn, titulo: x.numero + ' · ' + dinero(x.monto) + ' · ' + x.unidad,
+          texto: 'Aprobó ' + (x.aprPor || x.autPor || x.verPor) + '. ' + x.que.slice(0, 60), abrir: { pag: 'conta', ct: 'fondos' } });
+      if (x.estado === FONDO_DEV && x.por === yo.nombre)
+        out.push({ id: 'sd-dev-' + x.numero + '-' + x.devEn, tipo: 'Solicitud devuelta', cuando: x.devEn, titulo: x.numero + ' devuelta por ' + (x.devPor || 'contabilidad'), texto: x.devMotivo, abrir: { pag: 'fondos' } });
+      if (x.por === yo.nombre) {
+        if (x.estado === FONDO_AUT)
+          out.push({ id: 'sd-ok-' + x.numero, tipo: 'Solicitud autorizada', cuando: x.autEn, titulo: x.numero + ' autorizada: ya puede proceder', texto: 'Autorizó ' + x.autPor + (x.reqDinero ? '' : ' · no necesitaba dinero') + '. Márquela como hecha cuando termine.', abrir: { pag: 'fondos' } });
+        else if ([FONDO_EST.RECH, FONDO_EST.PAG, FONDO_EST.APR].indexOf(x.estado) >= 0 && cuando.slice(0, 10) >= desde)
+          out.push({ id: 'sd-g-' + x.estado + '-' + x.numero, tipo: 'Solicitud ' + x.estado.toLowerCase(), cuando: cuando, titulo: x.numero + ' ' + x.estado.toLowerCase(),
+            texto: x.estado === FONDO_EST.RECH ? ((x.aprPor || x.verPor) + ': ' + (x.comentario || x.verCom)) : x.estado === FONDO_EST.PAG ? 'Contabilidad entregó ' + dinero(x.pagado) + '.' : 'Aprobó ' + (x.aprPor || x.autPor) + '. Falta que contabilidad entregue el dinero.', abrir: { pag: 'fondos' } });
+      }
     });
   } catch (e) {}
   // presupuestos de las áreas: contabilidad aprueba, la CMO arma y recibe la respuesta
@@ -9837,6 +9764,7 @@ function equipoDe(u) {
 function puedePreguntarA(yo, u) {
   if (!u || !u.activo || u.nombre === yo.nombre || u.rol === 'dueno') return false;
   if (yo.esAdmin) return true;
+  if (yo.rol === 'finanzas' && (u.rol === 'operaciones' || u.rol === 'cmo' || u.rol === 'admin')) return true;   // supervisa presupuestos, pagos y planillas: pregunta a los directores y avisa al administrador
   return seComunican(yo.nombre, u.nombre);
 }
 function listaConsultas(cred) {
@@ -10065,7 +9993,7 @@ function personasSeguimiento(cred, seg) {
       p.lineas.push(['Presupuesto de ' + periodoTxt(mes), eC ? eC.estado : 'Sin armar', eC && eC.estado === PA_EST.APR ? 'si' : 'no']);
       var avC = null; try { avC = unC ? avanceArea(unC.id, mes) : null; } catch (e) {}
       if (avC && avC.aprobado) p.lineas.push(['Gastado del presupuesto', avC.pct == null ? dinero(avC.gastado) : avC.pct + ' %', avC.pct != null && avC.pct > 100 ? 'no' : 'si']);
-      p.lineas.push(['Solicitudes de pago en trámite', fs.filter(function (x) { return x.por === u.nombre && [FONDO_EST.PED, FONDO_EST.APR].indexOf(x.estado) >= 0; }).length, '']);
+      p.lineas.push(['Solicitudes de pago en trámite', fs.filter(function (x) { return x.por === u.nombre && [FONDO_EST.VER, FONDO_ADM, FONDO_EST.PED, FONDO_EST.APR].indexOf(x.estado) >= 0; }).length, '']);
       p.ver = 'fin';
     } else return;
     p.estado = p.atrasos.length ? 'atrasado' : 'al día';
@@ -11548,7 +11476,8 @@ function calAcceso(yo) {
   if (yo.rol === 'gerente') return { sucs: [yo.sucursal], turnos: true, equipo: true, pagos: false, dinero: false, confirma: false };
   if (yo.esAdmin) return { sucs: todas, turnos: true, equipo: true, pagos: true, dinero: true, confirma: true };
   if (yo.rol === 'operaciones') return { sucs: todas, turnos: true, equipo: true, pagos: true, dinero: true, confirma: false };
-  if (yo.rol === 'finanzas' || yo.rol === 'dueno') return { sucs: todas, turnos: false, equipo: false, pagos: false, dinero: true, confirma: false };
+  if (yo.rol === 'finanzas') return { sucs: todas, turnos: true, equipo: true, pagos: true, dinero: true, confirma: false, soloVer: true };   // ve todo (turnos, equipo, pagos, planillas) sin cambiar nada
+  if (yo.rol === 'dueno') return { sucs: todas, turnos: false, equipo: false, pagos: false, dinero: true, confirma: false };
   throw new Error('Los calendarios los ven los gerentes y la administración.');
 }
 function calSucursal(ac, sid) {
@@ -11647,7 +11576,7 @@ function calPantalla(yo, ac, sid, fecha, D) {
     hoy: hoy, sid: sid, sucursal: nombreUnidad(sid),
     sucursales: ac.sucs.map(function (s) { return { id: s, nombre: nombreUnidad(s) }; }),
     q: { ini: q.ini, fin: q.fin, n: q.n, n1: q.n1, n2: q.n2, nombre: q.nombre, corto: q.corto, ant: q.ant, sig: q.sig, dias: q.dias },
-    acceso: { turnos: ac.turnos, equipo: ac.equipo, pagos: ac.pagos, dinero: ac.dinero, confirma: ac.confirma },
+    acceso: { turnos: ac.turnos, equipo: ac.equipo, pagos: ac.pagos, dinero: ac.dinero, confirma: ac.confirma, soloVer: !!ac.soloVer },
     horas: m.hr, turnos: { am: [m.cfg.am_i, m.cfg.am_f], pm: [m.cfg.pm_i, m.cfg.pm_f], ap: [m.cfg.ap_i, m.cfg.ap_f], ap2: [m.cfg.ap2_i, m.cfg.ap2_f] },
     rangos: { bajoDe: m.cfg.bajoDe, bajoA: m.cfg.bajoA, optDe: m.cfg.optDe, optA: m.cfg.optA },
     cerrada: !!pl, venta: {}, tipica: ve.tipica,
@@ -11715,7 +11644,7 @@ function calRespuesta(yo, ac, sid, fecha, mensaje) {
 
 /* ── turnos: quién trabaja cada día ── */
 function guardarTurnos(cred, sid, fecha, cambios) {
-  var yo = quien(cred), ac = calAcceso(yo);
+  var yo = quien(cred), ac = calAcceso(yo); soloVerCal(ac);
   if (!ac.turnos) throw new Error('Su usuario solo consulta los calendarios.');
   if (ac.sucs.indexOf(sid) < 0) throw new Error('Ese calendario no es de su sucursal.');
   if (!Array.isArray(cambios) || !cambios.length) throw new Error('No hay cambios que guardar.');
@@ -11765,7 +11694,7 @@ function calNumero(v, campo, max) {
   return calRed(n);
 }
 function guardarPersonaCal(cred, sid, p, fecha) {
-  var yo = quien(cred), ac = calAcceso(yo);
+  var yo = quien(cred), ac = calAcceso(yo); soloVerCal(ac);
   if (!ac.equipo) throw new Error('Su usuario solo consulta los calendarios.');
   if (ac.sucs.indexOf(sid) < 0) throw new Error('Esa no es su sucursal.');
   p = p || {};
@@ -11802,7 +11731,7 @@ function guardarPersonaCal(cred, sid, p, fecha) {
 }
 /** Se elimina del equipo. Lo ya trabajado queda en las quincenas anteriores; los días que faltan se limpian. */
 function eliminarPersonaCal(cred, sid, id, fecha) {
-  var yo = quien(cred), ac = calAcceso(yo);
+  var yo = quien(cred), ac = calAcceso(yo); soloVerCal(ac);
   if (!ac.equipo) throw new Error('Su usuario solo consulta los calendarios.');
   if (ac.sucs.indexOf(sid) < 0) throw new Error('Esa no es su sucursal.');
   var lock = LockService.getScriptLock(); lock.waitLock(15000); _LEE = {};
@@ -11825,7 +11754,7 @@ function eliminarPersonaCal(cred, sid, id, fecha) {
 
 /* ── configuración: turnos, pago base, semáforo y pago de los gerentes ── */
 function guardarConfigCal(cred, sid, cfg, fecha) {
-  var yo = quien(cred), ac = calAcceso(yo);
+  var yo = quien(cred), ac = calAcceso(yo); soloVerCal(ac);
   if (!ac.pagos) throw new Error('La configuración de pagos la cambia el administrador o el director operativo.');
   if (ac.sucs.indexOf(sid) < 0) throw new Error('Escoja la sucursal.');
   cfg = cfg || {};
@@ -11870,7 +11799,7 @@ function guardarConfigCal(cred, sid, cfg, fecha) {
 }
 /** Horas de los dos apoyos de tarde: el gerente dice a qué hora entran (turnos escalonados). Solo cambia las quincenas sin pagar. */
 function guardarHorasApoyo(cred, sid, fecha, ap, ap2) {
-  var yo = quien(cred), ac = calAcceso(yo);
+  var yo = quien(cred), ac = calAcceso(yo); soloVerCal(ac);
   if (!ac.turnos) throw new Error('Los horarios los cambia el gerente o la administración.');
   if (ac.sucs.indexOf(sid) < 0) throw new Error('Escoja la sucursal.');
   var lista = [];
@@ -11897,7 +11826,7 @@ function guardarHorasApoyo(cred, sid, fecha, ap, ap2) {
 }
 /** Bono de esta quincena por persona (cambia el general solo para esta quincena). */
 function guardarBonosCal(cred, sid, fecha, bonos) {
-  var yo = quien(cred), ac = calAcceso(yo);
+  var yo = quien(cred), ac = calAcceso(yo); soloVerCal(ac);
   if (!ac.pagos) throw new Error('Los bonos los cambia el administrador o el director operativo.');
   if (ac.sucs.indexOf(sid) < 0) throw new Error('Escoja la sucursal.');
   var lock = LockService.getScriptLock(); lock.waitLock(15000); _LEE = {};
@@ -11950,7 +11879,7 @@ function leerBonoGeneral(cred) {
 }
 /** El bono de todos de una vez. Con «reemplazar» también se borran los bonos propios y todos quedan parejos. */
 function guardarBonoGeneral(cred, valor, reemplazar, sid, fecha) {
-  var yo = quien(cred), ac = calAcceso(yo);
+  var yo = quien(cred), ac = calAcceso(yo); soloVerCal(ac);
   if (!ac.pagos) throw new Error('El bono lo cambia el administrador o el director operativo.');
   var b = calNumero(valor, 'El bono', 20000);
   if (b == null) throw new Error('Escriba el bono. Si no hay bono, escriba 0.');
@@ -11974,7 +11903,7 @@ function guardarBonoGeneral(cred, valor, reemplazar, sid, fecha) {
 
 /* ── horas reales: al final de la quincena se anotan las que de verdad trabajó cada persona y sobre ellas se paga ── */
 function guardarHorasReales(cred, sid, fecha, horas) {
-  var yo = quien(cred), ac = calAcceso(yo);
+  var yo = quien(cred), ac = calAcceso(yo); soloVerCal(ac);
   if (!ac.pagos) throw new Error('Las horas trabajadas las anota el administrador o el director operativo.');
   if (ac.sucs.indexOf(sid) < 0) throw new Error('Escoja la sucursal.');
   var lock = LockService.getScriptLock(); lock.waitLock(15000); _LEE = {};
@@ -12025,7 +11954,7 @@ function calBorradorPon(yo, sid, ini, lista) {
   }
 }
 function guardarBorradorCal(cred, sid, fecha, cambios) {
-  var yo = quien(cred), ac = calAcceso(yo);
+  var yo = quien(cred), ac = calAcceso(yo); soloVerCal(ac);
   if (!ac.turnos) throw new Error('Su usuario solo consulta los calendarios.');
   if (ac.sucs.indexOf(sid) < 0) throw new Error('Ese calendario no es de su sucursal.');
   if (!Array.isArray(cambios)) cambios = [];
@@ -12047,7 +11976,7 @@ function guardarBorradorCal(cred, sid, fecha, cambios) {
 
 /* ── la planilla: se confirma cuando se paga ── */
 function confirmarPlanilla(cred, sid, fecha, pagado, fechaPago, nota) {
-  var yo = quien(cred), ac = calAcceso(yo);
+  var yo = quien(cred), ac = calAcceso(yo); soloVerCal(ac);
   if (!ac.confirma) throw new Error('La planilla la confirma el administrador.');
   if (ac.sucs.indexOf(sid) < 0) throw new Error('Escoja la sucursal.');
   var lock = LockService.getScriptLock(); lock.waitLock(15000); _LEE = {};
@@ -12080,7 +12009,7 @@ function confirmarPlanilla(cred, sid, fecha, pagado, fechaPago, nota) {
 /** Las quincenas recientes de una sucursal y cuáles se pueden pagar: las ya pagadas y las que no han terminado quedan bloqueadas. */
 function planillasPorPagar(cred, sid) {
   var yo = quien(cred), ac = calAcceso(yo);
-  if (!ac.confirma) throw new Error('La planilla la confirma el administrador.');
+  if (!ac.confirma && !ac.soloVer) throw new Error('La planilla la confirma el administrador.');
   if (ac.sucs.indexOf(sid) < 0) throw new Error('Escoja la sucursal.');
   var D = calDatos(), hoy = hoyISO(), f = calQuincena(hoy).ini, lista = [];
   for (var i = 0; i < 9; i++) {
@@ -12116,7 +12045,7 @@ function corrigeMesPlanillas() {
 }
 
 function reabrirPlanilla(cred, sid, fecha, motivo) {
-  var yo = quien(cred), ac = calAcceso(yo);
+  var yo = quien(cred), ac = calAcceso(yo); soloVerCal(ac);
   if (!ac.confirma) throw new Error('La planilla la reabre el administrador.');
   if (ac.sucs.indexOf(sid) < 0) throw new Error('Escoja la sucursal.');
   motivo = String(motivo || '').trim();
@@ -12535,7 +12464,7 @@ function exportarIndicadores(q) {
 /* ════════════ COPIA COMPLETA PARA EL SERVIDOR PROPIO ════════════
  * El servidor propio guarda una copia de TODAS las pestañas y corre este mismo código sobre ella para contestar las lecturas.
  * Cada cambio que pasa por aquí avisa qué pestañas tocó («tocadas»), y el servidor solo vuelve a traer esas. */
-var VERSION_CODIGO = '2026-10-08-a';       // se cambia a mano cada vez que se cambia este archivo; el servidor compara que coincida con la suya
+var VERSION_CODIGO = '2026-10-09-b';       // se cambia a mano cada vez que se cambia este archivo; el servidor compara que coincida con la suya
 function versionCodigo() { return VERSION_CODIGO; }
 function huellaTexto(t) { return Utilities.base64Encode(Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, t)).slice(0, 22); }
 /** Un resumen barato de cada pestaña: cuántas filas y columnas tiene y una huella de sus últimas 25 filas. */
@@ -13225,7 +13154,7 @@ function corregirFondo(cred, numero, d) {
   if (que.length < 8) throw new Error('Describa qué se necesita y por qué.');
   var arch = d.archivo && d.archivo.datos ? guardaArchivo(d.archivo, 'Solicitud de ' + yo.nombre + (rolDe(yo.nombre) === 'cmo' ? ' · factura' : ' · cotización'), rolDe(yo.nombre) === 'cmo' ? 'La factura' : '') : null;
   if (monto === x.monto && !arch && que === x.que) throw new Error('Cambie el monto o suba el archivo correcto; si todo está bien, contabilidad la puede pagar como está.');
-  var rol = rolDe(yo.nombre), vuelveA = (rol === 'gerente' || esEquipoBodega({ rol: rol })) ? FONDO_EST.VER : FONDO_EST.PED;
+  var rol = rolDe(yo.nombre), vuelveA = estadoInicialFondo(rol, x.reqDinero);          // vuelve a empezar su camino de aprobación
   var lock = LockService.getScriptLock(); lock.waitLock(15000); _LEE = {};
   try {
     var h = hojaFondos();
@@ -13233,9 +13162,10 @@ function corregirFondo(cred, numero, d) {
     if (arch) h.getRange(x.fila, 23, 1, 2).setValues([[arch.url, arch.nombre]]);
     h.getRange(x.fila, 10, 1, 4).setValues([[vuelveA, '', '', '']]);          // vuelve a empezar: nadie la ha aprobado con este monto
     h.getRange(x.fila, 25, 1, 3).setValues([['', '', '']]);
+    h.getRange(x.fila, 33, 1, 3).setValues([['', '', '']]); h.getRange(x.fila, 36).setValue('');
   } finally { lock.releaseLock(); }
   var r = listaFondos(cred); r.ok = true;
-  r.mensaje = numero + ' corregida' + (monto !== x.monto ? ' (' + dinero(x.monto) + ' → ' + dinero(monto) + ')' : '') + ' y reenviada ' + (vuelveA === FONDO_EST.VER ? 'al director operativo.' : 'a contabilidad para aprobar.');
+  r.mensaje = numero + ' corregida' + (monto !== x.monto ? ' (' + dinero(x.monto) + ' → ' + dinero(monto) + ')' : '') + ' y reenviada ' + (vuelveA === FONDO_EST.VER ? 'al director operativo.' : vuelveA === FONDO_ADM ? 'al administrador.' : 'a finanzas para aprobar.');
   return r;
 }
 
@@ -13387,7 +13317,7 @@ function avisosPendientes(yo) {
  * El Inicio de cada persona los muestra primero; la campanita sigue recordando que hay algo pendiente. Lo demás (ya se pagó, ya llegó…) es solo información. */
 var TAREA_DE = [
   ['em-rech-', null], ['recheq-', null],
-  ['sd-apr-', 'Aprobar', 1], ['sd-ver-', 'Aprobar', 1], ['sd-pag-', 'Pagar', 1], ['sd-dev-', 'Corregir', 1], ['val-', 'Validar', 1], ['rec-', 'Recibir efectivo', 1], ['banco-', 'Confirmar', 1],
+  ['sd-apr-', 'Aprobar', 1], ['sd-ver-', 'Verificar', 1], ['sd-aut-', 'Autorizar', 1], ['sd-ok-', 'Proceder', 2], ['sd-pag-', 'Pagar', 1], ['sd-dev-', 'Corregir', 1], ['val-', 'Validar', 1], ['rec-', 'Recibir efectivo', 1], ['banco-', 'Confirmar', 1],
   ['rech-', 'Corregir', 1], ['ocdev-', 'Corregir', 1], ['oc-cot-', 'Cotizar', 1], ['oc-pagar-', 'Pagar', 1], ['pres-por-', 'Aprobar', 1], ['rep-', 'Pagar', 1], ['dif-caja-', 'Revisar', 1],
   ['peq-', 'Decidir', 2], ['confeq-', 'Confirmar', 2], ['revq-', 'Revisar', 2], ['asigeq-', 'Confirmar', 2], ['pendl-', 'Despachar', 2], ['pendso-', 'Ordenar', 2], ['pendsin-', 'Revisar', 2],
   ['nueva-', 'Aceptar', 2], ['cargar-', 'Despachar', 2], ['cam-', 'Recibir', 2], ['dif-', 'Aclarar', 2], ['de-', 'Decidir', 2], ['perm-r-', 'Decidir', 2], ['cq-', 'Responder', 2],
@@ -13399,5 +13329,209 @@ function tareaDeAviso(a) {
   for (var i = 0; i < TAREA_DE.length; i++) if (id.indexOf(TAREA_DE[i][0]) === 0) return TAREA_DE[i][1] ? { accion: TAREA_DE[i][1], prio: TAREA_DE[i][2] } : null;
   return null;
 }
-/** Quién aprueba una solicitud de pago, según el rango de quien la pidió: el administrador aprueba lo de Álvaro y lo de Daniel; el director financiero, lo demás. */
-function aprobadorDe(nombreSolicitante) { var r = rolDe(nombreSolicitante); return r === 'operaciones' || r === 'finanzas' ? 'admin' : 'finanzas'; }
+
+/* ════════════ SOLICITUDES DE PAGO: el camino de aprobación según el rango de quien pide ════════════
+ *  · Gerentes, Samuel y Paulino (los de Álvaro):  Álvaro verifica → el administrador autoriza → Daniel aprueba el pago → contabilidad entrega el dinero.
+ *  · Los directores (Álvaro, Amalia):             el administrador autoriza → Daniel aprueba el pago → contabilidad.
+ *  · Daniel (director financiero):                el administrador autoriza → contabilidad.
+ *  · Si NO requiere dinero (un traslado, algo con lo que ya contamos): solo pasa por el administrador (y por Álvaro, si es de los suyos);
+ *    al autorizarse, la solicitud vuelve a quien la pidió para que proceda. */
+var FONDO_ADM = 'Por autorizar', FONDO_AUT = 'Autorizada';
+var ETAPA_ESTADO = { ver: FONDO_EST.VER, adm: FONDO_ADM, fin: FONDO_EST.PED, con: FONDO_EST.APR };
+function rutaFondo(rol, dinero) {
+  var r = [];
+  if (rol === 'gerente' || rol === 'bodega' || rol === 'produccion') r.push('ver');
+  if (rol !== 'admin') r.push('adm');
+  if (dinero) { if (rol !== 'finanzas') r.push('fin'); r.push('con'); }
+  return r;
+}
+function estadoInicialFondo(rol, dinero) { var r = rutaFondo(rol, dinero); return r.length ? ETAPA_ESTADO[r[0]] : FONDO_AUT; }
+function estadoSiguienteFondo(x, etapa) { var r = rutaFondo(rolDe(x.por), x.reqDinero), n = r[r.indexOf(etapa) + 1]; return n ? ETAPA_ESTADO[n] : FONDO_AUT; }
+function estadoTxtFondo(x) {
+  var m = {}; m[FONDO_EST.VER] = 'Por verificar'; m[FONDO_ADM] = 'Por autorizar'; m[FONDO_EST.PED] = 'Por aprobar el pago'; m[FONDO_EST.APR] = 'Por pagar';
+  m[FONDO_EST.PAG] = 'Pagada'; m[FONDO_EST.FIN] = 'Terminada'; m[FONDO_AUT] = 'Autorizada'; m[FONDO_EST.RECH] = 'Rechazada'; m[FONDO_DEV] = 'Devuelta';
+  return m[x.estado] || x.estado;
+}
+function etapaTxtFondo(x) {
+  var m = {}; m[FONDO_EST.VER] = 'Espera al director operativo'; m[FONDO_ADM] = 'Espera al administrador'; m[FONDO_EST.PED] = 'Espera al director financiero (aprobar el pago)';
+  m[FONDO_EST.APR] = 'Espera a contabilidad (entregar el dinero)'; m[FONDO_AUT] = 'Autorizada: ya puede proceder'; m[FONDO_DEV] = 'Devuelta: hay que corregirla';
+  return m[x.estado] || '';
+}
+/** Los pasos de una solicitud, según su camino: quién hizo cada uno y cuándo. */
+function pasosFondo(x) {
+  var ruta = rutaFondo(rolDe(x.por), x.reqDinero), idx = function (e) { var i = ruta.indexOf(e); return i < 0 ? ruta.length : i; };
+  var ei = ruta.length;
+  if (x.estado === FONDO_EST.VER) ei = idx('ver'); else if (x.estado === FONDO_ADM) ei = idx('adm'); else if (x.estado === FONDO_EST.PED) ei = idx('fin'); else if (x.estado === FONDO_EST.APR) ei = idx('con');
+  else if (x.estado === FONDO_DEV) ei = -1;
+  else if (x.estado === FONDO_EST.RECH) { var er = x.etapaRech || ({ operaciones: 'ver', admin: 'adm', finanzas: 'fin' }[rolDe(x.aprPor)] || 'fin'); ei = idx(er); }
+  var datos = { ver: ['Verificada', x.verPor, x.verEn], adm: ['Autorizada', x.autPor, x.autEn], fin: ['Aprobada', x.aprPor, x.aprEn], con: ['Pagada', x.pagPor, x.pagEn] };
+  var pasos = [{ n: 'Pedida', por: x.por, en: x.en }];
+  ruta.forEach(function (e, k) { var d = datos[e], hecho = k < ei; pasos.push({ n: d[0], por: hecho ? d[1] : '', en: hecho ? (d[2] || x.en) : '' }); });
+  if (x.reqDinero) { if (rolDe(x.por) !== 'cmo' && !esEquipoBodega({ rol: rolDe(x.por) })) pasos.push({ n: 'Terminada', por: '', en: x.finEn }); }
+  else pasos.push({ n: 'Hecha', por: x.por, en: x.finEn });
+  return pasos;
+}
+function listaFondos(cred) {
+  permiteCmo();
+  var yo = quien(cred);
+  if (!veFondos(yo)) throw new Error('Su usuario no ve las solicitudes.');
+  var mes = hoyISO().slice(0, 7), ls = filasFondos().reverse(), soloSuyas = yo.rol === 'gerente' || yo.cmo || esEquipoBodega(yo);
+  if (soloSuyas) ls = ls.filter(function (x) { return x.por === yo.nombre; });          // el gerente, la CMO y el equipo de bodega ven las suyas
+  var p = null;
+  if (!soloSuyas) { try { p = presupuestoMes({ usuario: yo.nombre, pin: cred.pin }, mes); } catch (e) {} }
+  var primer = estadoInicialFondo(yo.esAdmin ? 'admin' : rolDe(yo.nombre), true);
+  var r = { solicitudes: ls.slice(0, 60).map(function (x) {
+      x.rolSol = rolDe(x.por);
+      x.deBodega = esEquipoBodega({ rol: x.rolSol });
+      x.deGerente = x.rolSol === 'gerente' || (!x.deBodega && (!!x.verPor || x.estado === FONDO_EST.VER));
+      x.deCmo = x.rolSol === 'cmo';
+      x.estadoTxt = estadoTxtFondo(x); x.etapa = etapaTxtFondo(x); x.pasos = pasosFondo(x);
+      x.puedeVerificar = (yo.rol === 'operaciones' || yo.esAdmin) && x.estado === FONDO_EST.VER;
+      x.puedeAutorizar = !!yo.esAdmin && x.estado === FONDO_ADM;
+      x.puedeAprobar = (yo.rol === 'finanzas' || yo.esAdmin) && x.estado === FONDO_EST.PED;
+      x.puedePagar = (esContador(yo) || yo.esAdmin) && x.estado === FONDO_EST.APR;
+      x.puedeDevolver = (esContador(yo) || yo.esAdmin) && x.estado === FONDO_EST.APR;
+      x.puedeCorregir = x.por === yo.nombre && x.estado === FONDO_DEV;
+      x.devuelta = x.devEn && x.estado === FONDO_DEV ? { por: x.devPor, en: x.devEn, motivo: x.devMotivo, montoAntes: x.montoAntes } : null;
+      x.corregida = !!(x.devEn && x.estado !== FONDO_DEV && x.montoAntes && x.montoAntes !== x.monto);
+      x.puedeTerminar = (yo.rol === 'operaciones' || yo.esAdmin) && x.estado === FONDO_EST.PAG && !x.deCmo && !x.deBodega;
+      x.puedeHecha = (x.por === yo.nombre || !!yo.esAdmin) && x.estado === FONDO_AUT;
+      x.puedeAdjuntar = (yo.rol === 'operaciones' || yo.esAdmin || esContador(yo) || (x.por === yo.nombre && (x.estado === FONDO_EST.VER || x.estado === FONDO_ADM || (yo.cmo && x.estado === FONDO_EST.PED)))) &&
+        x.estado !== FONDO_EST.FIN && x.estado !== FONDO_EST.RECH && x.estado !== FONDO_AUT;
+      if (p) { var u = p.unidades.filter(function (y) { return y.nombre === x.unidad; })[0];
+        var rb = u && u.rubros.filter(function (q) { return q.rubro === rubroDeFondo(x.tipo); })[0];
+        if (rb) x.presupuesto = { rubro: rb.rubro, presupuesto: rb.presupuesto, gastado: rb.gastado }; }
+      return x; }),
+    tipos: yo.cmo ? Object.keys(FONDO_TIPOS_CMO) : esEquipoBodega(yo) ? Object.keys(FONDO_TIPOS_BODEGA) : Object.keys(FONDO_TIPOS),
+    unidades: (yo.rol === 'gerente' || yo.cmo) ? [nombreUnidad(yo.sucursal)] : esEquipoBodega(yo) ? [nombreUnidad('bodega')] : UNIDADES.map(function (u) { return u.nombre; }),
+    formas: FORMAS_PAGO, puedePedir: yo.rol === 'operaciones' || yo.esAdmin || yo.rol === 'finanzas' || yo.rol === 'gerente' || yo.cmo || esEquipoBodega(yo),
+    esGerente: yo.rol === 'gerente', esCmo: !!yo.cmo, esDirector: yo.rol === 'operaciones' || yo.rol === 'finanzas', esBodega: esEquipoBodega(yo),
+    pendientes: { devueltas: ls.filter(function (x) { return x.estado === FONDO_DEV; }).length, verificar: ls.filter(function (x) { return x.estado === FONDO_EST.VER; }).length,
+      autorizar: ls.filter(function (x) { return x.estado === FONDO_ADM; }).length, aprobar: ls.filter(function (x) { return x.estado === FONDO_EST.PED; }).length,
+      pagar: ls.filter(function (x) { return x.estado === FONDO_EST.APR; }).length } };
+  r.botonPedir = primer === FONDO_EST.VER ? 'Enviar al director operativo' : primer === FONDO_ADM ? 'Enviar al administrador' : 'Enviar a finanzas para aprobar';
+  r.ayudaPedir = primer === FONDO_EST.VER ? 'Su solicitud la verifica el director operativo, la autoriza el administrador, la aprueba el director financiero y contabilidad entrega el dinero.'
+    : yo.rol === 'finanzas' ? 'Lo que usted pide lo autoriza el administrador y después contabilidad lo paga.'
+    : 'Lo que usted pide lo autoriza el administrador, lo aprueba el director financiero y después contabilidad lo paga.';
+  r.ayudaSinDinero = 'Si es un traslado o algo con lo que ya contamos, no necesita dinero: solo pasa' + (primer === FONDO_EST.VER ? ' por el director operativo y' : '') + ' por el administrador, y al autorizarse le regresa para que proceda.';
+  return r;
+}
+function pedirFondos(cred, d) {
+  permiteCmo();
+  var yo = quien(cred), rol = rolDe(yo.nombre) || yo.rol;
+  if (yo.rol !== 'operaciones' && !yo.esAdmin && yo.rol !== 'finanzas' && yo.rol !== 'gerente' && !yo.cmo && !esEquipoBodega(yo)) throw new Error('Las solicitudes las hacen los gerentes, la bodega, producción, los directores y el administrador.');
+  d = d || {};
+  var conDinero = !(d.dinero === false || String(d.dinero).toLowerCase() === 'no');
+  if (!(yo.cmo ? FONDO_TIPOS_CMO[d.tipo] : esEquipoBodega(yo) ? FONDO_TIPOS_BODEGA[d.tipo] : FONDO_TIPOS[d.tipo])) throw new Error('Escoja qué tipo de solicitud es.');
+  if (yo.rol === 'gerente' || yo.cmo) d.unidad = nombreUnidad(yo.sucursal);
+  if (esEquipoBodega(yo)) d.unidad = nombreUnidad('bodega');
+  if (yo.cmo && conDinero && d.tipo !== 'Sueldo' && !(d.archivo && d.archivo.datos)) throw new Error('Adjunte la factura (PDF o foto): contabilidad la necesita para pagar.');
+  var u = null; UNIDADES.forEach(function (x) { if (x.nombre === d.unidad) u = x; });
+  if (!u) throw new Error('Escoja la sucursal.');
+  var que = String(d.que || '').trim().slice(0, 300);
+  if (que.length < 8) throw new Error('Describa qué se necesita y por qué.');
+  var monto = conDinero ? r2(String(d.monto || '').replace(/[Q,\s]/g, '')) : 0;
+  if (conDinero && !(monto > 0)) throw new Error('Escriba cuánto dinero se necesita (aproximado). Si no hace falta dinero, marque «No necesita dinero».');
+  var urg = ['Normal', 'Urgente'].indexOf(d.urgencia) >= 0 ? d.urgencia : 'Normal';
+  var arch = d.archivo && d.archivo.datos ? guardaArchivo(d.archivo, 'Solicitud de ' + yo.nombre + (yo.cmo ? ' · factura' : ' · cotización'), yo.cmo ? 'La factura' : '') : { url: '', nombre: '' };
+  var estado0 = estadoInicialFondo(yo.esAdmin ? 'admin' : rol, conDinero);
+  var lock = LockService.getScriptLock();
+  lock.waitLock(15000); _LEE = {};
+  var numero;
+  try {
+    var max = 0;
+    filasFondos().forEach(function (x) { var m = /^(?:SD|RQ|SO)-(\d+)$/.exec(x.numero); if (m) max = Math.max(max, +m[1]); });
+    numero = 'SO-' + ('0000' + (max + 1)).slice(-4);
+    hojaFondos().appendRow([numero, new Date(), yo.nombre, d.tipo, u.nombre, que, String(d.proveedor || '').slice(0, 60), monto, urg, estado0,
+      '', '', '', '', '', '', '', '', '', '', '', '', arch.url, arch.nombre, '', '', '', '', '', '', '', conDinero ? 'Sí' : 'No', '', '', '', '']);
+  } finally { lock.releaseLock(); }
+  var r = listaFondos(cred); r.ok = true;
+  var a = estado0 === FONDO_EST.VER ? ' enviada al director operativo para que la verifique' : estado0 === FONDO_ADM ? ' enviada al administrador para que la autorice'
+    : estado0 === FONDO_EST.PED ? ' enviada al director financiero para que apruebe el pago' : ' registrada y autorizada';
+  r.mensaje = numero + a + (conDinero ? ': ' + dinero(monto) : ' (no necesita dinero)') + '.';
+  return r;
+}
+function verificarFondos(cred, numero, confirmar, comentario) {
+  var yo = quien(cred);
+  if (yo.rol !== 'operaciones' && !yo.esAdmin) throw new Error('Lo de los gerentes, la bodega y producción lo verifica el director operativo.');
+  var x = buscaFondo(numero);
+  if (x.estado !== FONDO_EST.VER) throw new Error('Esa solicitud ya no está por verificar (' + x.estado.toLowerCase() + ').');
+  comentario = String(comentario || '').trim().slice(0, 200);
+  if (!confirmar && comentario.length < 4) throw new Error('Escriba por qué se rechaza.');
+  var h = hojaFondos();
+  h.getRange(x.fila, 25, 1, 3).setValues([[yo.nombre, new Date(), comentario]]);
+  if (confirmar) h.getRange(x.fila, 10).setValue(estadoSiguienteFondo(x, 'ver'));
+  else { h.getRange(x.fila, 10, 1, 4).setValues([[FONDO_EST.RECH, yo.nombre, new Date(), comentario]]); h.getRange(x.fila, 36).setValue('ver'); }
+  var r = listaFondos(cred); r.ok = true;
+  r.mensaje = numero + (confirmar ? ' verificada. Ahora la autoriza el administrador.' : ' rechazada. ' + x.por + ' lo verá en su campanita.');
+  return r;
+}
+/** El administrador autoriza (o rechaza). Sin dinero, aquí termina el camino y la solicitud regresa a quien la pidió para que proceda. */
+function autorizarFondos(cred, numero, autorizar, comentario) {
+  var yo = quien(cred);
+  if (!yo.esAdmin) throw new Error('Las solicitudes las autoriza el administrador.');
+  var x = buscaFondo(numero);
+  if (x.estado !== FONDO_ADM) throw new Error('Esa solicitud no está por autorizar (' + estadoTxtFondo(x).toLowerCase() + ').');
+  comentario = String(comentario || '').trim().slice(0, 200);
+  if (!autorizar && comentario.length < 4) throw new Error('Escriba por qué se rechaza.');
+  var h = hojaFondos();
+  h.getRange(x.fila, 33, 1, 3).setValues([[yo.nombre, new Date(), comentario]]);
+  var sig = autorizar ? estadoSiguienteFondo(x, 'adm') : FONDO_EST.RECH;
+  if (autorizar) h.getRange(x.fila, 10).setValue(sig);
+  else { h.getRange(x.fila, 10, 1, 4).setValues([[FONDO_EST.RECH, yo.nombre, new Date(), comentario]]); h.getRange(x.fila, 36).setValue('adm'); }
+  var r = listaFondos(cred); r.ok = true;
+  r.mensaje = numero + (!autorizar ? ' rechazada. ' + x.por + ' lo verá en su campanita.' : sig === FONDO_AUT ? ' autorizada. ' + x.por + ' ya puede proceder.'
+    : sig === FONDO_EST.PED ? ' autorizada. Ahora la aprueba el director financiero.' : ' autorizada. Contabilidad entrega el dinero.');
+  return r;
+}
+function aprobarFondos(cred, numero, aprobar, comentario) {
+  var yo = quien(cred);
+  if (yo.rol !== 'finanzas' && !yo.esAdmin) throw new Error('El pago lo aprueba el director financiero.');
+  var x = buscaFondo(numero);
+  if (x.estado !== FONDO_EST.PED) throw new Error(x.estado === FONDO_ADM || x.estado === FONDO_EST.VER ? 'Todavía falta que la autoricen (' + estadoTxtFondo(x).toLowerCase() + ').' : 'Esa solicitud ya está ' + estadoTxtFondo(x).toLowerCase() + '.');
+  comentario = String(comentario || '').trim().slice(0, 200);
+  if (!aprobar && comentario.length < 4) throw new Error('Escriba por qué se rechaza.');
+  hojaFondos().getRange(x.fila, 10, 1, 4).setValues([[aprobar ? FONDO_EST.APR : FONDO_EST.RECH, yo.nombre, new Date(), comentario]]);
+  if (!aprobar) hojaFondos().getRange(x.fila, 36).setValue('fin');
+  var r = listaFondos(cred); r.ok = true; r.mensaje = numero + (aprobar ? ' aprobada. El contador entrega el dinero.' : ' rechazada. ' + x.por + ' lo verá en su campanita.');
+  return r;
+}
+/** Quien pidió (sin dinero) marca que ya lo hizo. */
+function hechaFondos(cred, numero, nota) {
+  var yo = quien(cred), x = buscaFondo(numero);
+  if (x.por !== yo.nombre && !yo.esAdmin) throw new Error('La marca ' + x.por + ', quien la pidió.');
+  if (x.estado !== FONDO_AUT) throw new Error('Esa solicitud no está autorizada, o ya se marcó.');
+  hojaFondos().getRange(x.fila, 10).setValue(FONDO_EST.FIN);
+  hojaFondos().getRange(x.fila, 21, 1, 2).setValues([[new Date(), String(nota || '').slice(0, 200)]]);
+  var r = listaFondos(cred); r.ok = true; r.mensaje = numero + ' marcada como hecha.';
+  return r;
+}
+
+/* ════════════ DANIEL: VE TODO, NO CAMBIA NADA ════════════ */
+function soloVerCal(ac) {
+  if (ac && ac.soloVer) throw new Error('Usted puede ver los calendarios y las planillas, pero no cambiarlos. Si ve algo raro, pregúntele al director o avise al administrador.');
+}
+
+/* ════════════ PRESUPUESTOS: REINICIAR UN MES ════════════
+ * Borra todo lo del mes (presupuesto por sucursal y rubro, su aprobación, y los presupuestos de área) para volver a empezar.
+ * El presupuesto es un indicador, no el pago real: los pagos salen de las planillas y de las solicitudes. Solo el administrador, escribiendo REINICIAR. */
+function reiniciarPresupuestos(cred, mes, confirmacion) {
+  var yo = exigeAdmin(cred);
+  mes = /^\d{4}-\d{2}$/.test(String(mes || '')) ? String(mes) : hoyISO().slice(0, 7);
+  if (String(confirmacion || '').trim().toUpperCase() !== 'REINICIAR') throw new Error('Para borrar los presupuestos de ' + periodoTxt(mes) + ', escriba REINICIAR.');
+  var mesDe = function (v) { return v instanceof Date ? Utilities.formatDate(v, ZONA, 'yyyy-MM') : String(v == null ? '' : v).slice(0, 7); };
+  var borra = function (h, ancho) {
+    if (!h || h.getLastRow() < 2) return 0;
+    var vals = h.getRange(2, 1, h.getLastRow() - 1, Math.min(ancho, h.getLastColumn())).getValues(), k = 0;
+    for (var i = vals.length - 1; i >= 0; i--) if (mesDe(vals[i][0]) === mes) { h.deleteRow(i + 2); k++; }
+    return k;
+  };
+  var lock = LockService.getScriptLock(); lock.waitLock(20000); _LEE = {};
+  var n = 0;
+  try { n += borra(hojaPres(), H_PRES.length); n += borra(hojaPresEstado(), H_PRESE.length); n += borra(hojaPArea(), H_PAREA.length); n += borra(hojaPAreaEst(), H_PAREA_EST.length); }
+  finally { lock.releaseLock(); }
+  olvidaLectura();
+  var r = presupuestoMes(cred, mes); r.ok = true;
+  r.mensaje = 'Presupuestos de ' + periodoTxt(mes) + ' reiniciados (' + n + (n === 1 ? ' renglón borrado' : ' renglones borrados') + '). Se puede volver a armar cuando haya datos reales.';
+  return r;
+}

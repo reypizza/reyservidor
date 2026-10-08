@@ -72,7 +72,8 @@ Si este servidor se cae, **la app sigue funcionando** con Apps Script (respaldo 
 | `SERVER_TOKEN` | Clave secreta compartida con Apps Script (Fase 1) | la inventa Render |
 | `PIN_PEPPER` | Clave secreta para transformar los PIN (Fase 1) | la inventa Render |
 | `SYNC_MINUTES` | Cada cuántos minutos aprende de la hoja Usuarios | `2` |
-| `LECTURAS_MODO` | `apagado` (por defecto), `sombra` o `nativa` (ver Fase 3) | `apagado` |
+| `LECTURAS_MODO` | `apagado` (por defecto), `sombra`, `auto` (recomendado) o `nativa` (ver Fase 3) | `apagado` |
+| `MIN_GRADUAR` | modo `auto`: cuántas comparaciones seguidas iguales necesita una pantalla para contestarse aquí | `12` |
 | `MUESTRA_VERIFICACION` | En modo `nativa`, qué fracción de respuestas se compara después con Google (0 a 1) | `0.05` |
 | `SYNC_KPI_SEGUNDOS` | Cada cuántos segundos revisa la hoja de indicadores (con la app en uso; `0` = nunca) | `60` |
 | `LIMITE_ENTRAR_POR_MINUTO` | Intentos de entrar por IP por minuto | `40` |
@@ -136,7 +137,8 @@ Usa la misma clave `SERVER_TOKEN` de la Fase 1, así que solo hay que **actualiz
 1. Publique el `Codigo.gs` nuevo en Apps Script (nueva versión) y suba los archivos del zip a GitHub. En ese momento **todavía no cambia nada**: el modo por defecto es «apagado».
 2. En Render → su servicio → **Environment → Add Environment Variable**: `LECTURAS_MODO` = `sombra`. Render reinicia. El servidor trae una copia de todas las pestañas (1 a 3 minutos la primera vez; después queda guardada, cifrada, en la base de datos).
 3. Use la app unos días como siempre. Abra `https://rey-servidor.onrender.com/comparaciones?clave=SU_ADMIN_CLAVE`: dice, por función, cuántas veces la respuesta del servidor fue **idéntica** a la de Google, con los tiempos de cada uno, y la última diferencia si hubo.
-4. Cuando casi todo coincide, cambie `LECTURAS_MODO` a `nativa`. Las lecturas pasan a contestarse aquí. Lo que guarda datos (registrar, borrar…) se detecta solo y sigue yendo a Google; la copia se actualiza sola después de cada cambio.
+4. **Recomendado:** cambie `LECTURAS_MODO` a `auto`. Cada pantalla empieza contestándola Google y comparándose aquí; cuando sus últimas 12 comparaciones salen iguales, pasa sola a contestarse aquí (rápido). Una sola diferencia la regresa a Google. En `/estado?clave=…` se ve la lista `graduadas`. (O, si prefiere decidirlo usted, cambie a `nativa` cuando casi todo coincida.)
+5. Con `nativa`, Las lecturas pasan a contestarse aquí. Lo que guarda datos (registrar, borrar…) se detecta solo y sigue yendo a Google; la copia se actualiza sola después de cada cambio.
 
 **Salvavidas:** si algo falla, hay datos viejos o el código no coincide, contesta Google. Si una función da respuestas distintas 3 veces, se deja de usar aquí 30 minutos. Para apagarlo todo: `LECTURAS_MODO` = `apagado` (o bórrela).
 

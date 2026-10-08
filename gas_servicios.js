@@ -6,16 +6,33 @@ const ZONA_DEF = 'America/Guatemala';
 const MESES = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
 const DIAS = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
 
-function partes(d, tz) {
-  const f = new Intl.DateTimeFormat('en-GB', { timeZone: tz || ZONA_DEF, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hourCycle: 'h23', weekday: 'long' });
-  const o = {}; for (const p of f.formatToParts(d)) o[p.type] = p.value; return o;
+const DIAS_EN = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+const FORMATEADORES = new Map();
+function formateador(tz) {                       // crear un Intl.DateTimeFormat es caro: se crea uno por zona y se reutiliza
+  let f = FORMATEADORES.get(tz);
+  if (!f) { f = new Intl.DateTimeFormat('en-GB', { timeZone: tz, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hourCycle: 'h23', weekday: 'long' }); FORMATEADORES.set(tz, f); }
+  return f;
 }
+const dos = (n) => (n < 10 ? '0' + n : '' + n);
+const DESDE_2007 = Date.UTC(2007, 0, 1);
+function partes(d, tz) {
+  const zona = tz || ZONA_DEF, ms = d.getTime();
+  if (zona === 'America/Guatemala' && ms >= DESDE_2007) {       // Guatemala está en UTC−6 todo el año desde 2007: sin Intl, solo aritmética
+    const t = new Date(ms - 6 * 3600000);
+    return { year: '' + t.getUTCFullYear(), month: dos(t.getUTCMonth() + 1), day: dos(t.getUTCDate()), hour: dos(t.getUTCHours()), minute: dos(t.getUTCMinutes()), second: dos(t.getUTCSeconds()), weekday: DIAS_EN[t.getUTCDay()] };
+  }
+  const o = {}; for (const p of formateador(zona).formatToParts(d)) o[p.type] = p.value; return o;
+}
+const TOKENS = /'([^']*)'|yyyy|yy|MMMM|MMM|MM|M|dd|d|HH|H|hh|h|mm|ss|SSS|a|EEEE|EEE/g;
+const CACHE_FMT = new Map();
 /** Los patrones de Java que usa la app: yyyy yy MM M dd d HH H hh h mm ss SSS a EEE EEEE MMM MMMM  (y texto entre comillas simples) */
 export function formatDate(d, tz, patron) {
   if (!(d instanceof Date) || isNaN(d)) throw new Error('Argumentos no válidos: formatDate');
-  const p = partes(d, tz); const ms = String(d.getTime() % 1000).padStart(3, '0'); const h12 = (Number(p.hour) % 12) || 12;
-  const dowIdx = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'].indexOf(p.weekday);
-  return String(patron).replace(/'([^']*)'|yyyy|yy|MMMM|MMM|MM|M|dd|d|HH|H|hh|h|mm|ss|SSS|a|EEEE|EEE/g, (t, lit) => {
+  const llave = d.getTime() + '|' + (tz || '') + '|' + patron;
+  const hit = CACHE_FMT.get(llave); if (hit !== undefined) return hit;
+  const p = partes(d, tz); const ms = String(((d.getTime() % 1000) + 1000) % 1000).padStart(3, '0'); const h12 = (Number(p.hour) % 12) || 12;
+  const dowIdx = DIAS_EN.indexOf(p.weekday);
+  const r = String(patron).replace(TOKENS, (t, lit) => {
     if (lit !== undefined) return lit === '' ? "'" : lit;
     switch (t) {
       case 'yyyy': return p.year; case 'yy': return p.year.slice(-2); case 'MM': return p.month; case 'M': return String(Number(p.month));
@@ -25,6 +42,9 @@ export function formatDate(d, tz, patron) {
       case 'SSS': return ms; case 'a': return Number(p.hour) < 12 ? 'AM' : 'PM'; case 'EEEE': return DIAS[dowIdx]; case 'EEE': return DIAS[dowIdx].slice(0, 3);
     } return t;
   });
+  if (CACHE_FMT.size > 60000) CACHE_FMT.clear();
+  CACHE_FMT.set(llave, r);
+  return r;
 }
 
 class Blob {

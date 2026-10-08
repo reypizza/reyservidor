@@ -1,5 +1,6 @@
 import http from 'node:http';
 import crypto from 'node:crypto';
+import zlib from 'node:zlib';
 import { crearPuerta } from './puerta.js';
 import { crearOrigen } from './origen.js';
 import { crearBitacora } from './bitacora.js';
@@ -26,16 +27,30 @@ export function crearServidor({ cfg, pool, fetchFn, reloj }) {
   function cabeceras(req, extra = {}) {
     const h = { 'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff', ...extra };
     const o = req.headers.origin;
-    if (origenPermitido(o)) { h['Access-Control-Allow-Origin'] = o; h['Vary'] = 'Origin'; }
+    if (origenPermitido(o)) { h['Access-Control-Allow-Origin'] = o; h['Vary'] = extra.Vary || 'Origin'; }
     return h;
   }
   const ipDe = (req) => {
     if (cfg.confiaProxy) { const x = String(req.headers['x-forwarded-for'] || '').split(',')[0].trim(); if (x) return x; }
     return req.socket.remoteAddress || '?';
   };
+  /** Las respuestas grandes se mandan comprimidas (el JSON de «entrar» pasa de cientos de KB a unos pocos): en el teléfono, con datos móviles, es lo que más se nota. */
   const json = (req, res, estado, obj) => {
-    res.writeHead(estado, cabeceras(req, { 'Content-Type': 'application/json; charset=utf-8' }));
-    res.end(JSON.stringify(obj));
+    const cuerpo = Buffer.from(JSON.stringify(obj), 'utf8');
+    const acepta = String(req.headers['accept-encoding'] || '');
+    const h = { 'Content-Type': 'application/json; charset=utf-8', 'Vary': 'Origin, Accept-Encoding' };
+    if (cuerpo.length > 1024 && /\bbr\b|\bgzip\b/.test(acepta)) {
+      const br = /\bbr\b/.test(acepta);
+      const fin = (er, z) => {
+        if (er) { res.writeHead(estado, cabeceras(req, h)); return res.end(cuerpo); }
+        res.writeHead(estado, cabeceras(req, { ...h, 'Content-Encoding': br ? 'br' : 'gzip', 'Content-Length': z.length })); res.end(z);
+      };
+      if (br) zlib.brotliCompress(cuerpo, { params: { [zlib.constants.BROTLI_PARAM_QUALITY]: 4, [zlib.constants.BROTLI_PARAM_SIZE_HINT]: cuerpo.length } }, fin);
+      else zlib.gzip(cuerpo, { level: 6 }, fin);
+      return;
+    }
+    res.writeHead(estado, cabeceras(req, { ...h, 'Content-Length': cuerpo.length }));
+    res.end(cuerpo);
   };
   function leeCuerpo(req) {
     return new Promise((resolve, reject) => {

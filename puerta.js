@@ -40,7 +40,7 @@ export function crearPuerta({ cfg, pool, origen, bitacora, limite, usuarios, ind
     }
 
     // 1b) lecturas completas: el código de la app corre aquí sobre la copia de las hojas (solo si se encendió; por defecto está apagado)
-    if (lecturas && cfg.lecturasModo === 'nativa') {
+    if (lecturas && (cfg.lecturasModo === 'nativa' || (cfg.lecturasModo === 'auto' && await lecturas.graduada(fn)))) {
       const n = await lecturas.nativa(fn, args);
       if (n.ok) { lecturas.verificaDespues(fn, args, n.r); return fin(n.r, true); }
     }
@@ -51,7 +51,7 @@ export function crearPuerta({ cfg, pool, origen, bitacora, limite, usuarios, ind
     if (copia && r.tocadas) copia.marcaTocadas(r.tocadas);        // qué pestañas cambió esta ejecución: la copia las vuelve a traer
     const tocadas = r.tocadas || []; delete r.tocadas;
     if (indicadores && invalidaIndicadores.has(fn)) indicadores.marcaSucio();      // algo pudo cambiar en las hojas de indicadores: la copia se pone al día
-    if (lecturas && cfg.lecturasModo === 'sombra' && !tocadas.length && typeof r.ok === 'boolean') lecturas.sombra(fn, args, JSON.parse(JSON.stringify(r)), msOrigen);
+    if (lecturas && (cfg.lecturasModo === 'sombra' || cfg.lecturasModo === 'auto') && !tocadas.length && typeof r.ok === 'boolean') lecturas.sombra(fn, args, JSON.parse(JSON.stringify(r)), msOrigen);
     return fin(r, false, msOrigen);
   };
 }

@@ -29,7 +29,8 @@ export function leeConfig(env = process.env) {
     esperaPrimeraKpiMs: num(env.ESPERA_PRIMERA_KPI_MS, 6000),
     horasCompletaKpi: num(env.HORAS_COMPLETA_KPI, 6),
     // Lecturas completas con el código de la app corriendo aquí (Fase 3)
-    lecturasModo: ['sombra', 'nativa'].includes(env.LECTURAS_MODO) ? env.LECTURAS_MODO : 'apagado',   // apagado = todo como antes
+    lecturasModo: ['sombra', 'nativa', 'auto'].includes(env.LECTURAS_MODO) ? env.LECTURAS_MODO : 'apagado',   // apagado = todo como antes; auto = cada pantalla pasa sola cuando demuestra que da lo mismo que Google
+    minGraduar: Math.max(3, num(env.MIN_GRADUAR, 12)),    // modo auto: cuántas comparaciones seguidas iguales necesita una pantalla para contestarse aquí
     codigoGs: env.CODIGO_GS || '',                       // dónde está el Codigo.gs (por defecto, junto al programa)
     paginaHoja: num(env.PAGINA_HOJA, 2000),
     frescoCopiaMs: num(env.FRESCO_COPIA_MS, 120000),     // cada cuánto se verifica la copia (2 min con la app en uso)

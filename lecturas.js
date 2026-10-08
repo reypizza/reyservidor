@@ -34,6 +34,26 @@ const corto = (v) => { const t = JSON.stringify(v); return t === undefined ? 'un
 export function crearLecturas({ cfg, pool, copia, origen }) {
   let script = null, versionLocal = '', versionOk = null, versionRevisadaMs = 0, motivo = null;
   const escriben = new Set(), bloqueadas = new Map(), ventanas = new Map();      // ventanas: los últimos resultados de comparar cada función
+  /* Modo auto: una pantalla se «gradúa» (se contesta aquí) cuando sus últimas comparaciones con Google salieron todas iguales.
+   * Una sola diferencia la regresa a Google, que la sigue comparando hasta que vuelva a graduarse. */
+  const graduadas = new Set(); let graduadasMs = 0;
+  async function refrescaGraduadas(forzar) {
+    if (!pool || (!forzar && Date.now() - graduadasMs < 120000)) return;
+    graduadasMs = Date.now();
+    try {
+      const r = await pool.query(`SELECT fn, count(*)::int AS n, bool_and(igual) AS todas FROM (
+          SELECT fn, igual, row_number() OVER (PARTITION BY fn ORDER BY en DESC, id DESC) AS rn FROM comparaciones WHERE en > now() - interval '7 days') x
+        WHERE rn <= $1 GROUP BY fn`, [cfg.minGraduar]);
+      graduadas.clear();
+      r.rows.forEach((x) => { if (x.n >= cfg.minGraduar && x.todas) graduadas.add(x.fn); });
+    } catch (e) { /* si no se puede consultar, se queda como estaba */ }
+  }
+  async function graduada(fn) {
+    if (cfg.lecturasModo !== 'auto') return false;
+    await refrescaGraduadas(false);
+    const b = bloqueadas.get(fn);
+    return graduadas.has(fn) && !(b && b > Date.now()) && !escriben.has(fn);
+  }
 
   function carga() {
     if (script || cfg.lecturasModo === 'apagado') return;
@@ -81,6 +101,7 @@ export function crearLecturas({ cfg, pool, copia, origen }) {
   async function anota(fn, igual, msGoogle, msPropio, detalle) {
     // Una diferencia suelta puede ser solo el caché de Google (que a veces guarda unos minutos una respuesta). Si en las últimas 20 comparaciones
     // hubo 3 o más distintas, esa función se deja de contestar aquí durante 30 minutos.
+    if (!igual) graduadas.delete(fn);               // modo auto: una diferencia y esa pantalla vuelve a Google
     const v = ventanas.get(fn) || []; v.push(igual); if (v.length > 20) v.shift(); ventanas.set(fn, v);
     if (v.filter((x) => !x).length >= 3) { bloqueadas.set(fn, Date.now() + 30 * 60 * 1000); ventanas.set(fn, []); }
     if (!pool) return;
@@ -98,7 +119,8 @@ export function crearLecturas({ cfg, pool, copia, origen }) {
   }
   /** Modo nativa: a veces se le pregunta también a Google (después de contestar) para seguir comprobando. */
   async function verificaDespues(fn, args, rPropia) {
-    if (cfg.muestraVerificacion <= 0 || Math.random() >= cfg.muestraVerificacion) return;
+    const muestra = cfg.lecturasModo === 'auto' ? Math.max(cfg.muestraVerificacion, 0.1) : cfg.muestraVerificacion;      // en auto se sigue comparando 1 de cada 10
+    if (muestra <= 0 || Math.random() >= muestra) return;
     try {
       const t0 = Date.now(); const g = await origen.llamar({ fn, args, rid: '' }); const ms = Date.now() - t0;
       if (g._caido) return; delete g._ms; delete g._caido;
@@ -115,6 +137,7 @@ export function crearLecturas({ cfg, pool, copia, origen }) {
       FROM comparaciones WHERE en > now() - interval '7 days' GROUP BY fn ORDER BY (count(*) FILTER (WHERE NOT igual)) DESC, count(*) DESC`);
     return r.rows;
   }
-  const estado = () => ({ modo: cfg.lecturasModo, codigoCargado: !!script, versionLocal, versionCoincide: versionOk, motivo, escriben: [...escriben].sort(), bloqueadas: [...bloqueadas].filter(([, h]) => h > Date.now()).map(([f]) => f) });
-  return { nativa, sombra, verificaDespues, resumen, estado, activa, carga, anota };
+  const estado = () => ({ modo: cfg.lecturasModo, codigoCargado: !!script, versionLocal, versionCoincide: versionOk, motivo, escriben: [...escriben].sort(), bloqueadas: [...bloqueadas].filter(([, h]) => h > Date.now()).map(([f]) => f),
+    graduadas: [...graduadas].sort(), minGraduar: cfg.minGraduar });
+  return { nativa, sombra, verificaDespues, resumen, estado, activa, carga, anota, graduada, refrescaGraduadas };
 }
