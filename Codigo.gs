@@ -927,7 +927,7 @@ function doGet() {
  * mismo proyecto por POST. Solo se pueden llamar las funciones de esta lista (las mismas
  * que usa la pantalla), y cada una revisa el código de quien pregunta, igual que antes.
  * La lista la pone sola el armado; no hace falta tocarla. */
-/*API_INI*/var API_PERMITIDAS = ['abrirSolicitud', 'abrirTraslado', 'aceptarSolicitud', 'aceptarYPreparar', 'aclararDiferencia', 'activarCorreos', 'activarObligacion', 'activarProducto', 'activarProductoSucursal', 'adjuntarCotizacion', 'agregarEquipo', 'agregarProducto', 'agregarRecomendados', 'agregarRecomendadosCmo', 'agregarRubro', 'anclarProducto', 'anular', 'anularOrden', 'anularPagoImpuesto', 'anularSolicitud', 'aprobarFondos', 'aprobarPresupuesto', 'aprobarPresupuestoArea', 'asignarDescanso', 'borrarKpi', 'borrarKpiCmo', 'borrarSolicitud', 'cambiarEquipo', 'cambiarMiPin', 'cambiarPermiso', 'cancelarPermiso', 'confirmarPlanilla', 'confirmarRegistro', 'consolidado', 'copiarPresupuesto', 'costosTraslados', 'cotizarOrden', 'darDeBaja', 'datos', 'despacharSolicitudes', 'detalleGasto', 'editarProducto', 'eliminarPersonaCal', 'entrar', 'enviarEmergencia', 'enviarKpis', 'enviarKpisCmo', 'enviarSolicitud', 'enviarSugerencia', 'estadoCorreos', 'evaluarMerma', 'existencias', 'existenciasEmergencia', 'firmarTraslado', 'guardarAjustesInv', 'guardarBonoGeneral', 'guardarBonosCal', 'guardarBorradorCal', 'guardarComision', 'guardarConfigCal', 'guardarConteo', 'guardarEstudio', 'guardarHorario', 'guardarHorasApoyo', 'guardarHorasReales', 'guardarKpi', 'guardarKpiCmo', 'guardarLugar', 'guardarMando', 'guardarMedida', 'guardarMiCorreo', 'guardarMiPresupuesto', 'guardarObligacion', 'guardarOrden', 'guardarPersonaCal', 'guardarPrecios', 'guardarPresupuesto', 'guardarProducto', 'guardarProductoBodega', 'guardarProveedor', 'guardarProveedorInv', 'guardarReceta', 'guardarRepartidor', 'guardarTraslado', 'guardarTurnos', 'guardarUsuario', 'habilita', 'habilitarConteo', 'historialTraslados', 'indicadoresConta', 'leerBonoGeneral', 'leerSugerencias', 'listaBodega', 'listaCatalogo', 'listaConsultas', 'listaDiferencias', 'listaEntrada', 'listaFondos', 'listaImpuestos', 'listaKpis', 'listaKpisCmo', 'listaLugares', 'listaOrdenes', 'listaPermisos', 'listaPrecios', 'listaRepartidores', 'listaReportes', 'listaSolicitudes', 'listaUsuarios', 'llegoSolicitud', 'marcarPreparadas', 'medirAceite', 'miAvance', 'miCorreo', 'miPanel', 'miPresupuesto', 'notificaciones', 'ordenesPago', 'pagarFondos', 'pagarOrden', 'pagarRepartidor', 'pantallaCalendarios', 'pantallaConteo', 'pantallaEmergencias', 'pantallaFirmas', 'pantallaHorarios', 'pantallaKpi', 'pantallaMando', 'pantallaMant', 'pantallaMerma', 'pantallaMuestreo', 'pantallaPedidosBodega', 'pantallaProduccion', 'pantallaSolicitud', 'pantallaSugerencias', 'pdfCalendario', 'pdfOrden', 'pedirDescanso', 'pedirEmergencia', 'pedirFondos', 'pedirPermiso', 'ping', 'planillasPorPagar', 'ponPreciosGerentes', 'porConfirmar', 'preguntar', 'presupuestoMes', 'presupuestosAreas', 'probarCorreo', 'productosConfig', 'productosParaAnclar', 'productosSucursal', 'reabrirPlanilla', 'rechazarRegistro', 'recibirEfectivo', 'recibirEmergencia', 'recibirOrden', 'recibirSolicitud', 'registrarGasto', 'registrarIngreso', 'registrarKpis', 'registrarLote', 'registrarMant', 'registrarMerma', 'registrarObservacion', 'registrarPagoImpuesto', 'renombrarCategoria', 'reporteDiario', 'reporteTraslados', 'resolverDescanso', 'responderConsulta', 'responderMerma', 'resultadosKpi', 'resultadosKpiCmo', 'resultadosKpiRango', 'resultadosMuestreo', 'resumenInventario', 'resumenMes', 'revisarPermiso', 'seguimiento', 'sugerenciaCompra', 'tableroFinanzas', 'tableroKpi', 'terminarFondos', 'validarRegistro', 'ventas', 'verTraslado', 'verificarFondos', 'reiniciarPresupuestos', 'autorizarFondos', 'hechaFondos', 'listaPendientes', 'llegaPendiente', 'cancelarPendiente', 'despacharPendientes', 'devolverFondo', 'corregirFondo', 'pantallaEquipos', 'guardarEquipoA', 'bajaEquipo', 'revisarEquipos', 'confirmarRevisionEq', 'pedirEquipo', 'resolverPedidoEq', 'entregarCompraEq', 'recibirEquipo', 'devolverOrden', 'corregirOrden', 'reiniciarPrecios', 'guardarMezcla', 'registrarLoteMezcla', 'etiquetasLote', 'guardarConfigEtiquetas', 'listaKpisCoo', 'guardarKpiCoo', 'borrarKpiCoo', 'enviarKpisCoo', 'agregarRecomendadosCoo', 'resultadosKpiCoo', 'pantallaKpiCoo', 'registrarKpisCoo', 'resumenAreas', 'resumenAreasSenales', 'pantallaZonas', 'guardarZonas', 'listaKpisTec', 'guardarKpiTec', 'borrarKpiTec', 'enviarKpisTec', 'agregarRecomendadosTec', 'resultadosKpiTec', 'pantallaKpiTec', 'registrarKpisTec'];/*API_FIN*/
+/*API_INI*/var API_PERMITIDAS = ['abrirSolicitud', 'abrirTraslado', 'aceptarSolicitud', 'aceptarYPreparar', 'aclararDiferencia', 'activarCorreos', 'activarObligacion', 'activarProducto', 'activarProductoSucursal', 'adjuntarCotizacion', 'agregarEquipo', 'agregarProducto', 'agregarRecomendados', 'agregarRecomendadosCmo', 'agregarRubro', 'anclarProducto', 'anular', 'anularOrden', 'anularPagoImpuesto', 'anularSolicitud', 'aprobarFondos', 'aprobarPresupuesto', 'aprobarPresupuestoArea', 'asignarDescanso', 'borrarKpi', 'borrarKpiCmo', 'borrarSolicitud', 'cambiarEquipo', 'cambiarMiPin', 'cambiarPermiso', 'cancelarPermiso', 'confirmarPlanilla', 'confirmarRegistro', 'consolidado', 'copiarPresupuesto', 'costosTraslados', 'cotizarOrden', 'darDeBaja', 'datos', 'despacharSolicitudes', 'detalleGasto', 'editarProducto', 'eliminarPersonaCal', 'entrar', 'enviarEmergencia', 'enviarKpis', 'enviarKpisCmo', 'enviarSolicitud', 'enviarSugerencia', 'estadoCorreos', 'evaluarMerma', 'existencias', 'existenciasEmergencia', 'firmarTraslado', 'guardarAjustesInv', 'guardarBonoGeneral', 'guardarBonosCal', 'guardarBorradorCal', 'guardarComision', 'guardarConfigCal', 'guardarConteo', 'guardarEstudio', 'guardarHorario', 'guardarHorasApoyo', 'guardarHorasReales', 'guardarKpi', 'guardarKpiCmo', 'guardarLugar', 'guardarMando', 'guardarMedida', 'guardarMiCorreo', 'guardarMiPresupuesto', 'guardarObligacion', 'guardarOrden', 'guardarPersonaCal', 'guardarPrecios', 'guardarPresupuesto', 'guardarProducto', 'guardarProductoBodega', 'guardarProveedor', 'guardarProveedorInv', 'guardarReceta', 'guardarRepartidor', 'guardarTraslado', 'guardarTurnos', 'guardarUsuario', 'habilita', 'habilitarConteo', 'historialTraslados', 'indicadoresConta', 'leerBonoGeneral', 'leerSugerencias', 'listaBodega', 'listaCatalogo', 'listaConsultas', 'listaDiferencias', 'listaEntrada', 'listaFondos', 'listaImpuestos', 'listaKpis', 'listaKpisCmo', 'listaLugares', 'listaOrdenes', 'listaPermisos', 'listaPrecios', 'listaRepartidores', 'listaReportes', 'listaSolicitudes', 'listaUsuarios', 'llegoSolicitud', 'marcarPreparadas', 'medirAceite', 'miAvance', 'miCorreo', 'miPanel', 'miPresupuesto', 'notificaciones', 'ordenesPago', 'pagarFondos', 'pagarOrden', 'pagarRepartidor', 'pantallaCalendarios', 'pantallaConteo', 'pantallaEmergencias', 'pantallaFirmas', 'pantallaHorarios', 'pantallaKpi', 'pantallaMando', 'pantallaMant', 'pantallaMerma', 'pantallaMuestreo', 'pantallaPedidosBodega', 'pantallaProduccion', 'pantallaSolicitud', 'pantallaSugerencias', 'pdfCalendario', 'pdfOrden', 'pedirDescanso', 'pedirEmergencia', 'pedirFondos', 'pedirPermiso', 'ping', 'planillasPorPagar', 'ponPreciosGerentes', 'porConfirmar', 'preguntar', 'presupuestoMes', 'presupuestosAreas', 'probarCorreo', 'productosConfig', 'productosParaAnclar', 'productosSucursal', 'reabrirPlanilla', 'rechazarRegistro', 'recibirEfectivo', 'recibirEmergencia', 'recibirOrden', 'recibirSolicitud', 'registrarGasto', 'registrarIngreso', 'registrarKpis', 'registrarLote', 'registrarMant', 'registrarMerma', 'registrarObservacion', 'registrarPagoImpuesto', 'renombrarCategoria', 'reporteDiario', 'reporteTraslados', 'resolverDescanso', 'responderConsulta', 'responderMerma', 'resultadosKpi', 'resultadosKpiCmo', 'resultadosKpiRango', 'resultadosMuestreo', 'resumenInventario', 'resumenMes', 'revisarPermiso', 'seguimiento', 'sugerenciaCompra', 'tableroFinanzas', 'tableroKpi', 'terminarFondos', 'validarRegistro', 'ventas', 'verTraslado', 'verificarFondos', 'misMenus', 'menusRol', 'guardarMenusRol', 'historialInventario', 'reiniciarPresupuestos', 'autorizarFondos', 'hechaFondos', 'listaPendientes', 'llegaPendiente', 'cancelarPendiente', 'despacharPendientes', 'devolverFondo', 'corregirFondo', 'pantallaEquipos', 'guardarEquipoA', 'bajaEquipo', 'revisarEquipos', 'confirmarRevisionEq', 'pedirEquipo', 'resolverPedidoEq', 'entregarCompraEq', 'recibirEquipo', 'devolverOrden', 'corregirOrden', 'reiniciarPrecios', 'guardarMezcla', 'registrarLoteMezcla', 'etiquetasLote', 'guardarConfigEtiquetas', 'listaKpisCoo', 'guardarKpiCoo', 'borrarKpiCoo', 'enviarKpisCoo', 'agregarRecomendadosCoo', 'resultadosKpiCoo', 'pantallaKpiCoo', 'registrarKpisCoo', 'resumenAreas', 'resumenAreasSenales', 'pantallaZonas', 'guardarZonas', 'listaKpisTec', 'guardarKpiTec', 'borrarKpiTec', 'enviarKpisTec', 'agregarRecomendadosTec', 'resultadosKpiTec', 'pantallaKpiTec', 'registrarKpisTec'];/*API_FIN*/
 /** Solo contesta «aquí estoy»: sirve para despertar el servidor y medir la velocidad. No lee ni guarda nada. */
 function ping() { return { ok: true }; }
 function doPost(e) {
@@ -12075,7 +12075,7 @@ function calIncompleto(m, pendiente) {
   return r;
 }
 
-function calHtmlPdf(m, sucNombre, motivos) {
+function calHtmlPdf(m, sucNombre, motivos, soloSemana) {
   var q = m.q, h = [], colores = { am: '#FFE6A0', pm: '#14284B', ap: '#8FA6CC', ap2: '#C9D6EC' };
   /* Encabezados con colores alternos (por día y por AM/PM); en el cuerpo solo alternan las filas, para seguir el turno de cada persona. */
   var fondo = ['#F7F2E7', '#DDE5F3'];
@@ -12098,11 +12098,14 @@ function calHtmlPdf(m, sucNombre, motivos) {
   h.push('.pie{margin-top:12px;border-top:1px solid #E3DBCB;padding-top:6px;font-size:8.5px;color:#6F7686}');
   h.push('table.inc{width:100%;border-collapse:collapse;margin:0 0 8px}table.inc td{background:#C62828;color:#fff;text-align:center;padding:7px 8px;font-weight:bold;font-size:12px;letter-spacing:1px;border:0}table.inc td small{display:block;font-weight:normal;font-size:8.5px;letter-spacing:0;margin-top:2px}');
   h.push('</style></head><body>');
-  [[0, q.n1, 'Semana 1'], [q.n1, q.n, 'Semana 2']].forEach(function (b, bi) {
-    var a = b[0], z = b[1], dias = q.dias.slice(a, z), ultima = bi === 1;
-    h.push('<div' + (bi === 0 ? ' style="page-break-after:always"' : '') + '>');
+  var bloques = [[0, q.n1, 'Semana 1'], [q.n1, q.n, 'Semana 2']];
+  if (soloSemana === 1 || soloSemana === 2) bloques = [bloques[soloSemana - 1]];
+  bloques.forEach(function (b, bi) {
+    var a = b[0], z = b[1], dias = q.dias.slice(a, z), ultima = bi === bloques.length - 1;
+    h.push('<div' + (!ultima ? ' style="page-break-after:always"' : '') + '>');
     h.push('<table class="band"><tr><td style="width:52px"><img src="' + LOGO_PNG + '"></td><td><h1>REY PIZZA</h1><div class="co">CAIX, S.A.</div></td>' +
       '<td class="r">Calendario de trabajo<br>' + htm(sucNombre) + '</td></tr></table>');
+    if (soloSemana) h.push('<div style="text-align:right;font-size:9px;font-weight:bold;letter-spacing:1px;color:#1F7A4D;margin:-4px 0 6px">CALENDARIO OFICIAL</div>');
     if (motivos && motivos.length) h.push('<table class="inc"><tr><td>INFORMACIÓN INCOMPLETA<small>Muestra: el calendario aún no está terminado (' + htm(motivos.join(', ')) + '). No es el definitivo.</small></td></tr></table>');
     h.push('<h2>' + b[2] + ' · ' + dia(dias[0]).slice(0, 5) + ' al ' + dia(dias[dias.length - 1]) + ' &nbsp;<span style="font-weight:normal;color:#6F7686;font-size:10px">(' + htm(q.nombre) + ')</span></h2>');
     var enc = function (i, tx) {                            // encabezados de día: dorado y azul claro, uno sí y uno no
@@ -12148,16 +12151,39 @@ function calHtmlPdf(m, sucNombre, motivos) {
   h.push('</body></html>');
   return h.join('');
 }
-function pdfCalendario(cred, sid, fecha, pendiente) {
+function pdfCalendario(cred, sid, fecha, pendiente, opciones) {
   var yo = quien(cred), ac = calAcceso(yo);
   if (ac.sucs.indexOf(sid) < 0) throw new Error('Escoja la sucursal.');
   var m = calModelo(calDatos(), sid, fecha);
   if (!m.personas.length) throw new Error('Este calendario no tiene equipo. Agregue a las personas primero.');
-  /* Se puede descargar siempre, como muestra. Si el calendario aún no está terminado, el PDF lleva el letrero INFORMACIÓN INCOMPLETA. */
+  opciones = opciones || {};
+  var sem = opciones.tipo === 'oficial' ? (Number(opciones.semana) === 2 ? 2 : 1) : 0;
+  var base = 'Calendario ' + nombreUnidad(sid) + ' ' + m.q.corto.replace('–', '-');
+  if (sem) {
+    /* El oficial va por semana, y solo sale si ESA semana está completa (sin cambios pendientes, todos con turnos y su descanso, ningún día vacío). */
+    var faltan = calIncompletoSemana(m, sem, pendiente);
+    if (faltan.length) throw new Error('La semana ' + sem + ' todavía no está lista para el calendario oficial: ' + faltan.join(', ') + '. Puede descargar la muestra.');
+    var nombreO = base + ' Semana ' + sem + ' (oficial).pdf';
+    var blobO = Utilities.newBlob(calHtmlPdf(m, nombreUnidad(sid), [], sem), 'text/html', 'c.html').getAs('application/pdf').setName(nombreO);
+    return { ok: true, nombre: nombreO, tipo: 'application/pdf', base64: Utilities.base64Encode(blobO.getBytes()), incompleto: false, motivos: [], oficial: true, semana: sem };
+  }
+  /* La muestra es la quincena completa; si falta algo, lleva el letrero INFORMACIÓN INCOMPLETA. */
   var motivos = calIncompleto(m, pendiente);
-  var nombre = 'Calendario ' + nombreUnidad(sid) + ' ' + m.q.corto.replace('–', '-') + (motivos.length ? ' (INCOMPLETO)' : '') + '.pdf';
+  var nombre = base + (motivos.length ? ' (muestra, INCOMPLETO)' : ' (muestra)') + '.pdf';
   var blob = Utilities.newBlob(calHtmlPdf(m, nombreUnidad(sid), motivos), 'text/html', 'c.html').getAs('application/pdf').setName(nombre);
   return { ok: true, nombre: nombre, tipo: 'application/pdf', base64: Utilities.base64Encode(blob.getBytes()), incompleto: motivos.length > 0, motivos: motivos };
+}
+/** Lo que le falta a una semana para el oficial. */
+function calIncompletoSemana(m, sem, pendiente) {
+  var r = [], a = sem === 2 ? m.q.n1 : 0, z = sem === 2 ? m.q.n : m.q.n1;
+  if (pendiente) r.push('hay cambios sin guardar');
+  var sin = m.personas.filter(function (p) { return !((sem === 2 ? p.hb2 : p.hb1) > 0); }).length;
+  if (sin) r.push(sin + (sin === 1 ? ' persona sin turnos' : ' personas sin turnos'));
+  var sd = m.personas.filter(function (p) { return (sem === 2 ? p.hb2 : p.hb1) > 0 && (sem === 2 ? p.sd2 : p.sd1); }).length;
+  if (sd) r.push(sd + (sd === 1 ? ' persona sin su día de descanso' : ' personas sin su día de descanso'));
+  var vac = m.dias.slice(a, z).filter(function (d) { return d.gente === 0; }).length;
+  if (vac) r.push(vac + (vac === 1 ? ' día sin nadie' : ' días sin nadie'));
+  return r;
 }
 
 /* ── campanita ── */
@@ -12464,7 +12490,7 @@ function exportarIndicadores(q) {
 /* ════════════ COPIA COMPLETA PARA EL SERVIDOR PROPIO ════════════
  * El servidor propio guarda una copia de TODAS las pestañas y corre este mismo código sobre ella para contestar las lecturas.
  * Cada cambio que pasa por aquí avisa qué pestañas tocó («tocadas»), y el servidor solo vuelve a traer esas. */
-var VERSION_CODIGO = '2026-10-09-b';       // se cambia a mano cada vez que se cambia este archivo; el servidor compara que coincida con la suya
+var VERSION_CODIGO = '2026-10-10-a';       // se cambia a mano cada vez que se cambia este archivo; el servidor compara que coincida con la suya
 function versionCodigo() { return VERSION_CODIGO; }
 function huellaTexto(t) { return Utilities.base64Encode(Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, t)).slice(0, 22); }
 /** Un resumen barato de cada pestaña: cuántas filas y columnas tiene y una huella de sus últimas 25 filas. */
@@ -13533,5 +13559,96 @@ function reiniciarPresupuestos(cred, mes, confirmacion) {
   olvidaLectura();
   var r = presupuestoMes(cred, mes); r.ok = true;
   r.mensaje = 'Presupuestos de ' + periodoTxt(mes) + ' reiniciados (' + n + (n === 1 ? ' renglón borrado' : ' renglones borrados') + '). Se puede volver a armar cuando haya datos reales.';
+  return r;
+}
+
+/* ════════════ HISTORIAL DE INVENTARIO (auditoría) ════════════
+ * Por sucursal y por mes, producto por producto: cuánto contaron antes de pedir, cuánto pidieron, cuánto les mandaron, cuánto recibieron,
+ * con cuánto quedaron (lo contado + lo recibido) y cuánto gastaron hasta el siguiente conteo. Para revisar que no pidan de más.
+ * Lo ven el administrador, el director operativo y el director financiero. */
+function veHistorialInv(yo) { return !!yo && (yo.esAdmin || yo.rol === 'operaciones' || yo.rol === 'finanzas'); }
+function historialInventario(cred, unidadId, mes) {
+  var yo = quien(cred);
+  if (!veHistorialInv(yo)) throw new Error('El historial de inventario lo ven el administrador y los directores.');
+  var suc = UNIDADES.filter(function (u) { return u.vende; }), u = suc.filter(function (x) { return x.id === unidadId; })[0] || suc[0];
+  mes = /^\d{4}-\d{2}$/.test(String(mes || '')) ? String(mes) : hoyISO().slice(0, 7);
+  var sols = filasSol().filter(function (x) { return x.sucursal === u.nombre && x.estado !== SOL.ANU; }), porNum = {};
+  sols.forEach(function (x) { porNum[x.numero] = x; });
+  // los ciclos de cada producto: todos los pedidos (para saber el siguiente conteo aunque caiga en otro mes)
+  var ciclos = {};
+  lineasSol().forEach(function (l) {
+    var x = porNum[l.numero]; if (!x || !(l.pedido > 0 || l.enviado > 0)) return;
+    (ciclos[l.clave] = ciclos[l.clave] || { codigo: l.codigo, nombre: l.nombre, medida: l.medida, filas: [] }).filas.push({
+      numero: x.numero, fecha: x.enviadaEn, contado: l.existencia, pedido: l.pedido, enviado: l.enviado, recibido: l.recibido,
+      recibidoEn: x.recibidaEn, estado: x.estado, pendiente: pendDeLinea(l) });
+  });
+  var productos = [];
+  Object.keys(ciclos).forEach(function (k) {
+    var c = ciclos[k]; c.filas.sort(function (a, b) { return a.fecha < b.fecha ? -1 : 1; });
+    c.filas.forEach(function (f, i) {
+      f.quedo = f.recibido != null ? r3(f.contado + f.recibido) : null;          // con lo que quedó la sucursal al recibir
+      var sig = c.filas[i + 1];
+      f.gasto = f.quedo != null && sig ? r3(f.quedo - sig.contado) : null;      // lo que se usó hasta el siguiente conteo
+    });
+    var delMes = c.filas.filter(function (f) { return f.fecha.slice(0, 7) === mes; });
+    if (!delMes.length) return;
+    var suma = function (k2) { return r3(delMes.reduce(function (a, f) { return a + (Number(f[k2]) || 0); }, 0)); };
+    productos.push({ clave: k, codigo: c.codigo, nombre: c.nombre, medida: c.medida, ciclos: delMes,
+      totales: { pedido: suma('pedido'), enviado: suma('enviado'), recibido: suma('recibido'), gasto: suma('gasto') },
+      alerta: delMes.some(function (f) { return f.contado > 0 && f.pedido > 0 && f.contado >= f.pedido * 2; }) });   // pidió teniendo el doble de lo que pidió
+  });
+  productos.sort(function (a, b) { return a.nombre.localeCompare(b.nombre, 'es'); });
+  var meses = []; for (var i = 0; i < 6; i++) { var d = new Date(hoyISO().slice(0, 7) + '-15T12:00:00'); d.setMonth(d.getMonth() - i); meses.push(Utilities.formatDate(d, ZONA, 'yyyy-MM')); }
+  return { unidad: { id: u.id, nombre: u.nombre }, sucursales: suc.map(function (x) { return { id: x.id, nombre: x.nombre }; }), mes: mes, mesTxt: periodoTxt(mes), meses: meses,
+    productos: productos, pedidos: sols.filter(function (x) { return x.enviadaEn.slice(0, 7) === mes; }).length };
+}
+
+/* ════════════ MENÚS POR ROL ════════════
+ * El administrador decide qué menús y secciones ve cada rol (no cada persona): lo que se apaga desaparece del menú de todos los de ese rol.
+ * El contador es su propio perfil (dentro del rol «registro», los que confirman ingresos). Por defecto el contador solo ve lo de pagar. */
+var H_MENUS = ['Perfil', 'Apagados (JSON)', 'Cambiado por', 'Cambiado en'];
+var PERFILES_MENU = [['gerente', 'Gerente'], ['bodega', 'Bodega'], ['produccion', 'Producción'], ['operaciones', 'Director operativo'], ['finanzas', 'Director financiero'],
+  ['contador', 'Contador'], ['registro', 'Registro (caja)'], ['cmo', 'Marketing (CMO)'], ['auxiliar', 'Auxiliar'], ['dueno', 'Dueños']];
+var MENUS_DEFECTO = { contador: ['inicio', 'registrar', 'reportes', 'conta:resumen'] };     // el contador: solo pagos (Daniel)
+function hojaMenus(ss) {
+  ss = ss || libro();
+  var h = ss.getSheetByName('Menús por rol');
+  if (!h) { h = hojaLimpia(ss, 'Menús por rol', H_MENUS); h.getRange('D:D').setNumberFormat('dd/mm/yyyy hh:mm'); h.setColumnWidth(2, 420); }
+  return h;
+}
+function perfilDe(yo) { return yo.esAdmin ? 'admin' : (yo.rol === 'registro' && yo.recibe) ? 'contador' : yo.rol; }
+function menusApagados() {
+  var out = JSON.parse(JSON.stringify(MENUS_DEFECTO)), h = libro().getSheetByName('Menús por rol');
+  if (h && h.getLastRow() > 1) leeTodo(h, H_MENUS.length).forEach(function (r) { var k = String(r[0] || ''); if (!k) return; try { out[k] = JSON.parse(String(r[1] || '[]')) || []; } catch (e) {} });
+  return out;
+}
+/** Lo que tiene apagado mi perfil (la app lo esconde del menú). */
+function misMenus(cred) {
+  permiteAux(); permiteCmo();
+  var yo = quien(cred), p = perfilDe(yo);
+  return { perfil: p, apagados: p === 'admin' ? [] : (menusApagados()[p] || []) };
+}
+function menusRol(cred) {
+  exigeAdmin(cred);
+  var ap = menusApagados(), us = usuariosCache().filter(function (u) { return u.activo; });
+  return { perfiles: PERFILES_MENU.map(function (x) {
+      var n = us.filter(function (u) { return x[0] === 'contador' ? (u.rol === 'registro' && u.confirma) : x[0] === 'registro' ? (u.rol === 'registro' && !u.confirma) : u.rol === x[0]; }).length;
+      return { id: x[0], nombre: x[1], usuarios: n, apagados: ap[x[0]] || [] }; }) };
+}
+function guardarMenusRol(cred, perfil, apagados) {
+  var yo = exigeAdmin(cred);
+  if (!PERFILES_MENU.some(function (x) { return x[0] === perfil; })) throw new Error('Ese rol no existe.');
+  var lista = (apagados || []).map(function (x) { return String(x).trim(); })
+    .filter(function (x, i, a) { return /^[a-z]+(:[a-z0-9]+)?$/.test(x) && x !== 'config' && a.indexOf(x) === i; }).slice(0, 80);     // Configuración nunca se apaga
+  var lock = LockService.getScriptLock(); lock.waitLock(15000); _LEE = {};
+  try {
+    var h = hojaMenus(), fila = 0;
+    if (h.getLastRow() > 1) leeTodo(h, H_MENUS.length).forEach(function (r, i) { if (String(r[0]) === perfil) fila = i + 2; });
+    var val = [[perfil, JSON.stringify(lista), yo.nombre, new Date()]];
+    if (fila) h.getRange(fila, 1, 1, 4).setValues(val); else h.appendRow(val[0]);
+  } finally { lock.releaseLock(); }
+  var r = menusRol(cred); r.ok = true;
+  var nom = PERFILES_MENU.filter(function (x) { return x[0] === perfil; })[0][1];
+  r.mensaje = 'Menús de «' + nom + '» guardados' + (lista.length ? ' (' + lista.length + ' apagados)' : '') + '. Lo verán la próxima vez que abran la app.';
   return r;
 }
