@@ -927,7 +927,7 @@ function doGet() {
  * mismo proyecto por POST. Solo se pueden llamar las funciones de esta lista (las mismas
  * que usa la pantalla), y cada una revisa el código de quien pregunta, igual que antes.
  * La lista la pone sola el armado; no hace falta tocarla. */
-/*API_INI*/var API_PERMITIDAS = ['abrirSolicitud', 'abrirTraslado', 'aceptarSolicitud', 'aceptarYPreparar', 'aclararDiferencia', 'activarCorreos', 'activarObligacion', 'activarProducto', 'activarProductoSucursal', 'adjuntarCotizacion', 'agregarEquipo', 'agregarProducto', 'agregarRecomendados', 'agregarRecomendadosCmo', 'agregarRubro', 'anclarProducto', 'anular', 'anularOrden', 'anularPagoImpuesto', 'anularSolicitud', 'aprobarFondos', 'aprobarPresupuesto', 'aprobarPresupuestoArea', 'asignarDescanso', 'borrarKpi', 'borrarKpiCmo', 'borrarSolicitud', 'cambiarEquipo', 'cambiarMiPin', 'cambiarPermiso', 'cancelarPermiso', 'confirmarPlanilla', 'confirmarRegistro', 'consolidado', 'copiarPresupuesto', 'costosTraslados', 'cotizarOrden', 'darDeBaja', 'datos', 'despacharSolicitudes', 'detalleGasto', 'editarProducto', 'eliminarPersonaCal', 'entrar', 'enviarEmergencia', 'enviarKpis', 'enviarKpisCmo', 'enviarSolicitud', 'enviarSugerencia', 'estadoCorreos', 'evaluarMerma', 'existencias', 'existenciasEmergencia', 'firmarTraslado', 'guardarAjustesInv', 'guardarBonoGeneral', 'guardarBonosCal', 'guardarBorradorCal', 'guardarComision', 'guardarConfigCal', 'guardarConteo', 'guardarEstudio', 'guardarHorario', 'guardarHorasApoyo', 'guardarHorasReales', 'guardarKpi', 'guardarKpiCmo', 'guardarLugar', 'guardarMando', 'guardarMedida', 'guardarMiCorreo', 'guardarMiPresupuesto', 'guardarObligacion', 'guardarOrden', 'guardarPersonaCal', 'guardarPrecios', 'guardarPresupuesto', 'guardarProducto', 'guardarProductoBodega', 'guardarProveedor', 'guardarProveedorInv', 'guardarReceta', 'guardarRepartidor', 'guardarTraslado', 'guardarTurnos', 'guardarUsuario', 'habilita', 'habilitarConteo', 'historialTraslados', 'indicadoresConta', 'leerBonoGeneral', 'leerSugerencias', 'listaBodega', 'listaCatalogo', 'listaConsultas', 'listaDiferencias', 'listaEntrada', 'listaFondos', 'listaImpuestos', 'listaKpis', 'listaKpisCmo', 'listaLugares', 'listaOrdenes', 'listaPermisos', 'listaPrecios', 'listaRepartidores', 'listaReportes', 'listaSolicitudes', 'listaUsuarios', 'llegoSolicitud', 'marcarPreparadas', 'medirAceite', 'miAvance', 'miCorreo', 'miPanel', 'miPresupuesto', 'notificaciones', 'ordenesPago', 'pagarFondos', 'pagarOrden', 'pagarRepartidor', 'pantallaCalendarios', 'pantallaConteo', 'pantallaEmergencias', 'pantallaFirmas', 'pantallaHorarios', 'pantallaKpi', 'pantallaMando', 'pantallaMant', 'pantallaMerma', 'pantallaMuestreo', 'pantallaPedidosBodega', 'pantallaProduccion', 'pantallaSolicitud', 'pantallaSugerencias', 'pdfCalendario', 'pdfOrden', 'pedirDescanso', 'pedirEmergencia', 'pedirFondos', 'pedirPermiso', 'ping', 'planillasPorPagar', 'ponPreciosGerentes', 'porConfirmar', 'preguntar', 'presupuestoMes', 'presupuestosAreas', 'probarCorreo', 'productosConfig', 'productosParaAnclar', 'productosSucursal', 'reabrirPlanilla', 'rechazarRegistro', 'recibirEfectivo', 'recibirEmergencia', 'recibirOrden', 'recibirSolicitud', 'registrarGasto', 'registrarIngreso', 'registrarKpis', 'registrarLote', 'registrarMant', 'registrarMerma', 'registrarObservacion', 'registrarPagoImpuesto', 'renombrarCategoria', 'reporteDiario', 'reporteTraslados', 'resolverDescanso', 'responderConsulta', 'responderMerma', 'resultadosKpi', 'resultadosKpiCmo', 'resultadosKpiRango', 'resultadosMuestreo', 'resumenInventario', 'resumenMes', 'revisarPermiso', 'seguimiento', 'sugerenciaCompra', 'tableroFinanzas', 'tableroKpi', 'terminarFondos', 'validarRegistro', 'ventas', 'verTraslado', 'verificarFondos', 'misMenus', 'menusRol', 'guardarMenusRol', 'historialInventario', 'reiniciarPresupuestos', 'autorizarFondos', 'hechaFondos', 'listaPendientes', 'llegaPendiente', 'cancelarPendiente', 'despacharPendientes', 'devolverFondo', 'corregirFondo', 'pantallaEquipos', 'guardarEquipoA', 'bajaEquipo', 'revisarEquipos', 'confirmarRevisionEq', 'pedirEquipo', 'resolverPedidoEq', 'entregarCompraEq', 'recibirEquipo', 'devolverOrden', 'corregirOrden', 'reiniciarPrecios', 'guardarMezcla', 'registrarLoteMezcla', 'etiquetasLote', 'guardarConfigEtiquetas', 'listaKpisCoo', 'guardarKpiCoo', 'borrarKpiCoo', 'enviarKpisCoo', 'agregarRecomendadosCoo', 'resultadosKpiCoo', 'pantallaKpiCoo', 'registrarKpisCoo', 'resumenAreas', 'resumenAreasSenales', 'pantallaZonas', 'guardarZonas', 'listaKpisTec', 'guardarKpiTec', 'borrarKpiTec', 'enviarKpisTec', 'agregarRecomendadosTec', 'resultadosKpiTec', 'pantallaKpiTec', 'registrarKpisTec'];/*API_FIN*/
+/*API_INI*/var API_PERMITIDAS = ['abrirSolicitud', 'abrirTraslado', 'aceptarSolicitud', 'aceptarYPreparar', 'aclararDiferencia', 'activarCorreos', 'activarObligacion', 'activarProducto', 'activarProductoSucursal', 'adjuntarCotizacion', 'agregarEquipo', 'agregarProducto', 'agregarRecomendados', 'agregarRecomendadosCmo', 'agregarRubro', 'anclarProducto', 'anular', 'anularOrden', 'anularPagoImpuesto', 'anularSolicitud', 'aprobarFondos', 'aprobarPresupuesto', 'aprobarPresupuestoArea', 'asignarDescanso', 'borrarKpi', 'borrarKpiCmo', 'borrarSolicitud', 'cambiarEquipo', 'cambiarMiPin', 'cambiarPermiso', 'cancelarPermiso', 'confirmarPlanilla', 'confirmarRegistro', 'consolidado', 'copiarPresupuesto', 'costosTraslados', 'cotizarOrden', 'darDeBaja', 'datos', 'despacharSolicitudes', 'detalleGasto', 'editarProducto', 'eliminarPersonaCal', 'entrar', 'enviarEmergencia', 'enviarKpis', 'enviarKpisCmo', 'enviarSolicitud', 'enviarSugerencia', 'estadoCorreos', 'evaluarMerma', 'existencias', 'existenciasEmergencia', 'firmarTraslado', 'guardarAjustesInv', 'guardarBonoGeneral', 'guardarBonosCal', 'guardarBorradorCal', 'guardarComision', 'guardarConfigCal', 'guardarConteo', 'guardarEstudio', 'guardarHorario', 'guardarHorasApoyo', 'guardarHorasReales', 'guardarKpi', 'guardarKpiCmo', 'guardarLugar', 'guardarMando', 'guardarMedida', 'guardarMiCorreo', 'guardarMiPresupuesto', 'guardarObligacion', 'guardarOrden', 'guardarPersonaCal', 'guardarPrecios', 'guardarPresupuesto', 'guardarProducto', 'guardarProductoBodega', 'guardarProveedor', 'guardarProveedorInv', 'guardarReceta', 'guardarRepartidor', 'guardarTraslado', 'guardarTurnos', 'guardarUsuario', 'habilita', 'habilitarConteo', 'historialTraslados', 'indicadoresConta', 'leerBonoGeneral', 'leerSugerencias', 'listaBodega', 'listaCatalogo', 'listaConsultas', 'listaDiferencias', 'listaEntrada', 'listaFondos', 'listaImpuestos', 'listaKpis', 'listaKpisCmo', 'listaLugares', 'listaOrdenes', 'listaPermisos', 'listaPrecios', 'listaRepartidores', 'listaReportes', 'listaSolicitudes', 'listaUsuarios', 'llegoSolicitud', 'marcarPreparadas', 'medirAceite', 'miAvance', 'miCorreo', 'miPanel', 'miPresupuesto', 'notificaciones', 'ordenesPago', 'pagarFondos', 'pagarOrden', 'pagarRepartidor', 'pantallaCalendarios', 'pantallaConteo', 'pantallaEmergencias', 'pantallaFirmas', 'pantallaHorarios', 'pantallaKpi', 'pantallaMando', 'pantallaMant', 'pantallaMerma', 'pantallaMuestreo', 'pantallaPedidosBodega', 'pantallaProduccion', 'pantallaSolicitud', 'pantallaSugerencias', 'pdfCalendario', 'pdfOrden', 'pedirDescanso', 'pedirEmergencia', 'pedirFondos', 'pedirPermiso', 'ping', 'planillasPorPagar', 'ponPreciosGerentes', 'porConfirmar', 'preguntar', 'presupuestoMes', 'presupuestosAreas', 'probarCorreo', 'productosConfig', 'productosParaAnclar', 'productosSucursal', 'reabrirPlanilla', 'rechazarRegistro', 'recibirEfectivo', 'recibirEmergencia', 'recibirOrden', 'recibirSolicitud', 'registrarGasto', 'registrarIngreso', 'registrarKpis', 'registrarLote', 'registrarMant', 'registrarMerma', 'registrarObservacion', 'registrarPagoImpuesto', 'renombrarCategoria', 'reporteDiario', 'reporteTraslados', 'resolverDescanso', 'responderConsulta', 'responderMerma', 'resultadosKpi', 'resultadosKpiCmo', 'resultadosKpiRango', 'resultadosMuestreo', 'resumenInventario', 'resumenMes', 'revisarPermiso', 'seguimiento', 'sugerenciaCompra', 'tableroFinanzas', 'tableroKpi', 'terminarFondos', 'validarRegistro', 'ventas', 'verTraslado', 'verificarFondos', 'detalleAbastecimiento', 'pdfHistorialInventario', 'pantallaCierreMes', 'guardarCierreMes', 'misMenus', 'menusRol', 'guardarMenusRol', 'historialInventario', 'reiniciarPresupuestos', 'autorizarFondos', 'hechaFondos', 'listaPendientes', 'llegaPendiente', 'cancelarPendiente', 'despacharPendientes', 'devolverFondo', 'corregirFondo', 'pantallaEquipos', 'guardarEquipoA', 'bajaEquipo', 'revisarEquipos', 'confirmarRevisionEq', 'pedirEquipo', 'resolverPedidoEq', 'entregarCompraEq', 'recibirEquipo', 'devolverOrden', 'corregirOrden', 'reiniciarPrecios', 'guardarMezcla', 'registrarLoteMezcla', 'etiquetasLote', 'guardarConfigEtiquetas', 'listaKpisCoo', 'guardarKpiCoo', 'borrarKpiCoo', 'enviarKpisCoo', 'agregarRecomendadosCoo', 'resultadosKpiCoo', 'pantallaKpiCoo', 'registrarKpisCoo', 'resumenAreas', 'resumenAreasSenales', 'pantallaZonas', 'guardarZonas', 'listaKpisTec', 'guardarKpiTec', 'borrarKpiTec', 'enviarKpisTec', 'agregarRecomendadosTec', 'resultadosKpiTec', 'pantallaKpiTec', 'registrarKpisTec'];/*API_FIN*/
 /** Solo contesta «aquí estoy»: sirve para despertar el servidor y medir la velocidad. No lee ni guarda nada. */
 function ping() { return { ok: true }; }
 function doPost(e) {
@@ -4920,7 +4920,8 @@ function pantallaConteo(cred, unidadId) {
           pesoCada: b.pesoCada, pesoEn: b.pesoEn, pesa: b.pesoCada ? nivelPeso(b).nombre : '', presentacion: b.presentacion, descripcion: b.descripcion, zonas: zp[b.codigo] || [] };
       }),
     zonas: zs.map(function (z) { return { id: z.id, nombre: z.nombre }; }),
-    solicitud: unidadId === 'bodega' ? null : solicitudDelConteo(unidadId, ult, hoy)
+    solicitud: unidadId === 'bodega' ? null : solicitudDelConteo(unidadId, ult, hoy),
+    cierreRef: cierreRefDe(unidadId, ult, hoy)
   };
 }
 
@@ -5988,6 +5989,7 @@ function notificacionesCalc(cred) {
   var desde = masDias(hoy, -10);
   try { avisosEquipos(yo).forEach(function (a) { out.push(a); }); } catch (e) {}
   try { avisosPendientes(yo).forEach(function (a) { out.push(a); }); } catch (e) {}
+  try { avisosCierre(yo).forEach(function (a) { out.push(a); }); } catch (e) {}
   if (yo.rol === 'bodega' || yo.esAdmin) {          // órdenes de compra devueltas por contabilidad: se corrigen y se reenvían
     try { var pgD = filasOCP(); Object.keys(pgD).forEach(function (n) { var p = pgD[n];
       if (p.devueltaEn && !p.pagadaEn) out.push({ id: 'ocdev-' + n + '-' + p.devueltaEn, tipo: 'Compra devuelta', cuando: p.devueltaEn,
@@ -12490,7 +12492,7 @@ function exportarIndicadores(q) {
 /* ════════════ COPIA COMPLETA PARA EL SERVIDOR PROPIO ════════════
  * El servidor propio guarda una copia de TODAS las pestañas y corre este mismo código sobre ella para contestar las lecturas.
  * Cada cambio que pasa por aquí avisa qué pestañas tocó («tocadas»), y el servidor solo vuelve a traer esas. */
-var VERSION_CODIGO = '2026-10-10-a';       // se cambia a mano cada vez que se cambia este archivo; el servidor compara que coincida con la suya
+var VERSION_CODIGO = '2026-10-11-a';       // se cambia a mano cada vez que se cambia este archivo; el servidor compara que coincida con la suya
 function versionCodigo() { return VERSION_CODIGO; }
 function huellaTexto(t) { return Utilities.base64Encode(Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, t)).slice(0, 22); }
 /** Un resumen barato de cada pestaña: cuántas filas y columnas tiene y una huella de sus últimas 25 filas. */
@@ -13343,7 +13345,7 @@ function avisosPendientes(yo) {
  * El Inicio de cada persona los muestra primero; la campanita sigue recordando que hay algo pendiente. Lo demás (ya se pagó, ya llegó…) es solo información. */
 var TAREA_DE = [
   ['em-rech-', null], ['recheq-', null],
-  ['sd-apr-', 'Aprobar', 1], ['sd-ver-', 'Verificar', 1], ['sd-aut-', 'Autorizar', 1], ['sd-ok-', 'Proceder', 2], ['sd-pag-', 'Pagar', 1], ['sd-dev-', 'Corregir', 1], ['val-', 'Validar', 1], ['rec-', 'Recibir efectivo', 1], ['banco-', 'Confirmar', 1],
+  ['sd-apr-', 'Aprobar', 1], ['sd-ver-', 'Verificar', 1], ['sd-aut-', 'Autorizar', 1], ['sd-ok-', 'Proceder', 2], ['cierref-', 'Revisar', 2], ['cierre-', 'Cerrar mes', 2], ['sd-pag-', 'Pagar', 1], ['sd-dev-', 'Corregir', 1], ['val-', 'Validar', 1], ['rec-', 'Recibir efectivo', 1], ['banco-', 'Confirmar', 1],
   ['rech-', 'Corregir', 1], ['ocdev-', 'Corregir', 1], ['oc-cot-', 'Cotizar', 1], ['oc-pagar-', 'Pagar', 1], ['pres-por-', 'Aprobar', 1], ['rep-', 'Pagar', 1], ['dif-caja-', 'Revisar', 1],
   ['peq-', 'Decidir', 2], ['confeq-', 'Confirmar', 2], ['revq-', 'Revisar', 2], ['asigeq-', 'Confirmar', 2], ['pendl-', 'Despachar', 2], ['pendso-', 'Ordenar', 2], ['pendsin-', 'Revisar', 2],
   ['nueva-', 'Aceptar', 2], ['cargar-', 'Despachar', 2], ['cam-', 'Recibir', 2], ['dif-', 'Aclarar', 2], ['de-', 'Decidir', 2], ['perm-r-', 'Decidir', 2], ['cq-', 'Responder', 2],
@@ -13570,6 +13572,9 @@ function veHistorialInv(yo) { return !!yo && (yo.esAdmin || yo.rol === 'operacio
 function historialInventario(cred, unidadId, mes) {
   var yo = quien(cred);
   if (!veHistorialInv(yo)) throw new Error('El historial de inventario lo ven el administrador y los directores.');
+  return historialCalc(unidadId, mes);
+}
+function historialCalc(unidadId, mes) {
   var suc = UNIDADES.filter(function (u) { return u.vende; }), u = suc.filter(function (x) { return x.id === unidadId; })[0] || suc[0];
   mes = /^\d{4}-\d{2}$/.test(String(mes || '')) ? String(mes) : hoyISO().slice(0, 7);
   var sols = filasSol().filter(function (x) { return x.sucursal === u.nombre && x.estado !== SOL.ANU; }), porNum = {};
@@ -13579,7 +13584,7 @@ function historialInventario(cred, unidadId, mes) {
   lineasSol().forEach(function (l) {
     var x = porNum[l.numero]; if (!x || !(l.pedido > 0 || l.enviado > 0)) return;
     (ciclos[l.clave] = ciclos[l.clave] || { codigo: l.codigo, nombre: l.nombre, medida: l.medida, filas: [] }).filas.push({
-      numero: x.numero, fecha: x.enviadaEn, contado: l.existencia, pedido: l.pedido, enviado: l.enviado, recibido: l.recibido,
+      numero: x.numero, fecha: x.enviadaEn, entrega: diaAbasto(x), contado: l.existencia, pedido: l.pedido, enviado: l.enviado, recibido: l.recibido,
       recibidoEn: x.recibidaEn, estado: x.estado, pendiente: pendDeLinea(l) });
   });
   var productos = [];
@@ -13590,7 +13595,7 @@ function historialInventario(cred, unidadId, mes) {
       var sig = c.filas[i + 1];
       f.gasto = f.quedo != null && sig ? r3(f.quedo - sig.contado) : null;      // lo que se usó hasta el siguiente conteo
     });
-    var delMes = c.filas.filter(function (f) { return f.fecha.slice(0, 7) === mes; });
+    var delMes = c.filas.filter(function (f) { return f.entrega.slice(0, 7) === mes; });
     if (!delMes.length) return;
     var suma = function (k2) { return r3(delMes.reduce(function (a, f) { return a + (Number(f[k2]) || 0); }, 0)); };
     productos.push({ clave: k, codigo: c.codigo, nombre: c.nombre, medida: c.medida, ciclos: delMes,
@@ -13600,7 +13605,8 @@ function historialInventario(cred, unidadId, mes) {
   productos.sort(function (a, b) { return a.nombre.localeCompare(b.nombre, 'es'); });
   var meses = []; for (var i = 0; i < 6; i++) { var d = new Date(hoyISO().slice(0, 7) + '-15T12:00:00'); d.setMonth(d.getMonth() - i); meses.push(Utilities.formatDate(d, ZONA, 'yyyy-MM')); }
   return { unidad: { id: u.id, nombre: u.nombre }, sucursales: suc.map(function (x) { return { id: x.id, nombre: x.nombre }; }), mes: mes, mesTxt: periodoTxt(mes), meses: meses,
-    productos: productos, pedidos: sols.filter(function (x) { return x.enviadaEn.slice(0, 7) === mes; }).length };
+    productos: productos, pedidos: sols.filter(function (x) { return diaAbasto(x).slice(0, 7) === mes; }).length, calendario: calendarioAbasto(mes),
+    cierres: suc.map(function (x) { var c = filasCierres().filter(function (y) { return y.mes === mes && y.sucursal === x.nombre; })[0]; return { id: x.id, nombre: x.nombre, cerrado: !!c, por: c ? c.por : '', en: c ? c.en : '' }; }) };
 }
 
 /* ════════════ MENÚS POR ROL ════════════
@@ -13651,4 +13657,222 @@ function guardarMenusRol(cred, perfil, apagados) {
   var nom = PERFILES_MENU.filter(function (x) { return x[0] === perfil; })[0][1];
   r.mensaje = 'Menús de «' + nom + '» guardados' + (lista.length ? ' (' + lista.length + ' apagados)' : '') + '. Lo verán la próxima vez que abran la app.';
   return r;
+}
+
+/* ════════════ ABASTECIMIENTO DEL MES: calendario con semáforo, detalle de cada pedido, PDF por sucursal y cierre de mes ════════════
+ *  A (verde)    Abastecido sin inconvenientes.
+ *  P (amarillo) Abastecido, pero quedan pendientes o hubo un inconveniente (diferencias, faltante).
+ *  F (rojo)     Falta algún paso para que se abastezca (sin aceptar, sin despachar, en camino sin recibir).
+ *  El cierre de mes: al terminar el mes cada sucursal cuenta lo que queda. Eso es lo que «debería haber» contra lo contado, y es el punto de partida del mes siguiente. */
+var H_CIERRE = ['Mes', 'Sucursal', 'Código', 'Producto', 'Medida', 'Debía haber', 'Contado', 'Diferencia', 'Cerrado por', 'Cerrado en', 'Nota'];
+function hojaCierres(ss) {
+  ss = ss || libro();
+  var h = ss.getSheetByName('Cierres de mes');
+  if (!h) { h = hojaLimpia(ss, 'Cierres de mes', H_CIERRE); h.getRange('A:A').setNumberFormat('@'); h.getRange('C:C').setNumberFormat('@'); h.getRange('J:J').setNumberFormat('dd/mm/yyyy hh:mm'); h.setColumnWidth(4, 240); }
+  return h;
+}
+function mesDeCelda(v) { return v instanceof Date ? Utilities.formatDate(v, ZONA, 'yyyy-MM') : String(v == null ? '' : v).slice(0, 7); }
+function filasCierres() {
+  var h = libro().getSheetByName('Cierres de mes'); if (!h || h.getLastRow() < 2) return [];
+  return leeTodo(h, H_CIERRE.length).map(function (r, i) {
+    return { fila: i + 2, mes: mesDeCelda(r[0]), sucursal: String(r[1] || ''), codigo: String(r[2] || ''), nombre: String(r[3] || ''), medida: String(r[4] || ''),
+      debia: r[5] === '' || r[5] == null ? null : Number(r[5]), contado: Number(r[6]) || 0, dif: Number(r[7]) || 0, por: String(r[8] || ''), en: fmtSello(r[9]), nota: String(r[10] || '') };
+  }).filter(function (x) { return x.mes && x.codigo; });
+}
+function finDeMes(mes) { var p = mes.split('-'); var d = new Date(+p[0], +p[1], 0); return Utilities.formatDate(d, ZONA, 'yyyy-MM-dd'); }
+function mesAnterior(mes) { var p = mes.split('-'), d = new Date(+p[0], +p[1] - 2, 15); return Utilities.formatDate(d, ZONA, 'yyyy-MM'); }
+function diaAbasto(x) { return String(x.entrega || x.enviadaEn || '').slice(0, 10); }
+var ABASTO_ORDEN = { A: 0, P: 1, F: 2 };
+/** La letra de un pedido: A, P o F, y por qué. */
+function abastoDe(x, lineas) {
+  if (x.estado !== SOL.REC && x.estado !== SOL.DIF) {
+    var q = x.estado === SOL.ENV ? 'bodega todavía no lo acepta' : x.estado === SOL.ACE ? 'bodega lo está preparando o falta que salga el camión' : 'va en camino, falta que lo reciban';
+    return { e: 'F', txt: 'Falta un paso: ' + q + '.' };
+  }
+  var pend = lineas.filter(function (l) { return pendDeLinea(l) > 0.0005; }).length, dif = lineas.filter(function (l) { return Math.abs(l.diferencia || 0) > 0.0005 || (l.pendCanPor && l.pend > 0); }).length;
+  if (x.estado === SOL.DIF || pend || dif) {
+    var m = []; if (pend) m.push(pend + (pend === 1 ? ' producto pendiente de entrega' : ' productos pendientes de entrega')); if (dif) m.push(dif + (dif === 1 ? ' producto con diferencia' : ' productos con diferencias'));
+    return { e: 'P', txt: 'Abastecido, pero ' + (m.length ? m.join(' y ') : 'hubo un inconveniente') + '.' };
+  }
+  return { e: 'A', txt: 'Abastecido sin inconvenientes.' };
+}
+/** El calendario del mes: filas = sucursales, columnas = los días con abastecimiento. */
+function calendarioAbasto(mes) {
+  var sucs = UNIDADES.filter(function (u) { return u.vende; }), sols = filasSol().filter(function (x) { return x.estado !== SOL.ANU && diaAbasto(x).slice(0, 7) === mes; });
+  var lins = {}; lineasSol().forEach(function (l) { (lins[l.numero] = lins[l.numero] || []).push(l); });
+  var dias = {}, filas = sucs.map(function (u) {
+    var celdas = {}, tot = { A: 0, P: 0, F: 0 };
+    sols.filter(function (x) { return x.sucursal === u.nombre; }).forEach(function (x) {
+      var f = diaAbasto(x), a = abastoDe(x, lins[x.numero] || []); dias[f] = true;
+      var c = celdas[f] || (celdas[f] = { e: 'A', n: 0, numeros: [] }); c.n++; c.numeros.push(x.numero);
+      if (ABASTO_ORDEN[a.e] > ABASTO_ORDEN[c.e]) c.e = a.e; tot[a.e]++;
+    });
+    return { id: u.id, nombre: u.nombre, celdas: celdas, total: tot };
+  });
+  return { dias: Object.keys(dias).sort(), filas: filas };
+}
+function detalleAbastecimiento(cred, numero) {
+  var yo = quien(cred);
+  if (!veHistorialInv(yo)) throw new Error('El historial de abastecimiento lo ven el administrador y los directores.');
+  var x = null; filasSol().forEach(function (y) { if (y.numero === String(numero)) x = y; });
+  if (!x) throw new Error('No se encontró el pedido ' + numero + '.');
+  var ls = lineasSol(x.numero).filter(function (l) { return l.pedido > 0 || l.enviado > 0 || l.recibido > 0; }), a = abastoDe(x, ls);
+  return { numero: x.numero, sucursal: x.sucursal, estado: x.estado, letra: a.e, txt: a.txt, entrega: x.entrega, enviadaEn: x.enviadaEn, enviadaPor: x.enviadaPor, aceptadaEn: x.aceptadaEn, aceptadaPor: x.aceptadaPor,
+    despachadaEn: x.despachadaEn, despachadaPor: x.despachadaPor, recibidaEn: x.recibidaEn, recibidaPor: x.recibidaPor, traslado: x.traslado, nota: x.nota,
+    lineas: ls.map(function (l) { return { nombre: l.nombre, medida: l.medida, contado: l.existencia, pedido: l.pedido, enviado: l.enviado, recibido: l.recibido, diferencia: l.diferencia, difEstado: l.difEstado,
+      pendiente: pendDeLinea(l), cancelado: !!l.pendCanPor, motivo: l.pendMotivo }; }) };
+}
+/** Lo que se necesita para el PDF: el calendario, los productos con sus movimientos, y el cierre. */
+function datosHistorialPdf(cred, unidadId, mes) {
+  var h = historialInventario(cred, unidadId, mes), u = h.unidad;
+  var cierres = filasCierres().filter(function (c) { return c.mes === h.mes && c.sucursal === u.nombre; }), porCod = {};
+  cierres.forEach(function (c) { porCod[c.codigo] = c; });
+  var fila = h.calendario.filas.filter(function (f) { return f.id === u.id; })[0];
+  var lins = {}; lineasSol().forEach(function (l) { (lins[l.numero] = lins[l.numero] || []).push(l); });
+  var pedidos = filasSol().filter(function (x) { return x.sucursal === u.nombre && x.estado !== SOL.ANU && diaAbasto(x).slice(0, 7) === h.mes; })
+    .sort(function (a, b) { return diaAbasto(a) < diaAbasto(b) ? -1 : 1; }).map(function (x) { var ls = lins[x.numero] || [], a = abastoDe(x, ls);
+      return { numero: x.numero, dia: diaAbasto(x), letra: a.e, txt: a.txt, productos: ls.filter(function (l) { return l.pedido > 0 || l.enviado > 0; }).length, recibidaPor: x.recibidaPor, estado: x.estado }; });
+  var productos = h.productos.map(function (p) {
+    var ult = null, c = porCod[p.codigo]; for (var i = p.ciclos.length - 1; i >= 0; i--) if (p.ciclos[i].quedo != null) { ult = p.ciclos[i]; break; }
+    var debia = ult ? ult.quedo : null;
+    return { nombre: p.nombre, medida: p.medida, ciclos: p.ciclos, totales: p.totales, debia: debia, cierre: c ? c.contado : null, uso: debia != null && c ? r3(debia - c.contado) : null };
+  });
+  var sinMov = cierres.filter(function (c) { return !h.productos.some(function (p) { return p.codigo === c.codigo; }); })
+    .map(function (c) { return { nombre: c.nombre, medida: c.medida, ciclos: [], totales: { pedido: 0, enviado: 0, recibido: 0, gasto: 0 }, debia: c.debia, cierre: c.contado, uso: c.debia != null ? r3(c.debia - c.contado) : null }; });
+  return { sucursal: u.nombre, mes: h.mes, mesTxt: h.mesTxt, pedidos: pedidos, productos: productos.concat(sinMov).sort(function (a, b) { return a.nombre.localeCompare(b.nombre, 'es'); }),
+    cierre: cierres.length ? { por: cierres[0].por, en: cierres[0].en, nota: cierres[0].nota, productos: cierres.length } : null, resumen: fila ? fila.total : { A: 0, P: 0, F: 0 } };
+}
+function htmlHistorialPdf(d) {
+  var h = [], n = function (v) { return v == null ? '—' : String(Math.round(v * 100) / 100).replace('.', ','); };
+  var col = { A: '#1F7A4D', P: '#B8860B', F: '#B3261E' }, nom = { A: 'Abastecido', P: 'Con pendientes o inconveniente', F: 'Falta un paso' };
+  h.push('<html><head><meta charset="utf-8"><style>');
+  h.push('body{font-family:Arial,Helvetica,sans-serif;font-size:10px;color:#16223A;margin:22px}');
+  h.push('table.band{width:100%;background:#14284B;color:#fff;border-bottom:4px solid #F2B705;margin:0 0 10px;border-collapse:collapse}');
+  h.push('table.band td{border:0;padding:10px 12px;vertical-align:middle}.band img{width:40px}.band td.r{text-align:right;font-size:12px;color:#F7F2E7;font-weight:bold}');
+  h.push('h1{font-size:19px;color:#fff;margin:0;letter-spacing:1px}.band .co{color:#F2B705;font-size:9px;letter-spacing:2px;font-weight:bold}');
+  h.push('h2{font-size:13px;color:#14284B;margin:14px 0 6px}');
+  h.push('table.t{width:100%;border-collapse:collapse;margin:0 0 10px}table.t th,table.t td{border:1px solid #CFC6B2;padding:4px 6px;font-size:9.5px;text-align:right}');
+  h.push('table.t th{background:#14284B;color:#F2B705}table.t td.l,table.t th.l{text-align:left}table.t tr.p td{background:#F7F2E7;font-weight:bold}');
+  h.push('table.t td.fin{background:#EEF2FA;font-weight:bold}.note{color:#6F7686;font-size:9px}');
+  h.push('</style></head><body>');
+  h.push('<table class="band"><tr><td style="width:52px"><img src="' + LOGO_PNG + '"></td><td><h1>REY PIZZA</h1><div class="co">CAIX, S.A.</div></td><td class="r">Historial de abastecimiento<br>' + htm(d.sucursal) + ' · ' + htm(d.mesTxt) + '</td></tr></table>');
+  h.push('<h2>Abastecimientos del mes</h2>');
+  if (!d.pedidos.length) h.push('<div class="note">No hubo pedidos de esta sucursal en este mes.</div>');
+  else {
+    h.push('<table class="t"><tr><th class="l">Fecha</th><th class="l">Pedido</th><th class="l">Estado</th><th>Productos</th><th class="l">Lo recibió</th></tr>');
+    d.pedidos.forEach(function (p) { h.push('<tr><td class="l">' + htm(dia(p.dia)) + '</td><td class="l">' + htm(p.numero) + '</td><td class="l" style="color:' + col[p.letra] + ';font-weight:bold">' + p.letra + ' · ' + htm(p.txt) + '</td><td>' + p.productos + '</td><td class="l">' + htm(p.recibidaPor || '—') + '</td></tr>'); });
+    h.push('</table><div class="note">A = ' + nom.A + ' · P = ' + nom.P + ' · F = ' + nom.F + '. Resumen: ' + d.resumen.A + ' sin inconvenientes, ' + d.resumen.P + ' con pendientes, ' + d.resumen.F + ' sin terminar.</div>');
+  }
+  h.push('<h2>Producto por producto</h2><div class="note">«Total» = lo que contaron + lo que recibieron. «Debería haber» es el total del último pedido del mes. «Cierre» es lo que de verdad contaron al cerrar el mes; la diferencia es lo que se usó desde el último pedido.</div>');
+  d.productos.forEach(function (p) {
+    h.push('<table class="t" style="page-break-inside:avoid;margin-top:8px"><tr><th class="l" colspan="7">' + htm(p.nombre) + ' <span style="font-weight:normal;color:#C9D6EC">(' + htm(p.medida) + ')</span></th></tr>');
+    if (p.ciclos.length) {
+      h.push('<tr class="p"><td class="l">Fecha</td><td class="l">Pedido</td><td>Contó</td><td>Pidió</td><td>Se envió</td><td>Se recibió</td><td>Total</td></tr>');
+      p.ciclos.forEach(function (c) { h.push('<tr><td class="l">' + htm(dia(c.entrega || c.fecha)) + '</td><td class="l">' + htm(c.numero) + '</td><td>' + n(c.contado) + '</td><td>' + n(c.pedido) + '</td><td>' + n(c.enviado) + '</td><td>' + n(c.recibido) + '</td><td class="fin">' + n(c.quedo) + '</td></tr>'); });
+    }
+    h.push('<tr class="p"><td class="l" colspan="3">Debería haber: <b>' + n(p.debia) + '</b></td><td colspan="2">Cierre contado: <b>' + (p.cierre == null ? 'pendiente' : n(p.cierre)) + '</b></td><td colspan="2">Se usó: <b>' + (p.uso == null ? '—' : n(p.uso)) + '</b></td></tr></table>');
+  });
+  if (!d.productos.length) h.push('<div class="note">No hay productos con movimientos.</div>');
+  h.push('<div class="note" style="margin-top:14px">' + (d.cierre ? 'Cierre de mes registrado por ' + htm(d.cierre.por) + ' el ' + htm(String(d.cierre.en).slice(0, 10)) + (d.cierre.nota ? ' · ' + htm(d.cierre.nota) : '') + '.' : 'El cierre de mes de esta sucursal todavía no se ha hecho.') +
+    ' Generado el ' + Utilities.formatDate(new Date(), ZONA, 'dd/MM/yyyy HH:mm') + ' desde la app REY PIZZA · CAIX, S.A.</div></body></html>');
+  return h.join('');
+}
+function pdfHistorialInventario(cred, unidadId, mes) {
+  var d = datosHistorialPdf(cred, unidadId, mes);
+  var nombre = 'Historial de abastecimiento ' + d.sucursal + ' ' + d.mes + '.pdf';
+  var blob = Utilities.newBlob(htmlHistorialPdf(d), 'text/html', 'h.html').getAs('application/pdf').setName(nombre);
+  return { ok: true, nombre: nombre, tipo: 'application/pdf', base64: Utilities.base64Encode(blob.getBytes()) };
+}
+
+/* ── cierre de mes ── */
+function totalConteoProducto(b, x) {
+  var lee = function (v, que) {
+    var s = String(v == null ? '' : v).trim(); if (s === '') return 0;
+    var n = Number(s.replace(',', '.')); if (!isFinite(n) || n < 0 || n > 100000) throw new Error('La cantidad de «' + b.nombre + '» (' + que + ') no es válida.');
+    return r3(n);
+  };
+  var e = lee(x.e, b.unidad), s = tieneSuelto(b) ? lee(x.s, b.suelto) : 0, m = b.menor ? lee(x.m, b.menor) : 0, p = b.pesoCada ? lee(x.p, b.pesoEn) : 0;
+  return r3(e + (tieneSuelto(b) ? s / b.porUnidad : 0) + (b.menor ? m / (b.porUnidad * b.porSuelto) : 0) + (b.pesoCada ? p / (b.pesoCada * nivelPeso(b).n) : 0));
+}
+function llenoConteoProducto(b, x) { var h = function (v) { return String(v == null ? '' : v).trim() !== ''; }; return h(x.e) || h(x.s) || (b.menor && h(x.m)) || (b.pesoCada && h(x.p)); }
+function puedeCerrarMes(yo, unidadId) { return yo.esAdmin || yo.rol === 'operaciones' || (yo.rol === 'gerente' && yo.sucursal === unidadId); }
+function cierreAbierto(mes, hoy) { return mes < hoy.slice(0, 7) || (mes === hoy.slice(0, 7) && hoy >= masDias(finDeMes(mes), -2)); }      // desde 2 días antes de que acabe el mes
+function pantallaCierreMes(cred, unidadId, mes) {
+  var yo = quien(cred), hoy = hoyISO();
+  if (!(yo.esAdmin || yo.rol === 'operaciones' || yo.rol === 'finanzas' || yo.rol === 'gerente')) throw new Error('Su usuario no ve el cierre de mes.');
+  var suc = UNIDADES.filter(function (u) { return u.vende; });
+  if (yo.rol === 'gerente') unidadId = yo.sucursal;
+  var u = suc.filter(function (x) { return x.id === unidadId; })[0] || suc[0];
+  mes = /^\d{4}-\d{2}$/.test(String(mes || '')) ? String(mes) : (hoy.slice(8) >= '25' || hoy.slice(8) <= '05' ? (hoy.slice(8) <= '05' ? mesAnterior(hoy.slice(0, 7)) : hoy.slice(0, 7)) : hoy.slice(0, 7));
+  var guardado = {}; filasCierres().forEach(function (c) { if (c.mes === mes && c.sucursal === u.nombre) guardado[c.codigo] = c; });
+  var hist = historialCalc(u.id, mes), debia = {};
+  hist.productos.forEach(function (p) {                       // lo que debería haber: el total del último pedido ya recibido del mes (en la medida base del producto)
+    for (var i = p.ciclos.length - 1; i >= 0; i--) if (p.ciclos[i].quedo != null) { if (debia[p.codigo] == null || p.medida === (productosInv().filter(function (b) { return b.codigo === p.codigo; })[0] || {}).unidad) debia[p.codigo] = p.ciclos[i].quedo; break; } });
+  var exi = {}; try { exi = estadoInventario(u.id).existencia || {}; } catch (e) {}
+  var prods = productosInv().filter(function (b) { return maneja(b, u.id); }).map(function (b) {
+    var g = guardado[b.codigo], d0 = debia[b.codigo] != null ? debia[b.codigo] : (exi[b.codigo] != null ? r3(exi[b.codigo]) : null);
+    return { codigo: b.codigo, nombre: b.nombre, grupo: b.grupo, estante: b.estante, unidad: b.unidad, suelto: tieneSuelto(b) ? b.suelto : '', porUnidad: tieneSuelto(b) ? b.porUnidad : 0,
+      medida: b.medida, menor: b.menor, porSuelto: b.porSuelto, pesoCada: b.pesoCada, pesoEn: b.pesoEn, pesa: b.pesoCada ? nivelPeso(b).nombre : '', presentacion: b.presentacion,
+      debia: d0, contado: g ? g.contado : null }; });
+  var meses = []; for (var i = 0; i < 4; i++) { var d = new Date(hoy.slice(0, 7) + '-15T12:00:00'); d.setMonth(d.getMonth() - i); meses.push(Utilities.formatDate(d, ZONA, 'yyyy-MM')); }
+  var uno = Object.keys(guardado).map(function (k) { return guardado[k]; })[0];
+  return { unidad: { id: u.id, nombre: u.nombre }, sucursales: suc.map(function (x) { return { id: x.id, nombre: x.nombre }; }), mes: mes, mesTxt: periodoTxt(mes), meses: meses,
+    abierto: cierreAbierto(mes, hoy), puede: puedeCerrarMes(yo, u.id), fin: finDeMes(mes), productos: prods,
+    cerrado: uno ? { por: uno.por, en: uno.en, nota: uno.nota } : null };
+}
+function guardarCierreMes(cred, d) {
+  var yo = quien(cred), hoy = hoyISO(); d = d || {};
+  var unidadId = yo.rol === 'gerente' ? yo.sucursal : String(d.unidad || '');
+  if (!puedeCerrarMes(yo, unidadId)) throw new Error('El cierre de mes lo hace el gerente de la sucursal (o el director operativo).');
+  var u = UNIDADES.filter(function (x) { return x.vende && x.id === unidadId; })[0]; if (!u) throw new Error('Escoja la sucursal.');
+  var mes = String(d.mes || ''); if (!/^\d{4}-\d{2}$/.test(mes)) throw new Error('Escoja el mes.');
+  if (!cierreAbierto(mes, hoy)) throw new Error('El cierre de ' + periodoTxt(mes) + ' se hace en sus últimos 2 días o después de que termine el mes.');
+  var pant = pantallaCierreMes(cred, unidadId, mes), cant = d.cantidades || {}, filas = [], faltan = [];
+  var prods = productosInv().filter(function (b) { return maneja(b, u.id); }), porCod = {}; pant.productos.forEach(function (p) { porCod[p.codigo] = p; });
+  var ahora = new Date();
+  prods.forEach(function (b) {
+    var x = cant[b.codigo] || {};
+    if (!llenoConteoProducto(b, x)) { faltan.push(b.nombre); return; }
+    var total = totalConteoProducto(b, x), debia = porCod[b.codigo] ? porCod[b.codigo].debia : null;
+    filas.push([mes, u.nombre, b.codigo, b.nombre, b.unidad, debia == null ? '' : debia, total, debia == null ? '' : r3(total - debia), yo.nombre, ahora, String(d.nota || '').slice(0, 200)]);
+  });
+  if (faltan.length) throw new Error('Faltan cantidades: ' + faltan.slice(0, 3).join(', ') + (faltan.length > 3 ? ' y ' + (faltan.length - 3) + ' más' : '') + '. Escriba 0 si ya no queda nada.');
+  if (!filas.length) throw new Error('Esta sucursal no tiene productos para contar.');
+  var lock = LockService.getScriptLock(); lock.waitLock(20000); _LEE = {};
+  try {
+    var h = hojaCierres();
+    for (var r = h.getLastRow(); r >= 2; r--) if (mesDeCelda(h.getRange(r, 1).getValue()) === mes && String(h.getRange(r, 2).getValue()) === u.nombre) h.deleteRow(r);        // un cierre nuevo reemplaza al anterior
+    var f0 = h.getLastRow() + 1;
+    h.getRange(f0, 1, filas.length, 1).setNumberFormat('@'); h.getRange(f0, 3, filas.length, 1).setNumberFormat('@');
+    h.getRange(f0, 1, filas.length, H_CIERRE.length).setValues(filas);
+  } finally { lock.releaseLock(); }
+  var usados = filas.filter(function (f) { return f[7] !== '' && f[7] < -0.0005; }).length;
+  var r2 = pantallaCierreMes(cred, unidadId, mes); r2.ok = true;
+  r2.mensaje = 'Cierre de ' + periodoTxt(mes) + ' de ' + u.nombre + ' guardado: ' + filas.length + ' productos. Es el punto de partida del próximo mes.';
+  return r2;
+}
+/** Para el primer «contar y pedir» del mes: lo que se contó al cerrar el mes anterior. */
+function cierreRefDe(unidadId, ult, hoy) {
+  if (unidadId === 'bodega') return null;
+  var u = unidadPorId(unidadId), mesAct = hoy.slice(0, 7), ant = mesAnterior(mesAct);
+  if (ult && ult.fecha >= mesAct + '-01') return null;                         // ya hubo un conteo este mes: la referencia solo es para el primero
+  var por = {}, hay = false;
+  filasCierres().forEach(function (c) { if (c.mes === ant && c.sucursal === u.nombre) { por[c.codigo] = c.contado; hay = true; } });
+  return hay ? { mes: ant, mesTxt: periodoTxt(ant), por: por } : null;
+}
+/** El recordatorio: al gerente, desde 2 días antes de que acabe el mes hasta el día 10; al director, si pasan los primeros días y falta. */
+function avisosCierre(yo) {
+  var out = [], hoy = hoyISO(), mesAct = hoy.slice(0, 7), dd = +hoy.slice(8);
+  var m = hoy >= masDias(finDeMes(mesAct), -2) ? mesAct : (dd <= 10 ? mesAnterior(mesAct) : '');
+  if (!m) return out;
+  var hechos = {}; filasCierres().forEach(function (c) { if (c.mes === m) hechos[c.sucursal] = true; });
+  var suc = UNIDADES.filter(function (u) { return u.vende; });
+  if (yo.rol === 'gerente') { var u = suc.filter(function (x) { return x.id === yo.sucursal; })[0];
+    if (u && !hechos[u.nombre]) out.push({ id: 'cierre-' + u.id + '-' + m, tipo: 'Cierre de mes', cuando: '', titulo: 'Cierre de mes de ' + periodoTxt(m) + ': cuente lo que queda',
+      texto: 'Anote cuánto hay de cada producto. Es el punto de partida del próximo mes.', abrir: { tab: 'cierre' } }); }
+  if ((yo.esAdmin || yo.rol === 'operaciones') && m < mesAct && dd >= 4) {
+    var f = suc.filter(function (x) { return !hechos[x.nombre]; }).map(function (x) { return x.nombre; });
+    if (f.length) out.push({ id: 'cierref-' + m, tipo: 'Cierre de mes', cuando: '', titulo: 'Falta el cierre de ' + periodoTxt(m) + ': ' + f.join(', '), texto: 'Cada gerente tiene que contar lo que queda al terminar el mes.', abrir: { tab: 'hist' } });
+  }
+  return out;
 }
