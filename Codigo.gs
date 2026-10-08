@@ -2389,7 +2389,7 @@ var H_BODEGA = ['Código', 'Producto', 'Área', 'Grupo', 'Centro', 'Almendras',
   'Se manda suelto', 'Se compra por', 'Tipo de medida',
   'Unidad menor', 'Menores por suelto', 'Peso de cada', 'Peso en',
   'Descripción', 'Desactivado por', 'Desactivado en',
-  'Precio de la presentación', 'Precio cambiado en', 'Precio cambiado por'];
+  'Precio de la presentación', 'Precio cambiado en', 'Precio cambiado por', 'Proveedor secundario', 'Precio anterior'];
 var PESOS = ['libra', 'onza', 'kilo', 'gramo'];
 var AREAS_BODEGA = ['Barra', 'Cocina'];
 
@@ -2597,6 +2597,7 @@ function hojaBodega(ss) {
     // el precio de lo que se compra (por caja, bolsa, fardo…); de ahí sale solo lo que cuesta cada unidad
     if (h.getLastColumn() < 37) { encabezaAlFinal(h, 35, ['Precio de la presentación', 'Precio cambiado en', 'Precio cambiado por']);
       h.getRange('AI:AI').setNumberFormat('"Q"#,##0.00'); h.getRange('AJ:AJ').setNumberFormat('dd/mm/yyyy hh:mm'); }
+    if (h.getLastColumn() < 39) { encabezaAlFinal(h, 38, ['Proveedor secundario', 'Precio anterior']); h.getRange('AM:AM').setNumberFormat('"Q"#,##0.00'); }
     return h;
   }
   h = hojaLimpia(ss, 'Productos de bodega', H_BODEGA);
@@ -2607,7 +2608,7 @@ function hojaBodega(ss) {
       c[4].charAt(1) === '1' ? 'Sí' : 'No', c[4].charAt(2) === '1' ? 'Sí' : 'No',
       c[5], c[6], c[7] || '', c[8] ? Number(c[8]) : '', '', '', 1, '', 'Sí', ahora,
       'catálogo inicial', almacenDe(c[3]), estanteDe(almacenDe(c[3]), c[5]), '', '', '', '',
-      c[7] ? 'Sí' : '', '', '', '', '', '', '', '', '', '', '', '', ''];
+      c[7] ? 'Sí' : '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''];
   });
   h.getRange(2, 1, filas.length, H_BODEGA.length).setValues(filas);
   h.getRange('O:O').setNumberFormat('"Q"#,##0.00');
@@ -2660,7 +2661,8 @@ function filasBodega() {
       desactPor: String(r[32] || '').trim(),
       desactEn: r[33] instanceof Date ? r[33] : null,
       precioPres: Number(r[34]) > 0 ? Number(r[34]) : 0,
-      precioEn: fmtSello(r[35]), precioEnRaw: r[35] instanceof Date ? r[35] : '', precioPor: String(r[36] || '').trim()
+      precioEn: fmtSello(r[35]), precioEnRaw: r[35] instanceof Date ? r[35] : '', precioPor: String(r[36] || '').trim(),
+      proveedor2: String(r[37] || '').trim(), precioAnt: Number(r[38]) > 0 ? Number(r[38]) : 0
     };
   }).map(function (b) {
     b.unidad = singular(b.unidad) || 'unidad'; b.suelto = singular(b.suelto);
@@ -2843,7 +2845,8 @@ function guardarProductoBodega(cred, p) {
       activo === 'No' ? (destino && !destino.activo ? (destino.desactEn || '') : new Date()) : '',
       precioNuevo != null ? (precioNuevo || '') : (destino && destino.precioPres ? destino.precioPres : ''),
       precioNuevo != null && precioNuevo !== (destino ? destino.precioPres : 0) ? new Date() : (destino ? (destino.precioEnRaw || '') : ''),
-      precioNuevo != null && precioNuevo !== (destino ? destino.precioPres : 0) ? yo.nombre : (destino ? destino.precioPor : '')];
+      precioNuevo != null && precioNuevo !== (destino ? destino.precioPres : 0) ? yo.nombre : (destino ? destino.precioPor : ''),
+      destino ? destino.proveedor2 : '', destino ? (destino.precioAnt || '') : ''];
     if (destino) h.getRange(destino.fila, 1, 1, H_BODEGA.length).setValues([fila]);
     else h.appendRow(fila);
     _BOD = null;
@@ -5990,6 +5993,7 @@ function notificacionesCalc(cred) {
   try { avisosEquipos(yo).forEach(function (a) { out.push(a); }); } catch (e) {}
   try { avisosPendientes(yo).forEach(function (a) { out.push(a); }); } catch (e) {}
   try { avisosCierre(yo).forEach(function (a) { out.push(a); }); } catch (e) {}
+  try { avisosPrecioProducto(yo, out, desde); } catch (e) {}
   if (yo.rol === 'bodega' || yo.esAdmin) {          // órdenes de compra devueltas por contabilidad: se corrigen y se reenvían
     try { var pgD = filasOCP(); Object.keys(pgD).forEach(function (n) { var p = pgD[n];
       if (p.devueltaEn && !p.pagadaEn) out.push({ id: 'ocdev-' + n + '-' + p.devueltaEn, tipo: 'Compra devuelta', cuando: p.devueltaEn,
@@ -10715,11 +10719,14 @@ function productosConfig(cred) {
     var o = { codigo: b.codigo, nombre: b.nombre, grupo: b.grupo, area: b.area, unidad: b.unidad, medida: b.medida,
       suelto: b.suelto, porUnidad: b.porUnidad, menor: b.menor, porSuelto: b.porSuelto, pesoCada: b.pesoCada, pesoEn: b.pesoEn,
       presentacion: b.presentacion, descripcion: b.descripcion, activo: b.activo, suc: b.suc };
+    if (ver) { o.proveedor = b.proveedor; o.proveedor2 = b.proveedor2; o.precio = b.precioPres; o.presCompra = b.presCompra; o.rinde = b.rinde;
+      o.precioEn = b.precioEn; o.precioPor = b.precioPor; o.precioAnt = b.precioAnt; }
     if (!b.activo && b.desactPor) { o.desactPor = b.desactPor; o.desactEn = b.desactEn ? fmtSello(b.desactEn) : ''; }
     return o;
   });
   return { productos: lista, unidades: unidadesConteo(), pesos: PESOS, grupos: Object.keys(grupos).sort(), areas: AREAS_BODEGA,
     categorias: CATEGORIAS, puedeAgregar: puedeProductos(yo), esGerente: yo.rol === 'gerente',
+    proveedores: ver ? filasProveedores().filter(function (p) { return p.activo !== false; }).map(function (p) { return p.nombre; }).sort() : [],
     sucursales: UNIDADES.filter(function (u) { return u.vende; }).map(function (u) { return { id: u.id, nombre: u.nombre }; }) };
 }
 /** El nombre de un producto, ordenado: mayúsculas, sin espacios de más. */
@@ -10741,7 +10748,7 @@ function editarProducto(cred, codigo, d) {
   var grupo = String(d.grupo || '').trim() ? nombreCategoria(d.grupo) : b.grupo;
   filasBodega().forEach(function (x) { if (x.grupo.toLowerCase() === grupo.toLowerCase()) grupo = x.grupo; });
   var desc = String(d.descripcion == null ? '' : d.descripcion).replace(/\s+/g, ' ').trim().slice(0, 200);
-  var m = medidaValida(d);
+  var m = medidaValida(d), extra = null;
   var lock = LockService.getScriptLock(); lock.waitLock(15000); _LEE = {};
   try {
     filasBodega().forEach(function (x) {
@@ -10757,10 +10764,12 @@ function editarProducto(cred, codigo, d) {
     h.getRange(b.fila, 27).setValue(m.medida);
     h.getRange(b.fila, 28, 1, 4).setValues([[m.menor, m.porSuelto, m.pesoCada, m.pesoEn]]);
     h.getRange(b.fila, 32).setValue(desc);
+    extra = editarProductoExtra(yo, b, d, h, ahora);
     _BOD = null;
   } finally { lock.releaseLock(); }
+  if (extra && extra.cambioPrecio) { try { avisaCambioPrecioProducto(yo, b, extra.cambioPrecio); } catch (e) {} }
   var r = productosConfig(cred); r.ok = true;
-  r.mensaje = nombre + ' quedó guardado.' + (nombre !== b.nombre.toUpperCase() ? ' Antes se llamaba «' + b.nombre + '»; lo ya registrado conserva el nombre de ese día.' : '');
+  r.mensaje = nombre + ' quedó guardado.' + (extra && extra.mensaje ? ' ' + extra.mensaje : '') + (nombre !== b.nombre.toUpperCase() ? ' Antes se llamaba «' + b.nombre + '»; lo ya registrado conserva el nombre de ese día.' : '');
   return r;
 }
 /** Activar o desactivar un producto en todo el sistema (nunca se elimina). Al desactivar, le llega el aviso al director operativo. */
@@ -12492,7 +12501,7 @@ function exportarIndicadores(q) {
 /* ════════════ COPIA COMPLETA PARA EL SERVIDOR PROPIO ════════════
  * El servidor propio guarda una copia de TODAS las pestañas y corre este mismo código sobre ella para contestar las lecturas.
  * Cada cambio que pasa por aquí avisa qué pestañas tocó («tocadas»), y el servidor solo vuelve a traer esas. */
-var VERSION_CODIGO = '2026-10-11-a';       // se cambia a mano cada vez que se cambia este archivo; el servidor compara que coincida con la suya
+var VERSION_CODIGO = '2026-10-12-a';       // se cambia a mano cada vez que se cambia este archivo; el servidor compara que coincida con la suya
 function versionCodigo() { return VERSION_CODIGO; }
 function huellaTexto(t) { return Utilities.base64Encode(Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, t)).slice(0, 22); }
 /** Un resumen barato de cada pestaña: cuántas filas y columnas tiene y una huella de sus últimas 25 filas. */
@@ -13875,4 +13884,60 @@ function avisosCierre(yo) {
     if (f.length) out.push({ id: 'cierref-' + m, tipo: 'Cierre de mes', cuando: '', titulo: 'Falta el cierre de ' + periodoTxt(m) + ': ' + f.join(', '), texto: 'Cada gerente tiene que contar lo que queda al terminar el mes.', abrir: { tab: 'hist' } });
   }
   return out;
+}
+
+/* ════════════ PRODUCTO COMPLETO: sucursales, proveedores y precio dentro del producto ════════════
+ * Lo editan Samuel (bodega), Álvaro y el administrador. El precio se pone una vez (y se confirma); después lo actualizan solas las compras
+ * (cada cotización). Si alguien lo vuelve a cambiar a mano, se les avisa a Álvaro y al administrador. */
+function editarProductoExtra(yo, b, d, h, ahora) {
+  var out = { mensajes: [] };
+  if (d.sucursales && typeof d.sucursales === 'object') {
+    var s = d.sucursales, val = [['centro', 5], ['almendras', 6], ['parque', 7]].map(function (x) { return s[x[0]] == null ? (b.suc[x[0]] ? 'Sí' : 'No') : (s[x[0]] === true || s[x[0]] === 'true' ? 'Sí' : 'No'); });
+    var antes = ['centro', 'almendras', 'parque'].map(function (k) { return b.suc[k] ? 'Sí' : 'No'; });
+    if (val.join() !== antes.join()) { h.getRange(b.fila, 5, 1, 3).setValues([val]); out.mensajes.push('Sucursales actualizadas.'); }
+  }
+  var provs = null, provOk = function (n) {
+    if (!n) return '';
+    provs = provs || filasProveedores().map(function (p) { return p.nombre; });
+    var hit = provs.filter(function (p) { return p.toLowerCase() === String(n).trim().toLowerCase(); })[0];
+    if (!hit) throw new Error('El proveedor «' + n + '» no está registrado. Agréguelo primero en Proveedores.');
+    return hit;
+  };
+  if (d.proveedor != null) { var p1 = provOk(String(d.proveedor).trim()); if (p1 !== b.proveedor) h.getRange(b.fila, 13).setValue(p1); }
+  if (d.proveedor2 != null) { var p2 = provOk(String(d.proveedor2).trim());
+    if (p2 && p2 === (d.proveedor != null ? provOk(String(d.proveedor).trim()) : b.proveedor)) throw new Error('El proveedor secundario tiene que ser distinto del principal.');
+    if (p2 !== b.proveedor2) h.getRange(b.fila, 38).setValue(p2); }
+  if (d.presCompra != null) { var pc = String(d.presCompra).trim().slice(0, 40); if (pc !== b.presCompra) h.getRange(b.fila, 26).setValue(pc); }
+  if (d.rinde != null && String(d.rinde).trim() !== '') { var rd = Number(String(d.rinde).replace(',', '.'));
+    if (!(rd > 0 && rd <= 100000)) throw new Error('Diga cuántas ' + plur(2, b.unidad) + ' trae lo que se compra.'); if (rd !== b.rinde) h.getRange(b.fila, 14).setValue(r3(rd)); }
+  if (d.precio != null && String(d.precio).trim() !== '') {
+    var pr = r2(String(d.precio).replace(/[Q,\s]/g, ''));
+    if (!(pr > 0)) throw new Error('Escriba el precio de lo que se compra (mayor que cero).');
+    if (pr !== b.precioPres) {
+      if (b.precioPres > 0 && d.confirmaCambio !== true) throw new Error('Este producto ya tiene precio (' + dinero(b.precioPres) + '). Confirme el cambio: se les avisará a Álvaro y al administrador.');
+      h.getRange(b.fila, 35, 1, 3).setValues([[pr, ahora, yo.nombre]]); h.getRange(b.fila, 39).setValue(b.precioPres > 0 ? b.precioPres : '');
+      if (b.precioPres > 0) out.cambioPrecio = { antes: b.precioPres, ahora: pr };
+      out.mensajes.push(b.precioPres > 0 ? 'Precio cambiado de ' + dinero(b.precioPres) + ' a ' + dinero(pr) + ': se les avisó a Álvaro y al administrador.' : 'Precio guardado: ' + dinero(pr) + '. De aquí en adelante lo actualizan las compras.');
+    }
+  }
+  out.mensaje = out.mensajes.join(' ');
+  return out;
+}
+/** Un cambio de precio a mano: correo a Álvaro y al administrador (el aviso de la campanita lo arma avisosPrecioProducto). */
+function avisaCambioPrecioProducto(yo, b, c) {
+  var para = usuariosCache().filter(function (u) { return u.activo && correoValido(u.correo) && u.nombre !== yo.nombre && (u.rol === 'operaciones' || u.rol === 'admin'); });
+  if (!para.length) return [];
+  var html = htmlCorreo('Cambio de precio: ' + b.nombre, '<p>' + esHtml(yo.nombre) + ' cambió el precio de <b>' + esHtml(b.nombre) + '</b>' + (b.presCompra ? ' (por ' + esHtml(b.presCompra) + ')' : '') +
+    ': de <b>' + dinero(c.antes) + '</b> a <b>' + dinero(c.ahora) + '</b>, el ' + Utilities.formatDate(new Date(), ZONA, 'dd/MM/yyyy HH:mm') + '.</p>');
+  var ok = []; para.forEach(function (u) { try { if (enviaCorreo(u.correo, 'Rey Pizza · Cambio de precio: ' + b.nombre, html)) ok.push(u.nombre); } catch (e) {} });
+  return ok;
+}
+function avisosPrecioProducto(yo, out, desde) {
+  if (!(yo.rol === 'operaciones' || yo.esAdmin)) return;
+  filasBodega().forEach(function (b) {
+    if (!(b.precioAnt > 0) || !b.precioEnRaw || !b.precioPor || /^Cotizaci/.test(b.precioPor) || b.precioPor === yo.nombre) return;
+    if (fmtDia(b.precioEnRaw) < desde) return;
+    out.push({ id: 'prc-' + b.codigo + '-' + Utilities.formatDate(b.precioEnRaw, ZONA, 'yyyyMMddHHmm'), tipo: 'Cambio de precio', cuando: fmtSello(b.precioEnRaw), titulo: b.nombre + ': ' + dinero(b.precioAnt) + ' → ' + dinero(b.precioPres),
+      texto: 'Lo cambió ' + b.precioPor + (b.presCompra ? ' · por ' + b.presCompra : '') + '.', abrir: { prod: true } });
+  });
 }
