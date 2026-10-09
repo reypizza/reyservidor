@@ -927,7 +927,7 @@ function doGet() {
  * mismo proyecto por POST. Solo se pueden llamar las funciones de esta lista (las mismas
  * que usa la pantalla), y cada una revisa el código de quien pregunta, igual que antes.
  * La lista la pone sola el armado; no hace falta tocarla. */
-/*API_INI*/var API_PERMITIDAS = ['abrirSolicitud', 'abrirTraslado', 'aceptarSolicitud', 'aceptarYPreparar', 'aclararDiferencia', 'activarCorreos', 'activarObligacion', 'activarProducto', 'activarProductoSucursal', 'adjuntarCotizacion', 'agregarEquipo', 'agregarProducto', 'agregarRecomendados', 'agregarRecomendadosCmo', 'agregarRubro', 'anclarProducto', 'anular', 'anularOrden', 'anularPagoImpuesto', 'anularSolicitud', 'aprobarFondos', 'aprobarPresupuesto', 'aprobarPresupuestoArea', 'asignarDescanso', 'borrarKpi', 'borrarKpiCmo', 'borrarSolicitud', 'cambiarEquipo', 'cambiarMiPin', 'cambiarPermiso', 'cancelarPermiso', 'confirmarPlanilla', 'confirmarRegistro', 'consolidado', 'copiarPresupuesto', 'costosTraslados', 'cotizarOrden', 'darDeBaja', 'datos', 'despacharSolicitudes', 'detalleGasto', 'editarProducto', 'eliminarPersonaCal', 'entrar', 'enviarEmergencia', 'enviarKpis', 'enviarKpisCmo', 'enviarSolicitud', 'enviarSugerencia', 'estadoCorreos', 'evaluarMerma', 'existencias', 'existenciasEmergencia', 'firmarTraslado', 'guardarAjustesInv', 'guardarBonoGeneral', 'guardarBonosCal', 'guardarBorradorCal', 'guardarComision', 'guardarConfigCal', 'guardarConteo', 'guardarEstudio', 'guardarHorario', 'guardarHorasApoyo', 'guardarHorasReales', 'guardarKpi', 'guardarKpiCmo', 'guardarLugar', 'guardarMando', 'guardarMedida', 'guardarMiCorreo', 'guardarMiPresupuesto', 'guardarObligacion', 'guardarOrden', 'guardarPersonaCal', 'guardarPrecios', 'guardarPresupuesto', 'guardarProducto', 'guardarProductoBodega', 'guardarProveedor', 'guardarProveedorInv', 'guardarReceta', 'guardarRepartidor', 'guardarTraslado', 'guardarTurnos', 'guardarUsuario', 'habilita', 'habilitarConteo', 'historialTraslados', 'indicadoresConta', 'leerBonoGeneral', 'leerSugerencias', 'listaBodega', 'listaCatalogo', 'listaConsultas', 'listaDiferencias', 'listaEntrada', 'listaFondos', 'listaImpuestos', 'listaKpis', 'listaKpisCmo', 'listaLugares', 'listaOrdenes', 'listaPermisos', 'listaPrecios', 'listaRepartidores', 'listaReportes', 'listaSolicitudes', 'listaUsuarios', 'llegoSolicitud', 'marcarPreparadas', 'medirAceite', 'miAvance', 'miCorreo', 'miPanel', 'miPresupuesto', 'notificaciones', 'ordenesPago', 'pagarFondos', 'pagarOrden', 'pagarRepartidor', 'pantallaCalendarios', 'pantallaConteo', 'pantallaEmergencias', 'pantallaFirmas', 'pantallaHorarios', 'pantallaKpi', 'pantallaMando', 'pantallaMant', 'pantallaMerma', 'pantallaMuestreo', 'pantallaPedidosBodega', 'pantallaProduccion', 'pantallaSolicitud', 'pantallaSugerencias', 'pdfCalendario', 'pdfOrden', 'pedirDescanso', 'pedirEmergencia', 'pedirFondos', 'pedirPermiso', 'ping', 'planillasPorPagar', 'ponPreciosGerentes', 'porConfirmar', 'preguntar', 'presupuestoMes', 'presupuestosAreas', 'probarCorreo', 'productosConfig', 'productosParaAnclar', 'productosSucursal', 'reabrirPlanilla', 'rechazarRegistro', 'recibirEfectivo', 'recibirEmergencia', 'recibirOrden', 'recibirSolicitud', 'registrarGasto', 'registrarIngreso', 'registrarKpis', 'registrarLote', 'registrarMant', 'registrarMerma', 'registrarObservacion', 'registrarPagoImpuesto', 'renombrarCategoria', 'reporteDiario', 'reporteTraslados', 'resolverDescanso', 'responderConsulta', 'responderMerma', 'resultadosKpi', 'resultadosKpiCmo', 'resultadosKpiRango', 'resultadosMuestreo', 'resumenInventario', 'resumenMes', 'revisarPermiso', 'seguimiento', 'sugerenciaCompra', 'tableroFinanzas', 'tableroKpi', 'terminarFondos', 'validarRegistro', 'ventas', 'verTraslado', 'verificarFondos', 'proveedoresProductos', 'guardarProveedorProd', 'eliminarProveedor', 'detalleAbastecimiento', 'pdfHistorialInventario', 'pantallaCierreMes', 'guardarCierreMes', 'misMenus', 'menusRol', 'guardarMenusRol', 'historialInventario', 'reiniciarPresupuestos', 'autorizarFondos', 'hechaFondos', 'listaPendientes', 'llegaPendiente', 'cancelarPendiente', 'despacharPendientes', 'devolverFondo', 'corregirFondo', 'pantallaEquipos', 'guardarEquipoA', 'bajaEquipo', 'revisarEquipos', 'confirmarRevisionEq', 'pedirEquipo', 'resolverPedidoEq', 'entregarCompraEq', 'recibirEquipo', 'devolverOrden', 'corregirOrden', 'reiniciarPrecios', 'guardarMezcla', 'registrarLoteMezcla', 'etiquetasLote', 'guardarConfigEtiquetas', 'listaKpisCoo', 'guardarKpiCoo', 'borrarKpiCoo', 'enviarKpisCoo', 'agregarRecomendadosCoo', 'resultadosKpiCoo', 'pantallaKpiCoo', 'registrarKpisCoo', 'resumenAreas', 'resumenAreasSenales', 'pantallaZonas', 'guardarZonas', 'listaKpisTec', 'guardarKpiTec', 'borrarKpiTec', 'enviarKpisTec', 'agregarRecomendadosTec', 'resultadosKpiTec', 'pantallaKpiTec', 'registrarKpisTec'];/*API_FIN*/
+/*API_INI*/var API_PERMITIDAS = ['abrirSolicitud', 'abrirTraslado', 'aceptarSolicitud', 'aceptarYPreparar', 'aclararDiferencia', 'activarCorreos', 'activarObligacion', 'activarProducto', 'activarProductoSucursal', 'adjuntarCotizacion', 'agregarEquipo', 'agregarProducto', 'agregarRecomendados', 'agregarRecomendadosCmo', 'agregarRubro', 'anclarProducto', 'anular', 'anularOrden', 'anularPagoImpuesto', 'anularSolicitud', 'aprobarFondos', 'aprobarPresupuesto', 'aprobarPresupuestoArea', 'asignarDescanso', 'borrarKpi', 'borrarKpiCmo', 'borrarSolicitud', 'cambiarEquipo', 'cambiarMiPin', 'cambiarPermiso', 'cancelarPermiso', 'confirmarPlanilla', 'confirmarRegistro', 'consolidado', 'copiarPresupuesto', 'costosTraslados', 'cotizarOrden', 'darDeBaja', 'datos', 'despacharSolicitudes', 'detalleGasto', 'editarProducto', 'eliminarPersonaCal', 'entrar', 'enviarEmergencia', 'enviarKpis', 'enviarKpisCmo', 'enviarSolicitud', 'enviarSugerencia', 'estadoCorreos', 'evaluarMerma', 'existencias', 'existenciasEmergencia', 'firmarTraslado', 'guardarAjustesInv', 'guardarBonoGeneral', 'guardarBonosCal', 'guardarBorradorCal', 'guardarComision', 'guardarConfigCal', 'guardarConteo', 'guardarEstudio', 'guardarHorario', 'guardarHorasApoyo', 'guardarHorasReales', 'guardarKpi', 'guardarKpiCmo', 'guardarLugar', 'guardarMando', 'guardarMedida', 'guardarMiCorreo', 'guardarMiPresupuesto', 'guardarObligacion', 'guardarOrden', 'guardarPersonaCal', 'guardarPrecios', 'guardarPresupuesto', 'guardarProducto', 'guardarProductoBodega', 'guardarProveedor', 'guardarProveedorInv', 'guardarReceta', 'guardarRepartidor', 'guardarTraslado', 'guardarTurnos', 'guardarUsuario', 'habilita', 'habilitarConteo', 'historialTraslados', 'indicadoresConta', 'leerBonoGeneral', 'leerSugerencias', 'listaBodega', 'listaCatalogo', 'listaConsultas', 'listaDiferencias', 'listaEntrada', 'listaFondos', 'listaImpuestos', 'listaKpis', 'listaKpisCmo', 'listaLugares', 'listaOrdenes', 'listaPermisos', 'listaPrecios', 'listaRepartidores', 'listaReportes', 'listaSolicitudes', 'listaUsuarios', 'llegoSolicitud', 'marcarPreparadas', 'medirAceite', 'miAvance', 'miCorreo', 'miPanel', 'miPresupuesto', 'notificaciones', 'ordenesPago', 'pagarFondos', 'pagarOrden', 'pagarRepartidor', 'pantallaCalendarios', 'pantallaConteo', 'pantallaEmergencias', 'pantallaFirmas', 'pantallaHorarios', 'pantallaKpi', 'pantallaMando', 'pantallaMant', 'pantallaMerma', 'pantallaMuestreo', 'pantallaPedidosBodega', 'pantallaProduccion', 'pantallaSolicitud', 'pantallaSugerencias', 'pdfCalendario', 'pdfOrden', 'pedirDescanso', 'pedirEmergencia', 'pedirFondos', 'pedirPermiso', 'ping', 'planillasPorPagar', 'ponPreciosGerentes', 'porConfirmar', 'preguntar', 'presupuestoMes', 'presupuestosAreas', 'probarCorreo', 'productosConfig', 'productosParaAnclar', 'productosSucursal', 'reabrirPlanilla', 'rechazarRegistro', 'recibirEfectivo', 'recibirEmergencia', 'recibirOrden', 'recibirSolicitud', 'registrarGasto', 'registrarIngreso', 'registrarKpis', 'registrarLote', 'registrarMant', 'registrarMerma', 'registrarObservacion', 'registrarPagoImpuesto', 'renombrarCategoria', 'reporteDiario', 'reporteTraslados', 'resolverDescanso', 'responderConsulta', 'responderMerma', 'resultadosKpi', 'resultadosKpiCmo', 'resultadosKpiRango', 'resultadosMuestreo', 'resumenInventario', 'resumenMes', 'revisarPermiso', 'seguimiento', 'sugerenciaCompra', 'tableroFinanzas', 'tableroKpi', 'terminarFondos', 'validarRegistro', 'ventas', 'verTraslado', 'verificarFondos', 'proveedoresProductos', 'guardarProveedorProd', 'eliminarProveedor', 'detalleAbastecimiento', 'pdfHistorialInventario', 'pantallaCierreMes', 'guardarCierreMes', 'misMenus', 'menusRol', 'guardarMenusRol', 'historialInventario', 'reiniciarPresupuestos', 'autorizarFondos', 'hechaFondos', 'listaPendientes', 'llegaPendiente', 'cancelarPendiente', 'despacharPendientes', 'devolverFondo', 'corregirFondo', 'pantallaEquipos', 'guardarEquipoA', 'bajaEquipo', 'revisarEquipos', 'confirmarRevisionEq', 'pedirEquipo', 'resolverPedidoEq', 'entregarCompraEq', 'recibirEquipo', 'devolverOrden', 'corregirOrden', 'reiniciarPrecios', 'guardarMezcla', 'registrarLoteMezcla', 'etiquetasLote', 'guardarConfigEtiquetas', 'listaKpisCoo', 'guardarKpiCoo', 'borrarKpiCoo', 'enviarKpisCoo', 'agregarRecomendadosCoo', 'resultadosKpiCoo', 'pantallaKpiCoo', 'registrarKpisCoo', 'resumenAreas', 'resumenAreasSenales', 'pantallaZonas', 'guardarZonas', 'listaKpisTec', 'guardarKpiTec', 'borrarKpiTec', 'enviarKpisTec', 'agregarRecomendadosTec', 'resultadosKpiTec', 'pantallaKpiTec', 'registrarKpisTec', 'cotizarFondo', 'recibirFondo'];/*API_FIN*/
 /** Solo contesta «aquí estoy»: sirve para despertar el servidor y medir la velocidad. No lee ni guarda nada. */
 function ping() { return { ok: true }; }
 function doPost(e) {
@@ -7479,6 +7479,7 @@ function seguimientoCalc(cred) {
     ps.unidades.forEach(function (u) { u.rubros.forEach(function (r) { if (r.presupuesto && r.pct >= 100) out.presupuesto.pasados.push(u.nombre + ' · ' + r.rubro + ' ' + r.pct + ' %'); }); });
   } catch (e) { out.presupuesto = null; }
   try { var fs = filasFondos(); out.fondos = { autorizar: fs.filter(function (x) { return x.estado === FONDO_ADM; }).length, aprobar: fs.filter(function (x) { return x.estado === FONDO_EST.PED; }).length,
+    cotizar: fs.filter(function (x) { return x.estado === FONDO_COT; }).length,
     pagar: fs.filter(function (x) { return x.estado === FONDO_EST.APR; }).length,
     mes: r2(fs.filter(function (x) { return x.pagEn.slice(0, 7) === hoy.slice(0, 7); }).reduce(function (a, x) { return a + x.pagado; }, 0)) }; } catch (e) { out.fondos = null; }
   try { var pm = listaPermisos(cred); out.permisos = { porAprobar: pm.porAprobar.length, fuera: pm.fuera.filter(function (x) { return x.desde <= hoy; }).map(function (x) { return x.por; }) }; } catch (e) { out.permisos = null; }
@@ -8556,14 +8557,69 @@ var H_FONDOS = ['No.', 'Pedida en', 'Pedida por', 'Tipo', 'Unidad', 'Qué se nec
   'Urgencia', 'Estado', 'Aprobada por', 'Aprobada en', 'Comentario', 'Pagada por', 'Pagada en', 'Monto pagado',
   'Forma de pago', 'Referencia', 'Factura', 'ID gasto', 'Terminada en', 'Nota final', 'Cotización (archivo)', 'Nombre del archivo',
   'Verificada por', 'Verificada en', 'Comentario de verificación', 'Devuelta por', 'Devuelta en', 'Motivo de devolución', 'Monto antes de devolver',
-  'Requiere dinero', 'Autorizó (administrador)', 'Autorizó en', 'Comentario del administrador', 'Etapa del rechazo'];
+  'Requiere dinero', 'Autorizó (administrador)', 'Autorizó en', 'Comentario del administrador', 'Etapa del rechazo',
+  'Clase', 'Renglones (JSON)', 'Costos extra (JSON)', 'Monto autorizado', 'Cotizada por', 'Cotizada en', 'Equipos creados', 'Recibida por', 'Recibida en'];
+/* Las solicitudes con LISTA de artículos: quien pide anota lo que quiere con un precio aproximado; el administrador autoriza; contabilidad sube la cotización
+ * y pone los precios reales (si el total sube más de 10 % vuelve al administrador); el director financiero aprueba el monto exacto; contabilidad paga;
+ * y al confirmar que llegó (o quedó instalado), un equipo entra solo al inventario de Equipos de ese lugar. */
+var CLASES_FONDO = { compra: 'Compra de artículos', equipo: 'Equipo o mobiliario', servicio: 'Servicio o reparación' };
+var FONDO_TIPOS_COMPRA = { 'Utensilios y menaje': 'Equipo y mobiliario', 'Insumos de cocina': 'Insumos de cocina', 'Empaque y desechables': 'Empaque y desechables',
+  'Limpieza y químicos': 'Limpieza y químicos', 'Papelería y administración': 'Papelería y administración', 'Otro': 'Otros gastos' };
+var FONDO_TIPOS_SERVICIO = { 'Reparación': 'Mantenimiento y reparaciones', 'Visita técnica': 'Mantenimiento y reparaciones',
+  'Instalación o mano de obra': 'Mantenimiento y reparaciones', 'Otro': 'Otros gastos' };
+var FONDO_EXTRAS = ['Traslado o flete', 'Instalación', 'Mano de obra', 'Hechura a medida', 'Otro costo'];
+var FONDO_ETIQ_FIN = { compra: 'Recibida', equipo: 'Instalada', servicio: 'Trabajo terminado' };
+var FONDO_TOPE_SUBE = 0.10;
+function tiposDeClase(clase) { return clase === 'compra' ? FONDO_TIPOS_COMPRA : clase === 'servicio' ? FONDO_TIPOS_SERVICIO : { 'Equipo': 'Equipo y mobiliario' }; }
+function numFondo(v) { return r2(String(v == null ? '' : v).replace(/[Q,\s]/g, '')); }
+function leeRenglonesFondo(arr, clase) {
+  if (!Array.isArray(arr) || !arr.length) throw new Error('Agregue a la lista lo que se necesita (al menos un renglón).');
+  if (arr.length > 30) throw new Error('Una solicitud lleva hasta 30 renglones. Divídala en dos.');
+  return arr.map(function (l, i) {
+    l = l || {};
+    var n = String(l.n || '').replace(/\s+/g, ' ').trim().slice(0, 70);
+    if (n.length < 3) throw new Error('Renglón ' + (i + 1) + ': escriba qué es (mínimo 3 letras).');
+    var c = Number(String(l.c == null || l.c === '' ? 1 : l.c).replace(',', '.'));
+    if (!(c > 0 && c <= 99999)) throw new Error('Renglón ' + (i + 1) + ' («' + n + '»): la cantidad debe ser mayor que cero.');
+    if (clase === 'equipo') { c = Math.round(c); if (c < 1 || c > 999) throw new Error('Renglón ' + (i + 1) + ' («' + n + '»): la cantidad de equipos va de 1 a 999.'); }
+    c = Math.round(c * 1000) / 1000;
+    var p = String(l.p == null ? '' : l.p).trim() === '' ? 0 : numFondo(l.p);
+    if (p < 0) throw new Error('Renglón ' + (i + 1) + ' («' + n + '»): el precio no puede ser negativo.');
+    return { n: n, c: c, u: String(l.u || '').trim().slice(0, 20), p: p, r: null };
+  });
+}
+function leeExtrasFondo(arr) {
+  arr = Array.isArray(arr) ? arr : [];
+  var out = [];
+  arr.forEach(function (e, i) {
+    e = e || {};
+    var m = String(e.e == null ? '' : e.e).trim(), dd = String(e.d || '').replace(/\s+/g, ' ').trim().slice(0, 60);
+    if (m === '' && !dd) return;
+    if (FONDO_EXTRAS.indexOf(e.t) < 0) throw new Error('Costo extra ' + (i + 1) + ': escoja de qué es (traslado, instalación…).');
+    var v = m === '' ? 0 : numFondo(m);
+    if (v < 0) throw new Error('Costo extra ' + (i + 1) + ': el monto no puede ser negativo.');
+    out.push({ t: e.t, d: dd, e: v, r: null });
+  });
+  if (out.length > 10) throw new Error('Hasta 10 costos extra por solicitud.');
+  return out;
+}
+/** El total de la lista: con el precio aproximado, o con el real (el de la cotización) cuando ya se puso. */
+function totalFondo(ls, ex, real) {
+  var t = 0;
+  (ls || []).forEach(function (l) { var pr = real && l.r != null ? l.r : l.p; t += Math.round(l.c * pr * 100) / 100; });
+  (ex || []).forEach(function (e) { t += real && e.r != null ? e.r : e.e; });
+  return r2(t);
+}
+function limpiaRealFondo(ls, ex) {
+  return [ls.map(function (l) { return { n: l.n, c: l.c, u: l.u || '', p: l.p, r: null }; }), ex.map(function (e) { return { t: e.t, d: e.d || '', e: e.e, r: null }; })];
+}
 var FONDO_TIPOS = { 'Equipo': 'Equipo y mobiliario', 'Reparación': 'Mantenimiento y reparaciones',
   'Visita técnica': 'Mantenimiento y reparaciones', 'Otro': 'Otros gastos' };
 /* Lo que la CMO puede pedir pagar (con su factura): cada tipo cae en su rubro del estado de resultados. */
 var FONDO_TIPOS_CMO = { 'Sueldo': 'Nómina y bonificaciones', 'Renta': 'Renta', 'Internet': 'Internet y teléfono', 'Luz': 'Energía eléctrica',
   'Suscripción': 'Mercadeo y publicidad', 'Publicidad': 'Mercadeo y publicidad', 'Papelería e impresiones': 'Papelería y administración',
   'Servicio o proveedor': 'Otros gastos', 'Otro': 'Otros gastos' };
-function rubroDeFondo(tipo) { return FONDO_TIPOS[tipo] || FONDO_TIPOS_CMO[tipo] || FONDO_TIPOS_BODEGA[tipo] || 'Otros gastos'; }
+function rubroDeFondo(tipo) { return FONDO_TIPOS[tipo] || FONDO_TIPOS_CMO[tipo] || FONDO_TIPOS_BODEGA[tipo] || FONDO_TIPOS_COMPRA[tipo] || FONDO_TIPOS_SERVICIO[tipo] || 'Otros gastos'; }
 var FONDO_EST = { VER: 'Por verificar', PED: 'Pedida', APR: 'Aprobada', RECH: 'Rechazada', PAG: 'Pagada', FIN: 'Terminada' };
 function hojaFondos(ss) {
   ss = ss || libro();
@@ -8574,8 +8630,10 @@ function hojaFondos(ss) {
   if (h.getLastColumn() < 27) encabezaAlFinal(h, 25, ['Verificada por', 'Verificada en', 'Comentario de verificación']);
   if (h.getLastColumn() < 31) { encabezaAlFinal(h, 28, ['Devuelta por', 'Devuelta en', 'Motivo de devolución', 'Monto antes de devolver']); h.getRange('AC:AC').setNumberFormat('dd/mm/yyyy hh:mm'); }
   if (h.getLastColumn() < 36) { encabezaAlFinal(h, 32, ['Requiere dinero', 'Autorizó (administrador)', 'Autorizó en', 'Comentario del administrador', 'Etapa del rechazo']); h.getRange('AH:AH').setNumberFormat('dd/mm/yyyy hh:mm'); }
+  if (h.getLastColumn() < 45) { encabezaAlFinal(h, 37, H_FONDOS.slice(36)); h.getRange('AN:AN').setNumberFormat('"Q"#,##0.00'); h.getRange('AP:AP').setNumberFormat('dd/mm/yyyy hh:mm'); h.getRange('AS:AS').setNumberFormat('dd/mm/yyyy hh:mm'); h.setColumnWidth(38, 300); }
   return h;
 }
+function jsonLista(v) { try { var a = JSON.parse(String(v || '[]')); return Array.isArray(a) ? a : []; } catch (e) { return []; } }
 function filasFondos() {
   return leeTodo(hojaFondos(), H_FONDOS.length).map(function (r, i) {
     return { fila: i + 2, numero: String(r[0] || ''), en: fmtSello(r[1]), por: String(r[2] || ''), tipo: String(r[3] || ''),
@@ -8586,7 +8644,9 @@ function filasFondos() {
       finEn: fmtSello(r[20]), notaFin: String(r[21] || ''), archivo: String(r[22] || ''), archivoNombre: String(r[23] || ''),
       verPor: String(r[24] || ''), verEn: fmtSello(r[25]), verCom: String(r[26] || ''),
       devPor: String(r[27] || ''), devEn: fmtSello(r[28]), devMotivo: String(r[29] || ''), montoAntes: Number(r[30]) || 0,
-      reqDinero: String(r[31] || '').trim().toLowerCase() !== 'no', autPor: String(r[32] || ''), autEn: fmtSello(r[33]), autCom: String(r[34] || ''), etapaRech: String(r[35] || '') };
+      reqDinero: String(r[31] || '').trim().toLowerCase() !== 'no', autPor: String(r[32] || ''), autEn: fmtSello(r[33]), autCom: String(r[34] || ''), etapaRech: String(r[35] || ''),
+      clase: CLASES_FONDO[String(r[36] || '')] ? String(r[36]) : '', renglones: jsonLista(r[37]), extras: jsonLista(r[38]), montoAut: Number(r[39]) || 0,
+      cotPor: String(r[40] || ''), cotEn: fmtSello(r[41]), equiposCreados: String(r[42] || ''), recPor: String(r[43] || ''), recEn: fmtSello(r[44]) };
   }).filter(function (x) { return x.numero; });
 }
 /* El equipo de bodega y producción (Samuel y Paulino) pide sus gastos: los aprueba el director operativo (sin pasar por el director financiero)
@@ -8607,7 +8667,7 @@ function pagarFondos(cred, numero, d) {
   if (!(esContador(yo) || yo.esAdmin)) throw new Error('El dinero lo entrega el contador.');
   d = d || {};
   var x = buscaFondo(numero);
-  if (x.estado !== FONDO_EST.APR) throw new Error(x.estado === FONDO_EST.PED ? 'Primero la aprueba el director financiero.' : (x.estado === FONDO_EST.VER || x.estado === FONDO_ADM) ? 'Todavía falta que la autoricen.' : 'Esa solicitud ya está ' + x.estado.toLowerCase() + '.');
+  if (x.estado !== FONDO_EST.APR) throw new Error(x.estado === FONDO_EST.PED ? 'Primero la aprueba el director financiero.' : (x.estado === FONDO_EST.VER || x.estado === FONDO_ADM || x.estado === FONDO_COT) ? 'Todavía falta que la autoricen.' : 'Esa solicitud ya está ' + x.estado.toLowerCase() + '.');
   var monto = r2(String(d.monto == null || d.monto === '' ? x.monto : d.monto).replace(/[Q,\s]/g, ''));
   if (!(monto > 0)) throw new Error('Escriba cuánto se pagó.');
   var forma = FORMAS_PAGO.indexOf(d.forma) >= 0 ? d.forma : 'Transferencia';
@@ -9330,6 +9390,12 @@ function avisosNuevos(yo, out, cred) {
       if (x.estado === FONDO_ADM && yo.esAdmin)
         out.push({ id: 'sd-aut-' + x.numero, tipo: 'Solicitud por autorizar', cuando: x.verEn || x.en, titulo: x.numero + ' · ' + x.por + ' · ' + (x.reqDinero ? dinero(x.monto) : 'sin dinero'),
           texto: x.unidad + ' · ' + x.que.slice(0, 80) + urg, abrir: { pag: 'fondos' } });
+      if (x.estado === FONDO_COT && (esContador(yo) || yo.esAdmin))
+        out.push({ id: 'sd-cot-' + x.numero, tipo: 'Solicitud por cotizar', cuando: x.autEn || x.en, titulo: x.numero + ' · ' + x.por + ' · ~' + dinero(x.monto),
+          texto: x.unidad + ' · ' + x.que.slice(0, 80) + urg, abrir: { pag: 'conta', ct: 'fondos' } });
+      if (x.clase && x.estado === FONDO_EST.PAG && x.por === yo.nombre)
+        out.push({ id: 'sd-rec-' + x.numero, tipo: 'Solicitud pagada', cuando: x.pagEn, titulo: x.numero + ' pagada: confirme cuando ' + (x.clase === 'equipo' ? 'quede instalado' : x.clase === 'servicio' ? 'termine el trabajo' : 'llegue'),
+          texto: x.que.slice(0, 80), abrir: { pag: 'fondos' } });
       if (x.estado === FONDO_EST.PED && yo.rol === 'finanzas')
         out.push({ id: 'sd-apr-' + x.numero, tipo: 'Solicitud por aprobar', cuando: x.autEn || x.en, titulo: x.numero + ' · ' + x.por + ' · ' + dinero(x.monto),
           texto: x.unidad + ' · ' + x.que.slice(0, 80) + urg, abrir: { pag: 'conta', ct: 'fondos' } });
@@ -9341,7 +9407,7 @@ function avisosNuevos(yo, out, cred) {
       if (x.por === yo.nombre) {
         if (x.estado === FONDO_AUT)
           out.push({ id: 'sd-ok-' + x.numero, tipo: 'Solicitud autorizada', cuando: x.autEn, titulo: x.numero + ' autorizada: ya puede proceder', texto: 'Autorizó ' + x.autPor + (x.reqDinero ? '' : ' · no necesitaba dinero') + '. Márquela como hecha cuando termine.', abrir: { pag: 'fondos' } });
-        else if ([FONDO_EST.RECH, FONDO_EST.PAG, FONDO_EST.APR].indexOf(x.estado) >= 0 && cuando.slice(0, 10) >= desde)
+        else if ([FONDO_EST.RECH, FONDO_EST.PAG, FONDO_EST.APR].indexOf(x.estado) >= 0 && cuando.slice(0, 10) >= desde && !(x.clase && x.estado === FONDO_EST.PAG))
           out.push({ id: 'sd-g-' + x.estado + '-' + x.numero, tipo: 'Solicitud ' + x.estado.toLowerCase(), cuando: cuando, titulo: x.numero + ' ' + x.estado.toLowerCase(),
             texto: x.estado === FONDO_EST.RECH ? ((x.aprPor || x.verPor) + ': ' + (x.comentario || x.verCom)) : x.estado === FONDO_EST.PAG ? 'Contabilidad entregó ' + dinero(x.pagado) + '.' : 'Aprobó ' + (x.aprPor || x.autPor) + '. Falta que contabilidad entregue el dinero.', abrir: { pag: 'fondos' } });
       }
@@ -9848,7 +9914,7 @@ function datosAtrasos() {
         x.tipo + ' · ' + x.unidad + ' · ' + dinero(x.monto), h, { pag: 'conta', ct: 'fondos' }); }
     if (x.estado === FONDO_EST.APR) { var h2 = horasEntre(x.aprEn, ahoraS);
       if (h2 >= 48) pon(con, 'finanzas', 'rq-pag-' + x.numero, x.numero + ' aprobada y sin pagar', x.tipo + ' · ' + x.unidad + ' · ' + dinero(x.monto), h2, { pag: 'conta', ct: 'fondos' }); }
-    if (x.estado === FONDO_EST.PAG && !esEquipoBodega({ rol: rolDe(x.por) })) { var h3 = horasEntre(x.pagEn, ahoraS);
+    if (x.estado === FONDO_EST.PAG && !x.clase && !esEquipoBodega({ rol: rolDe(x.por) })) { var h3 = horasEntre(x.pagEn, ahoraS);
       if (h3 >= 24 * 7) pon(ope, 'operaciones', 'rq-fin-' + x.numero, x.numero + ' pagada hace ' + Math.round(h3 / 24) + ' días y sin marcar hecha', x.que.slice(0, 80), h3, { pag: 'fondos' }); }
   }); } catch (e) {}
   // presupuesto
@@ -12440,7 +12506,7 @@ function exportarIndicadores(q) {
 /* ════════════ COPIA COMPLETA PARA EL SERVIDOR PROPIO ════════════
  * El servidor propio guarda una copia de TODAS las pestañas y corre este mismo código sobre ella para contestar las lecturas.
  * Cada cambio que pasa por aquí avisa qué pestañas tocó («tocadas»), y el servidor solo vuelve a traer esas. */
-var VERSION_CODIGO = '2026-10-14-b';       // se cambia a mano cada vez que se cambia este archivo; el servidor compara que coincida con la suya
+var VERSION_CODIGO = '2026-10-14-c';       // se cambia a mano cada vez que se cambia este archivo; el servidor compara que coincida con la suya
 function versionCodigo() { return VERSION_CODIGO; }
 function huellaTexto(t) { return Utilities.base64Encode(Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, t)).slice(0, 22); }
 /** Un resumen barato de cada pestaña: cuántas filas y columnas tiene y una huella de sus últimas 25 filas. */
@@ -12844,7 +12910,7 @@ function reiniciarPrecios(cred, confirmacion) {
  * El director operativo registra los equipos de cada lugar (sucursales y bodega/producción) y quién responde por ellos.
  * Cada mes los revisa con el responsable: está, falta o está dañado. El responsable confirma la revisión; lo que falta se reporta.
  * Paulino y los gerentes piden equipo; el director decide: asignar uno que ya existe, comprarlo (pasa a pagos) o rechazarlo. */
-var H_EQA = ['No.', 'Lugar', 'Equipo', 'Detalle (marca, serie)', 'Cantidad', 'Responsable', 'A cargo desde', 'Estado', 'Activo', 'Agregado por', 'Agregado en', 'Nota'];
+var H_EQA = ['No.', 'Lugar', 'Equipo', 'Detalle (marca, serie)', 'Cantidad', 'Responsable', 'A cargo desde', 'Estado', 'Activo', 'Agregado por', 'Agregado en', 'Nota', 'Costo (Q)', 'Solicitud'];
 var H_EQI = ['No.', 'Lugar', 'Fecha', 'Hecho por', 'Responsable', 'Equipos', 'Están', 'Faltan', 'Dañados', 'Confirmado por', 'Confirmado en', 'Nota', 'Detalle (JSON)'];
 var H_EQS = ['No.', 'Pedido en', 'Pedido por', 'Lugar', 'Qué necesita', 'Para qué', 'Estado', 'Resuelto por', 'Resuelto en', 'Cómo', 'Equipo asignado', 'Solicitud de pago', 'Nota', 'Recibido en'];
 var EQA_ESTADOS = ['Bueno', 'Dañado', 'En reparación'];
@@ -12854,6 +12920,7 @@ function hojasEquipos(ss) {
   ss = ss || libro();
   var a = ss.getSheetByName('Equipos');
   if (!a) { a = hojaLimpia(ss, 'Equipos', H_EQA); a.getRange('G:G').setNumberFormat('@'); a.getRange('K:K').setNumberFormat('dd/mm/yyyy hh:mm'); a.setColumnWidth(3, 220); }
+  if (a.getLastColumn() < 14) { encabezaAlFinal(a, 13, ['Costo (Q)', 'Solicitud']); a.getRange('M:M').setNumberFormat('"Q"#,##0.00'); }
   var i = ss.getSheetByName('Equipos revisiones');
   if (!i) { i = hojaLimpia(ss, 'Equipos revisiones', H_EQI); i.getRange('C:C').setNumberFormat('@'); i.getRange('K:K').setNumberFormat('dd/mm/yyyy hh:mm'); i.setColumnWidth(13, 400); }
   var s = ss.getSheetByName('Equipos pedidos');
@@ -12864,7 +12931,7 @@ function filasEqA() {
   return leeTodo(hojasEquipos().a, H_EQA.length).map(function (r, k) {
     return { fila: k + 2, numero: String(r[0] || ''), lugar: String(r[1] || ''), equipo: String(r[2] || ''), detalle: String(r[3] || ''), cantidad: Number(r[4]) || 1,
       responsable: String(r[5] || ''), desde: fmtDia(r[6]), estado: String(r[7] || 'Bueno'), activo: String(r[8]).trim().toLowerCase() !== 'no',
-      agregadoPor: String(r[9] || ''), agregadoEn: fmtSello(r[10]), nota: String(r[11] || '') };
+      agregadoPor: String(r[9] || ''), agregadoEn: fmtSello(r[10]), nota: String(r[11] || ''), costo: Number(r[12]) || 0, solicitud: String(r[13] || '') };
   }).filter(function (x) { return x.numero; });
 }
 function filasEqI() {
@@ -12886,7 +12953,7 @@ function jefeEquipos(yo) { return !!yo && (yo.esAdmin || yo.rol === 'operaciones
 /** El lugar de cada persona: su sucursal; bodega y producción, la Bodega Central. */
 function lugarDe(yo) { return yo.rol === 'gerente' ? yo.sucursal : (yo.rol === 'bodega' || yo.rol === 'produccion') ? 'bodega' : ''; }
 function veEquipo(yo, x) { return jefeEquipos(yo) || yo.rol === 'finanzas' || yo.rol === 'dueno' || x.responsable === yo.nombre || (lugarDe(yo) && x.lugar === lugarDe(yo)); }
-function lugaresEq() { return UNIDADES.filter(function (u) { return u.vende || u.id === 'bodega'; }).map(function (u) { return { id: u.id, nombre: u.nombre }; }); }
+function lugaresEq() { return UNIDADES.filter(function (u) { return u.vende || u.id === 'bodega' || (u.extra && u.activo !== false); }).map(function (u) { return { id: u.id, nombre: u.nombre }; }); }
 /** El responsable que se propone para un lugar: el gerente de la sucursal (o nadie, en bodega). */
 function responsablePorDefecto(lugar) {
   var g = usuariosCache().filter(function (u) { return u.activo && u.rol === 'gerente' && u.sucursal === lugar; })[0];
@@ -13106,7 +13173,7 @@ function devolverFondo(cred, numero, motivo) {
   var yo = quien(cred);
   if (!(esContador(yo) || yo.esAdmin || yo.rol === 'finanzas')) throw new Error('Las solicitudes las devuelve contabilidad.');
   var x = buscaFondo(numero);
-  if (x.estado !== FONDO_EST.APR && x.estado !== FONDO_EST.PED) throw new Error('Esa solicitud ya está ' + x.estado.toLowerCase() + '.');
+  if (x.estado !== FONDO_EST.APR && x.estado !== FONDO_EST.PED && x.estado !== FONDO_COT) throw new Error('Esa solicitud ya está ' + x.estado.toLowerCase() + '.');
   motivo = String(motivo || '').trim().slice(0, 300);
   if (motivo.length < 5) throw new Error('Escriba por qué se devuelve (por ejemplo: la factura no tiene la misma cantidad que el dinero que se solicita).');
   var h = hojaFondos();
@@ -13128,20 +13195,33 @@ function corregirFondo(cred, numero, d) {
   if (!(monto > 0)) throw new Error('Escriba cuánto dinero se necesita.');
   var que = d.que == null || String(d.que).trim() === '' ? x.que : String(d.que).trim().slice(0, 300);
   if (que.length < 8) throw new Error('Describa qué se necesita y por qué.');
+  var ls = null, ex = null, cambioLista = false;
+  if (x.clase && Array.isArray(d.renglones)) {
+    ls = leeRenglonesFondo(d.renglones, x.clase); ex = leeExtrasFondo(d.extras);
+    monto = totalFondo(ls, ex, false);
+    if (!(monto > 0)) throw new Error('Ponga un precio aproximado en la lista.');
+    cambioLista = JSON.stringify([ls, ex]) !== JSON.stringify(limpiaRealFondo(x.renglones, x.extras));
+  }
   var arch = d.archivo && d.archivo.datos ? guardaArchivo(d.archivo, 'Solicitud de ' + yo.nombre + (rolDe(yo.nombre) === 'cmo' ? ' · factura' : ' · cotización'), rolDe(yo.nombre) === 'cmo' ? 'La factura' : '') : null;
-  if (monto === x.monto && !arch && que === x.que) throw new Error('Cambie el monto o suba el archivo correcto; si todo está bien, contabilidad la puede pagar como está.');
-  var rol = rolDe(yo.nombre), vuelveA = estadoInicialFondo(rol, x.reqDinero);          // vuelve a empezar su camino de aprobación
+  if (monto === x.monto && !arch && que === x.que && !cambioLista) throw new Error('Cambie el monto o suba el archivo correcto; si todo está bien, contabilidad la puede pagar como está.');
+  var rol = rolDe(yo.nombre), vuelveA = estadoInicialFondo(rol, x.reqDinero, x.clase);          // vuelve a empezar su camino de aprobación
   var lock = LockService.getScriptLock(); lock.waitLock(15000); _LEE = {};
   try {
     var h = hojaFondos();
     h.getRange(x.fila, 6).setValue(que); h.getRange(x.fila, 8).setValue(monto);
     if (arch) h.getRange(x.fila, 23, 1, 2).setValues([[arch.url, arch.nombre]]);
+    if (x.clase) {
+      var lim = ls ? [ls, ex] : limpiaRealFondo(x.renglones, x.extras);
+      h.getRange(x.fila, 38, 1, 3).setValues([[JSON.stringify(lim[0]), JSON.stringify(lim[1]), '']]); h.getRange(x.fila, 41, 1, 2).setValues([['', '']]);          // vuelve a precios aproximados; sin cotización ni autorización
+      if (!ls) h.getRange(x.fila, 8).setValue(totalFondo(lim[0], lim[1], false));
+      if (rutaFondo(rol, x.reqDinero, x.clase).indexOf('adm') < 0) h.getRange(x.fila, 40).setValue(ls ? monto : totalFondo(lim[0], lim[1], false));          // si pidió el administrador, ya está autorizada
+    }
     h.getRange(x.fila, 10, 1, 4).setValues([[vuelveA, '', '', '']]);          // vuelve a empezar: nadie la ha aprobado con este monto
     h.getRange(x.fila, 25, 1, 3).setValues([['', '', '']]);
     h.getRange(x.fila, 33, 1, 3).setValues([['', '', '']]); h.getRange(x.fila, 36).setValue('');
   } finally { lock.releaseLock(); }
   var r = listaFondos(cred); r.ok = true;
-  r.mensaje = numero + ' corregida' + (monto !== x.monto ? ' (' + dinero(x.monto) + ' → ' + dinero(monto) + ')' : '') + ' y reenviada ' + (vuelveA === FONDO_EST.VER ? 'al director operativo.' : vuelveA === FONDO_ADM ? 'al administrador.' : 'a finanzas para aprobar.');
+  r.mensaje = numero + ' corregida' + (monto !== x.monto ? ' (' + dinero(x.monto) + ' → ' + dinero(monto) + ')' : '') + ' y reenviada ' + (vuelveA === FONDO_EST.VER ? 'al director operativo.' : vuelveA === FONDO_ADM ? 'al administrador.' : vuelveA === FONDO_COT ? 'a contabilidad para que suba la cotización.' : 'a finanzas para aprobar.');
   return r;
 }
 
@@ -13293,7 +13373,7 @@ function avisosPendientes(yo) {
  * El Inicio de cada persona los muestra primero; la campanita sigue recordando que hay algo pendiente. Lo demás (ya se pagó, ya llegó…) es solo información. */
 var TAREA_DE = [
   ['em-rech-', null], ['recheq-', null],
-  ['sd-apr-', 'Aprobar', 1], ['sd-ver-', 'Verificar', 1], ['sd-aut-', 'Autorizar', 1], ['sd-ok-', 'Proceder', 2], ['cierref-', 'Revisar', 2], ['cierre-', 'Cerrar mes', 2], ['sd-pag-', 'Pagar', 1], ['sd-dev-', 'Corregir', 1], ['val-', 'Validar', 1], ['rec-', 'Recibir efectivo', 1], ['banco-', 'Confirmar', 1],
+  ['sd-apr-', 'Aprobar', 1], ['sd-cot-', 'Cotizar', 1], ['sd-rec-', 'Confirmar', 2], ['sd-ver-', 'Verificar', 1], ['sd-aut-', 'Autorizar', 1], ['sd-ok-', 'Proceder', 2], ['cierref-', 'Revisar', 2], ['cierre-', 'Cerrar mes', 2], ['sd-pag-', 'Pagar', 1], ['sd-dev-', 'Corregir', 1], ['val-', 'Validar', 1], ['rec-', 'Recibir efectivo', 1], ['banco-', 'Confirmar', 1],
   ['rech-', 'Corregir', 1], ['ocdev-', 'Corregir', 1], ['oc-cot-', 'Cotizar', 1], ['oc-pagar-', 'Pagar', 1], ['pres-por-', 'Aprobar', 1], ['rep-', 'Pagar', 1], ['dif-caja-', 'Revisar', 1],
   ['peq-', 'Decidir', 2], ['confeq-', 'Confirmar', 2], ['revq-', 'Revisar', 2], ['asigeq-', 'Confirmar', 2], ['pendl-', 'Despachar', 2], ['pendso-', 'Ordenar', 2], ['pendsin-', 'Revisar', 2],
   ['nueva-', 'Aceptar', 2], ['cargar-', 'Despachar', 2], ['cam-', 'Recibir', 2], ['dif-', 'Aclarar', 2], ['de-', 'Decidir', 2], ['perm-r-', 'Decidir', 2], ['cq-', 'Responder', 2],
@@ -13312,38 +13392,45 @@ function tareaDeAviso(a) {
  *  · Daniel (director financiero):                el administrador autoriza → contabilidad.
  *  · Si NO requiere dinero (un traslado, algo con lo que ya contamos): solo pasa por el administrador (y por Álvaro, si es de los suyos);
  *    al autorizarse, la solicitud vuelve a quien la pidió para que proceda. */
-var FONDO_ADM = 'Por autorizar', FONDO_AUT = 'Autorizada';
-var ETAPA_ESTADO = { ver: FONDO_EST.VER, adm: FONDO_ADM, fin: FONDO_EST.PED, con: FONDO_EST.APR };
-function rutaFondo(rol, dinero) {
+var FONDO_ADM = 'Por autorizar', FONDO_AUT = 'Autorizada', FONDO_COT = 'Por cotizar';
+var ETAPA_ESTADO = { ver: FONDO_EST.VER, adm: FONDO_ADM, cot: FONDO_COT, fin: FONDO_EST.PED, con: FONDO_EST.APR };
+/* Las solicitudes con lista (clase) llevan un paso más: «cot» (contabilidad sube la cotización y pone los precios reales) entre la autorización y el pago. */
+function rutaFondo(rol, dinero, clase) {
   var r = [];
   if (rol === 'gerente' || rol === 'bodega' || rol === 'produccion') r.push('ver');
   if (rol !== 'admin') r.push('adm');
+  if (dinero && clase) r.push('cot');
   if (dinero) { if (rol !== 'finanzas') r.push('fin'); r.push('con'); }
   return r;
 }
-function estadoInicialFondo(rol, dinero) { var r = rutaFondo(rol, dinero); return r.length ? ETAPA_ESTADO[r[0]] : FONDO_AUT; }
-function estadoSiguienteFondo(x, etapa) { var r = rutaFondo(rolDe(x.por), x.reqDinero), n = r[r.indexOf(etapa) + 1]; return n ? ETAPA_ESTADO[n] : FONDO_AUT; }
+function estadoInicialFondo(rol, dinero, clase) { var r = rutaFondo(rol, dinero, clase); return r.length ? ETAPA_ESTADO[r[0]] : FONDO_AUT; }
+function estadoSiguienteFondo(x, etapa) {
+  var r = rutaFondo(rolDe(x.por), x.reqDinero, x.clase), n = r[r.indexOf(etapa) + 1];
+  if (n === 'cot' && x.cotPor) n = r[r.indexOf('cot') + 1];          // ya se cotizó (volvió al administrador por pasarse de 10 %): no se cotiza otra vez
+  return n ? ETAPA_ESTADO[n] : FONDO_AUT;
+}
 function estadoTxtFondo(x) {
-  var m = {}; m[FONDO_EST.VER] = 'Por verificar'; m[FONDO_ADM] = 'Por autorizar'; m[FONDO_EST.PED] = 'Por aprobar el pago'; m[FONDO_EST.APR] = 'Por pagar';
+  var m = {}; m[FONDO_EST.VER] = 'Por verificar'; m[FONDO_ADM] = 'Por autorizar'; m[FONDO_EST.PED] = 'Por aprobar el pago'; m[FONDO_EST.APR] = 'Por pagar'; m[FONDO_COT] = 'Por cotizar';
   m[FONDO_EST.PAG] = 'Pagada'; m[FONDO_EST.FIN] = 'Terminada'; m[FONDO_AUT] = 'Autorizada'; m[FONDO_EST.RECH] = 'Rechazada'; m[FONDO_DEV] = 'Devuelta';
   return m[x.estado] || x.estado;
 }
 function etapaTxtFondo(x) {
-  var m = {}; m[FONDO_EST.VER] = 'Espera al director operativo'; m[FONDO_ADM] = 'Espera al administrador'; m[FONDO_EST.PED] = 'Espera al director financiero (aprobar el pago)';
+  var m = {}; m[FONDO_EST.VER] = 'Espera al director operativo'; m[FONDO_ADM] = 'Espera al administrador'; m[FONDO_EST.PED] = 'Espera al director financiero (aprobar el pago)'; m[FONDO_COT] = 'Espera a contabilidad (subir la cotización y poner los precios reales)';
   m[FONDO_EST.APR] = 'Espera a contabilidad (entregar el dinero)'; m[FONDO_AUT] = 'Autorizada: ya puede proceder'; m[FONDO_DEV] = 'Devuelta: hay que corregirla';
   return m[x.estado] || '';
 }
 /** Los pasos de una solicitud, según su camino: quién hizo cada uno y cuándo. */
 function pasosFondo(x) {
-  var ruta = rutaFondo(rolDe(x.por), x.reqDinero), idx = function (e) { var i = ruta.indexOf(e); return i < 0 ? ruta.length : i; };
+  var ruta = rutaFondo(rolDe(x.por), x.reqDinero, x.clase), idx = function (e) { var i = ruta.indexOf(e); return i < 0 ? ruta.length : i; };
   var ei = ruta.length;
-  if (x.estado === FONDO_EST.VER) ei = idx('ver'); else if (x.estado === FONDO_ADM) ei = idx('adm'); else if (x.estado === FONDO_EST.PED) ei = idx('fin'); else if (x.estado === FONDO_EST.APR) ei = idx('con');
+  if (x.estado === FONDO_EST.VER) ei = idx('ver'); else if (x.estado === FONDO_ADM) ei = idx('adm'); else if (x.estado === FONDO_COT) ei = idx('cot'); else if (x.estado === FONDO_EST.PED) ei = idx('fin'); else if (x.estado === FONDO_EST.APR) ei = idx('con');
   else if (x.estado === FONDO_DEV) ei = -1;
   else if (x.estado === FONDO_EST.RECH) { var er = x.etapaRech || ({ operaciones: 'ver', admin: 'adm', finanzas: 'fin' }[rolDe(x.aprPor)] || 'fin'); ei = idx(er); }
-  var datos = { ver: ['Verificada', x.verPor, x.verEn], adm: ['Autorizada', x.autPor, x.autEn], fin: ['Aprobada', x.aprPor, x.aprEn], con: ['Pagada', x.pagPor, x.pagEn] };
+  var datos = { ver: ['Visto bueno', x.verPor, x.verEn], adm: ['Autorizada', x.autPor, x.autEn], cot: ['Cotizada', x.cotPor, x.cotEn], fin: ['Aprobada', x.aprPor, x.aprEn], con: ['Pagada', x.pagPor, x.pagEn] };
   var pasos = [{ n: 'Pedida', por: x.por, en: x.en }];
-  ruta.forEach(function (e, k) { var d = datos[e], hecho = k < ei; pasos.push({ n: d[0], por: hecho ? d[1] : '', en: hecho ? (d[2] || x.en) : '' }); });
-  if (x.reqDinero) { if (rolDe(x.por) !== 'cmo' && !esEquipoBodega({ rol: rolDe(x.por) })) pasos.push({ n: 'Terminada', por: '', en: x.finEn }); }
+  ruta.forEach(function (e, k) { var d = datos[e], hecho = k < ei || (e === 'cot' && !!x.cotPor); pasos.push({ n: d[0], por: hecho ? d[1] : '', en: hecho ? (d[2] || x.en) : '' }); });
+  if (x.clase && x.reqDinero) pasos.push({ n: FONDO_ETIQ_FIN[x.clase], por: x.recPor, en: x.recEn || x.finEn });
+  else if (x.reqDinero) { if (rolDe(x.por) !== 'cmo' && !esEquipoBodega({ rol: rolDe(x.por) })) pasos.push({ n: 'Terminada', por: '', en: x.finEn }); }
   else pasos.push({ n: 'Hecha', por: x.por, en: x.finEn });
   return pasos;
 }
@@ -13355,7 +13442,7 @@ function listaFondos(cred) {
   if (soloSuyas) ls = ls.filter(function (x) { return x.por === yo.nombre; });          // el gerente, la CMO y el equipo de bodega ven las suyas
   var p = null;
   if (!soloSuyas) { try { p = presupuestoMes({ usuario: yo.nombre, pin: cred.pin }, mes); } catch (e) {} }
-  var primer = estadoInicialFondo(yo.esAdmin ? 'admin' : rolDe(yo.nombre), true);
+  var primer = estadoInicialFondo(yo.esAdmin ? 'admin' : rolDe(yo.nombre), true, '');
   var r = { solicitudes: ls.slice(0, 60).map(function (x) {
       x.rolSol = rolDe(x.por);
       x.deBodega = esEquipoBodega({ rol: x.rolSol });
@@ -13366,11 +13453,18 @@ function listaFondos(cred) {
       x.puedeAutorizar = !!yo.esAdmin && x.estado === FONDO_ADM;
       x.puedeAprobar = (yo.rol === 'finanzas' || yo.esAdmin) && x.estado === FONDO_EST.PED;
       x.puedePagar = (esContador(yo) || yo.esAdmin) && x.estado === FONDO_EST.APR;
-      x.puedeDevolver = (esContador(yo) || yo.esAdmin) && x.estado === FONDO_EST.APR;
+      x.puedeDevolver = (esContador(yo) || yo.esAdmin) && (x.estado === FONDO_EST.APR || x.estado === FONDO_COT);
+      x.claseTxt = x.clase ? CLASES_FONDO[x.clase] : '';
+      x.montoEst = x.clase ? totalFondo(x.renglones, x.extras, false) : x.monto;
+      x.hayReal = !!x.cotPor;
+      x.subePct = x.clase && x.cotPor && x.montoAut > 0 ? Math.round((x.monto - x.montoAut) / x.montoAut * 1000) / 10 : null;
+      x.puedeCotizar = !!x.clase && (esContador(yo) || yo.esAdmin) && x.estado === FONDO_COT;
+      x.puedeRecibir = !!x.clase && x.estado === FONDO_EST.PAG && (x.por === yo.nombre || yo.rol === 'operaciones' || !!yo.esAdmin);
+      x.etiqRecibir = x.clase === 'equipo' ? 'Recibido e instalado' : x.clase === 'servicio' ? 'Trabajo terminado' : 'Ya llegó';
       x.puedeCorregir = x.por === yo.nombre && x.estado === FONDO_DEV;
       x.devuelta = x.devEn && x.estado === FONDO_DEV ? { por: x.devPor, en: x.devEn, motivo: x.devMotivo, montoAntes: x.montoAntes } : null;
       x.corregida = !!(x.devEn && x.estado !== FONDO_DEV && x.montoAntes && x.montoAntes !== x.monto);
-      x.puedeTerminar = (yo.rol === 'operaciones' || yo.esAdmin) && x.estado === FONDO_EST.PAG && !x.deCmo && !x.deBodega;
+      x.puedeTerminar = !x.clase && (yo.rol === 'operaciones' || yo.esAdmin) && x.estado === FONDO_EST.PAG && !x.deCmo && !x.deBodega;
       x.puedeHecha = (x.por === yo.nombre || !!yo.esAdmin) && x.estado === FONDO_AUT;
       x.puedeAdjuntar = (yo.rol === 'operaciones' || yo.esAdmin || esContador(yo) || (x.por === yo.nombre && (x.estado === FONDO_EST.VER || x.estado === FONDO_ADM || (yo.cmo && x.estado === FONDO_EST.PED)))) &&
         x.estado !== FONDO_EST.FIN && x.estado !== FONDO_EST.RECH && x.estado !== FONDO_AUT;
@@ -13378,12 +13472,14 @@ function listaFondos(cred) {
         var rb = u && u.rubros.filter(function (q) { return q.rubro === rubroDeFondo(x.tipo); })[0];
         if (rb) x.presupuesto = { rubro: rb.rubro, presupuesto: rb.presupuesto, gastado: rb.gastado }; }
       return x; }),
+    clases: yo.cmo ? [] : Object.keys(CLASES_FONDO).map(function (k) { return { id: k, nombre: CLASES_FONDO[k], tipos: k === 'equipo' ? [] : Object.keys(tiposDeClase(k)) }; }),
+    extrasTipos: FONDO_EXTRAS, topeSube: FONDO_TOPE_SUBE * 100,
     tipos: yo.cmo ? Object.keys(FONDO_TIPOS_CMO) : esEquipoBodega(yo) ? Object.keys(FONDO_TIPOS_BODEGA) : Object.keys(FONDO_TIPOS),
     unidades: (yo.rol === 'gerente' || yo.cmo) ? [nombreUnidad(yo.sucursal)] : esEquipoBodega(yo) ? [nombreUnidad('bodega')] : UNIDADES.map(function (u) { return u.nombre; }),
     formas: FORMAS_PAGO, puedePedir: yo.rol === 'operaciones' || yo.esAdmin || yo.rol === 'finanzas' || yo.rol === 'gerente' || yo.cmo || esEquipoBodega(yo),
     esGerente: yo.rol === 'gerente', esCmo: !!yo.cmo, esDirector: yo.rol === 'operaciones' || yo.rol === 'finanzas', esBodega: esEquipoBodega(yo),
     pendientes: { devueltas: ls.filter(function (x) { return x.estado === FONDO_DEV; }).length, verificar: ls.filter(function (x) { return x.estado === FONDO_EST.VER; }).length,
-      autorizar: ls.filter(function (x) { return x.estado === FONDO_ADM; }).length, aprobar: ls.filter(function (x) { return x.estado === FONDO_EST.PED; }).length,
+      autorizar: ls.filter(function (x) { return x.estado === FONDO_ADM; }).length, cotizar: ls.filter(function (x) { return x.estado === FONDO_COT; }).length, aprobar: ls.filter(function (x) { return x.estado === FONDO_EST.PED; }).length,
       pagar: ls.filter(function (x) { return x.estado === FONDO_EST.APR; }).length } };
   r.botonPedir = primer === FONDO_EST.VER ? 'Enviar al director operativo' : primer === FONDO_ADM ? 'Enviar al administrador' : 'Enviar a finanzas para aprobar';
   r.ayudaPedir = primer === FONDO_EST.VER ? 'Su solicitud la verifica el director operativo, la autoriza el administrador, la aprueba el director financiero y contabilidad entrega el dinero.'
@@ -13398,7 +13494,13 @@ function pedirFondos(cred, d) {
   if (yo.rol !== 'operaciones' && !yo.esAdmin && yo.rol !== 'finanzas' && yo.rol !== 'gerente' && !yo.cmo && !esEquipoBodega(yo)) throw new Error('Las solicitudes las hacen los gerentes, la bodega, producción, los directores y el administrador.');
   d = d || {};
   var conDinero = !(d.dinero === false || String(d.dinero).toLowerCase() === 'no');
-  if (!(yo.cmo ? FONDO_TIPOS_CMO[d.tipo] : esEquipoBodega(yo) ? FONDO_TIPOS_BODEGA[d.tipo] : FONDO_TIPOS[d.tipo])) throw new Error('Escoja qué tipo de solicitud es.');
+  var clase = String(d.clase || '');
+  if (clase) {
+    if (yo.cmo) throw new Error('Lo suyo son pagos con factura: use la lista de siempre.');
+    if (!CLASES_FONDO[clase]) throw new Error('Escoja qué clase de solicitud es.');
+    conDinero = true; if (clase === 'equipo') d.tipo = 'Equipo';
+  }
+  if (!(clase ? tiposDeClase(clase)[d.tipo] : yo.cmo ? FONDO_TIPOS_CMO[d.tipo] : esEquipoBodega(yo) ? FONDO_TIPOS_BODEGA[d.tipo] : FONDO_TIPOS[d.tipo])) throw new Error('Escoja qué tipo de solicitud es.');
   if (yo.rol === 'gerente' || yo.cmo) d.unidad = nombreUnidad(yo.sucursal);
   if (esEquipoBodega(yo)) d.unidad = nombreUnidad('bodega');
   if (yo.cmo && conDinero && d.tipo !== 'Sueldo' && !(d.archivo && d.archivo.datos)) throw new Error('Adjunte la factura (PDF o foto): contabilidad la necesita para pagar.');
@@ -13406,11 +13508,15 @@ function pedirFondos(cred, d) {
   if (!u) throw new Error('Escoja la sucursal.');
   var que = String(d.que || '').trim().slice(0, 300);
   if (que.length < 8) throw new Error('Describa qué se necesita y por qué.');
-  var monto = conDinero ? r2(String(d.monto || '').replace(/[Q,\s]/g, '')) : 0;
-  if (conDinero && !(monto > 0)) throw new Error('Escriba cuánto dinero se necesita (aproximado). Si no hace falta dinero, marque «No necesita dinero».');
+  var ls = [], ex = [];
+  if (clase) { ls = leeRenglonesFondo(d.renglones, clase); ex = leeExtrasFondo(d.extras); }
+  var monto = clase ? totalFondo(ls, ex, false) : conDinero ? r2(String(d.monto || '').replace(/[Q,\s]/g, '')) : 0;
+  if (conDinero && !(monto > 0)) throw new Error(clase ? 'Ponga un precio aproximado en la lista (o en un costo extra): el administrador lo necesita para autorizar. Contabilidad lo cambia por el real al cotizar.'
+    : 'Escriba cuánto dinero se necesita (aproximado). Si no hace falta dinero, marque «No necesita dinero».');
   var urg = ['Normal', 'Urgente'].indexOf(d.urgencia) >= 0 ? d.urgencia : 'Normal';
   var arch = d.archivo && d.archivo.datos ? guardaArchivo(d.archivo, 'Solicitud de ' + yo.nombre + (yo.cmo ? ' · factura' : ' · cotización'), yo.cmo ? 'La factura' : '') : { url: '', nombre: '' };
-  var estado0 = estadoInicialFondo(yo.esAdmin ? 'admin' : rol, conDinero);
+  var estado0 = estadoInicialFondo(yo.esAdmin ? 'admin' : rol, conDinero, clase);
+  var sinAdm = !!clase && rutaFondo(yo.esAdmin ? 'admin' : rol, conDinero, clase).indexOf('adm') < 0;          // el administrador pide: ya está autorizada
   var lock = LockService.getScriptLock();
   lock.waitLock(15000); _LEE = {};
   var numero;
@@ -13419,11 +13525,12 @@ function pedirFondos(cred, d) {
     filasFondos().forEach(function (x) { var m = /^(?:SD|RQ|SO)-(\d+)$/.exec(x.numero); if (m) max = Math.max(max, +m[1]); });
     numero = 'SO-' + ('0000' + (max + 1)).slice(-4);
     hojaFondos().appendRow([numero, new Date(), yo.nombre, d.tipo, u.nombre, que, String(d.proveedor || '').slice(0, 60), monto, urg, estado0,
-      '', '', '', '', '', '', '', '', '', '', '', '', arch.url, arch.nombre, '', '', '', '', '', '', '', conDinero ? 'Sí' : 'No', '', '', '', '']);
+      '', '', '', '', '', '', '', '', '', '', '', '', arch.url, arch.nombre, '', '', '', '', '', '', '', conDinero ? 'Sí' : 'No', '', '', '', '',
+      clase, clase ? JSON.stringify(ls) : '', clase ? JSON.stringify(ex) : '', sinAdm ? monto : '', '', '', '', '', '']);
   } finally { lock.releaseLock(); }
   var r = listaFondos(cred); r.ok = true;
   var a = estado0 === FONDO_EST.VER ? ' enviada al director operativo para que la verifique' : estado0 === FONDO_ADM ? ' enviada al administrador para que la autorice'
-    : estado0 === FONDO_EST.PED ? ' enviada al director financiero para que apruebe el pago' : ' registrada y autorizada';
+    : estado0 === FONDO_COT ? ' enviada a contabilidad para que suba la cotización' : estado0 === FONDO_EST.PED ? ' enviada al director financiero para que apruebe el pago' : ' registrada y autorizada';
   r.mensaje = numero + a + (conDinero ? ': ' + dinero(monto) : ' (no necesita dinero)') + '.';
   return r;
 }
@@ -13439,7 +13546,7 @@ function verificarFondos(cred, numero, confirmar, comentario) {
   if (confirmar) h.getRange(x.fila, 10).setValue(estadoSiguienteFondo(x, 'ver'));
   else { h.getRange(x.fila, 10, 1, 4).setValues([[FONDO_EST.RECH, yo.nombre, new Date(), comentario]]); h.getRange(x.fila, 36).setValue('ver'); }
   var r = listaFondos(cred); r.ok = true;
-  r.mensaje = numero + (confirmar ? ' verificada. Ahora la autoriza el administrador.' : ' rechazada. ' + x.por + ' lo verá en su campanita.');
+  r.mensaje = numero + (confirmar ? ' con su visto bueno. Ahora la autoriza el administrador.' : ' rechazada. ' + x.por + ' lo verá en su campanita.');
   return r;
 }
 /** El administrador autoriza (o rechaza). Sin dinero, aquí termina el camino y la solicitud regresa a quien la pidió para que proceda. */
@@ -13453,24 +13560,118 @@ function autorizarFondos(cred, numero, autorizar, comentario) {
   var h = hojaFondos();
   h.getRange(x.fila, 33, 1, 3).setValues([[yo.nombre, new Date(), comentario]]);
   var sig = autorizar ? estadoSiguienteFondo(x, 'adm') : FONDO_EST.RECH;
-  if (autorizar) h.getRange(x.fila, 10).setValue(sig);
+  if (autorizar) { h.getRange(x.fila, 10).setValue(sig); if (x.clase) h.getRange(x.fila, 40).setValue(x.monto); }          // lo autorizado: la base para la regla del 10 %
   else { h.getRange(x.fila, 10, 1, 4).setValues([[FONDO_EST.RECH, yo.nombre, new Date(), comentario]]); h.getRange(x.fila, 36).setValue('adm'); }
   var r = listaFondos(cred); r.ok = true;
   r.mensaje = numero + (!autorizar ? ' rechazada. ' + x.por + ' lo verá en su campanita.' : sig === FONDO_AUT ? ' autorizada. ' + x.por + ' ya puede proceder.'
-    : sig === FONDO_EST.PED ? ' autorizada. Ahora la aprueba el director financiero.' : ' autorizada. Contabilidad entrega el dinero.');
+    : sig === FONDO_COT ? ' autorizada. Ahora contabilidad sube la cotización y pone los precios reales.' : sig === FONDO_EST.PED ? ' autorizada. Ahora la aprueba el director financiero.' : ' autorizada. Contabilidad entrega el dinero.');
   return r;
 }
 function aprobarFondos(cred, numero, aprobar, comentario) {
   var yo = quien(cred);
   if (yo.rol !== 'finanzas' && !yo.esAdmin) throw new Error('El pago lo aprueba el director financiero.');
   var x = buscaFondo(numero);
-  if (x.estado !== FONDO_EST.PED) throw new Error(x.estado === FONDO_ADM || x.estado === FONDO_EST.VER ? 'Todavía falta que la autoricen (' + estadoTxtFondo(x).toLowerCase() + ').' : 'Esa solicitud ya está ' + estadoTxtFondo(x).toLowerCase() + '.');
+  if (x.estado !== FONDO_EST.PED) throw new Error(x.estado === FONDO_ADM || x.estado === FONDO_EST.VER || x.estado === FONDO_COT ? 'Todavía falta que la autoricen (' + estadoTxtFondo(x).toLowerCase() + ').' : 'Esa solicitud ya está ' + estadoTxtFondo(x).toLowerCase() + '.');
   comentario = String(comentario || '').trim().slice(0, 200);
   if (!aprobar && comentario.length < 4) throw new Error('Escriba por qué se rechaza.');
   hojaFondos().getRange(x.fila, 10, 1, 4).setValues([[aprobar ? FONDO_EST.APR : FONDO_EST.RECH, yo.nombre, new Date(), comentario]]);
   if (!aprobar) hojaFondos().getRange(x.fila, 36).setValue('fin');
   var r = listaFondos(cred); r.ok = true; r.mensaje = numero + (aprobar ? ' aprobada. El contador entrega el dinero.' : ' rechazada. ' + x.por + ' lo verá en su campanita.');
   return r;
+}
+/** Contabilidad sube la cotización y pone los precios reales de cada renglón (y de los costos extra).
+ *  d = { renglones: [{ r: precio real }], extras: [{ r: monto real }…, y los que se agregan { t, d, r }], archivo, nota }
+ *  Si el total real sube más de 10 % sobre lo que autorizó el administrador, vuelve a él; si no, sigue al director financiero. */
+function cotizarFondo(cred, numero, d) {
+  var yo = quien(cred);
+  if (!(esContador(yo) || yo.esAdmin)) throw new Error('La cotización la registra contabilidad.');
+  var x = buscaFondo(numero);
+  if (!x.clase) throw new Error('Esa solicitud no lleva lista de artículos.');
+  if (x.estado !== FONDO_COT) throw new Error('Esa solicitud no está por cotizar (' + estadoTxtFondo(x).toLowerCase() + ').');
+  d = d || {};
+  var reales = Array.isArray(d.renglones) ? d.renglones : [];
+  var ls = x.renglones.map(function (l, i) {
+    var v = reales[i] && reales[i].r != null && String(reales[i].r).trim() !== '' ? numFondo(reales[i].r) : l.p;
+    if (!(v >= 0)) throw new Error('Renglón ' + (i + 1) + ' («' + l.n + '»): revise el precio.');
+    return { n: l.n, c: l.c, u: l.u || '', p: l.p, r: v };
+  });
+  var re = Array.isArray(d.extras) ? d.extras : [], ex = [];
+  x.extras.forEach(function (e, i) {
+    var v = re[i] && re[i].r != null && String(re[i].r).trim() !== '' ? numFondo(re[i].r) : e.e;
+    if (!(v >= 0)) throw new Error('Costo extra «' + e.t + '»: revise el monto.');
+    ex.push({ t: e.t, d: e.d || '', e: e.e, r: v });
+  });
+  re.slice(x.extras.length).forEach(function (e, k) {
+    e = e || {}; var m = String(e.r == null ? '' : e.r).trim();
+    if (m === '' && !String(e.d || '').trim()) return;
+    if (FONDO_EXTRAS.indexOf(e.t) < 0) throw new Error('Costo extra nuevo: escoja de qué es (traslado, instalación…).');
+    var v = m === '' ? 0 : numFondo(m); if (v < 0) throw new Error('Costo extra nuevo: revise el monto.');
+    ex.push({ t: e.t, d: String(e.d || '').replace(/\s+/g, ' ').trim().slice(0, 60), e: 0, r: v });
+  });
+  if (ex.length > 10) throw new Error('Hasta 10 costos extra por solicitud.');
+  var total = totalFondo(ls, ex, true);
+  if (!(total > 0)) throw new Error('El total de la cotización tiene que ser mayor que cero.');
+  var arch = d.archivo && d.archivo.datos ? guardaArchivo(d.archivo, numero + ' cotización') : null;
+  if (x.clase !== 'compra' && !arch && !x.archivo) throw new Error('Suba la cotización (PDF o foto): sin ella no se puede entregar el monto exacto.');
+  var sube = x.montoAut > 0 && total > x.montoAut * (1 + FONDO_TOPE_SUBE) + 0.004;
+  var lock = LockService.getScriptLock(); lock.waitLock(15000); _LEE = {};
+  var sig;
+  try {
+    var h = hojaFondos();
+    h.getRange(x.fila, 8).setValue(total);
+    h.getRange(x.fila, 38, 1, 2).setValues([[JSON.stringify(ls), JSON.stringify(ex)]]);
+    h.getRange(x.fila, 41, 1, 2).setValues([[yo.nombre, new Date()]]);
+    if (arch) h.getRange(x.fila, 23, 1, 2).setValues([[arch.url, arch.nombre]]);
+    var nota = String(d.nota || '').trim().slice(0, 200);
+    if (nota) h.getRange(x.fila, 13).setValue(nota);
+    sig = sube ? FONDO_ADM : estadoSiguienteFondo(x, 'cot');
+    h.getRange(x.fila, 10).setValue(sig);
+  } finally { lock.releaseLock(); }
+  var r = listaFondos(cred); r.ok = true;
+  r.mensaje = numero + ' cotizada: ' + dinero(total) + (x.montoAut > 0 ? ' (autorizado ' + dinero(x.montoAut) + ')' : '') + '. ' +
+    (sube ? 'Sube más de ' + Math.round(FONDO_TOPE_SUBE * 100) + ' %: vuelve al administrador para que la autorice otra vez.'
+      : sig === FONDO_EST.PED ? 'Ahora la aprueba el director financiero.' : 'Contabilidad entrega el dinero.');
+  return r;
+}
+/** Ya llegó / quedó instalado / terminó el trabajo. Quien pidió (o el director operativo, o el administrador) lo confirma.
+ *  Si era un equipo o mueble, entra solo al inventario de Equipos del lugar, a cargo de quien lo pidió, con su costo real. */
+function recibirFondo(cred, numero, nota) {
+  var yo = quien(cred), x = buscaFondo(numero);
+  if (!x.clase) throw new Error('Esa solicitud se termina de otra forma.');
+  if (!(x.por === yo.nombre || yo.rol === 'operaciones' || yo.esAdmin)) throw new Error('Lo confirma ' + x.por + ', quien la pidió, o el director operativo.');
+  if (x.estado !== FONDO_EST.PAG) throw new Error(x.estado === FONDO_EST.FIN ? 'Esa solicitud ya está terminada.' : 'Todavía falta que contabilidad la pague.');
+  nota = String(nota || '').trim().slice(0, 200);
+  var creados = [];
+  var lock = LockService.getScriptLock(); lock.waitLock(15000); _LEE = {};
+  try {
+    if (x.clase === 'equipo') creados = equiposDeFondo(x, yo);
+    var h = hojaFondos();
+    h.getRange(x.fila, 10).setValue(FONDO_EST.FIN);
+    h.getRange(x.fila, 21, 1, 2).setValues([[new Date(), nota]]);
+    h.getRange(x.fila, 43, 1, 3).setValues([[creados.join(', '), yo.nombre, new Date()]]);
+  } finally { lock.releaseLock(); }
+  var r = listaFondos(cred); r.ok = true;
+  r.mensaje = numero + ' ' + (x.clase === 'equipo' ? 'recibida e instalada' : x.clase === 'servicio' ? 'con el trabajo terminado' : 'recibida') + '.' +
+    (creados.length ? ' ' + (creados.length === 1 ? 'El equipo quedó' : 'Los ' + creados.length + ' equipos quedaron') + ' en Equipos de ' + x.unidad + ' (' + creados.join(', ') + ').' : '');
+  return r;
+}
+/** Crea en «Equipos» un renglón por cada artículo de la solicitud. El costo de cada uno es lo pagado, repartido según el precio de cada renglón (traslado e instalación incluidos). */
+function equiposDeFondo(x, yo) {
+  var u = null; UNIDADES.forEach(function (y) { if (y.nombre === x.unidad) u = y; });
+  if (!u || !lugaresEq().some(function (l) { return l.id === u.id; })) throw new Error('«' + x.unidad + '» no admite equipos todavía. Avise al administrador.');
+  var resp = x.por;
+  if (!usuariosCache().some(function (y) { return y.activo && y.nombre === resp; })) resp = responsablePorDefecto(u.id);
+  var ls = x.renglones, base = x.pagado > 0 ? x.pagado : x.monto, subs = ls.map(function (l) { return Math.round(l.c * (l.r != null ? l.r : l.p) * 100) / 100; });
+  var suma = subs.reduce(function (a, b) { return a + b; }, 0), usado = 0, h = hojasEquipos().a, todos = filasEqA(), out = [];
+  ls.forEach(function (l, i) {
+    var costo = i === ls.length - 1 ? r2(base - usado) : r2(suma > 0 ? base * subs[i] / suma : base / ls.length);
+    usado += costo;
+    var numero = numeroSiguiente(todos.concat(out.map(function (n) { return { numero: n }; })), 'EQP');
+    h.appendRow([numero, u.id, l.n, 'Compra ' + x.numero, Math.max(1, Math.round(l.c)), resp, hoyISO(), 'Bueno', 'Sí', yo.nombre, new Date(), ('Solicitud ' + x.numero + ': ' + x.que).slice(0, 200), costo, x.numero]);
+    h.getRange(h.getLastRow(), 7).setNumberFormat('@').setValue(hoyISO());
+    out.push(numero);
+  });
+  return out;
 }
 /** Quien pidió (sin dinero) marca que ya lo hizo. */
 function hechaFondos(cred, numero, nota) {
