@@ -4491,7 +4491,7 @@ var H_SOLD = ['No. de solicitud', 'Sucursal', 'Código', 'Producto', 'Medida', '
   'Pendiente', 'Pendiente: llega', 'Pendiente: entregado', 'Pendiente: no se entrega (quién)', 'Pendiente: motivo'];
 var H_OC = ['No. de orden', 'Creada en', 'Creada por', 'Proveedor', 'Producto de compra',
   'Presentación', 'Sugerido', 'Pedido', 'Código', 'Producto de bodega', 'Rinde',
-  'Estado', 'Recibido', 'Recibido en', 'Recibido por', 'Precio (cotización)', 'Subtotal'];
+  'Estado', 'Recibido', 'Recibido en', 'Recibido por', 'Precio (cotización)', 'Subtotal', 'Código del proveedor'];
 var H_AJUSTES = ['Clave', 'Valor', 'Qué es'];
 var AJUSTES_INICIALES = [
   ['dias_conteo_sucursales', 'domingo, jueves', 'Días en que cada sucursal hace inventario'],
@@ -4552,6 +4552,7 @@ function hojaInv(nombre, ss) {
   if (h) {
     if (nombre === 'Inventario conteos' && h.getLastColumn() < H_CONTEOS.length)
       encabezaAlFinal(h, 12, ['Menores sueltos', 'Peso de lo abierto']);
+    if (nombre === 'Órdenes de compra' && h.getLastColumn() < H_OC.length) encabezaAlFinal(h, 18, ['Código del proveedor']);
     if (nombre === 'Solicitudes detalle' && h.getLastColumn() < H_SOLD.length)
       encabezaAlFinal(h, 17, ['Pendiente', 'Pendiente: llega', 'Pendiente: entregado', 'Pendiente: no se entrega (quién)', 'Pendiente: motivo']);
     return (_HINV[nombre] = h);
@@ -5398,7 +5399,7 @@ function filasOC() {
       nombre: String(r[9] || ''), rinde: Number(r[10]) || 1, estado: String(r[11] || ''),
       recibido: r[12] === '' || r[12] == null ? null : Number(r[12]),
       recibidoEn: fmtSello(r[13]), recibidoPor: String(r[14] || ''),
-      precio: Number(r[15]) || 0, subtotal: Number(r[16]) || 0 };
+      precio: Number(r[15]) || 0, subtotal: Number(r[16]) || 0, codProv: String(r[17] || '') };
   }).filter(function (x) { return x.numero; });
 }
 
@@ -5416,7 +5417,7 @@ function sugerenciaCompra(cred, proveedor) {
   var idx = indiceCompras(), dias = aj.cobertura + aj.colchon, cuenta = {}, sinProv = 0;
   var todos = productosInv();
   todos.forEach(function (b) {
-    if (b.proveedor) cuenta[b.proveedor] = (cuenta[b.proveedor] || 0) + 1; else sinProv++; });
+    var an0 = anclasDe(b); if (an0.length) an0.forEach(function (a) { cuenta[a.proveedor] = (cuenta[a.proveedor] || 0) + 1; }); else sinProv++; });
   var noBodega = {};
   filasProveedores().forEach(function (p) { if (!esDeBodega(p)) noBodega[p.nombre] = true; });
   var provs = filasProveedores().filter(function (p) { return p.activo && esDeBodega(p); }).map(function (p) {
@@ -5429,12 +5430,13 @@ function sugerenciaCompra(cred, proveedor) {
     a.nombre.localeCompare(b.nombre, 'es'); });
   var lineas = [];
   if (proveedor) todos.forEach(function (b) {
-    if (b.proveedor !== proveedor) return;
+    var an = anclasDe(b).filter(function (a) { return a.proveedor === proveedor; })[0];          // lo que ESE proveedor nos vende
+    if (!an) return;
     var q = est.existencia[b.codigo] || 0, c = comp[b.codigo] || 0, llega = enCamino[b.codigo] || 0;
     var ligado = b.compra ? (idx[(b.compra + '§' + b.proveedor).toLowerCase()] ||
       idx[b.compra.toLowerCase()]) : null;
-    var pres = b.presCompra || (ligado ? ligado.medida : b.unidad);
-    var rinde = b.rinde > 0 ? b.rinde : 1, sug = null, base = '';
+    var pres = an.presentacion || b.presCompra || (ligado ? ligado.medida : b.unidad);
+    var rinde = an.trae > 0 ? an.trae : (b.rinde > 0 ? b.rinde : 1), sug = null, base = '';
     if (cons._conHistoria && cons[b.codigo] != null) {
       var falta = cons[b.codigo] * dias + c - q - llega;
       sug = falta > 0.0005 ? Math.ceil(falta / rinde - 1e-6) : 0;
@@ -5444,7 +5446,8 @@ function sugerenciaCompra(cred, proveedor) {
     var x = { codigo: b.codigo, nombre: b.nombre, estante: b.estante, unidad: b.unidad,
       existencia: q, existenciaTxt: textoCantidad(q, b), comprometido: r3(c),
       comprometidoTxt: c > 0 ? textoCantidad(c, b) : '', enCamino: llega > 0 ? textoCantidad(llega, b) : '',
-      presentacion: pres, rinde: rinde, sugerido: sug, base: base, compra: ligado ? ligado.nombre : '' };
+      presentacion: pres, rinde: rinde, sugerido: sug, base: base, compra: an.nombreProv || (ligado ? ligado.nombre : ''), codProv: an.codProv || '',
+      precioProv: an.precio || 0 };
     if (yo.esAdmin && ligado && ligado.precio > 0 && sug > 0)
       x.costoEstimado = Math.round(sug * ligado.precio * 100) / 100;
     lineas.push(x);
@@ -5481,7 +5484,7 @@ function guardarOrden(cred, d) {
       if (!isFinite(q) || q < 0) throw new Error('La cantidad de «' + l.nombre + '» no es válida.');
       if (!(q > 0)) return;
       filas.push([numero, ahora, yo.nombre, prov, l.compra || l.nombre, l.presentacion,
-        l.sugerido == null ? '' : l.sugerido, q, l.codigo, l.nombre, l.rinde, 'Pedida', '', '', '', '', '']);
+        l.sugerido == null ? '' : l.sugerido, q, l.codigo, l.nombre, l.rinde, 'Pedida', '', '', '', '', '', l.codProv || '']);
     });
     if (!filas.length) throw new Error('Escriba al menos una cantidad.');
     var h = hojaOC();
@@ -5536,7 +5539,7 @@ function listaOrdenes(cred) {
     }
     var ln = { codigo: o.codigo, nombre: o.nombre, compra: o.compra,
       presentacion: o.presentacion, sugerido: o.sugerido, pedido: o.pedido,
-      recibido: o.recibido, rinde: o.rinde, unidad: (unidadDeCodigo(o.codigo) || {}).unidad || 'unidad' };
+      recibido: o.recibido, rinde: o.rinde, unidad: (unidadDeCodigo(o.codigo) || {}).unidad || 'unidad', codProv: o.codProv };
     if (montos) { ln.anterior = anterior; ln.precio = o.precio; ln.subtotal = o.subtotal; }
     por[o.numero].lineas.push(ln);
   });
@@ -5599,11 +5602,11 @@ function htmlOrden(o, conMontos) {
     '<td class="r">Orden de compra<br>' + htm(o.numero) + '</td></tr></table>');
   h.push('<table class="d"><tr><td><b>Proveedor:</b> ' + htm(o.proveedor) + '</td><td><b>Fecha:</b> ' + htm(dia(o.creadaEn.slice(0, 10)) + ' ' + o.creadaEn.slice(11, 16)) + '</td></tr>' +
     '<tr><td><b>Pidió:</b> ' + htm(o.creadaPor) + '</td><td><b>Estado:</b> ' + htm(o.estado) + '</td></tr></table>');
-  h.push('<table class="l"><tr><th>#</th><th>Producto</th><th>Presentación</th><th class="n">Cantidad</th>' +
-    (conMontos ? '<th class="n">Precio</th><th class="n">Subtotal</th>' : '') + '</tr>');
-  o.lineas.forEach(function (l, i) {
+  h.push('<table class="l"><tr><th>#</th><th>Código</th><th>Descripción</th><th>Presentación</th><th class="n">Cantidad</th>' +
+    (conMontos ? '<th class="n">Precio unitario</th><th class="n">Precio total</th>' : '') + '</tr>');
+  o.lineas.forEach(function (l, i) {          // con el código y el nombre del proveedor: así lo reconoce él
     var st = l.precio > 0 ? r2(l.precio * l.pedido) : 0; sub += st;
-    h.push('<tr><td>' + (i + 1) + '</td><td>' + htm(l.compra || l.nombre) + '</td><td>' + htm(l.presentacion) + '</td><td class="n">' + l.pedido + '</td>' +
+    h.push('<tr><td>' + (i + 1) + '</td><td>' + htm(l.codProv || '') + '</td><td>' + htm(l.compra || l.nombre) + '</td><td>' + htm(l.presentacion) + '</td><td class="n">' + l.pedido + '</td>' +
       (conMontos ? '<td class="n">' + (l.precio > 0 ? dinero(l.precio) : '—') + '</td><td class="n">' + (st > 0 ? dinero(st) : '—') + '</td>' : '') + '</tr>');
   });
   h.push('</table>');
@@ -7826,8 +7829,11 @@ function sincronizaPreciosBodega(lineas, precios, numero) {
     if (!(p > 0)) return;
     bod.forEach(function (b) {
       var misma = b.codigo === o.codigo;
-      if (!misma || r2(p) === b.precioPres) return;
+      if (!misma) return;
+      actualizaAncla(b, o, r2(p), 'Cotización ' + numero, ahora);          // el precio de la última compra: de ese proveedor, con su presentación
+      if (r2(p) === b.precioPres && o.rinde === b.rinde) return;
       h.getRange(b.fila, 35, 1, 3).setValues([[r2(p), ahora, 'Cotización ' + numero]]);
+      h.getRange(b.fila, 14).setValue(o.rinde > 0 ? o.rinde : b.rinde); h.getRange(b.fila, 26).setValue(o.presentacion || b.presCompra);
       hechos++;
     });
   });
@@ -10663,7 +10669,8 @@ function productosConfig(cred) {
     var o = { codigo: b.codigo, nombre: b.nombre, grupo: b.grupo, area: b.area, unidad: b.unidad, medida: b.medida,
       suelto: b.suelto, porUnidad: b.porUnidad, menor: b.menor, porSuelto: b.porSuelto, pesoCada: b.pesoCada, pesoEn: b.pesoEn,
       presentacion: b.presentacion, descripcion: b.descripcion, activo: b.activo, suc: b.suc };
-    if (ver) { o.proveedor = b.proveedor; o.proveedor2 = b.proveedor2; o.precio = b.precioPres; o.presCompra = b.presCompra; o.rinde = b.rinde;
+    if (ver) { o.anclas = anclasDe(b).map(function (a) { return anclaPublica(a, b); });
+      o.proveedor = b.proveedor; o.proveedor2 = b.proveedor2; o.precio = b.precioPres; o.presCompra = b.presCompra; o.rinde = b.rinde;
       o.precioEn = b.precioEn; o.precioPor = b.precioPor; o.precioAnt = b.precioAnt; }
     if (!b.activo && b.desactPor) { o.desactPor = b.desactPor; o.desactEn = b.desactEn ? fmtSello(b.desactEn) : ''; }
     return o;
@@ -12433,7 +12440,7 @@ function exportarIndicadores(q) {
 /* ════════════ COPIA COMPLETA PARA EL SERVIDOR PROPIO ════════════
  * El servidor propio guarda una copia de TODAS las pestañas y corre este mismo código sobre ella para contestar las lecturas.
  * Cada cambio que pasa por aquí avisa qué pestañas tocó («tocadas»), y el servidor solo vuelve a traer esas. */
-var VERSION_CODIGO = '2026-10-14-a';       // se cambia a mano cada vez que se cambia este archivo; el servidor compara que coincida con la suya
+var VERSION_CODIGO = '2026-10-14-b';       // se cambia a mano cada vez que se cambia este archivo; el servidor compara que coincida con la suya
 function versionCodigo() { return VERSION_CODIGO; }
 function huellaTexto(t) { return Utilities.base64Encode(Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, t)).slice(0, 22); }
 /** Un resumen barato de cada pestaña: cuántas filas y columnas tiene y una huella de sus últimas 25 filas. */
@@ -13835,6 +13842,12 @@ function editarProductoExtra(yo, b, d, h, ahora) {
     if (!hit) throw new Error('El proveedor «' + n + '» no está registrado. Agréguelo primero en Proveedores.');
     return hit;
   };
+  if (Array.isArray(d.anclas)) {
+    var ra = editarAnclas(yo, b, d, h, ahora, provOk);
+    if (ra.cambios.length) out.cambioPrecio = { antes: ra.cambios[0].antes, ahora: ra.cambios[0].ahora, proveedor: ra.cambios[0].proveedor };
+    out.mensajes.push(ra.n + (ra.n === 1 ? ' proveedor' : ' proveedores') + ' del producto guardados.' + (ra.cambios.length ? ' Se les avisó a Álvaro y al administrador del cambio de precio.' : ''));
+    out.mensaje = out.mensajes.join(' '); return out;
+  }
   if (d.proveedor != null) { var p1 = provOk(String(d.proveedor).trim()); if (p1 !== b.proveedor) h.getRange(b.fila, 13).setValue(p1); }
   if (d.proveedor2 != null) { var p2 = provOk(String(d.proveedor2).trim());
     if (p2 && p2 === (d.proveedor != null ? provOk(String(d.proveedor).trim()) : b.proveedor)) throw new Error('El proveedor secundario tiene que ser distinto del principal.');
@@ -13908,7 +13921,7 @@ function proveedoresProductos(cred) {
 }
 /** Cuánto se ha usado un proveedor (para saber si se puede borrar sin perder historia). */
 function usoProveedor(nombre) {
-  var k = String(nombre).trim().toLowerCase(), u = { gastos: 0, detalle: 0, ordenes: 0, pagos: 0, productos: 0, bodega: 0 };
+  var k = String(nombre).trim().toLowerCase(), u = { gastos: 0, detalle: 0, ordenes: 0, pagos: 0, productos: 0, bodega: 0, anclas: 0 };
   var cuenta = function (h, ancho, col) {
     if (!h) return 0;
     return leeTodo(h, ancho).filter(function (r) { return String(r[col] || '').trim().toLowerCase() === k; }).length;
@@ -13920,7 +13933,8 @@ function usoProveedor(nombre) {
   u.pagos = cuenta(ss.getSheetByName('Órdenes de compra pagos'), H_OCP.length, 1);
   u.productos = filasProductos().filter(function (p) { return p.proveedor.toLowerCase() === k; }).length;
   u.bodega = filasBodega().filter(function (b) { return (b.proveedor || '').toLowerCase() === k || (b.proveedor2 || '').toLowerCase() === k; }).length;
-  u.total = u.gastos + u.detalle + u.ordenes + u.pagos + u.productos + u.bodega;
+  u.anclas = filasAnclasHoja().filter(function (a) { return a.proveedor.toLowerCase() === k; }).length;          // lo que ese proveedor nos vende (hoja «Productos del proveedor»)
+  u.total = u.gastos + u.detalle + u.ordenes + u.pagos + u.productos + u.bodega + u.anclas;
   return u;
 }
 /** Eliminar un proveedor. Solo se borra si nunca se usó; si ya tiene compras, órdenes o productos
@@ -13940,7 +13954,7 @@ function eliminarProveedor(cred, nombre) {
       var partes = [];
       if (u.gastos) partes.push(u.gastos + (u.gastos === 1 ? ' gasto' : ' gastos'));
       if (u.ordenes) partes.push(u.ordenes + (u.ordenes === 1 ? ' orden de compra' : ' órdenes de compra'));
-      if (u.productos + u.bodega) partes.push((u.productos + u.bodega) + ' productos');
+      var np = Math.max(u.productos + u.bodega, u.anclas); if (np) partes.push(np + (np === 1 ? ' producto' : ' productos'));
       if (!partes.length) partes.push('movimientos');
       h.getRange(x.fila, 4).setValue('No'); archivado = true;
       msg = '«' + x.nombre + '» tiene historial (' + partes.join(', ') + '), así que no se borra para no perderlo. Quedó deshabilitado: ya no sale en las listas.';
@@ -13975,4 +13989,94 @@ function guardarProveedorProd(cred, p) {
   } finally { lock.releaseLock(); }
   var r = proveedoresProductos(cred); r.ok = true; r.mensaje = msg; r.nombre = nombre;
   return r;
+}
+
+/* ════════════ ANCLAS: el producto de bodega y los productos de sus proveedores ════════════
+ * Bodega es el centro. Cada producto de bodega (que se maneja por unidad) se ancla a lo que le vende cada proveedor,
+ * con el código y el nombre del proveedor, su presentación (paquete), cuántas unidades de bodega trae (500) y su precio (Q280.80).
+ * Al recibir, 1 paquete entra como 500 unidades. El precio de cada unidad es el de la ÚLTIMA COMPRA (Q280.80 ÷ 500). */
+var H_ANCLA = ['Código', 'Producto (bodega)', 'Proveedor', 'Código del proveedor', 'Nombre del proveedor', 'Presentación', 'Trae',
+  'Precio de la presentación', 'Principal', 'Precio en', 'Precio por', 'Actualizado en'];
+function hojaAnclas(ss) {
+  ss = ss || libro();
+  var h = ss.getSheetByName('Productos del proveedor');
+  if (!h) { h = hojaLimpia(ss, 'Productos del proveedor', H_ANCLA); h.getRange('H:H').setNumberFormat('"Q"#,##0.00'); h.getRange('J:J').setNumberFormat('dd/mm/yyyy hh:mm'); h.setColumnWidth(5, 240); }
+  return h;
+}
+function filasAnclasHoja() {
+  var h = libro().getSheetByName('Productos del proveedor'); if (!h || h.getLastRow() < 2) return [];
+  return leeTodo(h, H_ANCLA.length).map(function (r, i) {
+    return { fila: i + 2, codigo: String(r[0] || ''), proveedor: String(r[2] || '').trim(), codProv: String(r[3] || '').trim(), nombreProv: String(r[4] || '').trim(),
+      presentacion: String(r[5] || '').trim(), trae: Number(r[6]) > 0 ? Number(r[6]) : 1, precio: Number(r[7]) > 0 ? Number(r[7]) : 0,
+      principal: String(r[8]).trim().toLowerCase() === 'sí', precioEn: r[9] instanceof Date ? r[9] : '', precioPor: String(r[10] || '') };
+  }).filter(function (x) { return x.codigo && x.proveedor; });
+}
+/** Las anclas de un producto. Si todavía no tiene en la hoja, salen de lo que ya tenía el producto (proveedor, presentación, trae, precio). */
+function anclasDe(b) {
+  var idx = _MEMO.anclas; if (!idx) { idx = _MEMO.anclas = {}; filasAnclasHoja().forEach(function (a) { (idx[a.codigo] = idx[a.codigo] || []).push(a); }); }
+  if (idx[b.codigo] && idx[b.codigo].length) return idx[b.codigo];
+  var v = [];
+  if (b.proveedor) v.push({ virtual: true, codigo: b.codigo, proveedor: b.proveedor, codProv: '', nombreProv: '', presentacion: b.presCompra || b.unidad, trae: b.rinde || 1,
+    precio: b.precioPres || 0, principal: true, precioEn: b.precioEnRaw || '', precioPor: b.precioPor || '' });
+  if (b.proveedor2 && b.proveedor2 !== b.proveedor) v.push({ virtual: true, codigo: b.codigo, proveedor: b.proveedor2, codProv: '', nombreProv: '', presentacion: b.presCompra || b.unidad,
+    trae: b.rinde || 1, precio: 0, principal: false, precioEn: '', precioPor: '' });
+  return v;
+}
+function anclaPublica(a, b) {
+  return { proveedor: a.proveedor, codProv: a.codProv, nombreProv: a.nombreProv, presentacion: a.presentacion, trae: a.trae, precio: a.precio, principal: !!a.principal,
+    unitario: a.precio > 0 && a.trae > 0 ? Math.round(a.precio / a.trae * 10000) / 10000 : 0, precioEn: a.precioEn ? fmtSello(a.precioEn) : '', precioPor: a.precioPor || '',
+    ultima: !!(b && b.precioPres > 0 && a.precio > 0 && Math.abs(a.precio - b.precioPres) < 0.005 && a.trae === b.rinde) };
+}
+/** Reescribe las anclas de un producto y deja en el producto lo de la principal (proveedor) y lo de la última compra (precio, presentación, trae). */
+function guardaAnclas(b, lista, h, yo, ahora) {
+  var ha = hojaAnclas(), viejas = filasAnclasHoja().filter(function (a) { return a.codigo === b.codigo; });
+  for (var i = viejas.length - 1; i >= 0; i--) ha.deleteRow(viejas[i].fila);
+  lista.forEach(function (a) {
+    ha.appendRow([b.codigo, b.nombre, a.proveedor, a.codProv, a.nombreProv, a.presentacion, a.trae, a.precio || '', a.principal ? 'Sí' : 'No', a.precioEn || '', a.precioPor || '', ahora]);
+  });
+  _MEMO.anclas = null;
+  var pr = lista.filter(function (a) { return a.principal; })[0] || lista[0], sec = lista.filter(function (a) { return a !== pr; })[0];
+  h.getRange(b.fila, 13).setValue(pr ? pr.proveedor : ''); h.getRange(b.fila, 38).setValue(sec ? sec.proveedor : '');
+  var ult = lista.filter(function (a) { return a.precio > 0; }).sort(function (x, y) { return (y.precioEn ? y.precioEn.getTime() : 0) - (x.precioEn ? x.precioEn.getTime() : 0); })[0];
+  if (ult) { h.getRange(b.fila, 26).setValue(ult.presentacion); h.getRange(b.fila, 14).setValue(ult.trae);
+    if (ult.precio !== b.precioPres) h.getRange(b.fila, 35, 1, 3).setValues([[ult.precio, ult.precioEn || ahora, ult.precioPor || yo.nombre]]); }
+}
+/** La cotización de una orden: actualiza el ancla de ESE proveedor (si no existía, la crea con lo de la orden). */
+function actualizaAncla(b, o, precio, por, ahora) {
+  var lista = anclasDe(b).map(function (a) { var c = {}; for (var k in a) c[k] = a[k]; return c; }), a = lista.filter(function (x) { return x.proveedor === o.proveedor; })[0];
+  if (!a) { a = { proveedor: o.proveedor, codProv: o.codProv || '', nombreProv: o.compra && o.compra !== b.nombre ? o.compra : '', presentacion: o.presentacion, trae: o.rinde || 1, precio: 0, principal: !lista.length };
+    lista.push(a); }
+  a.precio = precio; a.precioEn = ahora; a.precioPor = por; if (o.rinde > 0) a.trae = o.rinde; if (o.presentacion) a.presentacion = o.presentacion;
+  var ha = hojaAnclas(), viejas = filasAnclasHoja().filter(function (x) { return x.codigo === b.codigo; });
+  for (var i = viejas.length - 1; i >= 0; i--) ha.deleteRow(viejas[i].fila);
+  lista.forEach(function (x) { ha.appendRow([b.codigo, b.nombre, x.proveedor, x.codProv || '', x.nombreProv || '', x.presentacion, x.trae, x.precio || '', x.principal ? 'Sí' : 'No', x.precioEn || '', x.precioPor || '', ahora]); });
+  _MEMO.anclas = null;
+}
+/** Desde «Editar producto»: d.anclas = [{ proveedor, codProv, nombreProv, presentacion, trae, precio, principal }] */
+function editarAnclas(yo, b, d, h, ahora, provOk) {
+  var viejas = anclasDe(b), porProv = {}; viejas.forEach(function (a) { porProv[a.proveedor.toLowerCase()] = a; });
+  var vistos = {}, cambios = [];
+  var lista = (d.anclas || []).filter(function (a) { return a && String(a.proveedor || '').trim(); }).map(function (a) {
+    var prov = provOk(String(a.proveedor).trim());
+    if (vistos[prov.toLowerCase()]) throw new Error('«' + prov + '» está dos veces: cada proveedor va una sola vez.');
+    vistos[prov.toLowerCase()] = true;
+    var trae = Number(String(a.trae == null ? '' : a.trae).replace(',', '.'));
+    if (!(trae > 0 && trae <= 1000000)) throw new Error('Diga cuántas ' + plur(2, b.unidad) + ' trae lo que se le compra a ' + prov + '.');
+    var precio = String(a.precio == null ? '' : a.precio).trim() === '' ? 0 : r2(String(a.precio).replace(/[Q,\s]/g, ''));
+    if (!(precio >= 0)) throw new Error('El precio de ' + prov + ' no es válido.');
+    var v = porProv[prov.toLowerCase()], x = { proveedor: prov, codProv: String(a.codProv || '').trim().slice(0, 30), nombreProv: String(a.nombreProv || '').trim().slice(0, 80),
+      presentacion: String(a.presentacion || '').trim().slice(0, 40) || b.unidad, trae: r3(trae), precio: precio, principal: !!a.principal,
+      precioEn: v ? v.precioEn : '', precioPor: v ? v.precioPor : '' };
+    if (precio > 0 && (!v || precio !== v.precio || x.trae !== v.trae)) {
+      if (v && v.precio > 0 && precio !== v.precio) cambios.push({ proveedor: prov, antes: v.precio, ahora: precio });
+      x.precioEn = ahora; x.precioPor = yo.nombre;
+    }
+    return x;
+  });
+  if (lista.length && !lista.some(function (a) { return a.principal; })) lista[0].principal = true;
+  if (lista.filter(function (a) { return a.principal; }).length > 1) throw new Error('Solo un proveedor puede ser el principal.');
+  if (cambios.length && d.confirmaCambio !== true) throw new Error('Cambió el precio de ' + cambios.map(function (c) { return c.proveedor + ' (' + dinero(c.antes) + ' → ' + dinero(c.ahora) + ')'; }).join(', ') + '. Confírmelo: se les avisará a Álvaro y al administrador.');
+  guardaAnclas(b, lista, h, yo, ahora);
+  if (cambios.length) h.getRange(b.fila, 39).setValue(cambios[0].antes);
+  return { cambios: cambios, n: lista.length };
 }
