@@ -5071,7 +5071,7 @@ function pantallaSolicitud(cred) {
   try {          // para que el gerente sepa en qué pide (caja de 20 unidades, saco de 50 libras…) y cuánto hay en bodega
     var exB = estadoInventario('bodega').existencia, porC = {}; filasBodega().forEach(function (b) { porC[b.codigo] = b; });
     r.lineas.forEach(function (l) { var b = porC[l.codigo]; if (!b) return; var qb = exB[l.codigo] || 0;
-      l.presentacion = presentacionTxt(b); l.enBodega = r3(qb); l.enBodegaTxt = textoCantidad(qb, b);
+      l.presentacion = presentacionTxt(b); l.enBodega = r3(qb); l.enBodegaTxt = textoCantidad(qb, b); l.compraTxt = compraTxtDe(b);
       l.porUnidad = !l.suelto && b.suelto && b.porUnidad > 0 ? b.porUnidad : 0; l.sueltoNom = b.suelto || ''; });
   } catch (e) {}
   r.conHistoria = sug.conHistoria; r.conteo = est.ultimo.id;
@@ -5576,7 +5576,7 @@ function listaOrdenes(cred) {
     }
     var ln = { codigo: o.codigo, nombre: o.nombre, compra: o.compra,
       presentacion: o.presentacion, sugerido: o.sugerido, pedido: o.pedido,
-      recibido: o.recibido, rinde: o.rinde };
+      recibido: o.recibido, rinde: o.rinde, unidad: (unidadDeCodigo(o.codigo) || {}).unidad || 'unidad' };
     if (montos) { ln.anterior = anterior; ln.precio = o.precio; ln.subtotal = o.subtotal; }
     por[o.numero].lineas.push(ln);
   });
@@ -10727,6 +10727,7 @@ function productosConfig(cred) {
   return { productos: lista, unidades: unidadesConteo(), pesos: PESOS, grupos: Object.keys(grupos).sort(), areas: AREAS_BODEGA,
     categorias: CATEGORIAS, puedeAgregar: puedeProductos(yo), esGerente: yo.rol === 'gerente',
     proveedores: ver ? filasProveedores().filter(function (p) { return p.activo !== false; }).map(function (p) { return p.nombre; }).sort() : [],
+    presentacionesCompra: PRES_COMPRA,
     sucursales: UNIDADES.filter(function (u) { return u.vende; }).map(function (u) { return { id: u.id, nombre: u.nombre }; }) };
 }
 /** El nombre de un producto, ordenado: mayúsculas, sin espacios de más. */
@@ -12501,7 +12502,7 @@ function exportarIndicadores(q) {
 /* ════════════ COPIA COMPLETA PARA EL SERVIDOR PROPIO ════════════
  * El servidor propio guarda una copia de TODAS las pestañas y corre este mismo código sobre ella para contestar las lecturas.
  * Cada cambio que pasa por aquí avisa qué pestañas tocó («tocadas»), y el servidor solo vuelve a traer esas. */
-var VERSION_CODIGO = '2026-10-12-a';       // se cambia a mano cada vez que se cambia este archivo; el servidor compara que coincida con la suya
+var VERSION_CODIGO = '2026-10-12-b';       // se cambia a mano cada vez que se cambia este archivo; el servidor compara que coincida con la suya
 function versionCodigo() { return VERSION_CODIGO; }
 function huellaTexto(t) { return Utilities.base64Encode(Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, t)).slice(0, 22); }
 /** Un resumen barato de cada pestaña: cuántas filas y columnas tiene y una huella de sus últimas 25 filas. */
@@ -13940,4 +13941,18 @@ function avisosPrecioProducto(yo, out, desde) {
     out.push({ id: 'prc-' + b.codigo + '-' + Utilities.formatDate(b.precioEnRaw, ZONA, 'yyyyMMddHHmm'), tipo: 'Cambio de precio', cuando: fmtSello(b.precioEnRaw), titulo: b.nombre + ': ' + dinero(b.precioAnt) + ' → ' + dinero(b.precioPres),
       texto: 'Lo cambió ' + b.precioPor + (b.presCompra ? ' · por ' + b.presCompra : '') + '.', abrir: { prod: true } });
   });
+}
+
+/* ════════════ COMPRAS AL POR MAYOR (BULK) ════════════
+ * Cada producto dice en qué presentación lo compra la bodega (paquete, caja, fardo…) y cuántas unidades trae. Con eso:
+ * 3 paquetes × Q150 = Q450 → 1,500 unidades → Q0.30 cada unidad, que es el costo con que sale a las sucursales. */
+var PRES_COMPRA = ['paquete', 'caja', 'fardo', 'bolsa', 'saco', 'bulto', 'cubeta', 'galón', 'docena', 'ciento', 'millar', 'rollo', 'display', 'unidad'];
+function unidadDeCodigo(c) {
+  var m = _MEMO.uniCod; if (!m) { m = _MEMO.uniCod = {}; filasBodega().forEach(function (b) { m[b.codigo] = b; }); }
+  return m[c] || null;
+}
+function compraTxtDe(b) {
+  if (!b || !b.presCompra || !(b.rinde > 1)) return '';
+  var pres = String(b.presCompra).replace(/\s+de\s+[\d.,]+.*$/i, '');
+  return 'Bodega lo compra por ' + pres + ' de ' + num(b.rinde) + ' ' + plur(b.rinde, b.unidad);
 }
