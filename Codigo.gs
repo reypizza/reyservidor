@@ -927,7 +927,7 @@ function doGet() {
  * mismo proyecto por POST. Solo se pueden llamar las funciones de esta lista (las mismas
  * que usa la pantalla), y cada una revisa el código de quien pregunta, igual que antes.
  * La lista la pone sola el armado; no hace falta tocarla. */
-/*API_INI*/var API_PERMITIDAS = ['abrirSolicitud', 'abrirTraslado', 'aceptarSolicitud', 'aceptarYPreparar', 'aclararDiferencia', 'activarCorreos', 'activarObligacion', 'activarProducto', 'activarProductoSucursal', 'adjuntarCotizacion', 'agregarEquipo', 'agregarProducto', 'agregarRecomendados', 'agregarRecomendadosCmo', 'agregarRubro', 'anclarProducto', 'anular', 'anularOrden', 'anularPagoImpuesto', 'anularSolicitud', 'aprobarFondos', 'aprobarPresupuesto', 'aprobarPresupuestoArea', 'asignarDescanso', 'borrarKpi', 'borrarKpiCmo', 'borrarSolicitud', 'cambiarEquipo', 'cambiarMiPin', 'cambiarPermiso', 'cancelarPermiso', 'confirmarPlanilla', 'confirmarRegistro', 'consolidado', 'copiarPresupuesto', 'costosTraslados', 'cotizarOrden', 'darDeBaja', 'datos', 'despacharSolicitudes', 'detalleGasto', 'editarProducto', 'eliminarPersonaCal', 'entrar', 'enviarEmergencia', 'enviarKpis', 'enviarKpisCmo', 'enviarSolicitud', 'enviarSugerencia', 'estadoCorreos', 'evaluarMerma', 'existencias', 'existenciasEmergencia', 'firmarTraslado', 'guardarAjustesInv', 'guardarBonoGeneral', 'guardarBonosCal', 'guardarBorradorCal', 'guardarComision', 'guardarConfigCal', 'guardarConteo', 'guardarEstudio', 'guardarHorario', 'guardarHorasApoyo', 'guardarHorasReales', 'guardarKpi', 'guardarKpiCmo', 'guardarLugar', 'guardarMando', 'guardarMedida', 'guardarMiCorreo', 'guardarMiPresupuesto', 'guardarObligacion', 'guardarOrden', 'guardarPersonaCal', 'guardarPrecios', 'guardarPresupuesto', 'guardarProducto', 'guardarProductoBodega', 'guardarProveedor', 'guardarProveedorInv', 'guardarReceta', 'guardarRepartidor', 'guardarTraslado', 'guardarTurnos', 'guardarUsuario', 'habilita', 'habilitarConteo', 'historialTraslados', 'indicadoresConta', 'leerBonoGeneral', 'leerSugerencias', 'listaBodega', 'listaCatalogo', 'listaConsultas', 'listaDiferencias', 'listaEntrada', 'listaFondos', 'listaImpuestos', 'listaKpis', 'listaKpisCmo', 'listaLugares', 'listaOrdenes', 'listaPermisos', 'listaPrecios', 'listaRepartidores', 'listaReportes', 'listaSolicitudes', 'listaUsuarios', 'llegoSolicitud', 'marcarPreparadas', 'medirAceite', 'miAvance', 'miCorreo', 'miPanel', 'miPresupuesto', 'notificaciones', 'ordenesPago', 'pagarFondos', 'pagarOrden', 'pagarRepartidor', 'pantallaCalendarios', 'pantallaConteo', 'pantallaEmergencias', 'pantallaFirmas', 'pantallaHorarios', 'pantallaKpi', 'pantallaMando', 'pantallaMant', 'pantallaMerma', 'pantallaMuestreo', 'pantallaPedidosBodega', 'pantallaProduccion', 'pantallaSolicitud', 'pantallaSugerencias', 'pdfCalendario', 'pdfOrden', 'pedirDescanso', 'pedirEmergencia', 'pedirFondos', 'pedirPermiso', 'ping', 'planillasPorPagar', 'ponPreciosGerentes', 'porConfirmar', 'preguntar', 'presupuestoMes', 'presupuestosAreas', 'probarCorreo', 'productosConfig', 'productosParaAnclar', 'productosSucursal', 'reabrirPlanilla', 'rechazarRegistro', 'recibirEfectivo', 'recibirEmergencia', 'recibirOrden', 'recibirSolicitud', 'registrarGasto', 'registrarIngreso', 'registrarKpis', 'registrarLote', 'registrarMant', 'registrarMerma', 'registrarObservacion', 'registrarPagoImpuesto', 'renombrarCategoria', 'reporteDiario', 'reporteTraslados', 'resolverDescanso', 'responderConsulta', 'responderMerma', 'resultadosKpi', 'resultadosKpiCmo', 'resultadosKpiRango', 'resultadosMuestreo', 'resumenInventario', 'resumenMes', 'revisarPermiso', 'seguimiento', 'sugerenciaCompra', 'tableroFinanzas', 'tableroKpi', 'terminarFondos', 'validarRegistro', 'ventas', 'verTraslado', 'verificarFondos', 'proveedoresProductos', 'guardarProveedorProd', 'detalleAbastecimiento', 'pdfHistorialInventario', 'pantallaCierreMes', 'guardarCierreMes', 'misMenus', 'menusRol', 'guardarMenusRol', 'historialInventario', 'reiniciarPresupuestos', 'autorizarFondos', 'hechaFondos', 'listaPendientes', 'llegaPendiente', 'cancelarPendiente', 'despacharPendientes', 'devolverFondo', 'corregirFondo', 'pantallaEquipos', 'guardarEquipoA', 'bajaEquipo', 'revisarEquipos', 'confirmarRevisionEq', 'pedirEquipo', 'resolverPedidoEq', 'entregarCompraEq', 'recibirEquipo', 'devolverOrden', 'corregirOrden', 'reiniciarPrecios', 'guardarMezcla', 'registrarLoteMezcla', 'etiquetasLote', 'guardarConfigEtiquetas', 'listaKpisCoo', 'guardarKpiCoo', 'borrarKpiCoo', 'enviarKpisCoo', 'agregarRecomendadosCoo', 'resultadosKpiCoo', 'pantallaKpiCoo', 'registrarKpisCoo', 'resumenAreas', 'resumenAreasSenales', 'pantallaZonas', 'guardarZonas', 'listaKpisTec', 'guardarKpiTec', 'borrarKpiTec', 'enviarKpisTec', 'agregarRecomendadosTec', 'resultadosKpiTec', 'pantallaKpiTec', 'registrarKpisTec'];/*API_FIN*/
+/*API_INI*/var API_PERMITIDAS = ['abrirSolicitud', 'abrirTraslado', 'aceptarSolicitud', 'aceptarYPreparar', 'aclararDiferencia', 'activarCorreos', 'activarObligacion', 'activarProducto', 'activarProductoSucursal', 'adjuntarCotizacion', 'agregarEquipo', 'agregarProducto', 'agregarRecomendados', 'agregarRecomendadosCmo', 'agregarRubro', 'anclarProducto', 'anular', 'anularOrden', 'anularPagoImpuesto', 'anularSolicitud', 'aprobarFondos', 'aprobarPresupuesto', 'aprobarPresupuestoArea', 'asignarDescanso', 'borrarKpi', 'borrarKpiCmo', 'borrarSolicitud', 'cambiarEquipo', 'cambiarMiPin', 'cambiarPermiso', 'cancelarPermiso', 'confirmarPlanilla', 'confirmarRegistro', 'consolidado', 'copiarPresupuesto', 'costosTraslados', 'cotizarOrden', 'darDeBaja', 'datos', 'despacharSolicitudes', 'detalleGasto', 'editarProducto', 'eliminarPersonaCal', 'entrar', 'enviarEmergencia', 'enviarKpis', 'enviarKpisCmo', 'enviarSolicitud', 'enviarSugerencia', 'estadoCorreos', 'evaluarMerma', 'existencias', 'existenciasEmergencia', 'firmarTraslado', 'guardarAjustesInv', 'guardarBonoGeneral', 'guardarBonosCal', 'guardarBorradorCal', 'guardarComision', 'guardarConfigCal', 'guardarConteo', 'guardarEstudio', 'guardarHorario', 'guardarHorasApoyo', 'guardarHorasReales', 'guardarKpi', 'guardarKpiCmo', 'guardarLugar', 'guardarMando', 'guardarMedida', 'guardarMiCorreo', 'guardarMiPresupuesto', 'guardarObligacion', 'guardarOrden', 'guardarPersonaCal', 'guardarPrecios', 'guardarPresupuesto', 'guardarProducto', 'guardarProductoBodega', 'guardarProveedor', 'guardarProveedorInv', 'guardarReceta', 'guardarRepartidor', 'guardarTraslado', 'guardarTurnos', 'guardarUsuario', 'habilita', 'habilitarConteo', 'historialTraslados', 'indicadoresConta', 'leerBonoGeneral', 'leerSugerencias', 'listaBodega', 'listaCatalogo', 'listaConsultas', 'listaDiferencias', 'listaEntrada', 'listaFondos', 'listaImpuestos', 'listaKpis', 'listaKpisCmo', 'listaLugares', 'listaOrdenes', 'listaPermisos', 'listaPrecios', 'listaRepartidores', 'listaReportes', 'listaSolicitudes', 'listaUsuarios', 'llegoSolicitud', 'marcarPreparadas', 'medirAceite', 'miAvance', 'miCorreo', 'miPanel', 'miPresupuesto', 'notificaciones', 'ordenesPago', 'pagarFondos', 'pagarOrden', 'pagarRepartidor', 'pantallaCalendarios', 'pantallaConteo', 'pantallaEmergencias', 'pantallaFirmas', 'pantallaHorarios', 'pantallaKpi', 'pantallaMando', 'pantallaMant', 'pantallaMerma', 'pantallaMuestreo', 'pantallaPedidosBodega', 'pantallaProduccion', 'pantallaSolicitud', 'pantallaSugerencias', 'pdfCalendario', 'pdfOrden', 'pedirDescanso', 'pedirEmergencia', 'pedirFondos', 'pedirPermiso', 'ping', 'planillasPorPagar', 'ponPreciosGerentes', 'porConfirmar', 'preguntar', 'presupuestoMes', 'presupuestosAreas', 'probarCorreo', 'productosConfig', 'productosParaAnclar', 'productosSucursal', 'reabrirPlanilla', 'rechazarRegistro', 'recibirEfectivo', 'recibirEmergencia', 'recibirOrden', 'recibirSolicitud', 'registrarGasto', 'registrarIngreso', 'registrarKpis', 'registrarLote', 'registrarMant', 'registrarMerma', 'registrarObservacion', 'registrarPagoImpuesto', 'renombrarCategoria', 'reporteDiario', 'reporteTraslados', 'resolverDescanso', 'responderConsulta', 'responderMerma', 'resultadosKpi', 'resultadosKpiCmo', 'resultadosKpiRango', 'resultadosMuestreo', 'resumenInventario', 'resumenMes', 'revisarPermiso', 'seguimiento', 'sugerenciaCompra', 'tableroFinanzas', 'tableroKpi', 'terminarFondos', 'validarRegistro', 'ventas', 'verTraslado', 'verificarFondos', 'proveedoresProductos', 'guardarProveedorProd', 'eliminarProveedor', 'detalleAbastecimiento', 'pdfHistorialInventario', 'pantallaCierreMes', 'guardarCierreMes', 'misMenus', 'menusRol', 'guardarMenusRol', 'historialInventario', 'reiniciarPresupuestos', 'autorizarFondos', 'hechaFondos', 'listaPendientes', 'llegaPendiente', 'cancelarPendiente', 'despacharPendientes', 'devolverFondo', 'corregirFondo', 'pantallaEquipos', 'guardarEquipoA', 'bajaEquipo', 'revisarEquipos', 'confirmarRevisionEq', 'pedirEquipo', 'resolverPedidoEq', 'entregarCompraEq', 'recibirEquipo', 'devolverOrden', 'corregirOrden', 'reiniciarPrecios', 'guardarMezcla', 'registrarLoteMezcla', 'etiquetasLote', 'guardarConfigEtiquetas', 'listaKpisCoo', 'guardarKpiCoo', 'borrarKpiCoo', 'enviarKpisCoo', 'agregarRecomendadosCoo', 'resultadosKpiCoo', 'pantallaKpiCoo', 'registrarKpisCoo', 'resumenAreas', 'resumenAreasSenales', 'pantallaZonas', 'guardarZonas', 'listaKpisTec', 'guardarKpiTec', 'borrarKpiTec', 'enviarKpisTec', 'agregarRecomendadosTec', 'resultadosKpiTec', 'pantallaKpiTec', 'registrarKpisTec'];/*API_FIN*/
 /** Solo contesta «aquí estoy»: sirve para despertar el servidor y medir la velocidad. No lee ni guarda nada. */
 function ping() { return { ok: true }; }
 function doPost(e) {
@@ -1233,34 +1233,6 @@ function mismoPin(guardado, escrito) {
   if (a === b) return true;
   if (/^\d+$/.test(a) && /^\d+$/.test(b) && Number(a) === Number(b)) return true;
   return false;
-}
-
-/** Prueba de escritorio: córrala desde el editor y lea el registro. Dice qué PIN
- *  hay guardado, de qué tipo, y si coincidiría con el que se escribe. */
-function pruebaPin() {
-  var lineas = ['PRUEBA DE PIN', ''];
-  var us = filasUsuarios();
-  if (!us.length) lineas.push('No hay ningún usuario en la hoja Usuarios.');
-  us.forEach(function (u) {
-    var crudo = null;
-    try {
-      crudo = hojaUsuarios().getRange(u.fila, 2).getValue();
-    } catch (e) { crudo = '(no se pudo leer)'; }
-    lineas.push('Usuario: [' + u.nombre + ']  largo ' + u.nombre.length);
-    lineas.push('  rol: ' + u.rol + '   activo: ' + (u.activo ? 'sí' : 'NO'));
-    lineas.push('  PIN guardado: [' + u.pin + ']  largo ' + u.pin.length +
-      '  tipo en la celda: ' + (typeof crudo));
-    USUARIOS_INICIALES.forEach(function (ini) {
-      if (ini[0].toLowerCase() === u.nombre.toLowerCase()) {
-        lineas.push('  ¿coincide con ' + ini[1] + '? ' +
-          (mismoPin(u.pin, ini[1]) ? 'SÍ' : 'NO'));
-      }
-    });
-    lineas.push('');
-  });
-  var txt = lineas.join('\n');
-  Logger.log(txt);
-  return txt;
 }
 
 /** Lo de ver cifras de la empresa: el gerente no entra aquí, solo envía datos. */
@@ -2247,18 +2219,6 @@ function buscaIngreso(h, sucursal, fecha, turno, excepto) {
       p = { monto: x.monto, quien: x.enviadoPor, pendiente: true };
   });
   return p;
-}
-
-function turnosLibres(cred, unidadId, fecha) {
-  var yo = verifica(cred);
-  if (yo.rol === 'gerente') unidadId = yo.sucursal;
-  var u = unidadPorId(unidadId);
-  if (!u || !esFecha(fecha)) return { AM: true, PM: true };
-  var h = libro().getSheetByName('Ingresos');
-  return {
-    AM: !buscaIngreso(h, u.nombre, fecha, 'AM'),
-    PM: !buscaIngreso(h, u.nombre, fecha, 'PM')
-  };
 }
 
 /* ════════════ ANULAR ════════════ */
@@ -5934,15 +5894,6 @@ function borraSol(numero, quien) {
   return { mensaje: 'Solicitud ' + numero + ' de ' + s.sucursal + ' borrada' +
     (hechos.length ? ' (' + hechos.join(', ') + ')' : '') + '.' };
 }
-/** Desde el editor: borra TODAS las solicitudes (las de prueba) para empezar limpio. */
-function borrarSolicitudesDePrueba() {
-  var nums = filasSol().map(function (s) { return s.numero; });
-  var txt = nums.map(function (n) { return borraSol(n, 'reinicio').mensaje; });
-  txt.push(nums.length ? 'Listo: ' + nums.length + ' solicitudes borradas.' : 'No había solicitudes.');
-  Logger.log(txt.join('\n'));
-  return txt.join('\n');
-}
-
 /** La hoja consolidada: lo de todas las solicitudes escogidas, producto por producto. */
 function consolidado(cred, numeros) {
   var yo = exigeSoloBodega(cred);
@@ -9760,13 +9711,6 @@ function filasConsultas() {
 }
 function usuarioPorNombre(n) { var u = null; usuariosCache().forEach(function (x) { if (x.nombre === n) u = x; }); return u; }
 function esContadorU(u) { return u && u.rol === 'registro' && u.confirma; }
-/** A qué equipo pertenece alguien: el del director operativo o el del financiero. */
-function equipoDe(u) {
-  if (!u) return '';
-  if (['operaciones', 'gerente', 'bodega', 'produccion'].indexOf(u.rol) >= 0) return 'operaciones';
-  if (u.rol === 'finanzas' || esContadorU(u)) return 'finanzas';
-  return '';
-}
 function puedePreguntarA(yo, u) {
   if (!u || !u.activo || u.nombre === yo.nombre || u.rol === 'dueno') return false;
   if (yo.esAdmin) return true;
@@ -10890,19 +10834,6 @@ function renombrarCategoria(cred, de, a) {
   var r = productosConfig(cred); r.ok = true;
   r.mensaje = (existentes[a.toLowerCase()] && a.toLowerCase() !== de.toLowerCase() ? '«' + de + '» se juntó con «' + a + '»' : '«' + de + '» ahora se llama «' + a + '»') +
     ': ' + n + (n === 1 ? ' producto.' : ' productos.');
-  return r;
-}
-function cambiarCategoria(cred, codigo, grupo) {
-  var yo = quien(cred);
-  if (!puedeProductos(yo)) throw new Error('La categoría la cambia el director operativo o la bodega.');
-  var b = null; filasBodega().forEach(function (x) { if (x.codigo === String(codigo)) b = x; });
-  if (!b) throw new Error('No se encontró ese producto.');
-  var g = nombreCategoria(grupo);
-  filasBodega().forEach(function (x) { if (x.grupo.toLowerCase() === g.toLowerCase()) g = x.grupo; });
-  var h = hojaBodega();
-  h.getRange(b.fila, 4).setValue(g); h.getRange(b.fila, 17, 1, 2).setValues([[new Date(), yo.nombre]]);
-  _BOD = null;
-  var r = productosConfig(cred); r.ok = true; r.mensaje = b.nombre + ' pasó a «' + g + '».';
   return r;
 }
 /** Cómo se cuenta un producto: por unidad o por peso. Vale desde el próximo conteo. */
@@ -12502,7 +12433,7 @@ function exportarIndicadores(q) {
 /* ════════════ COPIA COMPLETA PARA EL SERVIDOR PROPIO ════════════
  * El servidor propio guarda una copia de TODAS las pestañas y corre este mismo código sobre ella para contestar las lecturas.
  * Cada cambio que pasa por aquí avisa qué pestañas tocó («tocadas»), y el servidor solo vuelve a traer esas. */
-var VERSION_CODIGO = '2026-10-13-a';       // se cambia a mano cada vez que se cambia este archivo; el servidor compara que coincida con la suya
+var VERSION_CODIGO = '2026-10-14-a';       // se cambia a mano cada vez que se cambia este archivo; el servidor compara que coincida con la suya
 function versionCodigo() { return VERSION_CODIGO; }
 function huellaTexto(t) { return Utilities.base64Encode(Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, t)).slice(0, 22); }
 /** Un resumen barato de cada pestaña: cuántas filas y columnas tiene y una huella de sus últimas 25 filas. */
@@ -13975,6 +13906,53 @@ function proveedoresProductos(cred) {
     }).sort(function (a, b) { return a.nombre.localeCompare(b.nombre, 'es'); }),
     puedeEditar: puedeProductos(yo) };
 }
+/** Cuánto se ha usado un proveedor (para saber si se puede borrar sin perder historia). */
+function usoProveedor(nombre) {
+  var k = String(nombre).trim().toLowerCase(), u = { gastos: 0, detalle: 0, ordenes: 0, pagos: 0, productos: 0, bodega: 0 };
+  var cuenta = function (h, ancho, col) {
+    if (!h) return 0;
+    return leeTodo(h, ancho).filter(function (r) { return String(r[col] || '').trim().toLowerCase() === k; }).length;
+  };
+  var ss = libro();
+  u.gastos = cuenta(ss.getSheetByName('Gastos'), H_GASTOS.length, 14);
+  u.detalle = cuenta(ss.getSheetByName('Gastos detalle'), H_DETALLE.length, 4);
+  u.ordenes = cuenta(ss.getSheetByName('Órdenes de compra'), H_OC.length, 3);
+  u.pagos = cuenta(ss.getSheetByName('Órdenes de compra pagos'), H_OCP.length, 1);
+  u.productos = filasProductos().filter(function (p) { return p.proveedor.toLowerCase() === k; }).length;
+  u.bodega = filasBodega().filter(function (b) { return (b.proveedor || '').toLowerCase() === k || (b.proveedor2 || '').toLowerCase() === k; }).length;
+  u.total = u.gastos + u.detalle + u.ordenes + u.pagos + u.productos + u.bodega;
+  return u;
+}
+/** Eliminar un proveedor. Solo se borra si nunca se usó; si ya tiene compras, órdenes o productos
+ *  no se borra (se perdería la historia): se deshabilita y deja de salir en las listas. */
+function eliminarProveedor(cred, nombre) {
+  var yo = quien(cred);
+  if (!(yo.esAdmin || yo.rol === 'operaciones')) throw new Error('Solo el administrador y el director operativo eliminan proveedores.');
+  nombre = String(nombre || '').replace(/\s+/g, ' ').trim();
+  var lock = LockService.getScriptLock(); lock.waitLock(15000); _LEE = {}; _BOD = null;
+  var msg, archivado = false;
+  try {
+    var h = hojaCat('Proveedores', H_PROVEEDORES), x = null;
+    filasProveedores().forEach(function (y) { if (y.nombre.toLowerCase() === nombre.toLowerCase()) x = y; });
+    if (!x) throw new Error('No se encontró ese proveedor.');
+    var u = usoProveedor(x.nombre);
+    if (u.total > 0) {
+      var partes = [];
+      if (u.gastos) partes.push(u.gastos + (u.gastos === 1 ? ' gasto' : ' gastos'));
+      if (u.ordenes) partes.push(u.ordenes + (u.ordenes === 1 ? ' orden de compra' : ' órdenes de compra'));
+      if (u.productos + u.bodega) partes.push((u.productos + u.bodega) + ' productos');
+      if (!partes.length) partes.push('movimientos');
+      h.getRange(x.fila, 4).setValue('No'); archivado = true;
+      msg = '«' + x.nombre + '» tiene historial (' + partes.join(', ') + '), así que no se borra para no perderlo. Quedó deshabilitado: ya no sale en las listas.';
+    } else {
+      h.deleteRow(x.fila);
+      msg = '«' + x.nombre + '» eliminado.';
+    }
+  } finally { lock.releaseLock(); }
+  var r = proveedoresProductos(cred); r.ok = true; r.mensaje = msg; r.nombre = nombre; r.archivado = archivado;
+  return r;
+}
+
 /** Agregar un proveedor nuevo, o cambiar el NIT, el teléfono o si está activo (el nombre de uno que ya existe no se cambia aquí). */
 function guardarProveedorProd(cred, p) {
   var yo = quien(cred);
