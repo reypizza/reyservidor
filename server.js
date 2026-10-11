@@ -9,6 +9,8 @@ import { crearUsuarios } from './usuarios.js';
 import { crearIndicadores } from './indicadores.js';
 import { crearCopia } from './copia.js';
 import { crearLecturas } from './lecturas.js';
+import { crearEscrituras } from './escrituras.js';
+import { crearEventos } from './eventos.js';
 
 const VERSION = '0.1.0';
 
@@ -20,7 +22,9 @@ export function crearServidor({ cfg, pool, fetchFn, reloj }) {
   const indicadores = crearIndicadores({ cfg, pool, origen });
   const copia = crearCopia({ cfg, pool, origen });
   const lecturas = crearLecturas({ cfg, pool, copia, origen });
-  const puerta = crearPuerta({ cfg, pool, origen, bitacora, limite, usuarios, indicadores, reloj, copia, lecturas });
+  const eventos = crearEventos();
+  const escrituras = crearEscrituras({ cfg, pool, copia, lecturas, origen, emite: eventos.emite });
+  const puerta = crearPuerta({ cfg, pool, origen, bitacora, limite, usuarios, indicadores, reloj, copia, lecturas, escrituras, emite: eventos.emite });
   const desde = Date.now();
 
   const origenPermitido = (o) => !!o && (cfg.origenes.includes('*') || cfg.origenes.includes(o));
@@ -74,6 +78,10 @@ export function crearServidor({ cfg, pool, fetchFn, reloj }) {
         if (pool) { try { await pool.query('SELECT 1'); db = true; } catch (e) { db = false; } }
         return json(req, res, 200, { ok: true, servidor: 'Rey Pizza', version: VERSION, baseDatos: db, appsScript: !!cfg.appsScript, activoMin: Math.round((Date.now() - desde) / 60000) });
       }
+      if (req.method === 'GET' && url.pathname === '/eventos') {
+        // sin datos: solo «algo cambió». Se abre una vez y queda abierto.
+        return eventos.abre(req, res, cabeceras(req), url.searchParams.get('s') || '');
+      }
       if (req.method === 'GET' && url.pathname === '/velocidad') {
         if (!cfg.claveAdmin || !igual(url.searchParams.get('clave') || '', cfg.claveAdmin)) return json(req, res, 401, { ok: false, error: 'Falta la clave.' });
         await bitacora.vaciar();
@@ -86,13 +94,18 @@ export function crearServidor({ cfg, pool, fetchFn, reloj }) {
         return json(req, res, 200, { ok: true, usuarios: est && !est.error ? { ...est, porRol: roles, sincronizacionLista: usuarios.listo(),
           ultimaOk: est.ultimaOk ? new Date(est.ultimaOk).toISOString() : null, ultimoIntento: est.ultimoIntento ? new Date(est.ultimoIntento).toISOString() : null } : est,
           indicadores: ind ? { ...ind, sincronizacionLista: indicadores.listo() } : null,
-          lecturas: { ...lecturas.estado(), copia: copia.estado() } });
+          lecturas: { ...lecturas.estado(), copia: copia.estado() },
+          escrituras: { ...escrituras.estado(), cola: await escrituras.resumen().catch(() => null) }, eventos: eventos.estado() });
       }
       if (req.method === 'GET' && url.pathname === '/comparaciones') {
         if (!cfg.claveAdmin || !igual(url.searchParams.get('clave') || '', cfg.claveAdmin)) return json(req, res, 401, { ok: false, error: 'Falta la clave.' });
         let porFuncion = []; try { porFuncion = await lecturas.resumen(); } catch (e) {}
         const tot = porFuncion.reduce((a, x) => ({ veces: a.veces + x.veces, iguales: a.iguales + x.iguales }), { veces: 0, iguales: 0 });
         return json(req, res, 200, { ok: true, estado: lecturas.estado(), total: tot, funciones: porFuncion });
+      }
+      if (req.method === 'GET' && url.pathname === '/conflictos') {
+        if (!cfg.claveAdmin || !igual(url.searchParams.get('clave') || '', cfg.claveAdmin)) return json(req, res, 401, { ok: false, error: 'Falta la clave.' });
+        return json(req, res, 200, { ok: true, conflictos: await escrituras.conflictos().catch(() => []) });
       }
       if (req.method === 'POST' && url.pathname === '/resincronizar') {
         if (!cfg.claveAdmin || !igual(url.searchParams.get('clave') || '', cfg.claveAdmin)) return json(req, res, 401, { ok: false, error: 'Falta la clave.' });
@@ -114,5 +127,5 @@ export function crearServidor({ cfg, pool, fetchFn, reloj }) {
   });
   server.keepAliveTimeout = 65000;     // más que el de los balanceadores, para no cortar conexiones
   server.headersTimeout = 66000;
-  return { server, bitacora, origen, usuarios, indicadores, copia, lecturas };
+  return { server, bitacora, origen, usuarios, indicadores, copia, lecturas, escrituras, eventos };
 }

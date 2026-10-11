@@ -12451,7 +12451,7 @@ function resumenSenalesCalc() {
  * (Configuración del proyecto → Propiedades del script). La clave nunca está escrita en el código.
  * Aquí viajan los PIN: por eso es una puerta aparte, con clave larga, y el servidor nuevo los guarda ya transformados
  * (nunca en texto legible). */
-var INTERNAS = ['exportarUsuarios', 'exportarIndicadores', 'exportarResumenLibro', 'exportarHojaTipada', 'versionCodigo'];
+var INTERNAS = ['exportarUsuarios', 'exportarIndicadores', 'exportarResumenLibro', 'exportarHojaTipada', 'versionCodigo', 'aplicarCambios'];
 function igualesSeguro(a, b) {
   a = String(a); b = String(b);
   if (a.length !== b.length) return false;
@@ -12506,7 +12506,7 @@ function exportarIndicadores(q) {
 /* ════════════ COPIA COMPLETA PARA EL SERVIDOR PROPIO ════════════
  * El servidor propio guarda una copia de TODAS las pestañas y corre este mismo código sobre ella para contestar las lecturas.
  * Cada cambio que pasa por aquí avisa qué pestañas tocó («tocadas»), y el servidor solo vuelve a traer esas. */
-var VERSION_CODIGO = '2026-10-14-c';       // se cambia a mano cada vez que se cambia este archivo; el servidor compara que coincida con la suya
+var VERSION_CODIGO = '2026-10-15-a';       // se cambia a mano cada vez que se cambia este archivo; el servidor compara que coincida con la suya
 function versionCodigo() { return VERSION_CODIGO; }
 function huellaTexto(t) { return Utilities.base64Encode(Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, t)).slice(0, 22); }
 /** Un resumen barato de cada pestaña: cuántas filas y columnas tiene y una huella de sus últimas 25 filas. */
@@ -12533,6 +12533,136 @@ function exportarHojaTipada(q) {
   if (c > 0) h.getRange(Math.min(2, Math.max(1, f)), 1, 1, c).getNumberFormats()[0].forEach(function (x, i) { if (x === '@') textoCols.push(i + 1); });
   return { existe: true, nombre: h.getName(), filas: f, cols: c, maxCols: h.getMaxColumns(), desde: desde, hasta: hasta, hayMas: hasta < f, celdas: celdas, textoCols: textoCols };
 }
+/* ════════════ GUARDADO RÁPIDO: REENVÍO DESDE EL SERVIDOR PROPIO ════════════
+ * Para ciertos registros (gastos e ingresos) el servidor propio guarda primero en su copia —así la persona no espera— y manda
+ * aquí, por detrás, la lista exacta de celdas que cambió. Antes de escribir se comprueba que cada celda siga como la vio el servidor
+ * («a»); si alguien cambió algo en medio, NO se escribe nada y se avisa del conflicto (la hoja de Google gana). */
+function igualCelda(a, b) {
+  if (a instanceof Date) a = a.getTime();
+  if (b instanceof Date) b = b.getTime();
+  if (a === null || a === undefined) a = '';
+  if (b === null || b === undefined) b = '';
+  return a === b || (typeof a !== 'object' && typeof b !== 'object' && String(a) === String(b));
+}
+function celdaDe(x) { return x && typeof x === 'object' && x.$d !== undefined ? new Date(x.$d) : x; }
+function aplicarCambios(q) {
+  q = q || {};
+  var id = String(q.id || '').replace(/[^A-Za-z0-9_-]/g, '').slice(0, 40);
+  var ops = Array.isArray(q.ops) ? q.ops : [];
+  if (!ops.length) return { ok: true, aplicadas: 0 };
+  var cc = null; try { cc = CacheService.getScriptCache(); } catch (e) { cc = null; }
+  if (id && cc && cc.get('ac_' + id) === '1') return { ok: true, repetido: true, aplicadas: 0 };
+  var lock = LockService.getScriptLock();
+  lock.waitLock(30000); _LEE = {};
+  try {
+    if (id && cc && cc.get('ac_' + id) === '1') return { ok: true, repetido: true, aplicadas: 0 };      // otro intento lo aplicó mientras este esperaba
+    var ss = libro(), hojas = {}, omitir = {}, yaEstaban = [];
+    function hoja(n) { if (!(n in hojas)) hojas[n] = ss.getSheetByName(n); return hojas[n]; }
+    // lo que hay ahora en cada hoja, solo en el rectángulo que toca esta lista (se vuelve a leer si las filas se corren)
+    var actual = {};
+    function leeActual() {
+      var caja = {}; actual = {};
+      ops.forEach(function (o) {
+        if (o.t !== 'v') return;
+        var b = caja[o.h] || (caja[o.h] = { r1: o.r, r2: o.r, c1: o.c, c2: o.c });
+        b.r1 = Math.min(b.r1, o.r); b.r2 = Math.max(b.r2, o.r); b.c1 = Math.min(b.c1, o.c); b.c2 = Math.max(b.c2, o.c);
+      });
+      Object.keys(caja).forEach(function (n) {
+        var h = hoja(n), b = caja[n]; if (!h) return;
+        var ultima = h.getLastRow(), ancho = Math.max(1, h.getLastColumn());
+        var r2 = Math.min(b.r2, ultima), c2 = Math.min(b.c2, Math.max(ancho, b.c1));
+        var vals = (r2 >= b.r1) ? h.getRange(b.r1, b.c1, r2 - b.r1 + 1, c2 - b.c1 + 1).getValues() : [];
+        actual[n] = { b: b, vals: vals, r2: r2, c2: c2 };
+      });
+    }
+    function valorActual(n, r, c) {
+      var a = actual[n]; if (!a || r > a.r2 || c > a.c2) return '';
+      var fila = a.vals[r - a.b.r1]; return fila ? fila[c - a.b.c1] : '';
+    }
+    // se revisa todo antes de escribir nada. «a» = lo que el servidor vio antes, «v» = lo que quiere dejar
+    function evalua() {
+      var cubierta = {}, plan = [], saltadas = 0, descartadas = [], choques = {}, faltan = [];
+      ops.forEach(function (o) {
+        if (o.t !== 'v') return;
+        if (omitir[o.h]) { saltadas++; return; }
+        if (!hoja(o.h)) { if (faltan.indexOf(o.h) < 0) faltan.push(o.h); return; }
+        var k = o.h + '|' + o.r + '|' + o.c, ahora = (k in cubierta) ? cubierta[k] : valorActual(o.h, o.r, o.c);
+        var antes = celdaDe(o.a), nuevo = celdaDe(o.v);
+        if (igualCelda(ahora, antes)) { plan.push(o); cubierta[k] = nuevo; }
+        else if (igualCelda(ahora, nuevo)) { saltadas++; cubierta[k] = nuevo; }          // ya estaba escrito (un reintento)
+        else if (igualCelda(antes, '')) { (choques[o.h] = choques[o.h] || []).push(o); }  // la fila donde iba ya la ocupó otra cosa
+        else descartadas.push(o.h + ' fila ' + o.r + ' columna ' + o.c + ': ya había «' + String(ahora) + '» (el servidor quería «' + String(nuevo) + '»)');   // la hoja manda
+      });
+      return { plan: plan, saltadas: saltadas, descartadas: descartadas, choques: choques, faltan: faltan };
+    }
+    leeActual();
+    var ev = evalua(), desplazadas = {};
+    if (ev.faltan.length) return { ok: false, conflicto: ['No existe la pestaña «' + ev.faltan.join('», «') + '».'] };
+    var hojasChoque = Object.keys(ev.choques);
+    if (hojasChoque.length) {
+      // una pestaña a la que solo se le agregan filas: si otra persona agregó una en medio, las nuestras van a la primera fila libre. Nada se pierde.
+      var malas = [];
+      hojasChoque.forEach(function (n) {
+        var lst = ops.filter(function (o) { return o.h === n; });
+        var vistas = {}, pura = true;                      // pura: la primera vez que se toca cada celda estaba vacía
+        lst.forEach(function (o) {
+          if (o.t !== 'v') return;
+          var k = o.r + '|' + o.c;
+          if (!(k in vistas)) { vistas[k] = 1; if (!igualCelda(celdaDe(o.a), '')) pura = false; }
+        });
+        if (!pura) { malas.push(n + ' fila ' + ev.choques[n][0].r + ' columna ' + ev.choques[n][0].c + ': ya la ocupó otra cosa'); return; }
+        var minR = null; lst.forEach(function (o) { if (o.t === 'v' && (minR === null || o.r < minR)) minR = o.r; });
+        // ¿ya está? (un reenvío repetido después de que alguien editó la fila): si el código del registro, en la columna A, ya existe, no se agrega otra vez
+        var clave = null; lst.forEach(function (o) { if (clave === null && o.t === 'v' && o.c === 1 && o.r === minR) clave = celdaDe(o.v); });
+        if (clave !== null && String(clave) !== '') {
+          var ult = hoja(n).getLastRow();
+          var colA = ult > 0 ? hoja(n).getRange(1, 1, ult, 1).getValues() : [];
+          if (colA.some(function (f) { return igualCelda(f[0], clave); })) { omitir[n] = 1; yaEstaban.push(n); return; }
+        }
+        var d = hoja(n).getLastRow() + 1 - minR;
+        if (d > 0) { lst.forEach(function (o) { o.r += d; }); desplazadas[n] = d; }
+        else malas.push(n + ': no se pudo mover');
+      });
+      if (malas.length) return { ok: false, conflicto: malas.slice(0, 6) };
+      leeActual(); ev = evalua();
+      if (Object.keys(ev.choques).length || ev.faltan.length) return { ok: false, conflicto: ['Las filas siguen ocupadas después de moverlas.'] };
+    }
+    var plan = ev.plan;
+    // primero los formatos (el texto sin formato tiene que estar puesto antes de escribir el valor), luego los valores
+    var tocadas = {};
+    ops.forEach(function (o) {
+      if (o.t !== 'f' || omitir[o.h]) return;
+      var h = hoja(o.h); if (!h) return;
+      h.getRange(o.r, o.c, o.nr || 1, o.nc || 1).setNumberFormat(o.f === '@' ? '@' : (o.f || 'General'));
+      tocadas[o.h] = 1;
+    });
+    // celdas contiguas de una misma fila → una sola escritura; filas iguales seguidas → un solo bloque
+    var filas = [], ult = null;
+    plan.forEach(function (o) {
+      if (ult && ult.h === o.h && ult.r === o.r && ult.c2 + 1 === o.c) { ult.vals.push(celdaDe(o.v)); ult.c2 = o.c; }
+      else { ult = { h: o.h, r: o.r, c1: o.c, c2: o.c, vals: [celdaDe(o.v)] }; filas.push(ult); }
+    });
+    var bloques = [], ub = null;
+    filas.forEach(function (f) {
+      if (ub && ub.h === f.h && ub.c1 === f.c1 && ub.c2 === f.c2 && ub.r2 + 1 === f.r) { ub.vals.push(f.vals); ub.r2 = f.r; }
+      else { ub = { h: f.h, r1: f.r, r2: f.r, c1: f.c1, c2: f.c2, vals: [f.vals] }; bloques.push(ub); }
+    });
+    bloques.forEach(function (b) {
+      hoja(b.h).getRange(b.r1, b.c1, b.r2 - b.r1 + 1, b.c2 - b.c1 + 1).setValues(b.vals);
+      tocadas[b.h] = 1;
+    });
+    Object.keys(tocadas).forEach(function (n) { olvidaLectura(n); });
+    if (id && cc) { try { cc.put('ac_' + id, '1', 21600); } catch (e) {} }
+    var out = { ok: true, aplicadas: plan.length, saltadas: ev.saltadas, bloques: bloques.length };
+    if (Object.keys(desplazadas).length) out.desplazadas = desplazadas;
+    if (ev.descartadas.length) out.descartadas = ev.descartadas.slice(0, 6);
+    if (yaEstaban.length) out.yaEstaban = yaEstaban;
+    return out;
+  } finally {
+    lock.releaseLock();
+  }
+}
+
 /** Las tareas programadas que ya tiene el proyecto (el servidor las necesita para saber que ya están puestas). */
 function disparadoresActivos() { try { return ScriptApp.getProjectTriggers().map(function (t) { return t.getHandlerFunction(); }); } catch (e) { return []; } }
 /** Las propiedades del script (marcas como «ya se corrigió tal cosa»), sin la clave secreta. El servidor las necesita para correr este código igual que aquí. */

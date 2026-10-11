@@ -145,3 +145,15 @@ Usa la misma clave `SERVER_TOKEN` de la Fase 1, así que solo hay que **actualiz
 **Qué NO hace todavía:** guardar datos, enviar correos, generar PDF ni subir archivos a Drive siguen en Apps Script. La hoja de Google sigue siendo la que manda.
 
 **Seguridad:** la copia incluye la hoja Usuarios (con PIN). En la base de datos está **cifrada** con `PIN_PEPPER` (sin esa clave no se puede leer); en la memoria del servidor está sin cifrar mientras corre, igual que en Google.
+
+## Fase 4 (primera parte): guardado rápido de gastos e ingresos
+
+Con esto, registrar un gasto o un corte se contesta en milésimas: el servidor corre el mismo `Codigo.gs` sobre su copia, deja el registro
+a salvo en la base de datos (tabla `cola_escrituras`) y lo reenvía a la hoja de Google por detrás (función `aplicarCambios`).
+
+- **Encender:** en Render → Environment, `ESCRITURAS_MODO = auto` (necesita `LECTURAS_MODO` en `auto` o `nativa`). **Apagar:** borrarla o ponerla en `apagado`; todo vuelve a guardarse en Google al instante.
+- **Qué funciones:** `ESCRITURAS_FN` (por defecto `registrarGasto,registrarIngreso`).
+- **Requisito:** el `Codigo.gs` de Apps Script y el de aquí deben ser la misma versión (`VERSION_CODIGO`); si no, el servidor no usa el camino rápido.
+- **Las hojas ya no se editan a mano** en Gastos, Gastos detalle, Ingresos y Por confirmar: son el espejo. Si alguien agrega una fila a mano en medio, la del servidor se corre a la primera fila libre (no se pierde nada); si cambia una celda, la hoja manda en esa celda.
+- **Revisar:** `/estado?clave=…` → `escrituras` (pendientes, aplicadas, conflictos) y `eventos` (teléfonos conectados en vivo). `/conflictos?clave=…` lista lo que no se pudo reenviar, con las celdas exactas para recuperarlo.
+- **Aviso en vivo:** `/eventos` es un canal abierto (sin datos, solo «algo cambió») con el que los demás teléfonos se ponen al día solos.

@@ -38,6 +38,11 @@ export function leeConfig(env = process.env) {
     esperaPrimeraCopiaMs: num(env.ESPERA_PRIMERA_COPIA_MS, 8000),
     segundosCopia: numOCero(env.SYNC_COPIA_SEGUNDOS, 90),
     horasCompletaCopia: num(env.HORAS_COMPLETA_COPIA, 3),
+    // Guardado rápido (Fase 4): ciertos registros se guardan primero aquí y se reenvían a Google por detrás
+    escrituraModo: env.ESCRITURAS_MODO === 'auto' ? 'auto' : 'apagado',                          // apagado = todo se guarda en Google como siempre
+    escrituraFn: lista(env.ESCRITURAS_FN || 'registrarGasto,registrarIngreso'),                  // qué funciones pueden usar el camino rápido
+    msBarrera: num(env.BARRERA_MS, 15000),               // lo que va a Google espera (hasta este tiempo) a que se reenvíe lo pendiente
+    maxCola: num(env.MAX_COLA_ESCRITURAS, 200),          // si hay más pendientes que esto, se deja de usar el camino rápido
     muestraVerificacion: Math.min(1, Math.max(0, Number(env.MUESTRA_VERIFICACION ?? 0.05))),   // en modo nativa: qué parte de las respuestas se comparan después con Google
   };
 }

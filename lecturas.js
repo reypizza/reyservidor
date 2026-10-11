@@ -98,6 +98,22 @@ export function crearLecturas({ cfg, pool, copia, origen }) {
     return { ok: true, r };
   }
 
+  /** El guardado rápido: corre una función que GUARDA sobre la copia, anotando cada celda que cambia. Si algo no es seguro de reenviar
+   *  (borrar filas, crear pestañas, mandar correos, cambiar propiedades…) se deshace todo y se avisa para que lo haga Google. */
+  function correrEscritura(fn, args) {
+    const libro = copia.libro, disp = copia.disparadores().slice();
+    const propiedades = crearPropiedades(copia.propiedades()), antesProps = JSON.stringify(propiedades.getProperties()), correos = [];
+    libro.soloLectura = false; libro.huboEscritura = false; libro.escrituraDatos = false; const g = libro.grabar();
+    let r;
+    try { r = ejecuta(script, { libro, cache: copia.cache, propiedades, correos, registro: [], disparadores: disp }, { fn, args, rid: '' }); }
+    catch (e) { r = { ok: false, error: String(e && e.message ? e.message : e), _interno: true }; }
+    const noApta = g.noApta;
+    const motivo = !r || !r.ok ? (noApta || (r && r.error) || 'falló') : noApta ? noApta : correos.length ? 'manda correos' :
+      (JSON.stringify(propiedades.getProperties()) !== antesProps || disp.length !== copia.disparadores().length) ? 'cambia propiedades o tareas programadas' : '';
+    const fin = libro.terminaGrabar(!!motivo);
+    return { ok: !motivo, r, motivo, noApta: !!noApta || /propiedades|correos/.test(motivo), ops: motivo ? [] : fin.ops, undo: fin.undo };
+  }
+
   async function anota(fn, igual, msGoogle, msPropio, detalle) {
     // Una diferencia suelta puede ser solo el caché de Google (que a veces guarda unos minutos una respuesta). Si en las últimas 20 comparaciones
     // hubo 3 o más distintas, esa función se deja de contestar aquí durante 30 minutos.
@@ -139,5 +155,5 @@ export function crearLecturas({ cfg, pool, copia, origen }) {
   }
   const estado = () => ({ modo: cfg.lecturasModo, codigoCargado: !!script, versionLocal, versionCoincide: versionOk, motivo, escriben: [...escriben].sort(), bloqueadas: [...bloqueadas].filter(([, h]) => h > Date.now()).map(([f]) => f),
     graduadas: [...graduadas].sort(), minGraduar: cfg.minGraduar });
-  return { nativa, sombra, verificaDespues, resumen, estado, activa, carga, anota, graduada, refrescaGraduadas };
+  return { nativa, sombra, verificaDespues, resumen, estado, activa, carga, anota, graduada, refrescaGraduadas, correrEscritura, escriben };
 }

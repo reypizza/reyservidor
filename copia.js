@@ -22,6 +22,7 @@ export function crearCopia({ cfg, pool, origen }) {
   const libro = new Libro(); const cache = crearCache();
   const est = { disparadores: [], propiedades: {}, cargada: false, ultimaVerificacionMs: 0, ultimaOkMs: 0, error: null, sucio: false, pendientes: new Set(), hojas: 0, filas: 0, desdeBaseDatos: false };
   let enCurso = null, temporizador = null, actividadMs = 0, completaMs = 0;
+  let retiene = () => false;          // mientras haya algo guardado aquí que Google todavía no tiene, la copia NO se pone al día desde Google (se perdería)
   const listo = () => !!(pool && cfg.appsScript && cfg.serverToken && cfg.pinPepper && cfg.lecturasModo !== 'apagado');
 
   const llamar = async (fn, extra = {}) => { const r = await origen.llamar({ interno: true, fn, token: cfg.serverToken, ...extra }); if (!r.ok) throw new Error(String(r.error || 'Apps Script no contestó')); return r.v; };
@@ -56,6 +57,7 @@ export function crearCopia({ cfg, pool, origen }) {
 
   async function sincronizarUna({ completa } = {}) {
     if (!listo()) return { ok: false, motivo: 'sin configurar' };
+    if (retiene()) { est.sucio = true; return { ok: true, omitida: true }; }
     try {
       if (!est.cargada) { try { est.desdeBaseDatos = (await cargaDeBaseDatos()) > 0; } catch (e) { libro.hojas.length = 0; est.desdeBaseDatos = false; } }
       const pend = [...est.pendientes]; est.pendientes.clear();
@@ -70,7 +72,11 @@ export function crearCopia({ cfg, pool, origen }) {
         if (l.filas !== x.filas || l.cols !== x.cols || l.huella !== x.huella) aTraer.add(x.nombre);
       }
       for (const h of [...libro.hojas]) if (!enGoogle.has(h.nombre)) { libro.quitaHoja(h.nombre); await pool.query('DELETE FROM copia_hojas WHERE nombre=$1', [h.nombre]); }
-      for (const n of aTraer) { const h = await traeHoja(n); if (h) { libro.reemplazaHoja(n, h); await guardaHoja(h); } }
+      for (const n of aTraer) {
+        const h = await traeHoja(n);
+        if (retiene()) { aTraer.forEach((x) => est.pendientes.add(x)); est.sucio = true; return { ok: true, omitida: true }; }      // mientras se traía, se guardó algo aquí: no se pisa
+        if (h) { libro.reemplazaHoja(n, h); await guardaHoja(h); }
+      }
       cache.limpia(['fallos_']);                   // lo que el código guardó en su caché ya no vale
       est.cargada = true; est.error = null; est.sucio = est.pendientes.size > 0; est.ultimaOkMs = est.ultimaVerificacionMs = Date.now(); if (completa) completaMs = Date.now(); cuenta();
       return { ok: true, traidas: [...aTraer] };
@@ -84,6 +90,7 @@ export function crearCopia({ cfg, pool, origen }) {
   /** ¿Se puede contestar desde la copia con confianza? Si hace falta, primero se actualiza. */
   async function alDia() {
     if (!listo()) return false;
+    if (retiene() && est.cargada) return fresca();         // lo más nuevo está aquí: Google todavía no lo tiene (pero sin nada de Google por traer)
     if (!est.cargada || est.sucio || Date.now() - est.ultimaVerificacionMs > cfg.frescoCopiaMs) {
       const p = sincronizar(); await Promise.race([p, new Promise((r) => setTimeout(r, est.cargada ? 15000 : cfg.esperaPrimeraCopiaMs))]);
       if (est.sucio && enCurso) await Promise.race([enCurso, new Promise((r) => setTimeout(r, 15000))]);
@@ -100,7 +107,21 @@ export function crearCopia({ cfg, pool, origen }) {
     }, 15000);
     temporizador.unref?.();
   }
+  /** ¿Sirve la copia para guardar algo ahora mismo, sin esperar? Se comprobó contra Google hace poco y no hay nada de Google pendiente de traer. */
+  function fresca() {
+    if (!listo() || !est.cargada || est.error || est.pendientes.size) return false;
+    if (est.sucio && !retiene()) return false;
+    const edad = Date.now() - est.ultimaVerificacionMs;
+    if (edad > cfg.frescoCopiaMs && !retiene()) sincronizar().catch(() => {});          // se pone al día por detrás para la próxima
+    return edad <= cfg.maxViejaCopiaMs;
+  }
+  /** Guarda en la base de datos las pestañas que cambiaron aquí (el guardado rápido las cambia en memoria). */
+  async function guardaSucias() {
+    if (!pool) return 0; let n = 0;
+    for (const h of [...libro.hojas]) if (h.sucia) { h.sucia = false; try { await guardaHoja(h); n++; } catch (e) { h.sucia = true; } }
+    return n;
+  }
   const estado = () => ({ lista: listo(), cargada: est.cargada, hojas: est.hojas, filas: est.filas, error: est.error, sucio: est.sucio, desdeBaseDatos: est.desdeBaseDatos,
     ultimaOk: est.ultimaOkMs ? new Date(est.ultimaOkMs).toISOString() : null });
-  return { libro, cache, disparadores: () => est.disparadores, propiedades: () => est.propiedades, listo, sincronizar, marcaTocadas, actividad, alDia, iniciar, estado, parar() { clearInterval(temporizador); } };
+  return { libro, cache, fresca, ponRetiene(f) { retiene = f; }, esperaSync: () => enCurso || Promise.resolve(), guardaSucias, cargada: () => est.cargada, disparadores: () => est.disparadores, propiedades: () => est.propiedades, listo, sincronizar, marcaTocadas, actividad, alDia, iniciar, estado, parar() { clearInterval(temporizador); } };
 }

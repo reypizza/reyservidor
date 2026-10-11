@@ -5,6 +5,10 @@ const colANum = (s) => { let n = 0; for (const ch of s.toUpperCase()) n = n * 26
 export const numACol = (n) => { let s = ''; while (n > 0) { const r = (n - 1) % 26; s = String.fromCharCode(65 + r) + s; n = Math.floor((n - 1) / 26); } return s; };
 
 /** «A1», «A1:C5», «B:B», «A:C», «2:4» → {r1,c1,r2,c2}  (r2 / c2 = 0 significa «hasta el final») */
+export const dec = (v) => (v && typeof v === 'object' && '$d' in v ? new Date(v.$d) : v);
+export const cod = (v) => (v instanceof Date ? { $d: v.getTime() } : v);
+export const igualV = (a, b) => { const x = a instanceof Date ? a.getTime() : a, y = b instanceof Date ? b.getTime() : b; return x === y || (x === '' && (y === undefined || y === null)) || (y === '' && (x === undefined || x === null)); };
+
 export function parseA1(a1) {
   const t = String(a1).replace(/\$/g, '').trim();
   const celda = (x) => { const m = /^([A-Za-z]*)(\d*)$/.exec(x); if (!m || (!m[1] && !m[2])) throw new Error('Rango no válido: ' + a1); return { c: m[1] ? colANum(m[1]) : 0, r: m[2] ? Number(m[2]) : 0 }; };
@@ -40,8 +44,8 @@ export class Rango {
     return this;
   }
   setValue(v) { for (let i = 0; i < this.nr; i++) for (let j = 0; j < this.nc; j++) this.hoja._escribe(this.r + i, this.c + j, v); return this; }
-  setFormula(f) { this.hoja.formulas.set(this.r + ',' + this.c, String(f)); this.hoja._escribe(this.r, this.c, ''); return this; }
-  setFormulas(fs) { fs.forEach((fila, i) => fila.forEach((f, j) => { if (f) { this.hoja.formulas.set((this.r + i) + ',' + (this.c + j), String(f)); this.hoja._escribe(this.r + i, this.c + j, ''); } })); return this; }
+  setFormula(f) { this.hoja.libro._estructural('escribir una fórmula'); this.hoja.formulas.set(this.r + ',' + this.c, String(f)); this.hoja._escribe(this.r, this.c, ''); return this; }
+  setFormulas(fs) { this.hoja.libro._estructural('escribir fórmulas'); fs.forEach((fila, i) => fila.forEach((f, j) => { if (f) { this.hoja.formulas.set((this.r + i) + ',' + (this.c + j), String(f)); this.hoja._escribe(this.r + i, this.c + j, ''); } })); return this; }
   clearContent() { for (let i = 0; i < this.nr; i++) for (let j = 0; j < this.nc; j++) this.hoja._borra(this.r + i, this.c + j); return this; }
   clear() { this.clearContent(); this.setNumberFormat('General'); return this; }
   setNumberFormat(f) { this.hoja._formato(this.r, this.c, this.nr, this.nc, f); return this; }
@@ -66,6 +70,12 @@ export class Hoja {
   _lee(r, c) { const f = this.filas[r - 1]; const v = f ? f[c - 1] : undefined; return v === undefined || v === null ? '' : v; }
   _igual(a, b) { return a instanceof Date && b instanceof Date ? a.getTime() === b.getTime() : a === b; }
   _ponCruda(r, c, v) {
+    const g = this.libro.grabador;
+    if (g && !this.libro.soloLectura) {          // modo «guardar y reenviar»: se anota cada celda con lo que había (para deshacer y para reenviar a Google)
+      const f0 = this.filas[r - 1], antes = f0 && c - 1 < f0.length ? f0[c - 1] : undefined;
+      g.undo.push({ h: this, r, c, antes, nf: this.filas.length, nc: f0 ? f0.length : -1, mf: this.maxFilas, mc: this.maxCols });
+      g.ops.push({ t: 'v', h: this.nombre, r, c, a: antes === undefined || antes === null ? '' : antes, v });
+    }
     if (this.libro.soloLectura) { if (!this._igual(this._lee(r, c), v)) this.libro._intento(r > 1 && this.libro.hojas.includes(this)); return; }     // en modo lectura nada cambia (escribir en una pestaña que no existe o en su fila de títulos es «reparar», no «guardar datos»)
     while (this.filas.length < r) this.filas.push([]); const f = this.filas[r - 1]; while (f.length < c - 1) f.push(''); f[c - 1] = v; if (r > this.maxFilas) this.maxFilas = r; if (c > this.maxCols) this.maxCols = c; this.sucia = true; }
   _esTexto(r, c) { return this.textoCols.some((x) => c >= x.c1 && (!x.c2 || c <= x.c2) && r >= x.r1 && (!x.r2 || r <= x.r2)); }
@@ -76,14 +86,17 @@ export class Hoja {
     else v = interpreta(v);
     this._ponCruda(r, c, v);
   }
-  _borra(r, c) { if (this.libro.soloLectura) { if (this._lee(r, c) !== '') this.libro._intento(r > 1 && this.libro.hojas.includes(this)); return; } const f = this.filas[r - 1]; if (f && c - 1 < f.length) { f[c - 1] = ''; this.sucia = true; } }
+  _borra(r, c) { if (this.libro.grabador && !this.libro.soloLectura) { const f0 = this.filas[r - 1]; if (f0 && c - 1 < f0.length && f0[c - 1] !== '') this._ponCruda(r, c, ''); return; }
+    if (this.libro.soloLectura) { if (this._lee(r, c) !== '') this.libro._intento(r > 1 && this.libro.hojas.includes(this)); return; } const f = this.filas[r - 1]; if (f && c - 1 < f.length) { f[c - 1] = ''; this.sucia = true; } }
   _formato(r, c, nr, nc, f) {
     if (this.libro.soloLectura) return;
+    const g = this.libro.grabador;
+    if (g) { g.undo.push({ h: this, tc: this.textoCols.slice() }); g.ops.push({ t: 'f', h: this.nombre, r, c, nr, nc, f }); }
     const x = { r1: r, c1: c, r2: nr ? r + nr - 1 : 0, c2: nc ? c + nc - 1 : 0 };
     if (f === '@') this.textoCols.push(x);
     else this.textoCols = this.textoCols.filter((t) => !(t.c1 === x.c1 && t.c2 === x.c2 && t.r1 === x.r1 && t.r2 === x.r2));
   }
-  getName() { return this.nombre; } setName(n) { this.nombre = String(n); this.libro._renombra(this); return this; }
+  getName() { return this.nombre; } setName(n) { this.libro._estructural('renombrar una pestaña'); this.nombre = String(n); this.libro._renombra(this); return this; }
   getSheetId() { return this.libro.hojas.indexOf(this) + 1; } getParent() { return this.libro; }
   getLastRow() { for (let i = this.filas.length - 1; i >= 0; i--) if (this.filas[i].some((v) => v !== '' && v !== null && v !== undefined)) return i + 1; return 0; }
   getLastColumn() { let m = 0; for (const f of this.filas) for (let j = f.length - 1; j >= m; j--) if (f[j] !== '' && f[j] !== undefined && f[j] !== null) { m = j + 1; break; } return m; }
@@ -94,7 +107,7 @@ export class Hoja {
   }
   getDataRange() { return new Rango(this, 1, 1, Math.max(1, this.getLastRow()), Math.max(1, this.getLastColumn())); }
   appendRow(fila) { const r = this.getLastRow() + 1; fila.forEach((v, j) => this._escribe(r, j + 1, v)); return this; }
-  _bloqueada() { if (this.libro.soloLectura) { this.libro._intento(this.libro.hojas.includes(this)); return true; } return false; }
+  _bloqueada() { if (this.libro.soloLectura) { this.libro._intento(this.libro.hojas.includes(this)); return true; } this.libro._estructural('cambiar filas o columnas de «' + this.nombre + '»'); return false; }
   deleteRow(n) { if (this._bloqueada()) return this; if (n <= this.filas.length) this.filas.splice(n - 1, 1); this.sucia = true; return this; }
   deleteRows(n, k) { if (this._bloqueada()) return this; this.filas.splice(n - 1, k); this.sucia = true; return this; }
   insertColumnAfter(n) { if (this._bloqueada()) return this; this.maxCols++; this.filas.forEach((f) => { if (f.length > n) f.splice(n, 0, ''); }); this.sucia = true; return this; }
@@ -112,6 +125,39 @@ export class Libro {
   constructor(id = 'libro-local') { this.id = id; this.hojas = []; this.nombre = 'Caja Rey Pizza'; this.soloLectura = false; this.huboEscritura = false; this.escrituraDatos = false; }
   /** Un intento de cambiar algo en modo lectura. «Reparar» (crear una pestaña que falta o su fila de títulos) no es lo mismo que escribir datos. */
   _intento(datos) { this.huboEscritura = true; if (datos) this.escrituraDatos = true; }
+  /** Algo que no se puede reenviar celda por celda (borrar filas, crear pestañas, fórmulas…): si se está grabando, se corta aquí, antes de tocar nada. */
+  _estructural(que) { if (this.grabador && !this.soloLectura) { this.grabador.noApta = que; throw new Error('Esto no se puede guardar por el camino rápido: ' + que + '.'); } }
+  /** Empieza a anotar todo lo que se escribe (para reenviarlo a Google) y para poder deshacerlo. */
+  grabar() { this.grabador = { ops: [], undo: [], noApta: '' }; return this.grabador; }
+  /** Termina de grabar. Con deshacer=true deja la copia exactamente como estaba antes. Devuelve lo anotado (y cómo deshacerlo después, si hace falta). */
+  terminaGrabar(deshacer) {
+    const g = this.grabador; this.grabador = null; if (!g) return { ops: [], noApta: '', undo: [] };
+    if (deshacer) this.deshaz(g.undo);
+    return { ops: g.ops, noApta: g.noApta, undo: g.undo };
+  }
+  deshaz(undo) {
+    for (let i = undo.length - 1; i >= 0; i--) {
+      const u = undo[i];
+      if (u.tc) { u.h.textoCols = u.tc; continue; }
+      const f = u.h.filas;
+      if (u.nc >= 0 && f[u.r - 1]) { const fila = f[u.r - 1]; if (u.antes === undefined) { if (u.c - 1 < fila.length) fila[u.c - 1] = ''; } else fila[u.c - 1] = u.antes; fila.length = u.nc; }
+      f.length = u.nf; u.h.maxFilas = u.mf; u.h.maxCols = u.mc; u.h.sucia = true;
+    }
+  }
+  /** Aplica a esta copia lo que otra ejecución ya hizo (al reiniciar el servidor, con lo que quedó pendiente de reenviar). Una celda ya puesta se salta;
+   *  una celda que no tiene lo que se esperaba («a») no se toca. Devuelve las pestañas donde algo no cuadró (hay que volver a traerlas de Google). */
+  aplicaOps(ops) {
+    const malas = new Set();
+    for (const o of ops) {
+      const h = this.getSheetByName(o.h); if (!h) { malas.add(o.h); continue; }
+      if (o.t === 'f') { h._formato(o.r, o.c, o.nr, o.nc, o.f); continue; }
+      const v = dec(o.v), a = dec(o.a), ya = h._lee(o.r, o.c);
+      if (igualV(ya, v)) continue;
+      if (igualV(ya, a)) { h._ponCruda(o.r, o.c, v); continue; }
+      malas.add(o.h);
+    }
+    return [...malas];
+  }
   /** Cambia una pestaña entera por otra (así se pone al día la copia). */
   reemplazaHoja(nombre, hoja) { const i = this.hojas.findIndex((h) => h.nombre === nombre); hoja.libro = this; if (i >= 0) this.hojas[i] = hoja; else this.hojas.push(hoja); }
   quitaHoja(nombre) { const i = this.hojas.findIndex((h) => h.nombre === nombre); if (i >= 0) this.hojas.splice(i, 1); }
@@ -119,8 +165,8 @@ export class Libro {
   getId() { return this.id; } getName() { return this.nombre; } getUrl() { return 'https://docs.google.com/spreadsheets/d/' + this.id + '/edit'; }
   getSheetByName(n) { return this.hojas.find((h) => h.nombre === n) || null; }
   getSheets() { return this.hojas.slice(); }
-  insertSheet(n) { if (this.soloLectura) { this._intento(false); return new Hoja(this, String(n === undefined ? 'temporal' : n)); } const nombre = n === undefined ? 'Hoja ' + (this.hojas.length + 1) : String(n); if (this.getSheetByName(nombre)) throw new Error(`Ya existe una hoja llamada «${nombre}».`); const h = new Hoja(this, nombre); this.hojas.push(h); return h; }
-  deleteSheet(h) { if (this.soloLectura) { this._intento(true); return; } const i = this.hojas.indexOf(h); if (i >= 0) this.hojas.splice(i, 1); }
+  insertSheet(n) { if (this.soloLectura) { this._intento(false); return new Hoja(this, String(n === undefined ? 'temporal' : n)); } this._estructural('crear una pestaña'); const nombre = n === undefined ? 'Hoja ' + (this.hojas.length + 1) : String(n); if (this.getSheetByName(nombre)) throw new Error(`Ya existe una hoja llamada «${nombre}».`); const h = new Hoja(this, nombre); this.hojas.push(h); return h; }
+  deleteSheet(h) { if (this.soloLectura) { this._intento(true); return; } this._estructural('borrar una pestaña'); const i = this.hojas.indexOf(h); if (i >= 0) this.hojas.splice(i, 1); }
   setActiveSheet(h) { return h; } moveActiveSheet() {} getActiveSheet() { return this.hojas[0]; } setSpreadsheetTimeZone() {} setName(n) { this.nombre = n; return this; } flush() {} getSpreadsheetTimeZone() { return 'America/Guatemala'; }
   duplicateActiveSheet() { throw new Error('No disponible'); }
   /** Para guardar y recuperar todo el libro (las fechas se marcan para no perder su tipo). */
