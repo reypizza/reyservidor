@@ -927,7 +927,7 @@ function doGet() {
  * mismo proyecto por POST. Solo se pueden llamar las funciones de esta lista (las mismas
  * que usa la pantalla), y cada una revisa el código de quien pregunta, igual que antes.
  * La lista la pone sola el armado; no hace falta tocarla. */
-/*API_INI*/var API_PERMITIDAS = ['abrirSolicitud', 'abrirTraslado', 'aceptarSolicitud', 'aceptarYPreparar', 'aclararDiferencia', 'activarCorreos', 'activarObligacion', 'activarProducto', 'activarProductoSucursal', 'adjuntarCotizacion', 'agregarEquipo', 'agregarProducto', 'agregarRecomendados', 'agregarRecomendadosCmo', 'agregarRubro', 'anclarProducto', 'anular', 'anularOrden', 'anularPagoImpuesto', 'anularSolicitud', 'aprobarFondos', 'aprobarPresupuesto', 'aprobarPresupuestoArea', 'asignarDescanso', 'borrarKpi', 'borrarKpiCmo', 'borrarSolicitud', 'cambiarEquipo', 'cambiarMiPin', 'cambiarPermiso', 'cancelarPermiso', 'confirmarPlanilla', 'confirmarRegistro', 'consolidado', 'copiarPresupuesto', 'costosTraslados', 'cotizarOrden', 'darDeBaja', 'datos', 'despacharSolicitudes', 'detalleGasto', 'editarProducto', 'eliminarPersonaCal', 'entrar', 'enviarEmergencia', 'enviarKpis', 'enviarKpisCmo', 'enviarSolicitud', 'enviarSugerencia', 'estadoCorreos', 'evaluarMerma', 'existencias', 'existenciasEmergencia', 'firmarTraslado', 'guardarAjustesInv', 'guardarBonoGeneral', 'guardarBonosCal', 'guardarBorradorCal', 'guardarComision', 'guardarConfigCal', 'guardarConteo', 'guardarEstudio', 'guardarHorario', 'guardarHorasApoyo', 'guardarHorasReales', 'guardarKpi', 'guardarKpiCmo', 'guardarLugar', 'guardarMando', 'guardarMedida', 'guardarMiCorreo', 'guardarMiPresupuesto', 'guardarObligacion', 'guardarOrden', 'guardarPersonaCal', 'guardarPrecios', 'guardarPresupuesto', 'guardarProducto', 'guardarProductoBodega', 'guardarProveedor', 'guardarProveedorInv', 'guardarReceta', 'guardarRepartidor', 'guardarTraslado', 'guardarTurnos', 'guardarUsuario', 'habilita', 'habilitarConteo', 'historialTraslados', 'indicadoresConta', 'leerBonoGeneral', 'leerSugerencias', 'listaBodega', 'listaCatalogo', 'listaConsultas', 'listaDiferencias', 'listaEntrada', 'listaFondos', 'listaImpuestos', 'listaKpis', 'listaKpisCmo', 'listaLugares', 'listaOrdenes', 'listaPermisos', 'listaPrecios', 'listaRepartidores', 'listaReportes', 'listaSolicitudes', 'listaUsuarios', 'llegoSolicitud', 'marcarPreparadas', 'medirAceite', 'miAvance', 'miCorreo', 'miPanel', 'miPresupuesto', 'notificaciones', 'ordenesPago', 'pagarFondos', 'pagarOrden', 'pagarRepartidor', 'pantallaCalendarios', 'pantallaConteo', 'pantallaEmergencias', 'pantallaFirmas', 'pantallaHorarios', 'pantallaKpi', 'pantallaMando', 'pantallaMant', 'pantallaMerma', 'pantallaMuestreo', 'pantallaPedidosBodega', 'pantallaProduccion', 'pantallaSolicitud', 'pantallaSugerencias', 'pdfCalendario', 'pdfOrden', 'pedirDescanso', 'pedirEmergencia', 'pedirFondos', 'pedirPermiso', 'ping', 'planillasPorPagar', 'ponPreciosGerentes', 'porConfirmar', 'preguntar', 'presupuestoMes', 'presupuestosAreas', 'probarCorreo', 'productosConfig', 'productosParaAnclar', 'productosSucursal', 'reabrirPlanilla', 'rechazarRegistro', 'recibirEfectivo', 'recibirEmergencia', 'recibirOrden', 'recibirSolicitud', 'registrarGasto', 'registrarIngreso', 'registrarKpis', 'registrarLote', 'registrarMant', 'registrarMerma', 'registrarObservacion', 'registrarPagoImpuesto', 'renombrarCategoria', 'reporteDiario', 'reporteTraslados', 'resolverDescanso', 'responderConsulta', 'responderMerma', 'resultadosKpi', 'resultadosKpiCmo', 'resultadosKpiRango', 'resultadosMuestreo', 'resumenInventario', 'resumenMes', 'revisarPermiso', 'seguimiento', 'sugerenciaCompra', 'tableroFinanzas', 'tableroKpi', 'terminarFondos', 'validarRegistro', 'ventas', 'verTraslado', 'verificarFondos', 'proveedoresProductos', 'guardarProveedorProd', 'eliminarProveedor', 'detalleAbastecimiento', 'pdfHistorialInventario', 'pantallaCierreMes', 'guardarCierreMes', 'misMenus', 'menusRol', 'guardarMenusRol', 'historialInventario', 'reiniciarPresupuestos', 'autorizarFondos', 'hechaFondos', 'listaPendientes', 'llegaPendiente', 'cancelarPendiente', 'despacharPendientes', 'devolverFondo', 'corregirFondo', 'pantallaEquipos', 'guardarEquipoA', 'bajaEquipo', 'revisarEquipos', 'confirmarRevisionEq', 'pedirEquipo', 'resolverPedidoEq', 'entregarCompraEq', 'recibirEquipo', 'devolverOrden', 'corregirOrden', 'reiniciarPrecios', 'guardarMezcla', 'registrarLoteMezcla', 'etiquetasLote', 'guardarConfigEtiquetas', 'listaKpisCoo', 'guardarKpiCoo', 'borrarKpiCoo', 'enviarKpisCoo', 'agregarRecomendadosCoo', 'resultadosKpiCoo', 'pantallaKpiCoo', 'registrarKpisCoo', 'resumenAreas', 'resumenAreasSenales', 'pantallaZonas', 'guardarZonas', 'listaKpisTec', 'guardarKpiTec', 'borrarKpiTec', 'enviarKpisTec', 'agregarRecomendadosTec', 'resultadosKpiTec', 'pantallaKpiTec', 'registrarKpisTec', 'cotizarFondo', 'recibirFondo'];/*API_FIN*/
+/*API_INI*/var API_PERMITIDAS = ['abrirSolicitud', 'abrirTraslado', 'aceptarSolicitud', 'aceptarYPreparar', 'aclararDiferencia', 'activarCorreos', 'activarObligacion', 'activarProducto', 'activarProductoSucursal', 'adjuntarCotizacion', 'agregarEquipo', 'agregarProducto', 'agregarRecomendados', 'agregarRecomendadosCmo', 'agregarRubro', 'anclarProducto', 'anular', 'anularOrden', 'anularPagoImpuesto', 'anularSolicitud', 'aprobarFondos', 'aprobarPresupuesto', 'aprobarPresupuestoArea', 'asignarDescanso', 'borrarKpi', 'borrarKpiCmo', 'borrarSolicitud', 'cambiarEquipo', 'cambiarMiPin', 'cambiarPermiso', 'cancelarPermiso', 'confirmarPlanilla', 'confirmarRegistro', 'consolidado', 'copiarPresupuesto', 'costosTraslados', 'cotizarOrden', 'darDeBaja', 'datos', 'despacharSolicitudes', 'detalleGasto', 'editarProducto', 'eliminarPersonaCal', 'entrar', 'enviarEmergencia', 'enviarKpis', 'enviarKpisCmo', 'enviarSolicitud', 'enviarSugerencia', 'estadoCorreos', 'evaluarMerma', 'existencias', 'existenciasEmergencia', 'firmarTraslado', 'guardarAjustesInv', 'guardarBonoGeneral', 'guardarBonosCal', 'guardarBorradorCal', 'guardarComision', 'guardarConfigCal', 'guardarConteo', 'guardarEstudio', 'guardarHorario', 'guardarHorasApoyo', 'guardarHorasReales', 'guardarKpi', 'guardarKpiCmo', 'guardarLugar', 'guardarMando', 'guardarMedida', 'guardarMiCorreo', 'guardarMiPresupuesto', 'guardarObligacion', 'guardarOrden', 'guardarPersonaCal', 'guardarPrecios', 'guardarPresupuesto', 'guardarProducto', 'guardarProductoBodega', 'guardarProveedor', 'guardarProveedorInv', 'guardarReceta', 'guardarRepartidor', 'guardarTraslado', 'guardarTurnos', 'guardarUsuario', 'habilita', 'habilitarConteo', 'historialTraslados', 'indicadoresConta', 'leerBonoGeneral', 'leerSugerencias', 'listaBodega', 'listaCatalogo', 'listaConsultas', 'listaDiferencias', 'listaEntrada', 'listaFondos', 'listaImpuestos', 'listaKpis', 'listaKpisCmo', 'listaLugares', 'listaOrdenes', 'listaPermisos', 'listaPrecios', 'listaRepartidores', 'listaReportes', 'listaSolicitudes', 'listaUsuarios', 'llegoSolicitud', 'marcarPreparadas', 'medirAceite', 'miAvance', 'miCorreo', 'miPanel', 'miPresupuesto', 'notificaciones', 'ordenesPago', 'pagarFondos', 'pagarOrden', 'pagarRepartidor', 'pantallaCalendarios', 'pantallaConteo', 'pantallaEmergencias', 'pantallaFirmas', 'pantallaHorarios', 'pantallaKpi', 'pantallaMando', 'pantallaMant', 'pantallaMerma', 'pantallaMuestreo', 'pantallaPedidosBodega', 'pantallaProduccion', 'pantallaSolicitud', 'pantallaSugerencias', 'pdfCalendario', 'pdfOrden', 'pedirDescanso', 'pedirEmergencia', 'pedirFondos', 'pedirPermiso', 'ping', 'planillasPorPagar', 'ponPreciosGerentes', 'porConfirmar', 'preguntar', 'presupuestoMes', 'presupuestosAreas', 'probarCorreo', 'productosConfig', 'productosParaAnclar', 'productosSucursal', 'reabrirPlanilla', 'rechazarRegistro', 'recibirEfectivo', 'recibirEmergencia', 'recibirOrden', 'recibirSolicitud', 'registrarGasto', 'registrarIngreso', 'registrarKpis', 'registrarLote', 'registrarMant', 'registrarMerma', 'registrarObservacion', 'registrarPagoImpuesto', 'renombrarCategoria', 'reporteDiario', 'reporteTraslados', 'resolverDescanso', 'responderConsulta', 'responderMerma', 'resultadosKpi', 'resultadosKpiCmo', 'resultadosKpiRango', 'resultadosMuestreo', 'resumenInventario', 'resumenMes', 'revisarPermiso', 'seguimiento', 'sugerenciaCompra', 'tableroFinanzas', 'tableroKpi', 'terminarFondos', 'validarRegistro', 'ventas', 'verTraslado', 'verificarFondos', 'proveedoresProductos', 'guardarProveedorProd', 'eliminarProveedor', 'detalleAbastecimiento', 'pdfHistorialInventario', 'pantallaCierreMes', 'guardarCierreMes', 'misMenus', 'menusRol', 'guardarMenusRol', 'historialInventario', 'reiniciarPresupuestos', 'autorizarFondos', 'hechaFondos', 'listaPendientes', 'llegaPendiente', 'cancelarPendiente', 'despacharPendientes', 'devolverFondo', 'corregirFondo', 'pantallaEquipos', 'guardarEquipoA', 'bajaEquipo', 'revisarEquipos', 'confirmarRevisionEq', 'pedirEquipo', 'resolverPedidoEq', 'entregarCompraEq', 'recibirEquipo', 'devolverOrden', 'corregirOrden', 'reiniciarPrecios', 'guardarMezcla', 'registrarLoteMezcla', 'etiquetasLote', 'guardarConfigEtiquetas', 'listaKpisCoo', 'guardarKpiCoo', 'borrarKpiCoo', 'enviarKpisCoo', 'agregarRecomendadosCoo', 'resultadosKpiCoo', 'pantallaKpiCoo', 'registrarKpisCoo', 'resumenAreas', 'resumenAreasSenales', 'pantallaZonas', 'guardarZonas', 'listaKpisTec', 'guardarKpiTec', 'borrarKpiTec', 'enviarKpisTec', 'agregarRecomendadosTec', 'resultadosKpiTec', 'pantallaKpiTec', 'registrarKpisTec', 'cotizarFondo', 'recibirFondo', 'pantallaNivelacion', 'iniciarNivelacion', 'guardarConteoNivelacion', 'explicarNivelacion', 'vistoBuenoNivelacion', 'aprobarNivelacion', 'devolverNivelacion', 'anularNivelacion', 'pdfNivelacion'];/*API_FIN*/
 /** Solo contesta «aquí estoy»: sirve para despertar el servidor y medir la velocidad. No lee ni guarda nada. */
 function ping() { return { ok: true }; }
 function doPost(e) {
@@ -5947,6 +5947,7 @@ function notificacionesCalc(cred) {
   try { avisosEquipos(yo).forEach(function (a) { out.push(a); }); } catch (e) {}
   try { avisosPendientes(yo).forEach(function (a) { out.push(a); }); } catch (e) {}
   try { avisosCierre(yo).forEach(function (a) { out.push(a); }); } catch (e) {}
+  try { avisosNivelacion(yo).forEach(function (a) { out.push(a); }); } catch (e) {}
   try { avisosPrecioProducto(yo, out, desde); } catch (e) {}
   if (yo.rol === 'bodega' || yo.esAdmin) {          // órdenes de compra devueltas por contabilidad: se corrigen y se reenvían
     try { var pgD = filasOCP(); Object.keys(pgD).forEach(function (n) { var p = pgD[n];
@@ -12445,6 +12446,326 @@ function resumenSenalesCalc() {
   return { hoy: hoy, areas: { operaciones: ops, finanzas: fin, marketing: mkt, tecnologia: [] }, ms: tiempos };
 }
 
+/* ════════════ NIVELACIÓN DE INVENTARIO ════════════
+ * Cuando el inventario de un lugar ya no cuadra, el administrador o el director operativo abre una «nivelación»:
+ *   1. el encargado (gerente de la sucursal, o Samuel en la bodega) cuenta TODO, sin ver lo que dice el sistema;
+ *   2. la app compara lo contado contra lo que el sistema decía en ese momento y lo valora al costo de la última compra;
+ *   3. el encargado explica cada diferencia (motivo obligatorio en todas);
+ *   4. el director operativo da su visto bueno con observaciones (o la devuelve para contar otra vez);
+ *   5. el administrador la aprueba: desde ese momento lo contado es la existencia del lugar (borrón y cuenta nueva),
+ *      y el acta en PDF llega al correo del administrador y de finanzas.
+ * Hojas: «Nivelaciones» (una fila por nivelación) y «Nivelaciones detalle» (una por producto). */
+var NIV = { CON: 'Por contar', EXP: 'Por explicar', REV: 'Por revisar', APR: 'Por aprobar', OK: 'Aprobada', ANU: 'Anulada' };
+var NIV_MOTIVOS = ['Error en un conteo anterior', 'Merma o desperdicio no registrado', 'Producto dañado o vencido', 'Consumo no registrado (recetas, porciones, personal)',
+  'Traslado o compra no registrada', 'Se registró de más o de menos al recibir', 'Faltante sin explicación', 'Sobrante sin explicación', 'Otro'];
+var H_NIV = ['Número', 'Unidad', 'Estado', 'Iniciada en', 'Iniciada por', 'Nota de inicio', 'Contada en', 'Contada por', 'Explicada en', 'Visto bueno en', 'Visto bueno por',
+  'Observaciones', 'Aprobada en', 'Aprobada por', 'Nota de aprobación', 'Faltante Q', 'Sobrante Q', 'Neto Q', 'Productos', 'Con diferencia', 'Devuelta / anulada: motivo', 'ID conteo', 'Correo enviado'];
+var H_NIVD = ['Número', 'Unidad', 'Código', 'Producto', 'Medida', 'Área', 'Grupo', 'Sistema', 'Contado', 'Diferencia', 'Costo unitario', 'Valor diferencia', 'Motivo', 'Nota',
+  'Completas', 'Sueltas', 'Menores', 'Peso'];
+function hojaNiv() {
+  var ss = libro(), h = ss.getSheetByName('Nivelaciones');
+  if (!h) { h = hojaLimpia(ss, 'Nivelaciones', H_NIV); h.getRange('D:D').setNumberFormat('dd/mm/yyyy hh:mm'); }
+  return h;
+}
+function hojaNivD() {
+  var ss = libro(), h = ss.getSheetByName('Nivelaciones detalle');
+  if (!h) { h = hojaLimpia(ss, 'Nivelaciones detalle', H_NIVD); h.getRange('C:C').setNumberFormat('@'); h.setColumnWidth(4, 240); }
+  return h;
+}
+function filasNiv() {
+  var h = libro().getSheetByName('Nivelaciones'); if (!h || h.getLastRow() < 2) return [];
+  return leeTodo(h, H_NIV.length).map(function (r, i) {
+    return { fila: i + 2, numero: String(r[0] || ''), unidad: String(r[1] || ''), estado: String(r[2] || ''), iniciadaEn: fmtSello(r[3]), iniciadaPor: String(r[4] || ''),
+      notaInicio: String(r[5] || ''), contadaEn: fmtSello(r[6]), contadaPor: String(r[7] || ''), explicadaEn: fmtSello(r[8]), vbEn: fmtSello(r[9]), vbPor: String(r[10] || ''),
+      obs: String(r[11] || ''), aprobadaEn: fmtSello(r[12]), aprobadaPor: String(r[13] || ''), notaAprob: String(r[14] || ''), faltante: Number(r[15]) || 0,
+      sobrante: Number(r[16]) || 0, neto: Number(r[17]) || 0, productos: Number(r[18]) || 0, conDif: Number(r[19]) || 0, motivo: String(r[20] || ''),
+      conteo: String(r[21] || ''), correo: String(r[22] || '') };
+  }).filter(function (x) { return x.numero; });
+}
+function detalleNiv(numero) {
+  var h = libro().getSheetByName('Nivelaciones detalle'); if (!h || h.getLastRow() < 2) return [];
+  var out = [];
+  leeTodo(h, H_NIVD.length).forEach(function (r, i) {
+    if (String(r[0]) !== numero) return;
+    out.push({ fila: i + 2, codigo: String(r[2] || ''), nombre: String(r[3] || ''), medida: String(r[4] || ''), area: String(r[5] || ''), grupo: String(r[6] || ''),
+      sistema: Number(r[7]) || 0, contado: Number(r[8]) || 0, dif: Number(r[9]) || 0, costo: Number(r[10]) || 0, valor: Number(r[11]) || 0,
+      motivo: String(r[12] || ''), nota: String(r[13] || ''), e: r[14], s: r[15], m: r[16], p: r[17] });
+  });
+  return out;
+}
+function nivAbierta(n) { return n.estado !== NIV.OK && n.estado !== NIV.ANU; }
+function unidadNivDe(n) { var u = null; UNIDADES.forEach(function (x) { if (x.nombre === n.unidad) u = x; }); return u; }
+/** Quién cuenta: el gerente de esa sucursal o la bodega en la bodega. También el director operativo y el administrador. */
+function cuentaNiv(yo, uId) { return yo.esAdmin || yo.rol === 'operaciones' || (yo.rol === 'gerente' && yo.sucursal === uId) || (yo.rol === 'bodega' && uId === 'bodega'); }
+function veNiv(yo, uId) { return yo.esAdmin || yo.rol === 'operaciones' || yo.rol === 'finanzas' || cuentaNiv(yo, uId); }
+function exigeNiv(cred, numero) {
+  var yo = quien(cred), n = filasNiv().filter(function (x) { return x.numero === String(numero || ''); })[0];
+  if (!n) throw new Error('No se encontró esa nivelación.');
+  var u = unidadNivDe(n); if (!u) throw new Error('La unidad de esa nivelación ya no existe.');
+  if (!veNiv(yo, u.id)) throw new Error('Su usuario no ve esa nivelación.');
+  return { yo: yo, n: n, u: u };
+}
+function resumenNiv(n) {
+  return { numero: n.numero, unidad: n.unidad, estado: n.estado, iniciadaEn: n.iniciadaEn, iniciadaPor: n.iniciadaPor, notaInicio: n.notaInicio,
+    contadaEn: n.contadaEn, contadaPor: n.contadaPor, vbEn: n.vbEn, vbPor: n.vbPor, obs: n.obs, aprobadaEn: n.aprobadaEn, aprobadaPor: n.aprobadaPor,
+    notaAprob: n.notaAprob, faltante: n.faltante, sobrante: n.sobrante, neto: n.neto, productos: n.productos, conDif: n.conDif, motivo: n.motivo, correo: n.correo };
+}
+/** La página «Nivelación»: la lista, la que toca contar, el detalle de una, la comparación entre lugares y el historial. */
+function pantallaNivelacion(cred, numero) {
+  var yo = quien(cred), todas = filasNiv();
+  var lugares = UNIDADES.filter(function (u) { return u.vende || u.id === 'bodega'; });
+  var mias = todas.filter(function (n) { var u = unidadNivDe(n); return u && veNiv(yo, u.id); });
+  var out = { puedeIniciar: yo.esAdmin || yo.rol === 'operaciones', puedeVB: yo.esAdmin || yo.rol === 'operaciones', puedeAprobar: !!yo.esAdmin,
+    lugares: lugares.map(function (u) { return { id: u.id, nombre: u.nombre, abierta: (todas.filter(function (n) { return n.unidad === u.nombre && nivAbierta(n); })[0] || {}).numero || '' }; }),
+    motivos: NIV_MOTIVOS, lista: mias.slice().reverse().map(resumenNiv) };
+  // comparación: la última aprobada de cada lugar, por área; y el historial (todas las aprobadas, en orden)
+  var aprob = mias.filter(function (n) { return n.estado === NIV.OK; });
+  var ult = {}; aprob.forEach(function (n) { if (!ult[n.unidad] || n.aprobadaEn > ult[n.unidad].aprobadaEn) ult[n.unidad] = n; });
+  out.comparacion = Object.keys(ult).map(function (k) {
+    var n = ult[k], areas = {};
+    detalleNiv(n.numero).forEach(function (l) { var a = areas[l.area || 'Sin área'] || (areas[l.area || 'Sin área'] = { area: l.area || 'Sin área', faltante: 0, sobrante: 0 });
+      if (l.valor < 0) a.faltante = r2(a.faltante - l.valor); else a.sobrante = r2(a.sobrante + l.valor); });
+    return { unidad: n.unidad, numero: n.numero, fecha: n.aprobadaEn, faltante: n.faltante, sobrante: n.sobrante, neto: n.neto, productos: n.productos, conDif: n.conDif,
+      areas: Object.keys(areas).map(function (a) { return areas[a]; }).sort(function (a, b) { return b.faltante - a.faltante; }) };
+  });
+  out.historial = aprob.map(function (n) { return { unidad: n.unidad, numero: n.numero, fecha: n.aprobadaEn || n.contadaEn, faltante: n.faltante, sobrante: n.sobrante, neto: n.neto,
+    pct: n.productos ? Math.round(n.conDif / n.productos * 1000) / 10 : 0 }; });
+  // la que me toca contar o explicar (gerente / bodega)
+  var toca = mias.filter(function (n) { var u = unidadNivDe(n); return u && (n.estado === NIV.CON || n.estado === NIV.EXP) && (yo.rol === 'gerente' || yo.rol === 'bodega') && cuentaNiv(yo, u.id); })[0];
+  if (!numero && toca) numero = toca.numero;
+  if (numero) out.detalle = detalleNivPara(yo, String(numero));
+  return out;
+}
+function detalleNivPara(yo, numero) {
+  var n = filasNiv().filter(function (x) { return x.numero === numero; })[0]; if (!n) throw new Error('No se encontró esa nivelación.');
+  var u = unidadNivDe(n); if (!u || !veNiv(yo, u.id)) throw new Error('Su usuario no ve esa nivelación.');
+  var d = resumenNiv(n); d.unidadId = u.id;
+  d.puedeContar = (n.estado === NIV.CON) && cuentaNiv(yo, u.id);
+  d.puedeExplicar = (n.estado === NIV.EXP) && cuentaNiv(yo, u.id);
+  d.puedeVB = (n.estado === NIV.REV) && (yo.esAdmin || yo.rol === 'operaciones');
+  d.puedeAprobar = (n.estado === NIV.REV || n.estado === NIV.APR) && !!yo.esAdmin;
+  d.puedeDevolver = (n.estado === NIV.EXP || n.estado === NIV.REV || n.estado === NIV.APR) && (yo.esAdmin || yo.rol === 'operaciones');
+  d.puedeAnular = nivAbierta(n) && (yo.esAdmin || yo.rol === 'operaciones');
+  if (n.estado === NIV.CON) {
+    // a ciegas: quien cuenta no ve lo que dice el sistema
+    d.productos = productosInv().filter(function (b) { return maneja(b, u.id); }).map(function (b) {
+      return { codigo: b.codigo, nombre: b.nombre, area: b.area, grupo: b.grupo, estante: b.estante, unidad: b.unidad, suelto: tieneSuelto(b) ? b.suelto : '', porUnidad: tieneSuelto(b) ? b.porUnidad : 0,
+        medida: b.medida, menor: b.menor, porSuelto: b.porSuelto, pesoCada: b.pesoCada, pesoEn: b.pesoEn, pesa: b.pesoCada ? nivelPeso(b).nombre : '', presentacion: b.presentacion }; });
+  } else d.lineas = detalleNiv(numero).map(function (l) { delete l.fila; return l; });
+  return d;
+}
+function nivSigue(cred, numero, mensaje) { var r = pantallaNivelacion(cred, numero); r.ok = true; r.mensaje = mensaje; return r; }
+function iniciarNivelacion(cred, d) {
+  var yo = quien(cred); d = d || {};
+  if (!(yo.esAdmin || yo.rol === 'operaciones')) throw new Error('La nivelación la abre el administrador o el director operativo.');
+  var u = unidadPorId(String(d.unidad || '')); if (!u || !(u.vende || u.id === 'bodega')) throw new Error('Escoja la sucursal o la bodega.');
+  var numero;
+  var lock = LockService.getScriptLock(); lock.waitLock(20000); _LEE = {};
+  try {
+    var todas = filasNiv();
+    var ya = todas.filter(function (n) { return n.unidad === u.nombre && nivAbierta(n); })[0];
+    if (ya) throw new Error(u.nombre + ' ya tiene una nivelación abierta (' + ya.numero + ', ' + ya.estado.toLowerCase() + ').');
+    numero = numeroSiguiente(todas, 'NV');
+    var fila = new Array(H_NIV.length).join('.').split('.').map(function () { return ''; });
+    fila[0] = numero; fila[1] = u.nombre; fila[2] = NIV.CON; fila[3] = new Date(); fila[4] = yo.nombre; fila[5] = String(d.nota || '').slice(0, 300);
+    hojaNiv().appendRow(fila);
+  } finally { lock.releaseLock(); }
+  return nivSigue(cred, numero, 'Nivelación ' + numero + ' de ' + u.nombre + ' abierta. El encargado ya puede contar.');
+}
+/** El conteo completo (a ciegas). Se compara con lo que el sistema decía en ese momento. */
+function guardarConteoNivelacion(cred, d) {
+  d = d || {};
+  var x = exigeNiv(cred, d.numero), yo = x.yo, n = x.n, u = x.u;
+  if (n.estado !== NIV.CON) throw new Error('Esta nivelación ya se contó (' + n.estado.toLowerCase() + ').');
+  if (!cuentaNiv(yo, u.id)) throw new Error('La cuenta el encargado de ' + u.nombre + '.');
+  var cant = d.cantidades || {}, faltan = [], filas = [], idx = indiceCompras(), sistema = estadoInventario(u.id).existencia || {};
+  var falt = 0, sobr = 0, conDif = 0;
+  productosInv().filter(function (b) { return maneja(b, u.id); }).forEach(function (b) {
+    var c = cant[b.codigo] || {};
+    if (!llenoConteoProducto(b, c)) { faltan.push(b.nombre); return; }
+    var total = totalConteoProducto(b, c), sis = r3(sistema[b.codigo] || 0), dif = r3(total - sis), costo = costoBodega(b, idx).costo, valor = r2(dif * costo);
+    if (Math.abs(dif) > 0.0005) { conDif++; if (valor < 0) falt = r2(falt - valor); else sobr = r2(sobr + valor); }
+    var q = function (v) { return String(v == null ? '' : v).trim(); };
+    filas.push([n.numero, u.nombre, b.codigo, b.nombre, b.unidad, b.area || '', b.grupo || '', sis, total, dif, costo, valor, '', '', q(c.e), q(c.s), q(c.m), q(c.p)]);
+  });
+  if (faltan.length) throw new Error('Faltan productos por contar: ' + faltan.slice(0, 3).join(', ') + (faltan.length > 3 ? ' y ' + (faltan.length - 3) + ' más' : '') + '. Escriba 0 si no hay.');
+  if (!filas.length) throw new Error('Este lugar no tiene productos para contar.');
+  var lock = LockService.getScriptLock(); lock.waitLock(20000); _LEE = {};
+  try {
+    var hd = hojaNivD();
+    for (var r = hd.getLastRow(); r >= 2; r--) if (String(hd.getRange(r, 1).getValue()) === n.numero) hd.deleteRow(r);       // un conteo nuevo reemplaza al anterior (si se devolvió)
+    var f0 = hd.getLastRow() + 1;
+    hd.getRange(f0, 3, filas.length, 1).setNumberFormat('@');
+    hd.getRange(f0, 1, filas.length, H_NIVD.length).setValues(filas);
+    var h = hojaNiv(), ahora = new Date();
+    h.getRange(n.fila, 3).setValue(conDif ? NIV.EXP : NIV.REV);
+    h.getRange(n.fila, 7, 1, 2).setValues([[ahora, yo.nombre]]);
+    h.getRange(n.fila, 16, 1, 5).setValues([[falt, sobr, r2(sobr - falt), filas.length, conDif]]);
+    h.getRange(n.fila, 21).setValue('');
+  } finally { lock.releaseLock(); }
+  return nivSigue(cred, n.numero, conDif ? 'Conteo guardado: ' + conDif + (conDif === 1 ? ' producto no cuadra' : ' productos no cuadran') + ' con el sistema. Escriba el motivo de cada uno.'
+    : 'Conteo guardado: todo cuadra con el sistema. Queda para revisión del director operativo.');
+}
+/** El motivo de cada diferencia (obligatorio en todas). */
+function explicarNivelacion(cred, d) {
+  d = d || {};
+  var x = exigeNiv(cred, d.numero), yo = x.yo, n = x.n, u = x.u;
+  if (n.estado !== NIV.EXP) throw new Error('Esta nivelación no está esperando motivos (' + n.estado.toLowerCase() + ').');
+  if (!cuentaNiv(yo, u.id)) throw new Error('Los motivos los escribe el encargado de ' + u.nombre + '.');
+  var mot = d.motivos || {}, lineas = detalleNiv(n.numero), faltan = [], cambios = [];
+  lineas.forEach(function (l) {
+    if (Math.abs(l.dif) <= 0.0005) return;
+    var m = mot[l.codigo] || {}, mo = String(m.m || ''), no = String(m.nota || '').trim().slice(0, 200);
+    if (NIV_MOTIVOS.indexOf(mo) < 0) { faltan.push(l.nombre); return; }
+    if ((mo === 'Otro' || /sin explicación/.test(mo)) && no.length < 4) { faltan.push(l.nombre + ' (escriba qué pasó)'); return; }
+    cambios.push({ fila: l.fila, m: mo, nota: no });
+  });
+  if (faltan.length) throw new Error('Falta el motivo de: ' + faltan.slice(0, 3).join(', ') + (faltan.length > 3 ? ' y ' + (faltan.length - 3) + ' más' : '') + '.');
+  var lock = LockService.getScriptLock(); lock.waitLock(20000); _LEE = {};
+  try {
+    var hd = hojaNivD(); cambios.forEach(function (c) { hd.getRange(c.fila, 13, 1, 2).setValues([[c.m, c.nota]]); });
+    var h = hojaNiv(); h.getRange(n.fila, 3).setValue(NIV.REV); h.getRange(n.fila, 9).setValue(new Date());
+  } finally { lock.releaseLock(); }
+  return nivSigue(cred, n.numero, 'Motivos guardados. La nivelación ' + n.numero + ' queda para revisión del director operativo.');
+}
+function vistoBuenoNivelacion(cred, numero, obs) {
+  var x = exigeNiv(cred, numero), yo = x.yo, n = x.n;
+  if (!(yo.esAdmin || yo.rol === 'operaciones')) throw new Error('El visto bueno lo da el director operativo.');
+  if (n.estado !== NIV.REV) throw new Error('Esta nivelación no está por revisar (' + n.estado.toLowerCase() + ').');
+  var lock = LockService.getScriptLock(); lock.waitLock(20000); _LEE = {};
+  try { var h = hojaNiv(); h.getRange(n.fila, 3).setValue(NIV.APR); h.getRange(n.fila, 10, 1, 3).setValues([[new Date(), yo.nombre, String(obs || '').slice(0, 500)]]); }
+  finally { lock.releaseLock(); }
+  return nivSigue(cred, n.numero, 'Visto bueno dado. La nivelación ' + n.numero + ' queda para aprobación del administrador.');
+}
+function devolverNivelacion(cred, numero, motivo) {
+  var x = exigeNiv(cred, numero), yo = x.yo, n = x.n;
+  if (!(yo.esAdmin || yo.rol === 'operaciones')) throw new Error('La devuelve el director operativo o el administrador.');
+  if (!(n.estado === NIV.EXP || n.estado === NIV.REV || n.estado === NIV.APR)) throw new Error('Esta nivelación no se puede devolver (' + n.estado.toLowerCase() + ').');
+  motivo = String(motivo || '').trim(); if (motivo.length < 4) throw new Error('Escriba por qué se vuelve a contar.');
+  var lock = LockService.getScriptLock(); lock.waitLock(20000); _LEE = {};
+  try { var h = hojaNiv(); h.getRange(n.fila, 3).setValue(NIV.CON); h.getRange(n.fila, 10, 1, 3).setValues([['', '', '']]); h.getRange(n.fila, 21).setValue(motivo.slice(0, 300) + ' (' + yo.nombre + ')'); }
+  finally { lock.releaseLock(); }
+  return nivSigue(cred, n.numero, 'Nivelación ' + n.numero + ' devuelta: hay que contar otra vez.');
+}
+function anularNivelacion(cred, numero, motivo) {
+  var x = exigeNiv(cred, numero), yo = x.yo, n = x.n;
+  if (!(yo.esAdmin || yo.rol === 'operaciones')) throw new Error('La anula el director operativo o el administrador.');
+  if (!nivAbierta(n)) throw new Error('Esta nivelación ya está ' + n.estado.toLowerCase() + '.');
+  motivo = String(motivo || '').trim(); if (motivo.length < 4) throw new Error('Escriba por qué se anula.');
+  var lock = LockService.getScriptLock(); lock.waitLock(20000); _LEE = {};
+  try { var h = hojaNiv(); h.getRange(n.fila, 3).setValue(NIV.ANU); h.getRange(n.fila, 21).setValue('Anulada: ' + motivo.slice(0, 300) + ' (' + yo.nombre + ')'); }
+  finally { lock.releaseLock(); }
+  return nivSigue(cred, '', 'Nivelación ' + n.numero + ' anulada. Las existencias no cambiaron.');
+}
+/** Aprobar: lo contado pasa a ser la existencia del lugar (desde la hora en que se contó), y el acta llega por correo. */
+function aprobarNivelacion(cred, numero, nota) {
+  var x = exigeNiv(cred, numero), yo = x.yo, n = x.n, u = x.u;
+  if (!yo.esAdmin) throw new Error('La nivelación la aprueba el administrador.');
+  if (!(n.estado === NIV.REV || n.estado === NIV.APR)) throw new Error('Esta nivelación no está lista para aprobar (' + n.estado.toLowerCase() + ').');
+  var lineas = detalleNiv(n.numero); if (!lineas.length) throw new Error('Esta nivelación no tiene conteo.');
+  var ahora = new Date(), contadaEn = hojaNiv().getRange(n.fila, 7).getValue();
+  if (!(contadaEn instanceof Date) || isNaN(contadaEn.getTime())) contadaEn = ahora;
+  var id = 'N' + Utilities.formatDate(ahora, ZONA, 'yyyyMMddHHmmss') + u.id.charAt(0).toUpperCase(), fecha = Utilities.formatDate(contadaEn, ZONA, 'yyyy-MM-dd');
+  var filas = lineas.map(function (l) { return [id, contadaEn, fecha, u.nombre, n.contadaPor + ' · nivelación ' + n.numero, l.codigo, l.nombre, l.medida, l.contado, '', l.contado, '', '']; });
+  var lock = LockService.getScriptLock(); lock.waitLock(20000); _LEE = {};
+  try {
+    var hc = hojaInv('Inventario conteos'), f0 = hc.getLastRow() + 1;
+    hc.getRange(f0, 3, filas.length, 1).setNumberFormat('@');
+    hc.getRange(f0, 1, filas.length, H_CONTEOS.length).setValues(filas);
+    var h = hojaNiv(); h.getRange(n.fila, 3).setValue(NIV.OK); h.getRange(n.fila, 13, 1, 3).setValues([[ahora, yo.nombre, String(nota || '').slice(0, 300)]]); h.getRange(n.fila, 22).setValue(id);
+  } finally { lock.releaseLock(); }
+  _MEMO = {};
+  var env = '';
+  try { env = correoNivelacion(n.numero); } catch (e) { env = ''; }
+  try { hojaNiv().getRange(n.fila, 23).setValue(env); } catch (e) {}
+  return nivSigue(cred, n.numero, 'Nivelación ' + n.numero + ' aprobada: las existencias de ' + u.nombre + ' quedaron como se contaron.' +
+    (env ? ' El acta se envió a ' + env + '.' : ' No se pudo enviar el correo (revise los correos en Configuración).'));
+}
+/* ── el acta ── */
+function datosNivPdf(numero) {
+  var n = filasNiv().filter(function (x) { return x.numero === numero; })[0]; if (!n) throw new Error('No se encontró esa nivelación.');
+  return { n: n, lineas: detalleNiv(numero) };
+}
+function htmlNivelacionPdf(d) {
+  var n = d.n, h = [], q = function (v) { return 'Q' + (Math.round(v * 100) / 100).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','); }, k = function (v) { return String(Math.round(v * 1000) / 1000).replace('.', ','); };
+  h.push('<html><head><meta charset="utf-8"><style>');
+  h.push('body{font-family:Arial,Helvetica,sans-serif;font-size:10px;color:#16223A;margin:22px}');
+  h.push('table.band{width:100%;background:#14284B;color:#fff;border-bottom:4px solid #F2B705;margin:0 0 10px;border-collapse:collapse}');
+  h.push('table.band td{border:0;padding:10px 12px;vertical-align:middle}.band img{width:40px}.band td.r{text-align:right;font-size:12px;color:#F7F2E7;font-weight:bold}');
+  h.push('h1{font-size:19px;color:#fff;margin:0;letter-spacing:1px}.band .co{color:#F2B705;font-size:9px;letter-spacing:2px;font-weight:bold}h2{font-size:13px;color:#14284B;margin:14px 0 6px}');
+  h.push('table.t{width:100%;border-collapse:collapse;margin:0 0 10px}table.t th,table.t td{border:1px solid #CFC6B2;padding:4px 6px;font-size:9.5px;text-align:right}');
+  h.push('table.t th{background:#14284B;color:#F2B705}table.t td.l,table.t th.l{text-align:left}td.neg{color:#B3261E;font-weight:bold}td.pos{color:#1F7A4D;font-weight:bold}');
+  h.push('.kpi{width:100%;border-collapse:collapse;margin:6px 0 10px}.kpi td{border:1px solid #CFC6B2;padding:8px;text-align:center;font-size:10px}.kpi b{display:block;font-size:15px}');
+  h.push('.firmas{width:100%;margin-top:40px;border-collapse:collapse}.firmas td{width:33%;padding:0 10px;text-align:center;font-size:9.5px;vertical-align:top}.firmas .l{border-top:1px solid #16223A;padding-top:4px}.note{color:#6F7686;font-size:9px}');
+  h.push('</style></head><body>');
+  h.push('<table class="band"><tr><td style="width:52px"><img src="' + LOGO_PNG + '"></td><td><h1>REY PIZZA</h1><div class="co">CAIX, S.A.</div></td><td class="r">Acta de nivelación de inventario<br>' + htm(n.numero) + ' · ' + htm(n.unidad) + '</td></tr></table>');
+  h.push('<table class="t"><tr><td class="l"><b>Lugar:</b> ' + htm(n.unidad) + '</td><td class="l"><b>Abierta:</b> ' + htm(n.iniciadaEn) + ' por ' + htm(n.iniciadaPor) + '</td><td class="l"><b>Estado:</b> ' + htm(n.estado) + '</td></tr>' +
+    '<tr><td class="l"><b>Contó:</b> ' + htm(n.contadaPor) + ' · ' + htm(n.contadaEn) + '</td><td class="l"><b>Visto bueno:</b> ' + (n.vbPor ? htm(n.vbPor) + ' · ' + htm(n.vbEn) : '—') + '</td><td class="l"><b>Aprobó:</b> ' + (n.aprobadaPor ? htm(n.aprobadaPor) + ' · ' + htm(n.aprobadaEn) : '—') + '</td></tr></table>');
+  h.push('<table class="kpi"><tr><td>Faltante<b style="color:#B3261E">' + q(n.faltante) + '</b></td><td>Sobrante<b style="color:#1F7A4D">' + q(n.sobrante) + '</b></td><td>Neto<b style="color:' + (n.neto < 0 ? '#B3261E' : '#1F7A4D') + '">' + q(n.neto) + '</b></td><td>Productos con diferencia<b>' + n.conDif + ' de ' + n.productos + '</b></td></tr></table>');
+  if (n.notaInicio) h.push('<p><b>Motivo de la nivelación:</b> ' + htm(n.notaInicio) + '</p>');
+  if (n.obs) h.push('<p><b>Observaciones del director operativo:</b> ' + htm(n.obs) + '</p>');
+  if (n.notaAprob) h.push('<p><b>Nota de aprobación:</b> ' + htm(n.notaAprob) + '</p>');
+  var dif = d.lineas.filter(function (l) { return Math.abs(l.dif) > 0.0005; }).sort(function (a, b) { return a.valor - b.valor; });
+  h.push('<h2>Productos con diferencia (' + dif.length + ')</h2><div class="note">Sistema = lo que decía la app al momento de contar. Valor = diferencia × costo de la última compra. Negativo = faltó.</div>');
+  h.push('<table class="t"><tr><th class="l">Producto</th><th class="l">Área</th><th>Sistema</th><th>Contado</th><th>Diferencia</th><th>Costo u.</th><th>Valor</th><th class="l">Motivo</th></tr>');
+  dif.forEach(function (l) { h.push('<tr><td class="l">' + htm(l.nombre) + ' <span class="note">(' + htm(l.medida) + ')</span></td><td class="l">' + htm(l.area) + '</td><td>' + k(l.sistema) + '</td><td>' + k(l.contado) + '</td><td>' + k(l.dif) + '</td><td>' + q(l.costo) + '</td><td class="' + (l.valor < 0 ? 'neg' : 'pos') + '">' + q(l.valor) + '</td><td class="l">' + htm(l.motivo) + (l.nota ? ' — ' + htm(l.nota) : '') + '</td></tr>'); });
+  if (!dif.length) h.push('<tr><td class="l" colspan="8">Todo cuadró con el sistema.</td></tr>');
+  h.push('</table>');
+  var ok = d.lineas.filter(function (l) { return Math.abs(l.dif) <= 0.0005; });
+  if (ok.length) h.push('<h2>Productos que cuadraron (' + ok.length + ')</h2><div class="note">' + ok.map(function (l) { return htm(l.nombre) + ' ' + k(l.contado); }).join(' · ') + '</div>');
+  h.push('<table class="firmas"><tr><td><div class="l">Contó: ' + htm(n.contadaPor) + '</div></td><td><div class="l">Supervisó: ' + htm(n.vbPor || 'Director operativo') + '</div></td><td><div class="l">Aprobó: ' + htm(n.aprobadaPor || 'Administrador') + '</div></td></tr></table>');
+  h.push('</body></html>');
+  return h.join('');
+}
+function pdfNivelacion(cred, numero) {
+  var x = exigeNiv(cred, numero), d = datosNivPdf(x.n.numero);
+  var nombre = 'Nivelacion ' + x.n.numero + ' ' + x.n.unidad + '.pdf';
+  var blob = Utilities.newBlob(htmlNivelacionPdf(d), 'text/html', 'n.html').getAs('application/pdf').setName(nombre);
+  return { ok: true, nombre: nombre, tipo: 'application/pdf', base64: Utilities.base64Encode(blob.getBytes()) };
+}
+/** El acta al correo del administrador y de finanzas. Devuelve a quiénes se envió. */
+function correoNivelacion(numero) {
+  var d = datosNivPdf(numero), n = d.n, para = [];
+  usuariosCache().forEach(function (u) { if (u.activo && (u.rol === 'admin' || u.rol === 'finanzas') && correoValido(u.correo) && para.indexOf(u.correo) < 0) para.push(u.correo); });
+  if (!para.length) return '';
+  var q = function (v) { return dinero(v); };
+  var dif = d.lineas.filter(function (l) { return Math.abs(l.dif) > 0.0005; }).sort(function (a, b) { return a.valor - b.valor; }).slice(0, 10);
+  var cuerpo = '<p style="margin:0 0 10px">Se aprobó la nivelación <b>' + esHtml(n.numero) + '</b> de <b>' + esHtml(n.unidad) + '</b>. Desde ahora las existencias son las que se contaron.</p>' +
+    '<table style="width:100%;border-collapse:collapse;font-size:13px"><tr><td style="padding:6px;border:1px solid #E3DBCB">Faltante</td><td style="padding:6px;border:1px solid #E3DBCB;text-align:right;color:#B3261E"><b>' + q(n.faltante) + '</b></td></tr>' +
+    '<tr><td style="padding:6px;border:1px solid #E3DBCB">Sobrante</td><td style="padding:6px;border:1px solid #E3DBCB;text-align:right;color:#1F7A4D"><b>' + q(n.sobrante) + '</b></td></tr>' +
+    '<tr><td style="padding:6px;border:1px solid #E3DBCB">Neto</td><td style="padding:6px;border:1px solid #E3DBCB;text-align:right"><b>' + q(n.neto) + '</b></td></tr>' +
+    '<tr><td style="padding:6px;border:1px solid #E3DBCB">Productos con diferencia</td><td style="padding:6px;border:1px solid #E3DBCB;text-align:right">' + n.conDif + ' de ' + n.productos + '</td></tr></table>' +
+    (dif.length ? '<p style="margin:12px 0 4px"><b>Las diferencias más grandes</b></p>' + dif.map(function (l) { return '<div style="font-size:13px;padding:3px 0;border-top:1px solid #eef0f3">' + esHtml(l.nombre) + ': ' + (l.dif > 0 ? '+' : '') + String(l.dif) + ' ' + esHtml(l.medida) + ' · <b>' + q(l.valor) + '</b> · ' + esHtml(l.motivo) + '</div>'; }).join('') : '') +
+    '<p style="font-size:13px;margin-top:10px">Contó ' + esHtml(n.contadaPor) + (n.vbPor ? ' · visto bueno de ' + esHtml(n.vbPor) : '') + ' · aprobó ' + esHtml(n.aprobadaPor) + '. El acta completa va adjunta en PDF.</p>';
+  var pdf = Utilities.newBlob(htmlNivelacionPdf(d), 'text/html', 'n.html').getAs('application/pdf').setName('Nivelacion ' + n.numero + ' ' + n.unidad + '.pdf');
+  var cuota; try { cuota = MailApp.getRemainingDailyQuota(); } catch (e) { anotaErrorCorreo(e); return ''; }
+  if (cuota < para.length) { anotaErrorCorreo('Se acabó la cuota (quota) de correos de hoy.'); return ''; }
+  try { MailApp.sendEmail({ to: para.join(','), subject: 'Rey Pizza · Nivelación de inventario ' + n.numero + ' · ' + n.unidad + ' · neto ' + q(n.neto), htmlBody: htmlCorreo('Nivelación de inventario aprobada', cuerpo), attachments: [pdf], name: 'Rey Pizza · app' }); }
+  catch (e) { anotaErrorCorreo(e); return ''; }
+  anotaOkCorreo();
+  return para.join(', ');
+}
+/* ── avisos (campanita y correo diario) ── */
+function avisosNivelacion(yo) {
+  var out = [];
+  filasNiv().forEach(function (n) {
+    if (!nivAbierta(n)) return;
+    var u = unidadNivDe(n); if (!u) return;
+    if ((n.estado === NIV.CON || n.estado === NIV.EXP) && (yo.rol === 'gerente' || yo.rol === 'bodega') && cuentaNiv(yo, u.id))
+      out.push({ id: 'niv-' + n.numero + '-' + n.estado, tipo: 'Nivelación de inventario', cuando: n.iniciadaEn,
+        titulo: n.estado === NIV.CON ? 'Cuente todo el inventario (' + n.numero + ')' : 'Escriba el motivo de cada diferencia (' + n.numero + ')',
+        texto: n.estado === NIV.CON ? (n.motivo ? 'Se devolvió: ' + n.motivo : 'Lo pidió ' + n.iniciadaPor + (n.notaInicio ? ': ' + n.notaInicio : '')) : n.conDif + ' productos no cuadran con el sistema.',
+        abrir: { tab: 'nivel' } });
+    if (n.estado === NIV.REV && (yo.rol === 'operaciones' || yo.esAdmin))
+      out.push({ id: 'niv-' + n.numero + '-rev', tipo: 'Nivelación de inventario', cuando: n.contadaEn, titulo: n.unidad + ': nivelación por revisar (' + n.numero + ')',
+        texto: 'Faltante ' + dinero(n.faltante) + ' · sobrante ' + dinero(n.sobrante) + ' · ' + n.conDif + ' con diferencia.', abrir: { tab: 'nivel' } });
+    if (n.estado === NIV.APR && yo.esAdmin)
+      out.push({ id: 'niv-' + n.numero + '-apr', tipo: 'Nivelación de inventario', cuando: n.vbEn, titulo: n.unidad + ': nivelación por aprobar (' + n.numero + ')',
+        texto: 'Visto bueno de ' + n.vbPor + '. Neto ' + dinero(n.neto) + '.', abrir: { tab: 'nivel' } });
+  });
+  return out;
+}
+
 /* ════════════ PUERTA INTERNA PARA EL SERVIDOR PROPIO ════════════
  * El servidor nuevo (Render) necesita saber quién es quién para reconocer a cada persona sin preguntarle a Google.
  * Se lo cuenta esta puerta, que SOLO abre con la clave secreta «SERVER_TOKEN» guardada en las propiedades del script
@@ -12506,7 +12827,7 @@ function exportarIndicadores(q) {
 /* ════════════ COPIA COMPLETA PARA EL SERVIDOR PROPIO ════════════
  * El servidor propio guarda una copia de TODAS las pestañas y corre este mismo código sobre ella para contestar las lecturas.
  * Cada cambio que pasa por aquí avisa qué pestañas tocó («tocadas»), y el servidor solo vuelve a traer esas. */
-var VERSION_CODIGO = '2026-10-15-a';       // se cambia a mano cada vez que se cambia este archivo; el servidor compara que coincida con la suya
+var VERSION_CODIGO = '2026-10-16-a';       // se cambia a mano cada vez que se cambia este archivo; el servidor compara que coincida con la suya
 function versionCodigo() { return VERSION_CODIGO; }
 function huellaTexto(t) { return Utilities.base64Encode(Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, t)).slice(0, 22); }
 /** Un resumen barato de cada pestaña: cuántas filas y columnas tiene y una huella de sus últimas 25 filas. */
