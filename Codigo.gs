@@ -927,7 +927,7 @@ function doGet() {
  * mismo proyecto por POST. Solo se pueden llamar las funciones de esta lista (las mismas
  * que usa la pantalla), y cada una revisa el código de quien pregunta, igual que antes.
  * La lista la pone sola el armado; no hace falta tocarla. */
-/*API_INI*/var API_PERMITIDAS = ['abrirSolicitud', 'abrirTraslado', 'aceptarSolicitud', 'aceptarYPreparar', 'aclararDiferencia', 'activarCorreos', 'activarObligacion', 'activarProducto', 'activarProductoSucursal', 'adjuntarCotizacion', 'agregarEquipo', 'agregarProducto', 'agregarRecomendados', 'agregarRecomendadosCmo', 'agregarRubro', 'anclarProducto', 'anular', 'anularOrden', 'anularPagoImpuesto', 'anularSolicitud', 'aprobarFondos', 'aprobarPresupuesto', 'aprobarPresupuestoArea', 'asignarDescanso', 'borrarKpi', 'borrarKpiCmo', 'borrarSolicitud', 'cambiarEquipo', 'cambiarMiPin', 'cambiarPermiso', 'cancelarPermiso', 'confirmarPlanilla', 'confirmarRegistro', 'consolidado', 'copiarPresupuesto', 'costosTraslados', 'cotizarOrden', 'darDeBaja', 'datos', 'despacharSolicitudes', 'detalleGasto', 'editarProducto', 'eliminarPersonaCal', 'entrar', 'enviarEmergencia', 'enviarKpis', 'enviarKpisCmo', 'enviarSolicitud', 'enviarSugerencia', 'estadoCorreos', 'evaluarMerma', 'existencias', 'existenciasEmergencia', 'firmarTraslado', 'guardarAjustesInv', 'guardarBonoGeneral', 'guardarBonosCal', 'guardarBorradorCal', 'guardarComision', 'guardarConfigCal', 'guardarConteo', 'guardarEstudio', 'guardarHorario', 'guardarHorasApoyo', 'guardarHorasReales', 'guardarKpi', 'guardarKpiCmo', 'guardarLugar', 'guardarMando', 'guardarMedida', 'guardarMiCorreo', 'guardarMiPresupuesto', 'guardarObligacion', 'guardarOrden', 'guardarPersonaCal', 'guardarPrecios', 'guardarPresupuesto', 'guardarProducto', 'guardarProductoBodega', 'guardarProveedor', 'guardarProveedorInv', 'guardarReceta', 'guardarRepartidor', 'guardarTraslado', 'guardarTurnos', 'guardarUsuario', 'habilita', 'habilitarConteo', 'historialTraslados', 'indicadoresConta', 'leerBonoGeneral', 'leerSugerencias', 'listaBodega', 'listaCatalogo', 'listaConsultas', 'listaDiferencias', 'listaEntrada', 'listaFondos', 'listaImpuestos', 'listaKpis', 'listaKpisCmo', 'listaLugares', 'listaOrdenes', 'listaPermisos', 'listaPrecios', 'listaRepartidores', 'listaReportes', 'listaSolicitudes', 'listaUsuarios', 'llegoSolicitud', 'marcarPreparadas', 'medirAceite', 'miAvance', 'miCorreo', 'miPanel', 'miPresupuesto', 'notificaciones', 'ordenesPago', 'pagarFondos', 'pagarOrden', 'pagarRepartidor', 'pantallaCalendarios', 'pantallaConteo', 'pantallaEmergencias', 'pantallaFirmas', 'pantallaHorarios', 'pantallaKpi', 'pantallaMando', 'pantallaMant', 'pantallaMerma', 'pantallaMuestreo', 'pantallaPedidosBodega', 'pantallaProduccion', 'pantallaSolicitud', 'pantallaSugerencias', 'pdfCalendario', 'pdfOrden', 'pedirDescanso', 'pedirEmergencia', 'pedirFondos', 'pedirPermiso', 'ping', 'planillasPorPagar', 'ponPreciosGerentes', 'porConfirmar', 'preguntar', 'presupuestoMes', 'presupuestosAreas', 'probarCorreo', 'productosConfig', 'productosParaAnclar', 'productosSucursal', 'reabrirPlanilla', 'rechazarRegistro', 'recibirEfectivo', 'recibirEmergencia', 'recibirOrden', 'recibirSolicitud', 'registrarGasto', 'registrarIngreso', 'registrarKpis', 'registrarLote', 'registrarMant', 'registrarMerma', 'registrarObservacion', 'registrarPagoImpuesto', 'renombrarCategoria', 'reporteDiario', 'reporteTraslados', 'resolverDescanso', 'responderConsulta', 'responderMerma', 'resultadosKpi', 'resultadosKpiCmo', 'resultadosKpiRango', 'resultadosMuestreo', 'resumenInventario', 'resumenMes', 'revisarPermiso', 'seguimiento', 'sugerenciaCompra', 'tableroFinanzas', 'tableroKpi', 'terminarFondos', 'validarRegistro', 'ventas', 'verTraslado', 'verificarFondos', 'proveedoresProductos', 'guardarProveedorProd', 'eliminarProveedor', 'detalleAbastecimiento', 'pdfHistorialInventario', 'pantallaCierreMes', 'guardarCierreMes', 'misMenus', 'menusRol', 'guardarMenusRol', 'historialInventario', 'reiniciarPresupuestos', 'autorizarFondos', 'hechaFondos', 'listaPendientes', 'llegaPendiente', 'cancelarPendiente', 'despacharPendientes', 'devolverFondo', 'corregirFondo', 'pantallaEquipos', 'guardarEquipoA', 'bajaEquipo', 'revisarEquipos', 'confirmarRevisionEq', 'pedirEquipo', 'resolverPedidoEq', 'entregarCompraEq', 'recibirEquipo', 'devolverOrden', 'corregirOrden', 'reiniciarPrecios', 'guardarMezcla', 'registrarLoteMezcla', 'etiquetasLote', 'guardarConfigEtiquetas', 'listaKpisCoo', 'guardarKpiCoo', 'borrarKpiCoo', 'enviarKpisCoo', 'agregarRecomendadosCoo', 'resultadosKpiCoo', 'pantallaKpiCoo', 'registrarKpisCoo', 'resumenAreas', 'resumenAreasSenales', 'pantallaZonas', 'guardarZonas', 'listaKpisTec', 'guardarKpiTec', 'borrarKpiTec', 'enviarKpisTec', 'agregarRecomendadosTec', 'resultadosKpiTec', 'pantallaKpiTec', 'registrarKpisTec', 'cotizarFondo', 'recibirFondo', 'pantallaNivelacion', 'iniciarNivelacion', 'guardarConteoNivelacion', 'explicarNivelacion', 'vistoBuenoNivelacion', 'aprobarNivelacion', 'devolverNivelacion', 'anularNivelacion', 'pdfNivelacion'];/*API_FIN*/
+/*API_INI*/var API_PERMITIDAS = ['abrirSolicitud', 'abrirTraslado', 'aceptarSolicitud', 'aceptarYPreparar', 'aclararDiferencia', 'activarCorreos', 'activarObligacion', 'activarProducto', 'activarProductoSucursal', 'adjuntarCotizacion', 'agregarEquipo', 'agregarProducto', 'agregarRecomendados', 'agregarRecomendadosCmo', 'agregarRubro', 'anclarProducto', 'anular', 'anularOrden', 'anularPagoImpuesto', 'anularSolicitud', 'aprobarFondos', 'aprobarPresupuesto', 'aprobarPresupuestoArea', 'asignarDescanso', 'borrarKpi', 'borrarKpiCmo', 'borrarSolicitud', 'cambiarEquipo', 'cambiarMiPin', 'cambiarPermiso', 'cancelarPermiso', 'confirmarPlanilla', 'confirmarRegistro', 'consolidado', 'copiarPresupuesto', 'costosTraslados', 'cotizarOrden', 'darDeBaja', 'datos', 'despacharSolicitudes', 'detalleGasto', 'editarProducto', 'eliminarPersonaCal', 'entrar', 'enviarEmergencia', 'enviarKpis', 'enviarKpisCmo', 'enviarSolicitud', 'enviarSugerencia', 'estadoCorreos', 'evaluarMerma', 'existencias', 'existenciasEmergencia', 'firmarTraslado', 'guardarAjustesInv', 'guardarBonoGeneral', 'guardarBonosCal', 'guardarBorradorCal', 'guardarComision', 'guardarConfigCal', 'guardarConteo', 'guardarEstudio', 'guardarHorario', 'guardarHorasApoyo', 'guardarHorasReales', 'guardarKpi', 'guardarKpiCmo', 'guardarLugar', 'guardarMando', 'guardarMedida', 'guardarMiCorreo', 'guardarMiPresupuesto', 'guardarObligacion', 'guardarOrden', 'guardarPersonaCal', 'guardarPrecios', 'guardarPresupuesto', 'guardarProducto', 'guardarProductoBodega', 'guardarProveedor', 'guardarProveedorInv', 'guardarReceta', 'guardarRepartidor', 'guardarTraslado', 'guardarTurnos', 'guardarUsuario', 'habilita', 'habilitarConteo', 'historialTraslados', 'indicadoresConta', 'leerBonoGeneral', 'leerSugerencias', 'listaBodega', 'listaCatalogo', 'listaConsultas', 'listaDiferencias', 'listaEntrada', 'listaFondos', 'listaImpuestos', 'listaKpis', 'listaKpisCmo', 'listaLugares', 'listaOrdenes', 'listaPermisos', 'listaPrecios', 'listaRepartidores', 'listaReportes', 'listaSolicitudes', 'listaUsuarios', 'llegoSolicitud', 'marcarPreparadas', 'medirAceite', 'miAvance', 'miCorreo', 'miPanel', 'miPresupuesto', 'notificaciones', 'ordenesPago', 'pagarFondos', 'pagarOrden', 'pagarRepartidor', 'pantallaCalendarios', 'pantallaConteo', 'pantallaEmergencias', 'pantallaFirmas', 'pantallaHorarios', 'pantallaKpi', 'pantallaMando', 'pantallaMant', 'pantallaMerma', 'pantallaMuestreo', 'pantallaPedidosBodega', 'pantallaProduccion', 'pantallaSolicitud', 'pantallaSugerencias', 'pdfCalendario', 'pdfOrden', 'pedirDescanso', 'pedirEmergencia', 'pedirFondos', 'pedirPermiso', 'ping', 'planillasPorPagar', 'ponPreciosGerentes', 'porConfirmar', 'preguntar', 'presupuestoMes', 'presupuestosAreas', 'probarCorreo', 'productosConfig', 'productosParaAnclar', 'productosSucursal', 'reabrirPlanilla', 'rechazarRegistro', 'recibirEfectivo', 'recibirEmergencia', 'recibirOrden', 'recibirSolicitud', 'registrarGasto', 'registrarIngreso', 'registrarKpis', 'registrarLote', 'registrarMant', 'registrarMerma', 'registrarObservacion', 'registrarPagoImpuesto', 'renombrarCategoria', 'reporteDiario', 'reporteTraslados', 'resolverDescanso', 'responderConsulta', 'responderMerma', 'resultadosKpi', 'resultadosKpiCmo', 'resultadosKpiRango', 'resultadosMuestreo', 'resumenInventario', 'resumenMes', 'revisarPermiso', 'seguimiento', 'sugerenciaCompra', 'tableroFinanzas', 'tableroKpi', 'terminarFondos', 'validarRegistro', 'ventas', 'verTraslado', 'verificarFondos', 'proveedoresProductos', 'guardarProveedorProd', 'eliminarProveedor', 'detalleAbastecimiento', 'pdfHistorialInventario', 'pantallaCierreMes', 'guardarCierreMes', 'misMenus', 'menusRol', 'guardarMenusRol', 'historialInventario', 'reiniciarPresupuestos', 'autorizarFondos', 'hechaFondos', 'listaPendientes', 'llegaPendiente', 'cancelarPendiente', 'despacharPendientes', 'devolverFondo', 'corregirFondo', 'pantallaEquipos', 'guardarEquipoA', 'bajaEquipo', 'revisarEquipos', 'confirmarRevisionEq', 'pedirEquipo', 'resolverPedidoEq', 'entregarCompraEq', 'recibirEquipo', 'devolverOrden', 'corregirOrden', 'reiniciarPrecios', 'guardarMezcla', 'registrarLoteMezcla', 'etiquetasLote', 'guardarConfigEtiquetas', 'listaKpisCoo', 'guardarKpiCoo', 'borrarKpiCoo', 'enviarKpisCoo', 'agregarRecomendadosCoo', 'resultadosKpiCoo', 'pantallaKpiCoo', 'registrarKpisCoo', 'resumenAreas', 'resumenAreasSenales', 'pantallaZonas', 'guardarZonas', 'listaKpisTec', 'guardarKpiTec', 'borrarKpiTec', 'enviarKpisTec', 'agregarRecomendadosTec', 'resultadosKpiTec', 'pantallaKpiTec', 'registrarKpisTec', 'cotizarFondo', 'recibirFondo', 'pantallaNivelacion', 'iniciarNivelacion', 'guardarConteoNivelacion', 'explicarNivelacion', 'vistoBuenoNivelacion', 'aprobarNivelacion', 'devolverNivelacion', 'anularNivelacion', 'pdfNivelacion', 'resumenSucursal', 'tableroBodega'];/*API_FIN*/
 /** Solo contesta «aquí estoy»: sirve para despertar el servidor y medir la velocidad. No lee ni guarda nada. */
 function ping() { return { ok: true }; }
 function doPost(e) {
@@ -12766,6 +12766,145 @@ function avisosNivelacion(yo) {
   return out;
 }
 
+/* ════════════ RESUMEN DE UNA SUCURSAL Y TABLERO DE LA BODEGA (menú nuevo de Operaciones) ════════════ */
+function exigeResumenOps(cred) {
+  var yo = quien(cred);
+  if (!(yo.esAdmin || yo.rol === 'operaciones')) throw new Error('Esto lo ven el administrador y el director operativo.');
+  return yo;
+}
+/** Al tocar una sucursal: cómo van sus ventas y cómo van las tareas del gerente. */
+function resumenSucursal(cred, unidadId) {
+  exigeResumenOps(cred);
+  var u = UNIDADES.filter(function (x) { return x.vende && x.id === String(unidadId || ''); })[0];
+  if (!u) throw new Error('Escoja la sucursal.');
+  var hoy = hoyISO(), mes = hoy.slice(0, 7), ini = mes + '-01', out = { unidad: { id: u.id, nombre: u.nombre, marca: u.marca }, hoy: hoy };
+  // ── ventas ──
+  try {
+    var dMes = +hoy.slice(8), iniAnt = mesAnterior(mes) + '-01', finAnt = masDias(ini, -1);
+    var hastaAnt = mesAnterior(mes) + '-' + ('0' + Math.min(dMes, +finAnt.slice(8))).slice(-2);
+    var vs = ventasRango(iniAnt < masDias(hoy, -40) ? iniAnt : masDias(hoy, -40), hoy).filter(function (v) { return v.u === u.nombre; });
+    var suma = function (d, h) { var t = { m: 0, e: 0, j: 0, n: 0 }; vs.forEach(function (v) { if (v.f >= d && v.f <= h) { t.m += v.m; t.e += v.e; t.j += v.j; t.n++; } }); t.m = r2(t.m); t.e = r2(t.e); t.j = r2(t.j); return t; };
+    var porDia = {}; vs.forEach(function (v) { if (v.f >= ini) porDia[v.f] = r2((porDia[v.f] || 0) + v.m); });
+    var dias = []; for (var f = ini; f <= hoy; f = masDias(f, 1)) dias.push({ f: f, m: porDia[f] || 0 });
+    var turnosHoy = {}; vs.forEach(function (v) { if (v.f === hoy) turnosHoy[v.t] = r2((turnosHoy[v.t] || 0) + v.m); });
+    var m0 = suma(ini, hoy), mA = suma(iniAnt, hastaAnt), cerrados = dias.filter(function (x) { return x.f < hoy && x.m > 0; });
+    out.ventas = { hoy: suma(hoy, hoy), turnosHoy: turnosHoy, ayer: suma(masDias(hoy, -1), masDias(hoy, -1)), semana: suma(masDias(hoy, -6), hoy), mes: m0,
+      mesAnteriorMismoDia: mA, cambioPct: mA.m > 0 ? Math.round((m0.m - mA.m) / mA.m * 1000) / 10 : null,
+      promedioDia: cerrados.length ? r2(cerrados.reduce(function (a, x) { return a + x.m; }, 0) / cerrados.length) : 0, dias: dias };
+  } catch (e) { out.ventas = null; out.errVentas = String(e.message || e); }
+  // ── tareas del gerente ──
+  var t = [];
+  var pon = function (ok, titulo, texto, ir) { t.push({ ok: ok, titulo: titulo, texto: texto || '', ir: ir || null }); };
+  try {
+    var res = datosResultadosKpi(hoy, [u.id]).sucursales[0], ks = filasKpi().filter(function (k) { return k.suc && k.suc[u.id] && k.estado === KPI_EST.ENV; });
+    var ap = ks.filter(function (k) { return k.frec === 'Apertura'; }).length, ci = ks.filter(function (k) { return k.frec === 'Cierre'; }).length;
+    pon(ap > 0, 'Checklist de apertura', ap ? ap + ' puntos definidos' : 'Todavía no tiene: defínalo en Indicadores', { p: 'kpi', s: 'lista' });
+    pon(ci > 0, 'Checklist de cierre', ci ? ci + ' puntos definidos' : 'Todavía no tiene: defínalo en Indicadores', { p: 'kpi', s: 'lista' });
+    var hechoAp = 0, espAp = 0, hechoCi = 0, espCi = 0;
+    res.filas.forEach(function (f) { f.celdas.forEach(function (c) { if (f.frec === 'Apertura') { espAp++; if (!c.falta) hechoAp++; } if (f.frec === 'Cierre') { espCi++; if (!c.falta) hechoCi++; } }); });
+    if (espAp) pon(hechoAp === espAp, 'Apertura de hoy', hechoAp + ' de ' + espAp + ' puntos anotados', { p: 'kpi', s: 'res' });
+    if (espCi) pon(hechoCi === espCi, 'Cierre de hoy', hechoCi + ' de ' + espCi + ' puntos anotados (se hace al cerrar)', { p: 'kpi', s: 'res' });
+    pon(res.esperados === 0 || res.hechos >= res.esperados, 'Indicadores de hoy', res.esperados ? res.hechos + ' de ' + res.esperados + ' anotados' + (res.fuera ? ' · ' + res.fuera + ' fuera de rango' : '') : 'No le tocaba ninguno', { p: 'kpi', s: 'res' });
+    if (res.semana.pct != null) pon(res.semana.pct >= 90, 'Cumplimiento de 7 días', res.semana.pct + ' % de lo que tocaba' + (res.semana.fuera ? ' · ' + res.semana.fuera + ' fuera de rango' : ''), { p: 'kpi', s: 'tab' });
+  } catch (e) {}
+  try {
+    var cc = cierresCaja(7), faltan = [];
+    cc.fechas.forEach(function (f) { if (f >= hoy) return; ['AM', 'PM'].forEach(function (tu) { if (!cc.celdas[u.nombre + '|' + f + '|' + tu]) faltan.push(dia(f).slice(0, 5) + ' ' + tu); }); });
+    pon(!faltan.length, 'Cortes de caja (7 días)', faltan.length ? 'Faltan: ' + faltan.slice(0, 4).join(', ') + (faltan.length > 4 ? '…' : '') : 'Todos reportados', { p: 'registrar' });
+    var porVal = filasPorConfirmar().filter(function (x) { return x.sucursal === u.nombre && pasoDe(x); }).length;
+    if (porVal) pon(false, 'Cortes por validar o recibir', porVal + ' esperando', null);
+  } catch (e) {}
+  try {
+    var aj = ajustesInv(), est = estadoInventario(u.id), cal = calendarioConteo(u.id, est.ultimo ? est.ultimo.fecha : '', aj, hoy);
+    pon(!cal.atrasado, 'Inventario', est.ultimo ? 'Último conteo ' + dia(est.ultimo.fecha).slice(0, 5) + (cal.proximo ? ' · próximo ' + dia(cal.proximo).slice(0, 5) : '') + (cal.atrasado ? ' · ATRASADO' : '') : 'Nunca ha contado', { p: 'inventario', s: 'exist' });
+    var enCurso = filasSol().filter(function (s) { return s.sucursal === u.nombre && (s.estado === SOL.ENV || s.estado === SOL.ACE || s.estado === SOL.CAM); }).length;
+    if (enCurso) pon(true, 'Pedidos a bodega en curso', enCurso + (enCurso === 1 ? ' pedido' : ' pedidos'), { p: 'inventario', s: 'sol' });
+    var pend = 0; lineasSol().forEach(function (l) { if (l.sucursal === u.nombre && pendDeLinea(l) > 0) pend++; });
+    if (pend) pon(false, 'Pendientes de entrega', pend + ' productos que bodega no ha completado', { p: 'inventario', s: 'pend' });
+  } catch (e) {}
+  try {
+    var mAnt = mesAnterior(mes), dd = +hoy.slice(8);
+    if (dd <= 10 || hoy >= masDias(finDeMes(mes), -2)) {
+      var mc = dd <= 10 ? mAnt : mes, hecho = filasCierres().some(function (c) { return c.mes === mc && c.sucursal === u.nombre; });
+      pon(hecho, 'Cierre de mes de ' + periodoTxt(mc), hecho ? 'Hecho' : 'Pendiente', { p: 'inventario', s: 'cierre' });
+    }
+    var nv = filasNiv().filter(function (n) { return n.unidad === u.nombre && nivAbierta(n); })[0];
+    if (nv) pon(false, 'Nivelación ' + nv.numero, nv.estado, { p: 'inventario', s: 'nivel' });
+    var mer = filasMerma().filter(function (m) { return m.sucursal === u.nombre && m.fecha >= ini; });
+    if (mer.length) pon(true, 'Dañado o vencido este mes', mer.length + ' reportes · ' + dinero(mer.reduce(function (a, m) { return a + (m.costo || 0); }, 0)), { p: 'inventario', s: 'merma' });
+  } catch (e) {}
+  try {
+    var eqs = filasEqA().filter(function (x) { return x.activo && x.lugar === u.id; }), ult = null;
+    filasEqI().forEach(function (r) { if (r.lugar === u.id && (!ult || r.fecha >= ult.fecha)) ult = r; });
+    if (eqs.length) pon(!!ult && diasEntre(ult.fecha, hoy) < DIAS_REV_EQ && !(ult.faltan > 0), 'Revisión de equipos', ult ? 'Última ' + dia(ult.fecha).slice(0, 5) + (ult.faltan ? ' · faltan ' + ult.faltan : '') : 'Nunca se ha revisado', { p: 'equipos' });
+  } catch (e) {}
+  out.tareas = t;
+  out.pendientes = t.filter(function (x) { return !x.ok; }).length;
+  return out;
+}
+
+/** El tablero de la bodega central: lo que pasó en el período (despachos, compras, inventario y producción). */
+function tableroBodega(cred, desde, hasta) {
+  exigeResumenOps(cred);
+  var hoy = hoyISO();
+  if (!esFecha(desde)) desde = hoy.slice(0, 8) + '01';
+  if (!esFecha(hasta) || hasta > hoy) hasta = hoy;
+  if (desde > hasta) { var x0 = desde; desde = hasta; hasta = x0; }
+  var en = function (s) { var f = String(s || '').slice(0, 10); return f >= desde && f <= hasta; };
+  var out = { desde: desde, hasta: hasta };
+  // ── despachos ──
+  try {
+    var sols = filasSol().filter(function (s) { return s.estado !== SOL.ANU && en(s.enviadaEn); }), lin = lineasSol(), porNum = {};
+    sols.forEach(function (s) { porNum[s.numero] = s; });
+    var aTiempo = 0, recibidas = 0, porSuc = {};
+    sols.forEach(function (s) {
+      if (s.estado === SOL.REC || s.recibidaEn) { recibidas++; if (s.entrega && String(s.recibidaEn).slice(0, 10) <= s.entrega) aTiempo++; }
+      var p = porSuc[s.sucursal] || (porSuc[s.sucursal] = { sucursal: s.sucursal, pedidos: 0, costo: 0 }); p.pedidos++;
+    });
+    var pend = 0; lin.forEach(function (l) { if (porNum[l.numero] && pendDeLinea(l) > 0) pend++; });
+    try { var rt = reporteTraslados(cred, desde, hasta); rt.filas.forEach(function (f) { var p = porSuc[f.s] || (porSuc[f.s] = { sucursal: f.s, pedidos: 0, costo: 0 }); p.costo = r2(p.costo + f.$); }); } catch (e) {}
+    var tot = 0; Object.keys(porSuc).forEach(function (k) { tot += porSuc[k].costo; });
+    out.despachos = { pedidos: sols.length, recibidos: recibidas, aTiempoPct: recibidas ? Math.round(aTiempo / recibidas * 100) : null,
+      sinAceptar: sols.filter(function (s) { return s.estado === SOL.ENV; }).length, pendientesEntrega: pend, costo: r2(tot),
+      porSucursal: Object.keys(porSuc).map(function (k) { return porSuc[k]; }).sort(function (a, b) { return b.costo - a.costo; }) };
+  } catch (e) { out.despachos = null; }
+  // ── compras y pagos ──
+  try {
+    var ocs = ordenesAgrupadas().filter(function (o) { return o.estado !== 'Anulada' && en(o.creadaEn); }), porProv = {};
+    var total = 0, pagado = 0, porPagar = 0, recSinPagar = 0;
+    ocs.forEach(function (o) {
+      var t = o.monto || o.totalCotizado || o.lineas.reduce(function (a, l) { return a + (l.subtotal || 0); }, 0);
+      total += t; if (o.pago === 'Pagada') pagado += o.monto || t; else porPagar += t;
+      if (o.estado === 'Recibida' && o.pago !== 'Pagada') recSinPagar++;
+      var p = porProv[o.proveedor] || (porProv[o.proveedor] = { proveedor: o.proveedor, ordenes: 0, total: 0 }); p.ordenes++; p.total = r2(p.total + t);
+    });
+    out.compras = { ordenes: ocs.length, total: r2(total), pagado: r2(pagado), porPagar: r2(porPagar), recibidasSinPagar: recSinPagar,
+      porRecibir: ocs.filter(function (o) { return o.estado === 'Pedida'; }).length,
+      porProveedor: Object.keys(porProv).map(function (k) { return porProv[k]; }).sort(function (a, b) { return b.total - a.total; }).slice(0, 8) };
+  } catch (e) { out.compras = null; }
+  // ── inventario de bodega ──
+  try {
+    var est = estadoInventario('bodega'), cons = consumoPorDia(est, Date.now()), idx = indiceCompras(), valor = 0, agotarse = [];
+    productosInv().forEach(function (b) {
+      var q = est.existencia[b.codigo] || 0, c = costoBodega(b, idx).costo; valor += Math.max(0, q) * c;
+      var cd = cons[b.codigo]; if (cd > 0 && q / cd < 3) agotarse.push({ nombre: b.nombre, dias: Math.floor(q / cd * 10) / 10, unidad: b.unidad, existencia: r3(q) });
+    });
+    var difPend = lineasSol().filter(function (l) { return l.difEstado === DIF.PEND; }).length;
+    var mer = filasMerma().filter(function (m) { return en(m.fecha); }), niv = filasNiv().filter(function (n) { return n.estado === NIV.OK && en(n.aprobadaEn); });
+    out.inventario = { valor: r2(valor), ultimoConteo: est.ultimo ? est.ultimo.fecha : '', porAgotarse: agotarse.sort(function (a, b) { return a.dias - b.dias; }).slice(0, 10),
+      diferenciasPorAclarar: difPend, mermas: mer.length, mermasCosto: r2(mer.reduce(function (a, m) { return a + (m.costo || 0); }, 0)),
+      nivelaciones: niv.length, nivelacionFaltante: r2(niv.reduce(function (a, n) { return a + n.faltante; }, 0)),
+      emergencias: filasEmerg().filter(function (e) { return en(e.en); }).length };
+  } catch (e) { out.inventario = null; }
+  // ── producción ──
+  try {
+    var lotes = filasLotes().filter(function (l) { return en(l.fecha || l.en); }), porc = 0, costo = 0, bajos = 0;
+    lotes.forEach(function (l) { porc += l.obtenidas || 0; costo += (l.costoPorcion || 0) * (l.obtenidas || 0); if (l.esperadas && l.obtenidas < l.esperadas * 0.95) bajos++; });
+    out.produccion = { lotes: lotes.length, porciones: r3(porc), costo: r2(costo), bajoRendimiento: bajos };
+  } catch (e) { out.produccion = null; }
+  return out;
+}
+
 /* ════════════ PUERTA INTERNA PARA EL SERVIDOR PROPIO ════════════
  * El servidor nuevo (Render) necesita saber quién es quién para reconocer a cada persona sin preguntarle a Google.
  * Se lo cuenta esta puerta, que SOLO abre con la clave secreta «SERVER_TOKEN» guardada en las propiedades del script
@@ -12827,7 +12966,7 @@ function exportarIndicadores(q) {
 /* ════════════ COPIA COMPLETA PARA EL SERVIDOR PROPIO ════════════
  * El servidor propio guarda una copia de TODAS las pestañas y corre este mismo código sobre ella para contestar las lecturas.
  * Cada cambio que pasa por aquí avisa qué pestañas tocó («tocadas»), y el servidor solo vuelve a traer esas. */
-var VERSION_CODIGO = '2026-10-16-a';       // se cambia a mano cada vez que se cambia este archivo; el servidor compara que coincida con la suya
+var VERSION_CODIGO = '2026-10-17-a';       // se cambia a mano cada vez que se cambia este archivo; el servidor compara que coincida con la suya
 function versionCodigo() { return VERSION_CODIGO; }
 function huellaTexto(t) { return Utilities.base64Encode(Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, t)).slice(0, 22); }
 /** Un resumen barato de cada pestaña: cuántas filas y columnas tiene y una huella de sus últimas 25 filas. */
@@ -12996,6 +13135,21 @@ function propiedadesVisibles() {
  * «Mis KPIs». El director sigue decidiendo y enviando los de sus gerentes por su lado. */
 var KPI_CATS_COO = ['Bodega central', 'Producción', 'Sucursales', 'Equipo'];
 var KPIS_COO_RECOMENDADOS = [
+  // ── para arrancar: que cada lugar tenga sus checklists y que se hagan ──
+  { c: 'Sucursales', n: 'Sucursales con checklist de apertura y de cierre definidos', t: 'Número', u: 'sucursales', min: 3, max: null, f: 'Semanal',
+    i: 'Cuántas de las 3 sucursales ya tienen sus puntos de apertura y de cierre enviados (lo ve en el Resumen de cada sucursal).', p: 'Sin checklist, cada gerente abre y cierra a su manera.' },
+  { c: 'Sucursales', n: 'Checklists de apertura completos en la semana', t: 'Número', u: '%', min: 95, max: null, f: 'Semanal',
+    i: 'De las aperturas de la semana en las 3 sucursales, el porcentaje con todos sus puntos anotados (lo ve en Resultados).', p: 'Una apertura mal hecha se nota en el servicio de todo el día.' },
+  { c: 'Sucursales', n: 'Checklists de cierre completos en la semana', t: 'Número', u: '%', min: 95, max: null, f: 'Semanal',
+    i: 'De los cierres de la semana, el porcentaje con todos sus puntos anotados.', p: 'El cierre cuida el equipo, el producto y el dinero.' },
+  { c: 'Sucursales', n: 'Gerentes con todas sus tareas al día (Resumen de sucursal)', t: 'Número', u: 'gerentes', min: 3, max: null, f: 'Semanal',
+    i: 'Al cerrar la semana, cuántos gerentes no tienen nada pendiente en el Resumen de su sucursal (cortes, inventario, checklists, equipos).', p: 'Lo pendiente de hoy es el problema de mañana.' },
+  { c: 'Bodega central', n: 'Bodega con checklist de apertura y de cierre definidos', t: 'Sí / No', u: '', min: null, max: null, f: 'Semanal',
+    i: 'Marque «Sí» cuando la bodega tenga definidos sus puntos de apertura y de cierre (orden, temperaturas, limpieza, llaves, cámara fría).', p: 'La bodega es el centro: si se desordena, se desordenan las tres sucursales.' },
+  { c: 'Bodega central', n: 'Inventario de bodega contado los días que toca', t: 'Número', u: '%', min: 100, max: null, f: 'Semanal',
+    i: 'De los conteos de bodega programados en la semana, el porcentaje que se hizo (lo ve en el Tablero de bodega).', p: 'Sin conteo no se puede comprar bien.' },
+  { c: 'Bodega central', n: 'Faltante de la última nivelación', t: 'Número', u: 'Q', min: null, max: 500, f: 'Mensual',
+    i: 'El faltante en quetzales de la última nivelación aprobada de cada lugar (lo ve en Nivelación → Comparación).', p: 'Es lo que se pierde: debe ir bajando de una nivelación a otra.' },
   { c: 'Sucursales', n: 'Sucursales con todos sus indicadores anotados en la semana', t: 'Número', u: '%', min: 90, max: null, f: 'Semanal',
     i: 'De los indicadores que tocaban en la semana, el porcentaje que los gerentes sí anotaron (lo ve en Resultados).', p: 'Si no anotan, no se sabe cómo va la operación.' },
   { c: 'Sucursales', n: 'Cierres de caja validados el mismo día', t: 'Número', u: '%', min: 95, max: null, f: 'Semanal',
