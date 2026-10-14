@@ -1020,7 +1020,7 @@ function llamar(fn, rid, args) {
     }
     if (previo) {
       if (previo === 'OK') throw new Error('Eso ya se guardó. Actualice la pantalla para verlo.');
-      return rqLee(previo);
+      try { return rqLee(previo); } catch (e) { throw new Error('Eso ya se guardó. Actualice la pantalla para verlo.'); }
     }
     c.put(k, 'EN', 120);
   }
@@ -1045,7 +1045,7 @@ function rqGuarda(c, k, v) {
 }
 function rqLee(s) {
   if (s.charAt(0) === 'Z')
-    return JSON.parse(Utilities.newBlob(Utilities.ungzip(Utilities.newBlob(Utilities.base64Decode(s.slice(1)), 'application/x-gzip'))).getDataAsString());
+    return JSON.parse(Utilities.ungzip(Utilities.newBlob(Utilities.base64Decode(s.slice(1)), 'application/x-gzip')).getDataAsString());   // ungzip ya da un Blob (antes se envolvía otra vez y fallaba)
   return JSON.parse(s);
 }
 
@@ -12967,7 +12967,7 @@ function exportarIndicadores(q) {
 /* ════════════ COPIA COMPLETA PARA EL SERVIDOR PROPIO ════════════
  * El servidor propio guarda una copia de TODAS las pestañas y corre este mismo código sobre ella para contestar las lecturas.
  * Cada cambio que pasa por aquí avisa qué pestañas tocó («tocadas»), y el servidor solo vuelve a traer esas. */
-var VERSION_CODIGO = '2026-10-17-b';       // se cambia a mano cada vez que se cambia este archivo; el servidor compara que coincida con la suya
+var VERSION_CODIGO = '2026-10-17-c';       // se cambia a mano cada vez que se cambia este archivo; el servidor compara que coincida con la suya
 function versionCodigo() { return VERSION_CODIGO; }
 function huellaTexto(t) { return Utilities.base64Encode(Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, t)).slice(0, 22); }
 /** Un resumen barato de cada pestaña: cuántas filas y columnas tiene y una huella de sus últimas 25 filas. */
