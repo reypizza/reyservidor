@@ -10738,7 +10738,7 @@ function productosConfig(cred) {
       presentacion: b.presentacion, descripcion: b.descripcion, activo: b.activo, suc: b.suc };
     if (ver) { o.anclas = anclasDe(b).map(function (a) { return anclaPublica(a, b); });
       o.proveedor = b.proveedor; o.proveedor2 = b.proveedor2; o.precio = b.precioPres; o.presCompra = b.presCompra; o.rinde = b.rinde;
-      o.precioEn = b.precioEn; o.precioPor = b.precioPor; o.precioAnt = b.precioAnt; }
+      o.precioEn = b.precioEn; o.precioPor = b.precioPor; o.precioAnt = b.precioAnt; o.mandaSuelto = !!b.mandaSuelto; }
     if (!b.activo && b.desactPor) { o.desactPor = b.desactPor; o.desactEn = b.desactEn ? fmtSello(b.desactEn) : ''; }
     return o;
   });
@@ -10779,7 +10779,8 @@ function editarProducto(cred, codigo, d) {
     h.getRange(b.fila, 4).setValue(grupo);
     h.getRange(b.fila, 9, 1, 3).setValues([[m.unidad, m.suelto, m.porUnidad]]);
     h.getRange(b.fila, 17, 1, 2).setValues([[ahora, yo.nombre]]);
-    h.getRange(b.fila, 25).setValue(m.suelto ? (b.mandaSuelto ? 'Sí' : 'No') : 'No');
+    var ms = d.mandaSuelto == null ? b.mandaSuelto : (d.mandaSuelto === true || d.mandaSuelto === 'true');     // entrega 58: la ficha dice si la sucursal pide la presentación chica
+    h.getRange(b.fila, 25).setValue(m.suelto && m.porUnidad >= 2 ? (ms ? 'Sí' : 'No') : 'No');
     h.getRange(b.fila, 27).setValue(m.medida);
     h.getRange(b.fila, 28, 1, 4).setValues([[m.menor, m.porSuelto, m.pesoCada, m.pesoEn]]);
     h.getRange(b.fila, 32).setValue(desc);
@@ -12966,7 +12967,7 @@ function exportarIndicadores(q) {
 /* ════════════ COPIA COMPLETA PARA EL SERVIDOR PROPIO ════════════
  * El servidor propio guarda una copia de TODAS las pestañas y corre este mismo código sobre ella para contestar las lecturas.
  * Cada cambio que pasa por aquí avisa qué pestañas tocó («tocadas»), y el servidor solo vuelve a traer esas. */
-var VERSION_CODIGO = '2026-10-17-a';       // se cambia a mano cada vez que se cambia este archivo; el servidor compara que coincida con la suya
+var VERSION_CODIGO = '2026-10-17-b';       // se cambia a mano cada vez que se cambia este archivo; el servidor compara que coincida con la suya
 function versionCodigo() { return VERSION_CODIGO; }
 function huellaTexto(t) { return Utilities.base64Encode(Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, t)).slice(0, 22); }
 /** Un resumen barato de cada pestaña: cuántas filas y columnas tiene y una huella de sus últimas 25 filas. */
