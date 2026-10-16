@@ -927,7 +927,7 @@ function doGet() {
  * mismo proyecto por POST. Solo se pueden llamar las funciones de esta lista (las mismas
  * que usa la pantalla), y cada una revisa el código de quien pregunta, igual que antes.
  * La lista la pone sola el armado; no hace falta tocarla. */
-/*API_INI*/var API_PERMITIDAS = ['abrirSolicitud', 'abrirTraslado', 'aceptarSolicitud', 'aceptarYPreparar', 'aclararDiferencia', 'activarCorreos', 'activarObligacion', 'activarProducto', 'activarProductoSucursal', 'adjuntarCotizacion', 'agregarEquipo', 'agregarProducto', 'agregarRecomendados', 'agregarRecomendadosCmo', 'agregarRubro', 'anclarProducto', 'anular', 'anularOrden', 'anularPagoImpuesto', 'anularSolicitud', 'aprobarFondos', 'aprobarPresupuesto', 'aprobarPresupuestoArea', 'asignarDescanso', 'borrarKpi', 'borrarKpiCmo', 'borrarSolicitud', 'cambiarEquipo', 'cambiarMiPin', 'cambiarPermiso', 'cancelarPermiso', 'confirmarPlanilla', 'confirmarRegistro', 'consolidado', 'copiarPresupuesto', 'costosTraslados', 'cotizarOrden', 'darDeBaja', 'datos', 'despacharSolicitudes', 'detalleGasto', 'editarProducto', 'eliminarPersonaCal', 'entrar', 'enviarEmergencia', 'enviarKpis', 'enviarKpisCmo', 'enviarSolicitud', 'enviarSugerencia', 'estadoCorreos', 'evaluarMerma', 'existencias', 'existenciasEmergencia', 'firmarTraslado', 'guardarAjustesInv', 'guardarBonoGeneral', 'guardarBonosCal', 'guardarBorradorCal', 'guardarComision', 'guardarConfigCal', 'guardarConteo', 'guardarEstudio', 'guardarHorario', 'guardarHorasApoyo', 'guardarHorasReales', 'guardarKpi', 'guardarKpiCmo', 'guardarLugar', 'guardarMando', 'guardarMedida', 'guardarMiCorreo', 'guardarMiPresupuesto', 'guardarObligacion', 'guardarOrden', 'guardarPersonaCal', 'guardarPrecios', 'guardarPresupuesto', 'guardarProducto', 'guardarProductoBodega', 'guardarProveedor', 'guardarProveedorInv', 'guardarReceta', 'guardarRepartidor', 'guardarTraslado', 'guardarTurnos', 'guardarUsuario', 'habilita', 'habilitarConteo', 'historialTraslados', 'indicadoresConta', 'leerBonoGeneral', 'leerSugerencias', 'listaBodega', 'listaCatalogo', 'listaConsultas', 'listaDiferencias', 'listaEntrada', 'listaFondos', 'listaImpuestos', 'listaKpis', 'listaKpisCmo', 'listaLugares', 'listaOrdenes', 'listaPermisos', 'listaPrecios', 'listaRepartidores', 'listaReportes', 'listaSolicitudes', 'listaUsuarios', 'llegoSolicitud', 'marcarPreparadas', 'medirAceite', 'miAvance', 'miCorreo', 'miPanel', 'miPresupuesto', 'notificaciones', 'ordenesPago', 'pagarFondos', 'pagarOrden', 'pagarRepartidor', 'pantallaCalendarios', 'pantallaConteo', 'pantallaEmergencias', 'pantallaFirmas', 'pantallaHorarios', 'pantallaKpi', 'pantallaMando', 'pantallaMant', 'pantallaMerma', 'pantallaMuestreo', 'pantallaPedidosBodega', 'pantallaProduccion', 'pantallaSolicitud', 'pantallaSugerencias', 'pdfCalendario', 'pdfOrden', 'pedirDescanso', 'pedirEmergencia', 'pedirFondos', 'pedirPermiso', 'ping', 'planillasPorPagar', 'ponPreciosGerentes', 'porConfirmar', 'preguntar', 'presupuestoMes', 'presupuestosAreas', 'probarCorreo', 'productosConfig', 'productosParaAnclar', 'productosSucursal', 'reabrirPlanilla', 'rechazarRegistro', 'recibirEfectivo', 'recibirEmergencia', 'recibirOrden', 'recibirSolicitud', 'registrarGasto', 'registrarIngreso', 'registrarKpis', 'registrarLote', 'registrarMant', 'registrarMerma', 'registrarObservacion', 'registrarPagoImpuesto', 'renombrarCategoria', 'reporteDiario', 'reporteTraslados', 'resolverDescanso', 'responderConsulta', 'responderMerma', 'resultadosKpi', 'resultadosKpiCmo', 'resultadosKpiRango', 'resultadosMuestreo', 'resumenInventario', 'resumenMes', 'revisarPermiso', 'seguimiento', 'sugerenciaCompra', 'tableroFinanzas', 'tableroKpi', 'terminarFondos', 'validarRegistro', 'ventas', 'verTraslado', 'verificarFondos', 'proveedoresProductos', 'guardarProveedorProd', 'eliminarProveedor', 'detalleAbastecimiento', 'pdfHistorialInventario', 'pantallaCierreMes', 'guardarCierreMes', 'misMenus', 'menusRol', 'guardarMenusRol', 'historialInventario', 'reiniciarPresupuestos', 'autorizarFondos', 'hechaFondos', 'listaPendientes', 'llegaPendiente', 'cancelarPendiente', 'despacharPendientes', 'devolverFondo', 'corregirFondo', 'pantallaEquipos', 'guardarEquipoA', 'bajaEquipo', 'revisarEquipos', 'confirmarRevisionEq', 'pedirEquipo', 'resolverPedidoEq', 'entregarCompraEq', 'recibirEquipo', 'devolverOrden', 'corregirOrden', 'reiniciarPrecios', 'guardarMezcla', 'registrarLoteMezcla', 'etiquetasLote', 'guardarConfigEtiquetas', 'listaKpisCoo', 'guardarKpiCoo', 'borrarKpiCoo', 'enviarKpisCoo', 'agregarRecomendadosCoo', 'resultadosKpiCoo', 'pantallaKpiCoo', 'registrarKpisCoo', 'resumenAreas', 'resumenAreasSenales', 'pantallaZonas', 'guardarZonas', 'listaKpisTec', 'guardarKpiTec', 'borrarKpiTec', 'enviarKpisTec', 'agregarRecomendadosTec', 'resultadosKpiTec', 'pantallaKpiTec', 'registrarKpisTec', 'cotizarFondo', 'recibirFondo', 'pantallaNivelacion', 'iniciarNivelacion', 'guardarConteoNivelacion', 'explicarNivelacion', 'vistoBuenoNivelacion', 'aprobarNivelacion', 'devolverNivelacion', 'anularNivelacion', 'pdfNivelacion', 'resumenSucursal', 'tableroBodega'];/*API_FIN*/
+/*API_INI*/var API_PERMITIDAS = ['abrirSolicitud', 'abrirTraslado', 'aceptarSolicitud', 'aceptarYPreparar', 'aclararDiferencia', 'activarCorreos', 'activarObligacion', 'activarProducto', 'activarProductoSucursal', 'adjuntarCotizacion', 'agregarEquipo', 'agregarProducto', 'agregarRecomendados', 'agregarRecomendadosCmo', 'agregarRubro', 'anclarProducto', 'anular', 'anularOrden', 'anularPagoImpuesto', 'anularSolicitud', 'aprobarFondos', 'aprobarPresupuesto', 'aprobarPresupuestoArea', 'asignarDescanso', 'borrarKpi', 'borrarKpiCmo', 'borrarSolicitud', 'cambiarEquipo', 'cambiarMiPin', 'cambiarPermiso', 'cancelarPermiso', 'confirmarPlanilla', 'confirmarRegistro', 'consolidado', 'copiarPresupuesto', 'costosTraslados', 'cotizarOrden', 'darDeBaja', 'datos', 'despacharSolicitudes', 'detalleGasto', 'editarProducto', 'eliminarPersonaCal', 'entrar', 'enviarEmergencia', 'enviarKpis', 'enviarKpisCmo', 'enviarSolicitud', 'enviarSugerencia', 'estadoCorreos', 'evaluarMerma', 'existencias', 'existenciasEmergencia', 'firmarTraslado', 'guardarAjustesInv', 'guardarBonoGeneral', 'guardarBonosCal', 'guardarBorradorCal', 'guardarComision', 'guardarConfigCal', 'guardarConteo', 'guardarEstudio', 'guardarHorario', 'guardarHorasApoyo', 'guardarHorasReales', 'guardarKpi', 'guardarKpiCmo', 'guardarLugar', 'guardarMando', 'guardarMedida', 'guardarMiCorreo', 'guardarMiPresupuesto', 'guardarObligacion', 'guardarOrden', 'guardarPersonaCal', 'guardarPrecios', 'guardarPresupuesto', 'guardarProducto', 'guardarProductoBodega', 'guardarProveedor', 'guardarProveedorInv', 'guardarReceta', 'guardarRepartidor', 'guardarTraslado', 'guardarTurnos', 'guardarUsuario', 'habilita', 'habilitarConteo', 'historialTraslados', 'indicadoresConta', 'leerBonoGeneral', 'leerSugerencias', 'listaBodega', 'listaCatalogo', 'listaConsultas', 'listaDiferencias', 'listaEntrada', 'listaFondos', 'listaImpuestos', 'listaKpis', 'listaKpisCmo', 'listaLugares', 'listaOrdenes', 'listaPermisos', 'listaPrecios', 'listaRepartidores', 'listaReportes', 'listaSolicitudes', 'listaUsuarios', 'llegoSolicitud', 'marcarPreparadas', 'medirAceite', 'miAvance', 'miCorreo', 'miPanel', 'miPresupuesto', 'notificaciones', 'ordenesPago', 'pagarFondos', 'pagarOrden', 'pagarRepartidor', 'pantallaCalendarios', 'pantallaConteo', 'pantallaEmergencias', 'pantallaFirmas', 'pantallaHorarios', 'pantallaKpi', 'pantallaMando', 'pantallaMant', 'pantallaMerma', 'pantallaMuestreo', 'pantallaPedidosBodega', 'pantallaProduccion', 'pantallaSolicitud', 'pantallaSugerencias', 'pdfCalendario', 'pdfOrden', 'pedirDescanso', 'pedirEmergencia', 'pedirFondos', 'pedirPermiso', 'ping', 'planillasPorPagar', 'ponPreciosGerentes', 'porConfirmar', 'preguntar', 'presupuestoMes', 'presupuestosAreas', 'probarCorreo', 'productosConfig', 'productosParaAnclar', 'productosSucursal', 'reabrirPlanilla', 'rechazarRegistro', 'recibirEfectivo', 'recibirEmergencia', 'recibirOrden', 'recibirSolicitud', 'registrarGasto', 'registrarIngreso', 'registrarKpis', 'registrarLote', 'registrarMant', 'registrarMerma', 'registrarObservacion', 'registrarPagoImpuesto', 'renombrarCategoria', 'reporteDiario', 'reporteTraslados', 'resolverDescanso', 'responderConsulta', 'responderMerma', 'resultadosKpi', 'resultadosKpiCmo', 'resultadosKpiRango', 'resultadosMuestreo', 'resumenInventario', 'resumenMes', 'revisarPermiso', 'seguimiento', 'sugerenciaCompra', 'tableroFinanzas', 'tableroKpi', 'terminarFondos', 'validarRegistro', 'ventas', 'verTraslado', 'verificarFondos', 'proveedoresProductos', 'guardarProveedorProd', 'eliminarProveedor', 'detalleAbastecimiento', 'pdfHistorialInventario', 'pantallaCierreMes', 'guardarCierreMes', 'misMenus', 'menusRol', 'guardarMenusRol', 'historialInventario', 'reiniciarPresupuestos', 'autorizarFondos', 'hechaFondos', 'listaPendientes', 'llegaPendiente', 'cancelarPendiente', 'despacharPendientes', 'devolverFondo', 'corregirFondo', 'pantallaEquipos', 'guardarEquipoA', 'bajaEquipo', 'revisarEquipos', 'confirmarRevisionEq', 'pedirEquipo', 'resolverPedidoEq', 'entregarCompraEq', 'recibirEquipo', 'devolverOrden', 'corregirOrden', 'reiniciarPrecios', 'guardarMezcla', 'registrarLoteMezcla', 'etiquetasLote', 'guardarConfigEtiquetas', 'listaKpisCoo', 'guardarKpiCoo', 'borrarKpiCoo', 'enviarKpisCoo', 'agregarRecomendadosCoo', 'resultadosKpiCoo', 'pantallaKpiCoo', 'registrarKpisCoo', 'resumenAreas', 'resumenAreasSenales', 'pantallaZonas', 'guardarZonas', 'listaKpisTec', 'guardarKpiTec', 'borrarKpiTec', 'enviarKpisTec', 'agregarRecomendadosTec', 'resultadosKpiTec', 'pantallaKpiTec', 'registrarKpisTec', 'cotizarFondo', 'recibirFondo', 'pantallaNivelacion', 'iniciarNivelacion', 'guardarConteoNivelacion', 'explicarNivelacion', 'vistoBuenoNivelacion', 'aprobarNivelacion', 'devolverNivelacion', 'anularNivelacion', 'pdfNivelacion', 'resumenSucursal', 'tableroBodega', 'permisosRol', 'guardarPermisosRol', 'guardarReglasCal', 'confirmarSemanaCal', 'pedirCambioCal', 'autorizarCambioCal'];/*API_FIN*/
 /** Solo contesta «aquí estoy»: sirve para despertar el servidor y medir la velocidad. No lee ni guarda nada. */
 function ping() { return { ok: true }; }
 function doPost(e) {
@@ -1008,6 +1008,7 @@ function llamar(fn, rid, args) {
   if (API_PERMITIDAS.indexOf(fn) < 0 || typeof globalThis[fn] !== 'function')
     throw new Error('La app pidió algo que no existe (' + fn + '). Falta pegar el Codigo.gs nuevo y crear una versión nueva de la implementación.');
   args = Array.isArray(args) ? args : [];
+  permAntes(fn, args);
   rid = String(rid || '').replace(/[^A-Za-z0-9_-]/g, '').slice(0, 40);
   if (!rid) return globalThis[fn].apply(null, args);
   var c = null, k = 'rq_' + rid;
@@ -1204,7 +1205,8 @@ function quien(cred, cuenta) {
     throw new Error('Su usuario no entra a esta parte. Tiene su presupuesto, gastos, solicitudes e indicadores.');
   if ((hallado.rol === 'gerente' || hallado.rol === 'auxiliar' || hallado.rol === 'cmo') && !hallado.sucursal)
     throw new Error('A su usuario le falta la sucursal o el lugar. Pida al administrador que lo ponga.');
-  return { nombre: hallado.nombre, rol: hallado.rol, esAdmin: hallado.rol === 'admin',
+  hallado = permPresta(hallado);
+  return { nombre: hallado.nombre, rol: hallado.rol, esAdmin: hallado.rol === 'admin', rolReal: hallado.rolReal || '', confirmaReal: hallado.confirmaReal,
     codigoCorto: String(hallado.pin).length < 6,
     sucursal: (hallado.rol === 'gerente' || hallado.rol === 'auxiliar' || hallado.rol === 'cmo') ? hallado.sucursal : '',
     limitado: hallado.rol === 'auxiliar' || hallado.rol === 'cmo',
@@ -1592,7 +1594,7 @@ function listaEntrada() {
 
 /** Los datos de la app. Pide PIN. Si falla la lectura de movimientos, igual
  *  deja entrar: mejor entrar sin historial que no entrar. */
-function datos(cred) {
+function datosBase(cred) {
   permiteAux();
   var yo = quien(cred);
   corrigeMesPlanillas();
@@ -11442,7 +11444,7 @@ function calLeePl() {
 function calDatos() { return { eq: calLeeEq(), tu: calLeeTu(), cf: calLeeCf(), bo: calLeeBo(), hr: calLeeHr(), pl: calLeePl() }; }
 
 /* ── configuración de una sucursal ── */
-function calCfg(sid, filas) {
+function calCfgBase(sid, filas) {
   var c = { ger: {} }, k;
   for (k in CAL_DEF) c[k] = CAL_DEF[k];
   (filas || []).forEach(function (x) {
@@ -11489,7 +11491,7 @@ function calClase(h, cfg, k) {
 }
 
 /* ── quién puede qué ── */
-function calAcceso(yo) {
+function calAccesoViejo(yo) {
   var todas = ['centro', 'almendras', 'parque'];
   if (yo.rol === 'gerente') return { sucs: [yo.sucursal], turnos: true, equipo: true, pagos: false, dinero: false, confirma: false };
   if (yo.esAdmin) return { sucs: todas, turnos: true, equipo: true, pagos: true, dinero: true, confirma: true };
@@ -11587,7 +11589,7 @@ function calVentas(sid, q) {
 }
 
 /** Todo lo que pinta la ventana de Calendarios. */
-function calPantalla(yo, ac, sid, fecha, D) {
+function calPantallaBase(yo, ac, sid, fecha, D) {
   sid = calSucursal(ac, sid); D = D || calDatos();
   var m = calModelo(D, sid, fecha), q = m.q, pl = calPlanillaDe(D, sid, q.ini), ve = calVentas(sid, q), hoy = hoyISO();
   var out = {
@@ -11661,7 +11663,7 @@ function calRespuesta(yo, ac, sid, fecha, mensaje) {
 }
 
 /* ── turnos: quién trabaja cada día ── */
-function guardarTurnos(cred, sid, fecha, cambios) {
+function guardarTurnosBase(cred, sid, fecha, cambios) {
   var yo = quien(cred), ac = calAcceso(yo); soloVerCal(ac);
   if (!ac.turnos) throw new Error('Su usuario solo consulta los calendarios.');
   if (ac.sucs.indexOf(sid) < 0) throw new Error('Ese calendario no es de su sucursal.');
@@ -11731,10 +11733,10 @@ function guardarPersonaCal(cred, sid, p, fecha) {
         throw new Error('Ya hay alguien que se llama «' + nombre + '» en esta sucursal. Agregue el apellido.');
     });
     var pago = null, bono = null;
-    if (ac.pagos) { pago = calNumero(p.pago, 'El pago por hora', 500); bono = calNumero(p.bono, 'El bono', 20000); }
+    if (ac.tarifa) { pago = calNumero(p.pago, 'El pago por hora', 500); bono = calNumero(p.bono, 'El bono', 20000); }
     if (previo) {
       h.getRange(previo.fila, 3, 1, 2).setValues([[nombre, area]]);
-      if (ac.pagos) h.getRange(previo.fila, 5, 1, 2).setValues([[pago == null ? '' : pago, bono == null ? 0 : bono]]);
+      if (ac.tarifa) h.getRange(previo.fila, 5, 1, 2).setValues([[pago == null ? '' : pago, bono == null ? 0 : bono]]);
       h.getRange(previo.fila, 12, 1, 2).setValues([[yo.nombre, ahora]]);
     } else {
       var mx = 0; eq.forEach(function (x) { var n = parseInt(x.id.slice(1), 10) || 0; if (n > mx) mx = n; });
@@ -11771,7 +11773,7 @@ function eliminarPersonaCal(cred, sid, id, fecha) {
 }
 
 /* ── configuración: turnos, pago base, semáforo y pago de los gerentes ── */
-function guardarConfigCal(cred, sid, cfg, fecha) {
+function guardarConfigCalBase(cred, sid, cfg, fecha) {
   var yo = quien(cred), ac = calAcceso(yo); soloVerCal(ac);
   if (!ac.pagos) throw new Error('La configuración de pagos la cambia el administrador o el director operativo.');
   if (ac.sucs.indexOf(sid) < 0) throw new Error('Escoja la sucursal.');
@@ -11818,7 +11820,7 @@ function guardarConfigCal(cred, sid, cfg, fecha) {
 /** Horas de los dos apoyos de tarde: el gerente dice a qué hora entran (turnos escalonados). Solo cambia las quincenas sin pagar. */
 function guardarHorasApoyo(cred, sid, fecha, ap, ap2) {
   var yo = quien(cred), ac = calAcceso(yo); soloVerCal(ac);
-  if (!ac.turnos) throw new Error('Los horarios los cambia el gerente o la administración.');
+  if (!ac.apoyo) throw new Error('La hora del apoyo la cambia quien tiene ese permiso.');
   if (ac.sucs.indexOf(sid) < 0) throw new Error('Escoja la sucursal.');
   var lista = [];
   [['ap', 'Apoyo 1', ap], ['ap2', 'Apoyo 2', ap2]].forEach(function (a) {
@@ -11887,18 +11889,18 @@ function calGuardaCf(sid, k, v, quien, ahora) {
 /** Quién tiene un bono propio y cuál es el general: lo que pinta Configuración → Bono general. */
 function leerBonoGeneral(cred) {
   var yo = quien(cred), ac = calAcceso(yo);
-  if (!ac.dinero) throw new Error('El bono lo ven el administrador, el director operativo y finanzas.');
+  if (!ac.dinero && !ac.bonoGeneral) throw new Error('El bono lo ven el administrador, el director operativo y finanzas.');
   var D = calDatos(), g = calCfg('centro', D.cf).bonoGeneral;
   var propios = D.eq.filter(function (p) { return !p.baja && p.bono > 0; }).map(function (p) {
     return { id: p.id, sucursal: nombreUnidad(p.sid), nombre: p.nombre, bono: p.bono };
   });
   var gente = D.eq.filter(function (p) { return !p.baja; }).length;
-  return { ok: true, bonoGeneral: g, propios: propios, personas: gente, puedeCambiar: ac.pagos };
+  return { ok: true, bonoGeneral: g, propios: propios, personas: gente, puedeCambiar: ac.bonoGeneral };
 }
 /** El bono de todos de una vez. Con «reemplazar» también se borran los bonos propios y todos quedan parejos. */
 function guardarBonoGeneral(cred, valor, reemplazar, sid, fecha) {
   var yo = quien(cred), ac = calAcceso(yo); soloVerCal(ac);
-  if (!ac.pagos) throw new Error('El bono lo cambia el administrador o el director operativo.');
+  if (!ac.bonoGeneral) throw new Error('El bono general lo cambia quien tiene ese permiso.');
   var b = calNumero(valor, 'El bono', 20000);
   if (b == null) throw new Error('Escriba el bono. Si no hay bono, escriba 0.');
   var lock = LockService.getScriptLock(); lock.waitLock(15000); _LEE = {};
@@ -11971,7 +11973,7 @@ function calBorradorPon(yo, sid, ini, lista) {
     h.getRange(d0, 1, 1, H_CBR.length).setValues([[yo.nombre, sid, ini, txt, new Date()]]);
   }
 }
-function guardarBorradorCal(cred, sid, fecha, cambios) {
+function guardarBorradorCalBase(cred, sid, fecha, cambios) {
   var yo = quien(cred), ac = calAcceso(yo); soloVerCal(ac);
   if (!ac.turnos) throw new Error('Su usuario solo consulta los calendarios.');
   if (ac.sucs.indexOf(sid) < 0) throw new Error('Ese calendario no es de su sucursal.');
@@ -12027,7 +12029,7 @@ function confirmarPlanilla(cred, sid, fecha, pagado, fechaPago, nota) {
 /** Las quincenas recientes de una sucursal y cuáles se pueden pagar: las ya pagadas y las que no han terminado quedan bloqueadas. */
 function planillasPorPagar(cred, sid) {
   var yo = quien(cred), ac = calAcceso(yo);
-  if (!ac.confirma && !ac.soloVer) throw new Error('La planilla la confirma el administrador.');
+  if (!ac.confirma && !ac.verPagos) throw new Error('La planilla la confirma el administrador.');
   if (ac.sucs.indexOf(sid) < 0) throw new Error('Escoja la sucursal.');
   var D = calDatos(), hoy = hoyISO(), f = calQuincena(hoy).ini, lista = [];
   for (var i = 0; i < 9; i++) {
@@ -12064,7 +12066,7 @@ function corrigeMesPlanillas() {
 
 function reabrirPlanilla(cred, sid, fecha, motivo) {
   var yo = quien(cred), ac = calAcceso(yo); soloVerCal(ac);
-  if (!ac.confirma) throw new Error('La planilla la reabre el administrador.');
+  if (!ac.reabrir) throw new Error('La planilla la reabre quien tiene ese permiso.');
   if (ac.sucs.indexOf(sid) < 0) throw new Error('Escoja la sucursal.');
   motivo = String(motivo || '').trim();
   if (motivo.length < 4) throw new Error('Escriba el motivo.');
@@ -12169,7 +12171,7 @@ function calHtmlPdf(m, sucNombre, motivos, soloSemana) {
   h.push('</body></html>');
   return h.join('');
 }
-function pdfCalendario(cred, sid, fecha, pendiente, opciones) {
+function pdfCalendarioBase(cred, sid, fecha, pendiente, opciones) {
   var yo = quien(cred), ac = calAcceso(yo);
   if (ac.sucs.indexOf(sid) < 0) throw new Error('Escoja la sucursal.');
   var m = calModelo(calDatos(), sid, fecha);
@@ -12192,7 +12194,7 @@ function pdfCalendario(cred, sid, fecha, pendiente, opciones) {
   return { ok: true, nombre: nombre, tipo: 'application/pdf', base64: Utilities.base64Encode(blob.getBytes()), incompleto: motivos.length > 0, motivos: motivos };
 }
 /** Lo que le falta a una semana para el oficial. */
-function calIncompletoSemana(m, sem, pendiente) {
+function calIncompletoSemanaViejo(m, sem, pendiente) {
   var r = [], a = sem === 2 ? m.q.n1 : 0, z = sem === 2 ? m.q.n : m.q.n1;
   if (pendiente) r.push('hay cambios sin guardar');
   var sin = m.personas.filter(function (p) { return !((sem === 2 ? p.hb2 : p.hb1) > 0); }).length;
@@ -12205,7 +12207,7 @@ function calIncompletoSemana(m, sem, pendiente) {
 }
 
 /* ── campanita ── */
-function avisosCalendario(yo, out, desde) {
+function avisosCalendarioBase(yo, out, desde) {
   var esJefe = yo.esAdmin || yo.rol === 'operaciones';
   if (!esJefe) return;
   var D = calDatos(), hoy = hoyISO();
@@ -12967,7 +12969,7 @@ function exportarIndicadores(q) {
 /* ════════════ COPIA COMPLETA PARA EL SERVIDOR PROPIO ════════════
  * El servidor propio guarda una copia de TODAS las pestañas y corre este mismo código sobre ella para contestar las lecturas.
  * Cada cambio que pasa por aquí avisa qué pestañas tocó («tocadas»), y el servidor solo vuelve a traer esas. */
-var VERSION_CODIGO = '2026-10-17-c';       // se cambia a mano cada vez que se cambia este archivo; el servidor compara que coincida con la suya
+var VERSION_CODIGO = '2026-10-18-b';       // se cambia a mano cada vez que se cambia este archivo; el servidor compara que coincida con la suya
 function versionCodigo() { return VERSION_CODIGO; }
 function huellaTexto(t) { return Utilities.base64Encode(Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, t)).slice(0, 22); }
 /** Un resumen barato de cada pestaña: cuántas filas y columnas tiene y una huella de sus últimas 25 filas. */
@@ -14384,7 +14386,7 @@ function menusApagados() {
   return out;
 }
 /** Lo que tiene apagado mi perfil (la app lo esconde del menú). */
-function misMenus(cred) {
+function misMenusViejo(cred) {
   permiteAux(); permiteCmo();
   var yo = quien(cred), p = perfilDe(yo);
   return { perfil: p, apagados: p === 'admin' ? [] : (menusApagados()[p] || []) };
@@ -14886,4 +14888,675 @@ function editarAnclas(yo, b, d, h, ahora, provOk) {
   guardaAnclas(b, lista, h, yo, ahora);
   if (cambios.length) h.getRange(b.fila, 39).setValue(cambios[0].antes);
   return { cambios: cambios, n: lista.length };
+}
+
+
+/* ════════════ PERMISOS POR ROL (entrega 72) ════════════
+ * Todas las funciones de la app en un catálogo: página → (sucursales) → función, con nivel 0 = no, 1 = ver, 2 = ver y cambiar (o «sí»).
+ * Cada rol arranca con lo que tenía antes (PERM_HOY). El administrador cambia lo que quiera en Configuración › Roles y permisos.
+ * Reglas:
+ *  - Al administrador nunca se le quita nada.
+ *  - Quitar: lo que el administrador apagó de verdad (distinto de lo de antes) lo frena el servidor en llamar(), para cualquier función del catálogo.
+ *  - Dar de más: solo donde hay «puente» (Personal completo; Producción, Compras y ver Finanzas con el rol prestado). Lo demás se podrá dar en entregas siguientes.
+ *  - Personal se maneja entero con los permisos (calAcceso). */
+var PERM_CAT = [
+  { id: 'ventas', n: 'Ventas y caja', d: 'Cortes, gastos de caja y lo que se vende', alc: 1, f: [
+    ['tablero', 'Tablero de ventas', 'v', 0, ['ventas']],
+    ['corte', 'Registrar corte de caja (AM y PM)', 'si', 0, []],
+    ['gasto', 'Registrar gasto de caja', 'si', 0, []],
+    ['validar', 'Validar cortes de caja', 'si', 0, []],
+    ['efectivo', 'Efectivo por recibir', 'si', 1, []],
+    ['banco', 'Confirmar en banco', 'si', 1, []],
+    ['anular', 'Anular un registro', 'si', 0, []]] },
+  { id: 'sucursales', n: 'Sucursales', d: 'Resumen, indicadores, equipos y mantenimiento', alc: 1, f: [
+    ['resumen', 'Resumen de la sucursal', 'v', 0, ['sucres']],
+    ['tablero', 'Tablero de indicadores', 'v', 0, ['kpi:tab', 'dash']],
+    ['definir', 'Definir indicadores', 'vc', 0, ['kpi:lista']],
+    ['seguimiento', 'Seguimiento de gerentes', 'v', 0, ['kpi:seg', 'kpi:res', 'res']],
+    ['muestreo', 'Muestreo de trabajo', 'vc', 0, ['kpi:mue']],
+    ['mant', 'Mantenimiento de equipos', 'vc', 0, ['mant', 'kpi:mant']],
+    ['equipos', 'Equipos de la sucursal', 'vc', 0, ['equipos']],
+    ['pedeq', 'Resolver pedidos de equipo', 'si', 0, []]] },
+  { id: 'personal', n: 'Personal', d: 'Turnos, pagos de planilla, equipo y ajustes', alc: 1, f: [
+    ['turnos', 'Calendario de turnos', 'vc', 0, ['cal:s']],
+    ['apoyo', 'Hora de entrada del apoyo', 'vc', 0, []],
+    ['confirmar', 'Confirmar el calendario de la semana', 'si', 0, []],
+    ['desbloquear', 'Autorizar cambios a una semana confirmada', 'si', 0, []],
+    ['pdfo', 'Descargar el calendario (semana 1 y 2)', 'si', 0, []],
+    ['venta', 'Venta del día dentro del calendario', 'v', 1, []],
+    ['costo', 'Costo de la mano de obra', 'v', 1, []],
+    ['pagos', 'Pagos: horas trabajadas y bonos', 'vc', 1, ['cal:pagos']],
+    ['planilla', 'Pagar y cerrar la planilla', 'si', 1, []],
+    ['reabrir', 'Reabrir una planilla pagada', 'si', 1, []],
+    ['equipo', 'Equipo: agregar, editar y dar de baja', 'vc', 0, ['cal:equipo']],
+    ['tarifa', 'Pago por hora y bono de cada persona', 'vc', 1, []],
+    ['ajustes', 'Ajustes: horarios de turno, rangos de horas y reglas', 'vc', 0, ['cal:config']],
+    ['salgte', 'Salario y bono de gerentes', 'vc', 1, []],
+    ['ausp', 'Pedir permisos de ausencia', 'si', 0, []],
+    ['ausa', 'Aprobar permisos de su equipo', 'si', 0, []]] },
+  { id: 'inventario', n: 'Inventario', d: 'Conteos, pedidos, traslados y cierre', alc: 1, bod: 1, f: [
+    ['contar', 'Contar inventario', 'si', 0, ['inventario:contar']],
+    ['pedir', 'Pedir a bodega', 'si', 0, ['inventario:pedidos']],
+    ['recibir', 'Recibir traslados', 'si', 0, []],
+    ['exist', 'Existencias', 'v', 0, ['inventario:exist']],
+    ['despachar', 'Despachar pedidos de sucursales', 'si', 0, ['inventario:sol']],
+    ['pend', 'Pendientes de entrega', 'vc', 0, ['inventario:pend']],
+    ['nivel', 'Nivelación: iniciar y contar', 'si', 0, ['inventario:nivel']],
+    ['nivelap', 'Nivelación: aprobar', 'si', 0, []],
+    ['firmas', 'Firmas de traslados', 'si', 0, ['inventario:firmas']],
+    ['tras', 'Traslados de bodega', 'v', 0, ['inventario:tras', 'tras']],
+    ['dif', 'Diferencias', 'vc', 0, ['inventario:dif']],
+    ['merma', 'Dañado o vencido: registrar', 'si', 0, ['inventario:merma']],
+    ['mermaev', 'Dañado o vencido: evaluar', 'si', 0, []],
+    ['emerg', 'Emergencias', 'vc', 0, ['inventario:emerg']],
+    ['hist', 'Historial y calendario de abastecimiento', 'v', 0, ['inventario:hist']],
+    ['cierre', 'Cierre de mes', 'vc', 0, ['inventario:cierre', 'inventario:repmes']],
+    ['costo', 'Costo de lo que hay y de lo que se gastó', 'v', 1, []]] },
+  { id: 'produccion', n: 'Producción de insumos', d: 'Porcionar, recetas por % y lotes', f: [
+    ['porcionar', 'Porcionar', 'si', 0, ['prod:hacer', 'inventario:prod']],
+    ['recetas', 'Recetas por %', 'vc', 0, ['prod:mezclas', 'prod:recetas']],
+    ['lotes', 'Lotes y etiquetas', 'vc', 0, ['prod:lotes']]] },
+  { id: 'productos', n: 'Productos', d: 'Ficha del producto y proveedores', f: [
+    ['lista', 'Lista de productos', 'v', 0, []],
+    ['editar', 'Crear y editar productos', 'si', 0, []],
+    ['sucs', 'En qué sucursales está', 'si', 0, []],
+    ['precios', 'Precios y costos', 'vc', 1, []],
+    ['prov', 'Proveedores', 'vc', 0, []]] },
+  { id: 'compras', n: 'Compras', d: 'Órdenes de compra, cotizaciones y pagos', f: [
+    ['ocs', 'Órdenes de compra', 'vc', 0, ['inventario:ocs', 'inventario:compras']],
+    ['cotizar', 'Cotizar', 'si', 0, []],
+    ['recibir', 'Recibir mercadería del proveedor', 'si', 0, []],
+    ['pagar', 'Pagar órdenes', 'si', 1, []],
+    ['costtras', 'Costo de los traslados', 'v', 1, []]] },
+  { id: 'solicitudes', n: 'Solicitudes de pago', d: 'Cada paso del camino de aprobación', f: [
+    ['pedir', 'Pedir dinero o compras', 'si', 0, []],
+    ['vb', 'Dar visto bueno', 'si', 0, []],
+    ['autorizar', 'Autorizar', 'si', 0, []],
+    ['cotizar', 'Cotizar con precios reales', 'si', 0, []],
+    ['aprobar', 'Aprobar el pago', 'si', 1, []],
+    ['entregar', 'Entregar el dinero', 'si', 1, []],
+    ['todas', 'Ver las de todos', 'v', 0, []]] },
+  { id: 'finanzas', n: 'Finanzas', d: 'Resultados, presupuesto, impuestos y pagos', f: [
+    ['resumen', 'Tablero de finanzas y resumen del mes', 'v', 1, ['kpi:fin', 'conta:resumen']],
+    ['presup', 'Presupuesto del mes', 'vc', 1, []],
+    ['presupap', 'Aprobar el presupuesto', 'si', 1, []],
+    ['areas', 'Presupuestos de área', 'vc', 1, []],
+    ['imp', 'Impuestos', 'vc', 1, ['kpi:imp', 'imp']],
+    ['provpag', 'Pagos a proveedores', 'vc', 1, ['conta:pagos']],
+    ['repart', 'Repartidores', 'vc', 0, ['conta:rep']],
+    ['reportes', 'Reportes', 'v', 0, ['reportes']]] },
+  { id: 'indicadores', n: 'Indicadores de las áreas', d: 'Director operativo, marketing y tecnología', f: [
+    ['coo', 'Indicadores del director operativo', 'vc', 0, ['kpi:coo', 'kpi:cool']],
+    ['cmo', 'Indicadores de marketing', 'vc', 0, ['kpi:cmo']],
+    ['tec', 'Indicadores de tecnología', 'vc', 0, ['kpi:tec', 'kpi:tecl']]] },
+  { id: 'comunicacion', n: 'Preguntas y sugerencias', d: 'Escribirle al equipo', f: [
+    ['preguntas', 'Hacer y contestar preguntas', 'si', 0, []],
+    ['sugerir', 'Enviar sugerencias', 'si', 0, []],
+    ['sugleer', 'Leer las sugerencias de todos', 'v', 0, []]] },
+  { id: 'config', n: 'Configuración', d: 'Lo que configura la app', f: [
+    ['catalogo', 'Catálogo de caja', 'vc', 0, []],
+    ['zonas', 'Zonas de inventario', 'vc', 0, []],
+    ['bono', 'Bono general del personal', 'vc', 1, []],
+    ['usuarios', 'Usuarios y PIN', 'lock', 0, []],
+    ['mando', 'Líneas de mando', 'lock', 0, []],
+    ['lugares', 'Lugares', 'lock', 0, []],
+    ['roles', 'Roles y permisos', 'lock', 0, []]] }
+];
+/* Los perfiles que se configuran (el administrador no: lo tiene todo). */
+var PERM_PERFILES = [['operaciones', 'Director operativo'], ['gerente', 'Gerente'], ['finanzas', 'Director financiero'], ['bodega', 'Bodega'],
+  ['produccion', 'Producción'], ['contador', 'Contador'], ['cmo', 'Marketing (CMO)'], ['registro', 'Caja'], ['auxiliar', 'Acceso limitado'], ['dueno', 'Dueños']];
+/* En qué sucursales aplica, por defecto. */
+var PERM_ALC_DEF = { operaciones: 'todas', gerente: 'suya', finanzas: 'todas', bodega: 'todas', produccion: 'todas', contador: 'todas', cmo: 'suya', registro: 'todas', auxiliar: 'suya', dueno: 'todas' };
+/* Lo que cada rol tenía antes de los permisos. 2 = cambiar o sí, 1 = ver. */
+var PERM_HOY = {
+  operaciones: 'ventas.tablero1 ventas.validar2 sucursales.*2 sucursales.resumen1 sucursales.tablero1 sucursales.seguimiento1 personal.turnos2 personal.apoyo2 personal.confirmar2 personal.desbloquear2 personal.pdfo2 personal.venta1 personal.costo1 personal.pagos2 personal.equipo2 personal.tarifa2 personal.ajustes2 personal.salgte2 personal.ausp2 personal.ausa2 inventario.*2 inventario.exist1 inventario.hist1 inventario.tras1 inventario.costo1 inventario.contar0 inventario.pedir0 inventario.recibir0 inventario.despachar0 produccion.recetas1 produccion.lotes1 productos.lista1 productos.editar2 productos.sucs2 productos.precios1 productos.prov2 compras.ocs1 compras.costtras1 solicitudes.pedir2 solicitudes.vb2 solicitudes.todas1 indicadores.coo2 comunicacion.*2 comunicacion.sugleer1 config.zonas2 config.bono2',
+  gerente: 'ventas.corte2 sucursales.tablero1 sucursales.mant2 sucursales.equipos2 personal.turnos2 personal.apoyo2 personal.confirmar2 personal.pdfo2 personal.venta1 personal.equipo2 personal.ausp2 inventario.contar2 inventario.pedir2 inventario.recibir2 inventario.firmas2 inventario.pend2 inventario.nivel2 inventario.dif2 inventario.merma2 inventario.emerg2 inventario.cierre2 productos.lista1 solicitudes.pedir2 comunicacion.preguntas2 comunicacion.sugerir2 config.zonas2',
+  finanzas: 'ventas.tablero1 sucursales.resumen1 sucursales.tablero1 personal.turnos1 personal.apoyo1 personal.pdfo2 personal.venta1 personal.costo1 personal.pagos1 personal.equipo1 personal.tarifa1 personal.ajustes1 personal.salgte1 personal.ausp2 inventario.exist1 inventario.hist1 inventario.cierre1 inventario.nivel2 inventario.costo1 productos.lista1 productos.precios2 compras.ocs1 compras.costtras1 solicitudes.pedir2 solicitudes.aprobar2 solicitudes.todas1 finanzas.resumen1 finanzas.presup2 finanzas.presupap2 finanzas.areas1 finanzas.imp2 finanzas.provpag1 finanzas.repart1 finanzas.reportes1 comunicacion.preguntas2 comunicacion.sugerir2',
+  bodega: 'sucursales.equipos2 personal.ausp2 inventario.contar2 inventario.exist1 inventario.despachar2 inventario.pend2 inventario.nivel2 inventario.dif2 inventario.emerg2 inventario.tras1 productos.lista1 productos.editar2 productos.sucs2 productos.prov2 compras.ocs2 compras.cotizar2 compras.recibir2 solicitudes.pedir2 comunicacion.preguntas2 comunicacion.sugerir2',
+  produccion: 'produccion.*2 sucursales.equipos2 personal.ausp2 solicitudes.pedir2 comunicacion.preguntas2 comunicacion.sugerir2',
+  contador: 'ventas.tablero1 ventas.corte2 ventas.gasto2 ventas.efectivo2 ventas.banco2 compras.ocs1 compras.cotizar2 compras.pagar2 solicitudes.cotizar2 solicitudes.entregar2 solicitudes.todas1 finanzas.presup2 finanzas.provpag2 finanzas.repart2 finanzas.reportes1 personal.ausp2 comunicacion.preguntas2 comunicacion.sugerir2',
+  cmo: 'ventas.gasto2 solicitudes.pedir2 indicadores.cmo2 personal.ausp2 comunicacion.preguntas2 comunicacion.sugerir2',
+  registro: 'ventas.tablero1 ventas.corte2 ventas.gasto2 finanzas.reportes1',
+  auxiliar: 'ventas.gasto2',
+  dueno: 'ventas.tablero1 personal.turnos1 personal.pdfo2 personal.venta1 personal.costo1 personal.pagos1 personal.tarifa1 finanzas.resumen1 finanzas.presup1 finanzas.areas1 finanzas.provpag1 finanzas.repart1 finanzas.reportes1'
+};
+/* Lo que se le puede dar a un rol que no lo tenía. rol = el rol que el servidor «presta» para esa función. */
+var PERM_PUENTE = {
+  'personal.turnos': {}, 'personal.apoyo': {}, 'personal.confirmar': {}, 'personal.desbloquear': {}, 'personal.pdfo': {}, 'personal.venta': {}, 'personal.costo': {}, 'personal.pagos': {},
+  'personal.planilla': {}, 'personal.reabrir': {}, 'personal.equipo': {}, 'personal.tarifa': {}, 'personal.ajustes': {}, 'personal.salgte': {},
+  'produccion.porcionar': { rol: 'produccion' }, 'produccion.recetas': { rol: 'produccion' }, 'produccion.lotes': { rol: 'produccion' },
+  'compras.ocs': { rol: 'bodega' }, 'compras.recibir': { rol: 'bodega' },
+  'finanzas.resumen': { rol: 'finanzas' }, 'finanzas.reportes': { rol: 'finanzas' }
+};
+/* Lo que se agrega al menú de quien recibe algo de más (la app lo agrega a sus páginas y pestañas). */
+var PERM_EXTRA = { 'produccion.porcionar': ['prod', 'prod:hacer', 'prod:lotes'], 'produccion.recetas': ['prod', 'prod:mezclas', 'prod:recetas'], 'produccion.lotes': ['prod', 'prod:lotes'],
+  'compras.ocs': ['inventario', 'inventario:compras'], 'compras.recibir': ['inventario', 'inventario:compras'],
+  'finanzas.resumen': ['kpi', 'kpi:fin'], 'finanzas.reportes': ['reportes'],
+  'personal.turnos': ['cal'], 'personal.pagos': ['cal'], 'personal.equipo': ['cal'], 'personal.ajustes': ['cal'], 'personal.apoyo': ['cal'] };
+/* Cada función del servidor → el permiso que pide [claves (cualquiera), nivel]. Lo que no está aquí funciona como antes. */
+var PERM_API = {
+  registrarIngreso: [['ventas.corte'], 2], registrarGasto: [['ventas.gasto'], 2], validarRegistro: [['ventas.validar'], 2], rechazarRegistro: [['ventas.validar', 'ventas.efectivo', 'ventas.banco'], 2],
+  recibirEfectivo: [['ventas.efectivo'], 2], confirmarRegistro: [['ventas.banco', 'ventas.efectivo'], 2], anular: [['ventas.anular'], 2], ventas: [['ventas.tablero', 'sucursales.resumen'], 1],
+  resumenSucursal: [['sucursales.resumen'], 1], tableroKpi: [['sucursales.tablero'], 1], seguimiento: [['sucursales.seguimiento'], 1],
+  guardarKpi: [['sucursales.definir', 'indicadores.coo', 'indicadores.cmo', 'indicadores.tec'], 2], borrarKpi: [['sucursales.definir', 'indicadores.coo', 'indicadores.cmo', 'indicadores.tec'], 2],
+  enviarKpis: [['sucursales.definir', 'indicadores.coo', 'indicadores.cmo', 'indicadores.tec'], 2], agregarRecomendados: [['sucursales.definir', 'indicadores.coo', 'indicadores.cmo', 'indicadores.tec'], 2],
+  guardarEstudio: [['sucursales.muestreo'], 2], registrarObservacion: [['sucursales.muestreo'], 2], pantallaMuestreo: [['sucursales.muestreo'], 1], resultadosMuestreo: [['sucursales.muestreo'], 1],
+  registrarMant: [['sucursales.mant'], 2], pantallaMant: [['sucursales.mant'], 1], medirAceite: [['sucursales.mant'], 2],
+  guardarEquipoA: [['sucursales.equipos'], 2], bajaEquipo: [['sucursales.equipos'], 2], revisarEquipos: [['sucursales.equipos'], 2], confirmarRevisionEq: [['sucursales.equipos'], 2],
+  pedirEquipo: [['sucursales.equipos'], 2], recibirEquipo: [['sucursales.equipos'], 2], pantallaEquipos: [['sucursales.equipos'], 1],
+  resolverPedidoEq: [['sucursales.pedeq'], 2], entregarCompraEq: [['sucursales.pedeq'], 2],
+  pedirPermiso: [['personal.ausp'], 2], cambiarPermiso: [['personal.ausp'], 2], cancelarPermiso: [['personal.ausp'], 2], revisarPermiso: [['personal.ausa'], 2],
+  guardarConteo: [['inventario.contar'], 2], habilitarConteo: [['inventario.contar'], 2], enviarSolicitud: [['inventario.pedir'], 2], recibirSolicitud: [['inventario.recibir'], 2], llegoSolicitud: [['inventario.recibir'], 2],
+  existencias: [['inventario.exist', 'inventario.contar', 'inventario.despachar'], 1],
+  aceptarSolicitud: [['inventario.despachar'], 2], aceptarYPreparar: [['inventario.despachar'], 2], despacharSolicitudes: [['inventario.despachar'], 2], marcarPreparadas: [['inventario.despachar'], 2], consolidado: [['inventario.despachar'], 2],
+  despacharPendientes: [['inventario.pend'], 2], cancelarPendiente: [['inventario.pend'], 2], llegaPendiente: [['inventario.pend', 'inventario.recibir'], 2],
+  iniciarNivelacion: [['inventario.nivel'], 2], guardarConteoNivelacion: [['inventario.nivel'], 2], explicarNivelacion: [['inventario.nivel'], 2],
+  aprobarNivelacion: [['inventario.nivelap'], 2], devolverNivelacion: [['inventario.nivelap'], 2], anularNivelacion: [['inventario.nivelap'], 2], vistoBuenoNivelacion: [['inventario.nivelap'], 2],
+  firmarTraslado: [['inventario.firmas', 'inventario.recibir'], 2], aclararDiferencia: [['inventario.dif'], 2], registrarMerma: [['inventario.merma'], 2],
+  evaluarMerma: [['inventario.mermaev'], 2], responderMerma: [['inventario.mermaev', 'inventario.merma'], 2],
+  pedirEmergencia: [['inventario.emerg'], 2], enviarEmergencia: [['inventario.emerg'], 2], recibirEmergencia: [['inventario.emerg'], 2],
+  historialInventario: [['inventario.hist'], 1], pdfHistorialInventario: [['inventario.hist'], 1], guardarCierreMes: [['inventario.cierre'], 2],
+  registrarLote: [['produccion.porcionar'], 2], guardarReceta: [['produccion.recetas'], 2], guardarMezcla: [['produccion.recetas'], 2], registrarLoteMezcla: [['produccion.recetas', 'produccion.porcionar'], 2],
+  etiquetasLote: [['produccion.lotes', 'produccion.porcionar'], 1], guardarConfigEtiquetas: [['produccion.lotes'], 2], pantallaProduccion: [['produccion.porcionar', 'produccion.recetas', 'produccion.lotes'], 1],
+  agregarProducto: [['productos.editar'], 2], editarProducto: [['productos.editar'], 2], guardarProducto: [['productos.editar'], 2], activarProducto: [['productos.editar'], 2],
+  guardarProductoBodega: [['productos.editar'], 2], anclarProducto: [['productos.editar', 'productos.prov'], 2], activarProductoSucursal: [['productos.sucs'], 2],
+  guardarPrecios: [['productos.precios'], 2], reiniciarPrecios: [['productos.precios'], 2], ponPreciosGerentes: [['productos.precios'], 2],
+  guardarProveedor: [['productos.prov'], 2], guardarProveedorInv: [['productos.prov'], 2], guardarProveedorProd: [['productos.prov'], 2], eliminarProveedor: [['productos.prov'], 2],
+  listaOrdenes: [['compras.ocs'], 1], pdfOrden: [['compras.ocs'], 1], guardarOrden: [['compras.ocs'], 2], corregirOrden: [['compras.ocs'], 2], anularOrden: [['compras.ocs'], 2],
+  sugerenciaCompra: [['compras.ocs'], 2], cotizarOrden: [['compras.cotizar'], 2], recibirOrden: [['compras.recibir'], 2], pagarOrden: [['compras.pagar'], 2],
+  costosTraslados: [['compras.costtras'], 1],
+  pedirFondos: [['solicitudes.pedir'], 2], corregirFondo: [['solicitudes.pedir'], 2], verificarFondos: [['solicitudes.vb'], 2], autorizarFondos: [['solicitudes.autorizar'], 2],
+  cotizarFondo: [['solicitudes.cotizar'], 2], aprobarFondos: [['solicitudes.aprobar'], 2], pagarFondos: [['solicitudes.entregar'], 2], devolverFondo: [['solicitudes.cotizar', 'solicitudes.entregar', 'solicitudes.aprobar'], 2],
+  tableroFinanzas: [['finanzas.resumen'], 1], indicadoresConta: [['finanzas.resumen', 'finanzas.provpag'], 1], reporteDiario: [['finanzas.reportes', 'finanzas.resumen'], 1],
+  guardarPresupuesto: [['finanzas.presup'], 2], copiarPresupuesto: [['finanzas.presup'], 2], agregarRubro: [['finanzas.presup'], 2],
+  aprobarPresupuesto: [['finanzas.presupap'], 2], aprobarPresupuestoArea: [['finanzas.presupap'], 2], presupuestosAreas: [['finanzas.areas', 'finanzas.presup'], 1],
+  listaImpuestos: [['finanzas.imp'], 1], registrarPagoImpuesto: [['finanzas.imp'], 2], anularPagoImpuesto: [['finanzas.imp'], 2], guardarObligacion: [['finanzas.imp'], 2], activarObligacion: [['finanzas.imp'], 2],
+  guardarRepartidor: [['finanzas.repart'], 2], pagarRepartidor: [['finanzas.repart'], 2], listaRepartidores: [['finanzas.repart'], 1],
+  listaKpisCoo: [['indicadores.coo'], 1], guardarKpiCoo: [['indicadores.coo'], 2], borrarKpiCoo: [['indicadores.coo'], 2], enviarKpisCoo: [['indicadores.coo'], 2], registrarKpisCoo: [['indicadores.coo'], 2],
+  listaKpisCmo: [['indicadores.cmo'], 1], guardarKpiCmo: [['indicadores.cmo'], 2], borrarKpiCmo: [['indicadores.cmo'], 2], enviarKpisCmo: [['indicadores.cmo'], 2],
+  listaKpisTec: [['indicadores.tec'], 1], guardarKpiTec: [['indicadores.tec'], 2], borrarKpiTec: [['indicadores.tec'], 2], enviarKpisTec: [['indicadores.tec'], 2], registrarKpisTec: [['indicadores.tec'], 2],
+  preguntar: [['comunicacion.preguntas'], 2], responderConsulta: [['comunicacion.preguntas'], 2], enviarSugerencia: [['comunicacion.sugerir'], 2], leerSugerencias: [['comunicacion.sugleer'], 1],
+  renombrarCategoria: [['config.catalogo'], 2], guardarZonas: [['config.zonas'], 2], guardarBonoGeneral: [['config.bono'], 2]
+};
+
+/* Con lo que arranca, antes de que el administrador guarde algo: Álvaro con Producción, Compras y ver Finanzas (aprobado el 15/10/2026). */
+var PERM_INICIAL = { operaciones: { 'produccion.porcionar': 2, 'produccion.recetas': 2, 'produccion.lotes': 2, 'compras.ocs': 2, 'compras.recibir': 2, 'finanzas.resumen': 1, 'finanzas.reportes': 1 } };
+/* ── lectura ── */
+var H_PERM = ['Perfil', 'Permisos (JSON)', 'Sucursales (JSON)', 'Cambiado por', 'Cambiado en'];
+var H_PERM_BIT = ['Fecha', 'Quién', 'Perfil', 'Cambio'];
+var _PERM_HOJA = null, _PRESTADO = null, _PERM_FN = '';
+function permMax(t) { return t === 'vc' || t === 'si' ? 2 : t === 'v' ? 1 : 0; }
+function permFn(k) { var p = String(k).split('.'), m = null; PERM_CAT.forEach(function (x) { if (x.id === p[0]) m = x; }); if (!m) return null; var r = null; m.f.forEach(function (f) { if (f[0] === p[1]) r = f; }); return r; }
+function permModulo(id) { var r = null; PERM_CAT.forEach(function (x) { if (x.id === id) r = x; }); return r; }
+function permTodas() { var o = []; PERM_CAT.forEach(function (m) { m.f.forEach(function (f) { if (f[2] !== 'lock') o.push(m.id + '.' + f[0]); }); }); return o; }
+function permAplica(P, txt) {
+  String(txt || '').split(/\s+/).forEach(function (x) {
+    var mm = /^([a-z]+)\.([a-z*]+)(\d)$/.exec(x); if (!mm) return;
+    var m = permModulo(mm[1]); if (!m) return;
+    m.f.forEach(function (f) { if (f[2] === 'lock') return; if (mm[2] === '*' || f[0] === mm[2]) P[m.id + '.' + f[0]] = Math.min(Number(mm[3]), permMax(f[2])); });
+  });
+  return P;
+}
+function permDefecto(perfil) { var P = {}; permTodas().forEach(function (k) { P[k] = 0; }); return permAplica(P, PERM_HOY[perfil] || ''); }
+function permAlcDefecto(perfil) {
+  var a = PERM_ALC_DEF[perfil] || 'todas', o = {};
+  PERM_CAT.forEach(function (m) { if (m.alc) o[m.id] = perfil === 'bodega' && m.bod ? ['bodega'] : [a]; });
+  return o;
+}
+function hojaPermisos(ss) {
+  ss = ss || libro();
+  var h = ss.getSheetByName('Permisos por rol');
+  if (!h) { h = hojaLimpia(ss, 'Permisos por rol', H_PERM); h.getRange('E:E').setNumberFormat('dd/mm/yyyy hh:mm'); h.setColumnWidth(2, 420); h.setColumnWidth(3, 260); }
+  return h;
+}
+function hojaPermBit(ss) {
+  ss = ss || libro();
+  var h = ss.getSheetByName('Permisos bitácora');
+  if (!h) { h = hojaLimpia(ss, 'Permisos bitácora', H_PERM_BIT); h.getRange('A:A').setNumberFormat('dd/mm/yyyy hh:mm'); h.setColumnWidth(4, 520); }
+  return h;
+}
+/** Lo guardado: { perfil: { ex:{clave:nivel}, alc:{modulo:[...]}, por, en } } (solo lo distinto de lo de antes). */
+function permLeeHoja() {
+  if (_PERM_HOJA) return _PERM_HOJA;
+  var out = {}, h = libro().getSheetByName('Permisos por rol');
+  if (!h) Object.keys(PERM_INICIAL).forEach(function (k) { out[k] = { ex: PERM_INICIAL[k], alc: null, por: 'Entrega 72 (lo que aprobó el administrador)', en: '' }; });
+  if (h && h.getLastRow() > 1) leeTodo(h, H_PERM.length).forEach(function (r) {
+    var k = String(r[0] || ''); if (!k) return;
+    var ex = {}, alc = null; try { ex = JSON.parse(String(r[1] || '{}')) || {}; } catch (e) { ex = {}; } try { alc = JSON.parse(String(r[2] || 'null')); } catch (e) { alc = null; }
+    out[k] = { ex: ex, alc: alc, por: String(r[3] || ''), en: r[4] instanceof Date ? fmtDia(r[4]) : String(r[4] || '') };
+  });
+  _PERM_HOJA = out; return out;
+}
+/** Lo de un perfil: def (antes), ex (lo cambiado), ef (lo que vale), alc (sucursales por página). */
+function permPerfil(perfil) {
+  var def = permDefecto(perfil), g = permLeeHoja()[perfil] || {}, ex = {}, ef = {};
+  Object.keys(def).forEach(function (k) {
+    ef[k] = def[k];
+    if (g.ex && g.ex.hasOwnProperty(k)) { var f = permFn(k), v = Math.max(0, Math.min(permMax(f ? f[2] : 'v'), Number(g.ex[k]) || 0));
+      if (v !== def[k] && (v < def[k] || permPuedeDar(perfil, k, v))) { ex[k] = v; ef[k] = v; } }
+  });
+  var alc = permAlcDefecto(perfil);
+  if (g.alc) Object.keys(alc).forEach(function (m) { if (Array.isArray(g.alc[m]) && g.alc[m].length) alc[m] = g.alc[m].map(String); });
+  return { def: def, ex: ex, ef: ef, alc: alc };
+}
+/** ¿Se le puede dar ese nivel a ese perfil? Lo que ya tenía, sí; lo de más, solo con puente. */
+function permPuedeDar(perfil, k, v) { var d = permDefecto(perfil)[k] || 0; return v <= d || !!PERM_PUENTE[k]; }
+function perfilDeU(u) { return u.rol === 'admin' ? 'admin' : (u.rol === 'registro' && u.confirma) ? 'contador' : u.rol; }
+function permDeYo(yo) {
+  if (yo.esAdmin) { var all = {}; permTodas().forEach(function (k) { all[k] = permMax(permFn(k)[2]); }); return { def: all, ex: {}, ef: all, alc: {}, admin: true }; }
+  var perfil = yo.rolReal ? perfilDeU({ rol: yo.rolReal, confirma: yo.confirmaReal }) : perfilDe(yo);
+  return permPerfil(perfil);
+}
+/** ¿Tiene «clave» con al menos «nivel», en esa sucursal (si se da)? */
+function tienePerm(yo, clave, nivel, sid) {
+  var P = permDeYo(yo); if (P.admin) return true;
+  if ((P.ef[clave] || 0) < (nivel || 1)) return false;
+  if (!sid) return true;
+  var m = String(clave).split('.')[0], a = P.alc[m]; if (!a) return true;
+  return permSucOk(a, sid, yo);
+}
+function permSucOk(a, sid, yo) {
+  if (a.indexOf('todas') >= 0) return true;
+  if (a.indexOf('suya') >= 0 && yo.sucursal && yo.sucursal === sid) return true;
+  return a.indexOf(sid) >= 0;
+}
+/** Las sucursales de una página para esta persona. */
+function permSucs(yo, modulo, todas) {
+  var P = permDeYo(yo); if (P.admin) return todas.slice();
+  var a = P.alc[modulo] || ['todas'];
+  return todas.filter(function (s) { return permSucOk(a, s, yo); });
+}
+
+/* ── el servidor revisa cada llamada ── */
+function permAntes(fn, args) {
+  _PRESTADO = null; _PERM_FN = fn;
+  var regla = PERM_API[fn]; if (!regla) return;
+  var cred = args && args[0]; if (!cred || typeof cred !== 'object' || !cred.usuario) return;
+  var u = null; usuariosCache().forEach(function (x) { if (x.nombre.toLowerCase() === String(cred.usuario).trim().toLowerCase()) u = x; });
+  if (!u || !u.activo || u.rol === 'admin' || !mismoPin(u.pin, String(cred.pin || '').trim())) return;      // quien() se encarga de los errores de entrada
+  var perfil = perfilDeU(u), P = permPerfil(perfil), claves = regla[0], nivel = regla[1];
+  var ok = claves.some(function (k) { return (P.ef[k] || 0) >= nivel; });
+  var quitado = claves.every(function (k) { return P.ex.hasOwnProperty(k) && P.ex[k] < nivel || (!P.ex.hasOwnProperty(k) && (P.def[k] || 0) < nivel); }) &&
+    claves.some(function (k) { return P.ex.hasOwnProperty(k) && P.ex[k] < nivel; });
+  if (!ok && quitado) {
+    var f = permFn(claves[0]);
+    throw new Error('Su rol ya no tiene permiso para esto (' + (f ? f[1] : claves[0]) + '). Si lo necesita, pídaselo al administrador.');
+  }
+  if (!ok) return;                                           // nunca lo tuvo: sigue igual que antes (lo frena la función si no le toca)
+  claves.forEach(function (k) {                               // lo recibió de más: el servidor le presta el rol que hace eso
+    if (_PRESTADO || !PERM_PUENTE[k] || !PERM_PUENTE[k].rol) return;
+    if ((P.def[k] || 0) >= nivel || (P.ef[k] || 0) < nivel) return;
+    _PRESTADO = { rol: PERM_PUENTE[k].rol, nombre: u.nombre };
+  });
+}
+/** quien() llama esto al final: si hay rol prestado, la persona trabaja con ese rol solo en esta llamada. */
+function permPresta(h) {
+  if (!_PRESTADO || !h || String(h.nombre).toLowerCase() !== String(_PRESTADO.nombre).toLowerCase()) return h;
+  var c = {}; Object.keys(h).forEach(function (k) { c[k] = h[k]; });
+  c.rolReal = h.rol; c.confirmaReal = h.confirma; c.rol = _PRESTADO.rol; if (c.rol !== 'registro') c.confirma = h.confirma && c.rol === 'registro';
+  return c;
+}
+
+/* ── para la app ── */
+function permTokens(P, perfil) {
+  var off = [], extra = [];
+  PERM_CAT.forEach(function (m) {
+    var porToken = {};
+    m.f.forEach(function (f) { (f[4] || []).forEach(function (t) { (porToken[t] = porToken[t] || []).push(m.id + '.' + f[0]); }); });
+    Object.keys(porToken).forEach(function (t) {
+      var ks = porToken[t];
+      if (ks.every(function (k) { return !(P.ef[k] > 0); }) && ks.some(function (k) { return P.ex.hasOwnProperty(k); })) off.push(t);
+    });
+  });
+  Object.keys(PERM_EXTRA).forEach(function (k) {
+    if ((P.ef[k] || 0) > (P.def[k] || 0) && P.ex.hasOwnProperty(k)) PERM_EXTRA[k].forEach(function (t) { if (extra.indexOf(t) < 0) extra.push(t); });
+  });
+  // lo de personal: si no tiene nada, la página se apaga
+  if (['turnos', 'pagos', 'equipo', 'ajustes', 'apoyo'].every(function (k) { return !(P.ef['personal.' + k] > 0); }) &&
+      ['turnos', 'pagos', 'equipo', 'ajustes', 'apoyo'].some(function (k) { return P.ex.hasOwnProperty('personal.' + k); })) off.push('cal');
+  return { off: off.filter(function (t) { return extra.indexOf(t) < 0; }), extra: extra };
+}
+function permisosApp(yo) {
+  var P = permDeYo(yo);
+  if (P.admin) return { admin: true, ef: P.ef, off: [], extra: [] };
+  var t = permTokens(P, perfilDe(yo));
+  return { ef: P.ef, alc: P.alc, off: t.off, extra: t.extra };
+}
+/** La pantalla del administrador. */
+function permisosRol(cred) {
+  exigeAdmin(cred);
+  var us = usuariosCache().filter(function (u) { return u.activo; }), hoja = permLeeHoja(), viejos = {};
+  try { viejos = menusApagados(); } catch (e) { viejos = {}; }
+  return {
+    cat: PERM_CAT.map(function (m) { return { id: m.id, n: m.n, d: m.d, alc: !!m.alc, bod: !!m.bod, f: m.f.map(function (f) { return { id: f[0], n: f[1], t: f[2], s: !!f[3] }; }) }; }),
+    puentes: Object.keys(PERM_PUENTE),
+    sucursales: UNIDADES.filter(function (u) { return u.vende && u.activo !== false; }).map(function (u) { return { id: u.id, nombre: u.nombre }; }),
+    perfiles: PERM_PERFILES.map(function (x) {
+      var P = permPerfil(x[0]), n = us.filter(function (u) { return perfilDeU(u) === x[0]; });
+      return { id: x[0], nombre: x[1], personas: n.map(function (u) { return u.nombre; }), def: P.def, ex: P.ex, ef: P.ef, alc: P.alc, alcDef: permAlcDefecto(x[0]),
+        por: (hoja[x[0]] || {}).por || '', en: (hoja[x[0]] || {}).en || '', menusViejos: viejos[x[0]] || [] };
+    })
+  };
+}
+function guardarPermisosRol(cred, perfil, niveles, alc) {
+  var yo = exigeAdmin(cred);
+  if (!PERM_PERFILES.some(function (x) { return x[0] === perfil; })) throw new Error('Ese rol no existe.');
+  var def = permDefecto(perfil), ex = {}, cambios = [], antes = permPerfil(perfil);
+  niveles = niveles || {};
+  Object.keys(def).forEach(function (k) {
+    if (!niveles.hasOwnProperty(k)) { if (antes.ex.hasOwnProperty(k)) ex[k] = antes.ex[k]; return; }
+    var f = permFn(k), v = Math.max(0, Math.min(permMax(f[2]), Math.round(Number(niveles[k]) || 0)));
+    if (v > def[k] && !permPuedeDar(perfil, k, v)) throw new Error('«' + f[1] + '» todavía no se le puede dar a este rol (llega en una próxima entrega).');
+    if (v !== def[k]) ex[k] = v;
+  });
+  Object.keys(def).forEach(function (k) { var a = antes.ef[k], b = ex.hasOwnProperty(k) ? ex[k] : def[k]; if (a !== b) cambios.push(k + ': ' + a + '→' + b); });
+  var alcOk = {}, permitidos = ['todas', 'suya'].concat(UNIDADES.map(function (u) { return u.id; }));
+  var alcDef = permAlcDefecto(perfil);
+  Object.keys(alcDef).forEach(function (m) {
+    var a = alc && Array.isArray(alc[m]) ? alc[m].map(String).filter(function (s, i, l) { return permitidos.indexOf(s) >= 0 && l.indexOf(s) === i; }) : antes.alc[m];
+    if (!a || !a.length) a = alcDef[m];
+    if (a.indexOf('todas') >= 0) a = ['todas']; else if (a.indexOf('suya') >= 0) a = ['suya'];
+    alcOk[m] = a;
+    if (JSON.stringify(a) !== JSON.stringify(antes.alc[m])) cambios.push(m + ' sucursales: ' + antes.alc[m].join(',') + '→' + a.join(','));
+  });
+  var lock = LockService.getScriptLock(); lock.waitLock(15000); _LEE = {}; _PERM_HOJA = null;
+  try {
+    var h = hojaPermisos(), fila = 0;
+    if (h.getLastRow() > 1) leeTodo(h, H_PERM.length).forEach(function (r, i) { if (String(r[0]) === perfil) fila = i + 2; });
+    var val = [[perfil, JSON.stringify(ex), JSON.stringify(alcOk), yo.nombre, new Date()]];
+    if (fila) h.getRange(fila, 1, 1, H_PERM.length).setValues(val); else h.appendRow(val[0]);
+    if (cambios.length) hojaPermBit().appendRow([new Date(), yo.nombre, perfil, cambios.join(' · ').slice(0, 4000)]);
+    // los «Menús por rol» de antes quedan dentro de los permisos: se limpian para ese rol
+    var hm = libro().getSheetByName('Menús por rol');
+    if (hm && hm.getLastRow() > 1) leeTodo(hm, H_MENUS.length).forEach(function (r, i) { if (String(r[0]) === perfil) hm.getRange(i + 2, 2).setValue('[]'); });
+  } finally { lock.releaseLock(); }
+  _PERM_HOJA = null; _LEE = {};
+  var r = permisosRol(cred); r.ok = true;
+  var nom = PERM_PERFILES.filter(function (x) { return x[0] === perfil; })[0][1];
+  r.mensaje = cambios.length ? 'Permisos de «' + nom + '» guardados (' + cambios.length + (cambios.length === 1 ? ' cambio' : ' cambios') + '). Lo verán la próxima vez que abran la app.' : 'No había cambios en «' + nom + '».';
+  return r;
+}
+/** misMenus de antes + los permisos: lo apagado de antes y lo que apagan los permisos. */
+function misMenus(cred) {
+  var r = misMenusViejo(cred);
+  try {
+    var yo = quien(cred), pa = permisosApp(yo);
+    r.permisos = pa;
+    if (!yo.esAdmin) pa.off.forEach(function (t) { if (r.apagados.indexOf(t) < 0) r.apagados.push(t); });
+    if (!yo.esAdmin) r.apagados = r.apagados.filter(function (t) { return pa.extra.indexOf(t) < 0; });
+  } catch (e) {}
+  return r;
+}
+function datos(cred) {
+  var r = datosBase(cred);
+  try { if (r && typeof r === 'object') r.permisos = permisosApp(quien(cred)); } catch (e) {}
+  return r;
+}
+
+/* ════════════ PERSONAL CON PERMISOS (entrega 72) ════════════ */
+function calAcceso(yo) {
+  var todas = ['centro', 'almendras', 'parque'];
+  var L = function (k) { return yo.esAdmin ? permMax(permFn('personal.' + k)[2]) : (permDeYo(yo).ef['personal.' + k] || 0); };
+  var n = { turnos: L('turnos'), apoyo: L('apoyo'), confirmar: L('confirmar'), desbloquear: L('desbloquear'), pdfo: L('pdfo'), venta: L('venta'), costo: L('costo'), pagos: L('pagos'), planilla: L('planilla'),
+    reabrir: L('reabrir'), equipo: L('equipo'), tarifa: L('tarifa'), ajustes: L('ajustes'), salgte: L('salgte') };
+  if (!(n.turnos || n.pagos || n.equipo || n.ajustes || n.apoyo)) throw new Error('Su rol no tiene permiso para Personal. Si lo necesita, pídaselo al administrador.');
+  var sucs = permSucs(yo, 'personal', todas);
+  if (!sucs.length) throw new Error('Su rol no tiene ninguna sucursal en Personal. Pídale al administrador que se la asigne.');
+  var bonoG = yo.esAdmin || (permDeYo(yo).ef['config.bono'] || 0) >= 2;
+  return { sucs: sucs, n: n,
+    turnos: n.turnos >= 2, verTurnos: n.turnos >= 1, equipo: n.equipo >= 2, verEquipo: n.equipo >= 1,
+    pagos: n.pagos >= 2, verPagos: n.pagos >= 1, dinero: n.pagos >= 1 || n.costo >= 1, costo: n.costo >= 1, venta: n.venta >= 1,
+    tarifa: n.tarifa >= 2, verTarifa: n.tarifa >= 1 || n.pagos >= 1, ajustes: n.ajustes >= 2, verAjustes: n.ajustes >= 1,
+    apoyo: n.apoyo >= 2 || n.ajustes >= 2, salgte: n.salgte >= 2, verSalgte: n.salgte >= 1,
+    confirma: n.planilla >= 2, reabrir: n.reabrir >= 2, pdfm: false, pdfo: n.pdfo >= 2, confirmarSem: n.confirmar >= 2, desbloquear: n.desbloquear >= 2, bonoGeneral: bonoG, soloVer: false };
+}
+/* calPantalla: arma lo de siempre y quita lo que la persona no puede ver. */
+function calPantalla(yo, ac, sid, fecha, D) {
+  D = D || calDatos();
+  var r = calPantallaBase(yo, ac, sid, fecha, D);
+  var m = calModelo(D, r.sid, r.q.ini);
+  r.acceso = { turnos: ac.turnos, verTurnos: ac.verTurnos, equipo: ac.equipo, verEquipo: ac.verEquipo, pagos: ac.pagos, verPagos: ac.verPagos, dinero: ac.dinero,
+    costo: ac.costo, venta: ac.venta, tarifa: ac.tarifa, verTarifa: ac.verTarifa, ajustes: ac.ajustes, verAjustes: ac.verAjustes, apoyo: ac.apoyo,
+    salgte: ac.salgte, verSalgte: ac.verSalgte, confirma: ac.confirma, reabrir: ac.reabrir, pdfm: false, pdfo: ac.pdfo, confirmarSem: ac.confirmarSem, desbloquear: ac.desbloquear, bonoGeneral: ac.bonoGeneral, soloVer: false };
+  r.reglas = calReglas(m.cfg);
+  r.semanas = calSemanas(r.sid, r.q.ini);
+  if (!ac.venta) { r.venta = {}; r.tipica = {}; }
+  if (!ac.verPagos) { delete r.pagos; delete r.planilla; delete r.sinReales; delete r.conReales; }
+  if (!ac.costo) delete r.costoDias;
+  if (!ac.verTarifa && !ac.costo) r.personas.forEach(function (p) { delete p.tarifa; delete p.bono; delete p.hreal; });
+  if (ac.costo && !r.costoDias) r.costoDias = m.dias.map(function (d) { return d.costo; });
+  if (ac.verTarifa) r.equipo.forEach(function (p) { var q = D.eq.filter(function (x) { return x.id === p.id; })[0]; if (q) { p.pago = q.pago; p.bono = q.bono; p.bonoEf = q.bono > 0 ? q.bono : m.cfg.bonoGeneral; } });
+  else r.equipo.forEach(function (p) { delete p.pago; delete p.bono; delete p.bonoEf; });
+  if (ac.verAjustes || ac.apoyo || ac.verSalgte || ac.verTarifa || ac.bonoGeneral) {
+    r.config = { bonoGeneral: (ac.verTarifa || ac.bonoGeneral) ? m.cfg.bonoGeneral : null, am: [m.cfg.am_i, m.cfg.am_f], pm: [m.cfg.pm_i, m.cfg.pm_f], ap: [m.cfg.ap_i, m.cfg.ap_f], ap2: [m.cfg.ap2_i, m.cfg.ap2_f],
+      base: ac.verTarifa ? m.cfg.base : null, bajoDe: m.cfg.bajoDe, bajoA: m.cfg.bajoA, optDe: m.cfg.optDe, optA: m.cfg.optA,
+      gerentes: ac.verSalgte ? m.gerencia.map(function (g) { return { nombre: g.nombre, salario: g.salario, bono: g.bono }; }) : [] };
+    if (ac.verPagos) { r.base = m.cfg.base; r.bonoGeneral = m.cfg.bonoGeneral; }
+  } else delete r.config;
+  if (ac.verPagos && r.pagos && !ac.verSalgte) { r.pagos = JSON.parse(JSON.stringify(r.pagos)); r.pagos.gerencia = []; }
+  return r;
+}
+/* Las reglas del calendario de una sucursal (Ajustes › Reglas). Por defecto: el oficial se descarga aunque haya avisos. */
+function calReglas(cfg) {
+  return { bloquea: !!cfg.reglaBloquea, minAm: cfg.minAm || 0, minPm: cfg.minPm || 0, diasSeguidos: cfg.diasSeguidos || 0, avisoDoble: cfg.avisoDoble !== false };
+}
+function calCfg(sid, filas) {
+  var c = calCfgBase(sid, filas);
+  c.reglaBloquea = false; c.minAm = 0; c.minPm = 0; c.diasSeguidos = 6; c.avisoDoble = true;
+  (filas || []).forEach(function (x) {
+    if (x.sid !== sid) return;
+    if (x.k === 'regla_bloquea') c.reglaBloquea = String(x.v) === 'si';
+    if (x.k === 'regla_doble') c.avisoDoble = String(x.v) !== 'no';
+    if (x.k === 'regla_min_am' || x.k === 'regla_min_pm' || x.k === 'regla_dias') {
+      var n = Math.round(Number(x.v)); if (x.v === '' || !isFinite(n) || n < 0) return;
+      if (x.k === 'regla_min_am') c.minAm = n; else if (x.k === 'regla_min_pm') c.minPm = n; else c.diasSeguidos = n;
+    }
+  });
+  return c;
+}
+/** Avisos de una semana (o de la quincena con sem 0). Nunca frenan el oficial, salvo que la regla «bloquea» esté prendida. */
+function calAvisosSemana(m, sem) {
+  var q = m.q, a = sem === 2 ? q.n1 : 0, z = sem === 1 ? q.n1 : q.n, c = m.cfg, out = [];
+  var hb = function (p) { return sem === 1 ? p.hb1 : sem === 2 ? p.hb2 : p.hq; };
+  m.personas.forEach(function (p) {
+    if (!(hb(p) > 0)) { out.push(p.nombre + ' no tiene turnos'); return; }
+    if ((sem === 1 && p.sd1) || (sem === 2 && p.sd2) || (!sem && (p.sd1 || p.sd2))) out.push(p.nombre + ' no tiene día de descanso');
+    var cl = sem ? (sem === 1 ? p.c1 : p.c2) : p.cq; if (cl === 'alto') out.push(p.nombre + ' pasa de las horas óptimas');
+    var dob = 0; for (var i = a; i < z; i++) if (p.dias[i].am && p.dias[i].pm) dob++;
+    if (dob && c.avisoDoble !== false) out.push(p.nombre + ' dobla turno ' + dob + (dob === 1 ? ' día' : ' días'));
+    if (c.diasSeguidos > 0) { var seg = 0, max = 0; for (var j = 0; j < q.n; j++) { seg = p.dias[j].h > 0 ? seg + 1 : 0; if (j >= a && j < z && seg > max) max = seg; }
+      if (max > c.diasSeguidos) out.push(p.nombre + ' trabaja ' + max + ' días seguidos'); }
+  });
+  for (var k = a; k < z; k++) {
+    var d = m.dias[k], f = d.f, dd = String(+f.slice(8));
+    if (d.gente === 0) { out.push('el ' + dd + ' no hay nadie'); continue; }
+    if (c.minAm > 0 && d.am < c.minAm) out.push('el ' + dd + ' hay ' + d.am + ' en la mañana (mínimo ' + c.minAm + ')');
+    if (c.minPm > 0 && d.pm < c.minPm) out.push('el ' + dd + ' hay ' + d.pm + ' en la tarde (mínimo ' + c.minPm + ')');
+  }
+  return out;
+}
+function calIncompletoSemana(m, sem, pendiente) {
+  if (pendiente) return ['hay cambios sin guardar'];
+  return [];
+}
+function pdfCalendario(cred, sid, fecha, pendiente, opciones) {
+  var yo = quien(cred), ac = calAcceso(yo);
+  opciones = opciones || {};
+  if (!ac.pdfo) throw new Error('Su rol no tiene permiso para descargar el calendario.');
+  if (opciones.tipo !== 'oficial') throw new Error('El calendario se descarga por semana, cuando está confirmada.');
+  var sem0 = Number(opciones.semana) === 2 ? 2 : 1, est0 = calSemanas(sid, calQuincena(fecha).ini)[sem0 - 1];
+  if (est0.estado !== 'Confirmada' && !calPlanillaDe(calDatos(), sid, calQuincena(fecha).ini)) throw new Error('Primero confirme la semana ' + sem0 + ' para descargarla.');
+  var r = pdfCalendarioBase(cred, sid, fecha, pendiente, opciones);
+  if (r && r.oficial) { var m = calModelo(calDatos(), sid, fecha); r.avisos = calAvisosSemana(m, r.semana); }
+  return r;
+}
+function guardarReglasCal(cred, sid, reglas, fecha) {
+  var yo = quien(cred), ac = calAcceso(yo);
+  if (!ac.ajustes) throw new Error('Las reglas del calendario las cambia quien tiene «Ajustes» con permiso de cambiar.');
+  if (ac.sucs.indexOf(sid) < 0) throw new Error('Escoja la sucursal.');
+  reglas = reglas || {};
+  var num = function (v, campo, max) { if (v === '' || v == null) return 0; var n = Math.round(Number(String(v).replace(',', '.'))); if (!isFinite(n) || n < 0 || n > max) throw new Error(campo + ' no es válido.'); return n; };
+  calEscribeCfg(yo, sid, [['regla_bloquea', reglas.bloquea ? 'si' : ''], ['regla_doble', reglas.avisoDoble === false ? 'no' : 'si'],
+    ['regla_min_am', num(reglas.minAm, 'El mínimo de la mañana', 30)], ['regla_min_pm', num(reglas.minPm, 'El mínimo de la tarde', 30)], ['regla_dias', num(reglas.diasSeguidos, 'Los días seguidos', 15)]]);
+  return calRespuesta(yo, ac, sid, fecha, 'Reglas del calendario guardadas.');
+}
+
+/* Configuración del calendario por partes: horarios y rangos (Ajustes), pago base (pago por hora) y gerentes (salario de gerentes). */
+function guardarConfigCal(cred, sid, cfg, fecha) {
+  var yo = quien(cred), ac = calAcceso(yo);
+  if (!ac.ajustes && !ac.tarifa && !ac.salgte) throw new Error('Su rol puede ver los ajustes, pero no cambiarlos.');
+  if (ac.sucs.indexOf(sid) < 0) throw new Error('Escoja la sucursal.');
+  cfg = cfg || {};
+  var lista = [];
+  if (ac.ajustes && cfg.turnos) {
+    var t = cfg.turnos;
+    [['am', 'La mañana'], ['pm', 'La tarde'], ['ap', 'El apoyo 1'], ['ap2', 'El apoyo 2']].forEach(function (a) {
+      var par = t[a[0]] || [];
+      if (a[0] === 'ap2' && !t.ap2) return;
+      if (!horaValida(par[0]) || !horaValida(par[1])) throw new Error(a[1] + ': escriba hora de inicio y de fin.');
+      lista.push([a[0] + '_i', horaNorm(par[0])], [a[0] + '_f', horaNorm(par[1])]);
+    });
+  }
+  if (ac.ajustes && cfg.semaforo) {
+    var s = cfg.semaforo, v = {};
+    ['bajoDe', 'bajoA', 'optDe', 'optA'].forEach(function (k) { v[k] = calNumero(s[k], 'El rango de horas', 200); if (v[k] == null) throw new Error('Complete los rangos de horas.'); });
+    if (!(v.bajoDe <= v.bajoA && v.bajoA <= v.optDe && v.optDe <= v.optA)) throw new Error('Los rangos de horas deben ir de menor a mayor: bajo, óptimo.');
+    lista.push(['bajoDe', v.bajoDe], ['bajoA', v.bajoA], ['optDe', v.optDe], ['optA', v.optA]);
+  }
+  if (ac.tarifa && cfg.base != null && cfg.base !== '') {
+    var base = calNumero(cfg.base, 'El pago por hora base', 500);
+    if (base == null) throw new Error('Escriba el pago por hora base.');
+    lista.push(['base', base]);
+  }
+  if (ac.salgte && cfg.gerentes) {
+    var nombresG = usuariosCache().filter(function (u) { return u.activo && u.rol === 'gerente' && u.sucursal === sid; }).map(function (u) { return u.nombre; });
+    cfg.gerentes.forEach(function (g) {
+      if (!g || nombresG.indexOf(g.nombre) < 0) return;
+      var sal = calNumero(g.salario, 'El salario', 100000), bo = calNumero(g.bono, 'El bono', 100000);
+      lista.push(['ger_salario:' + g.nombre, sal == null ? 0 : sal], ['ger_bono:' + g.nombre, bo == null ? 0 : bo]);
+    });
+  }
+  if (!lista.length) throw new Error('No hay nada que guardar.');
+  calEscribeCfg(yo, sid, lista);
+  return calRespuesta(yo, ac, sid, fecha, 'Ajustes de ' + nombreUnidad(sid) + ' guardados. Las quincenas ya pagadas no cambian.');
+}
+function calEscribeCfg(yo, sid, lista) {
+  var lock = LockService.getScriptLock(); lock.waitLock(15000); _LEE = {};
+  try {
+    var filas = calLeeCf(), h = calHoja('Calendario config', H_CCF, ['C']), ahora = new Date(), nuevas = [];
+    lista.forEach(function (par) {
+      var previa = null; filas.forEach(function (x) { if (x.sid === sid && x.k === par[0]) previa = x; });
+      if (previa) h.getRange(previa.fila, 3, 1, 3).setValues([[String(par[1]), yo.nombre, ahora]]);
+      else nuevas.push([sid, par[0], String(par[1]), yo.nombre, ahora]);
+    });
+    if (nuevas.length) { var d0 = h.getLastRow() + 1; h.getRange(d0, 3, nuevas.length, 1).setNumberFormat('@'); h.getRange(d0, 1, nuevas.length, H_CCF.length).setValues(nuevas); }
+  } finally { lock.releaseLock(); }
+  _LEE = {};
+}
+
+/* ════════════ CONFIRMAR EL CALENDARIO POR SEMANA (entrega 72c) ════════════
+ * El gerente arma la semana, revisa los avisos y la confirma. Confirmada ya no se cambia: el gerente pide el cambio y
+ * quien tiene «Autorizar cambios» (Álvaro, el administrador) lo autoriza; la semana vuelve a quedar abierta.
+ * Solo se descarga en PDF la semana confirmada. Hoja «Calendario confirmaciones»: una fila por sucursal, quincena y semana. */
+var H_CCO = ['Sucursal', 'Inicio', 'Semana', 'Estado', 'Confirmó', 'Confirmado en', 'Avisos', 'Pidió cambio', 'Motivo', 'Pedido en', 'Revisó', 'Revisado en', 'Comentario'];
+function calHojaCo() { return calHoja('Calendario confirmaciones', H_CCO, ['B']); }
+function calLeeCo() {
+  var h = libro().getSheetByName('Calendario confirmaciones'); if (!h || h.getLastRow() < 2) return [];
+  return leeTodo(h, H_CCO.length).map(function (r, i) {
+    var t = function (v) { return v instanceof Date ? Utilities.formatDate(v, ZONA, 'yyyy-MM-dd HH:mm') : String(v == null ? '' : v).trim(); };
+    return { fila: i + 2, sid: t(r[0]), ini: r[1] instanceof Date ? Utilities.formatDate(r[1], ZONA, 'yyyy-MM-dd') : t(r[1]), sem: Number(r[2]) || 0, estado: t(r[3]),
+      por: t(r[4]), en: t(r[5]), avisos: t(r[6]), pidio: t(r[7]), motivo: t(r[8]), pedidoEn: t(r[9]), reviso: t(r[10]), revisadoEn: t(r[11]), comentario: t(r[12]) };
+  });
+}
+/** Estado de las dos semanas: Abierta (se arma), Confirmada, o Pedido (confirmada, con un cambio pedido). */
+function calSemanas(sid, ini) {
+  var fs = calLeeCo();
+  return [1, 2].map(function (sem) {
+    var x = fs.filter(function (r) { return r.sid === sid && r.ini === ini && r.sem === sem; })[0];
+    if (!x) return { sem: sem, estado: 'Abierta' };
+    return { sem: sem, estado: x.estado || 'Abierta', por: x.por, en: x.en, avisos: x.avisos, pidio: x.pidio, motivo: x.motivo, pedidoEn: x.pedidoEn,
+      reviso: x.reviso, revisadoEn: x.revisadoEn, comentario: x.comentario };
+  });
+}
+function calSemDe(q, f) { var i = q.dias.indexOf(f); return i < 0 ? 0 : i < q.n1 ? 1 : 2; }
+function calCoPon(sid, ini, sem, cambios) {
+  var lock = LockService.getScriptLock(); lock.waitLock(15000); _LEE = {};
+  try {
+    var h = calHojaCo(), fs = calLeeCo(), x = fs.filter(function (r) { return r.sid === sid && r.ini === ini && r.sem === sem; })[0];
+    var fila = x ? [x.sid, x.ini, x.sem, x.estado, x.por, x.en, x.avisos, x.pidio, x.motivo, x.pedidoEn, x.reviso, x.revisadoEn, x.comentario] : [sid, ini, sem, 'Abierta', '', '', '', '', '', '', '', '', ''];
+    Object.keys(cambios).forEach(function (k) { fila[H_CCO.indexOf(k)] = cambios[k]; });
+    if (x) h.getRange(x.fila, 1, 1, H_CCO.length).setValues([fila]);
+    else { var d0 = h.getLastRow() + 1; h.getRange(d0, 2, 1, 1).setNumberFormat('@'); h.getRange(d0, 1, 1, H_CCO.length).setValues([fila]); }
+  } finally { lock.releaseLock(); }
+  _LEE = {};
+}
+function calAhora() { return Utilities.formatDate(new Date(), ZONA, 'yyyy-MM-dd HH:mm'); }
+function confirmarSemanaCal(cred, sid, fecha, sem) {
+  var yo = quien(cred), ac = calAcceso(yo);
+  if (!ac.confirmarSem) throw new Error('Su rol no confirma el calendario.');
+  if (ac.sucs.indexOf(sid) < 0) throw new Error('Ese calendario no es de su sucursal.');
+  sem = Number(sem) === 2 ? 2 : 1;
+  var D = calDatos(), m = calModelo(D, sid, fecha), ini = m.q.ini;
+  if (calPlanillaDe(D, sid, ini)) throw new Error('La planilla de esta quincena ya está pagada: el calendario quedó cerrado.');
+  var est = calSemanas(sid, ini)[sem - 1];
+  if (est.estado === 'Confirmada' || est.estado === 'Pedido') throw new Error('La semana ' + sem + ' ya está confirmada.');
+  var av = calAvisosSemana(m, sem);
+  if (m.cfg.reglaBloquea && av.length) throw new Error('En esta sucursal no se confirma con avisos (regla de Ajustes): ' + av.slice(0, 6).join(', ') + (av.length > 6 ? '…' : '') + '.');
+  if (!m.personas.some(function (p) { return (sem === 1 ? p.hb1 : p.hb2) > 0; })) throw new Error('La semana ' + sem + ' está vacía: arme los turnos antes de confirmarla.');
+  calCoPon(sid, ini, sem, { 'Estado': 'Confirmada', 'Confirmó': yo.nombre, 'Confirmado en': calAhora(), 'Avisos': av.join(' · ').slice(0, 2000),
+    'Pidió cambio': '', 'Motivo': '', 'Pedido en': '' });
+  return calRespuesta(yo, ac, sid, fecha, 'Semana ' + sem + ' confirmada' + (av.length ? ' con ' + av.length + (av.length === 1 ? ' aviso' : ' avisos') : '') + '. Ya la puede descargar.');
+}
+function pedirCambioCal(cred, sid, fecha, sem, motivo) {
+  var yo = quien(cred), ac = calAcceso(yo);
+  if (!ac.turnos && !ac.confirmarSem) throw new Error('Su rol no cambia el calendario.');
+  if (ac.sucs.indexOf(sid) < 0) throw new Error('Ese calendario no es de su sucursal.');
+  sem = Number(sem) === 2 ? 2 : 1; motivo = String(motivo || '').replace(/\s+/g, ' ').trim();
+  if (motivo.length < 5) throw new Error('Escriba qué necesita cambiar y por qué (mínimo 5 letras).');
+  var ini = calQuincena(fecha).ini, est = calSemanas(sid, ini)[sem - 1];
+  if (est.estado !== 'Confirmada' && est.estado !== 'Pedido') throw new Error('La semana ' + sem + ' no está confirmada: la puede cambiar directamente.');
+  calCoPon(sid, ini, sem, { 'Estado': 'Pedido', 'Pidió cambio': yo.nombre, 'Motivo': motivo.slice(0, 300), 'Pedido en': calAhora(), 'Revisó': '', 'Revisado en': '', 'Comentario': '' });
+  try { CacheService.getScriptCache().removeAll(usuariosCache().map(function (u) { return 'notif_' + u.nombre.toLowerCase(); })); } catch (e) {}
+  return calRespuesta(yo, ac, sid, fecha, 'Cambio pedido. Le llega a quien autoriza (director operativo o administrador).');
+}
+/** Autorizar (la semana vuelve a quedar abierta) o no autorizar (sigue confirmada). También sirve para abrirla sin que nadie lo pida. */
+function autorizarCambioCal(cred, sid, fecha, sem, si, comentario) {
+  var yo = quien(cred), ac = calAcceso(yo);
+  if (!ac.desbloquear) throw new Error('Los cambios a un calendario confirmado los autoriza el director operativo o el administrador.');
+  if (ac.sucs.indexOf(sid) < 0) throw new Error('Escoja la sucursal.');
+  sem = Number(sem) === 2 ? 2 : 1; comentario = String(comentario || '').replace(/\s+/g, ' ').trim().slice(0, 300);
+  var D = calDatos(), ini = calQuincena(fecha).ini, est = calSemanas(sid, ini)[sem - 1];
+  if (calPlanillaDe(D, sid, ini)) throw new Error('La planilla de esta quincena ya está pagada: primero hay que reabrirla.');
+  if (est.estado !== 'Confirmada' && est.estado !== 'Pedido') throw new Error('La semana ' + sem + ' ya está abierta.');
+  if (!si && !comentario) throw new Error('Escriba por qué no lo autoriza.');
+  calCoPon(sid, ini, sem, si ? { 'Estado': 'Abierta', 'Revisó': yo.nombre, 'Revisado en': calAhora(), 'Comentario': comentario || 'Autorizado' }
+    : { 'Estado': 'Confirmada', 'Revisó': yo.nombre, 'Revisado en': calAhora(), 'Comentario': 'No autorizado: ' + comentario });
+  try { CacheService.getScriptCache().removeAll(usuariosCache().map(function (u) { return 'notif_' + u.nombre.toLowerCase(); })); } catch (e) {}
+  return calRespuesta(yo, ac, sid, fecha, si ? 'Semana ' + sem + ' abierta para cambios. El gerente la vuelve a confirmar al terminar.' : 'No se autorizó el cambio. La semana ' + sem + ' sigue confirmada.');
+}
+/* Lo confirmado no se toca: guardar turnos y el avance dejan fuera las semanas confirmadas. */
+function guardarTurnos(cred, sid, fecha, cambios) {
+  var q = calQuincena(fecha), est = calSemanas(sid, q.ini);
+  (cambios || []).forEach(function (c) { var s = calSemDe(q, String((c || {}).f || '')); if (s && est[s - 1].estado !== 'Abierta')
+    throw new Error('La semana ' + s + ' ya está confirmada. Para cambiarla, toque «Pedir cambio» y espere la autorización.'); });
+  return guardarTurnosBase(cred, sid, fecha, cambios);
+}
+function guardarBorradorCal(cred, sid, fecha, cambios) {
+  var q = calQuincena(fecha), est = calSemanas(sid, q.ini);
+  cambios = (cambios || []).filter(function (c) { var s = calSemDe(q, String((c || {}).f || '')); return !s || est[s - 1].estado === 'Abierta'; });
+  return guardarBorradorCalBase(cred, sid, fecha, cambios);
+}
+/* Campanita: a quien autoriza le llegan los pedidos; al que pidió, la respuesta. */
+function avisosCalendario(yo, out, desde) {
+  avisosCalendarioBase(yo, out, desde);
+  var ac = null; try { ac = calAcceso(yo); } catch (e) { return; }
+  var hoyQ = calQuincena(hoyISO()), inis = [hoyQ.ini, hoyQ.ant, hoyQ.sig];
+  calLeeCo().forEach(function (x) {
+    if (inis.indexOf(x.ini) < 0 || ac.sucs.indexOf(x.sid) < 0) return;
+    var q = calQuincena(x.ini);
+    if (x.estado === 'Pedido' && ac.desbloquear) out.push({ id: 'calped-' + x.sid + '-' + x.ini + '-' + x.sem + '-' + x.pedidoEn, tipo: 'Cambio de calendario', cuando: x.pedidoEn,
+      titulo: nombreUnidad(x.sid) + ' · semana ' + x.sem + ' (' + q.corto + ')', texto: x.pidio + ' pide cambiarla: ' + x.motivo, abrir: { pag: 'cal', ct: 's' + x.sem, sid: x.sid, fecha: x.ini } });
+    if (x.reviso && x.pidio === yo.nombre && x.revisadoEn && x.revisadoEn.slice(0, 10) >= desde) out.push({ id: 'calrev-' + x.sid + '-' + x.ini + '-' + x.sem + '-' + x.revisadoEn, tipo: 'Cambio de calendario', cuando: x.revisadoEn,
+      titulo: (x.estado === 'Abierta' ? 'Autorizado: ' : 'No autorizado: ') + 'semana ' + x.sem + ' de ' + nombreUnidad(x.sid), texto: x.reviso + (x.comentario ? ' · ' + x.comentario : ''), abrir: { pag: 'cal', ct: 's' + x.sem, sid: x.sid, fecha: x.ini } });
+  });
 }
