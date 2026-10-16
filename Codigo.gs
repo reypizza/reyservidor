@@ -12969,7 +12969,7 @@ function exportarIndicadores(q) {
 /* ════════════ COPIA COMPLETA PARA EL SERVIDOR PROPIO ════════════
  * El servidor propio guarda una copia de TODAS las pestañas y corre este mismo código sobre ella para contestar las lecturas.
  * Cada cambio que pasa por aquí avisa qué pestañas tocó («tocadas»), y el servidor solo vuelve a traer esas. */
-var VERSION_CODIGO = '2026-10-18-b';       // se cambia a mano cada vez que se cambia este archivo; el servidor compara que coincida con la suya
+var VERSION_CODIGO = '2026-10-18-c';       // se cambia a mano cada vez que se cambia este archivo; el servidor compara que coincida con la suya
 function versionCodigo() { return VERSION_CODIGO; }
 function huellaTexto(t) { return Utilities.base64Encode(Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, t)).slice(0, 22); }
 /** Un resumen barato de cada pestaña: cuántas filas y columnas tiene y una huella de sus últimas 25 filas. */
@@ -15536,12 +15536,14 @@ function autorizarCambioCal(cred, sid, fecha, sem, si, comentario) {
 }
 /* Lo confirmado no se toca: guardar turnos y el avance dejan fuera las semanas confirmadas. */
 function guardarTurnos(cred, sid, fecha, cambios) {
+  if (quien(cred).esAdmin) return guardarTurnosBase(cred, sid, fecha, cambios);          // el administrador cambia directo, aunque esté confirmada
   var q = calQuincena(fecha), est = calSemanas(sid, q.ini);
   (cambios || []).forEach(function (c) { var s = calSemDe(q, String((c || {}).f || '')); if (s && est[s - 1].estado !== 'Abierta')
     throw new Error('La semana ' + s + ' ya está confirmada. Para cambiarla, toque «Pedir cambio» y espere la autorización.'); });
   return guardarTurnosBase(cred, sid, fecha, cambios);
 }
 function guardarBorradorCal(cred, sid, fecha, cambios) {
+  if (quien(cred).esAdmin) return guardarBorradorCalBase(cred, sid, fecha, cambios);
   var q = calQuincena(fecha), est = calSemanas(sid, q.ini);
   cambios = (cambios || []).filter(function (c) { var s = calSemDe(q, String((c || {}).f || '')); return !s || est[s - 1].estado === 'Abierta'; });
   return guardarBorradorCalBase(cred, sid, fecha, cambios);
