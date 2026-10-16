@@ -927,7 +927,7 @@ function doGet() {
  * mismo proyecto por POST. Solo se pueden llamar las funciones de esta lista (las mismas
  * que usa la pantalla), y cada una revisa el código de quien pregunta, igual que antes.
  * La lista la pone sola el armado; no hace falta tocarla. */
-/*API_INI*/var API_PERMITIDAS = ['abrirSolicitud', 'abrirTraslado', 'aceptarSolicitud', 'aceptarYPreparar', 'aclararDiferencia', 'activarCorreos', 'activarObligacion', 'activarProducto', 'activarProductoSucursal', 'adjuntarCotizacion', 'agregarEquipo', 'agregarProducto', 'agregarRecomendados', 'agregarRecomendadosCmo', 'agregarRubro', 'anclarProducto', 'anular', 'anularOrden', 'anularPagoImpuesto', 'anularSolicitud', 'aprobarFondos', 'aprobarPresupuesto', 'aprobarPresupuestoArea', 'asignarDescanso', 'borrarKpi', 'borrarKpiCmo', 'borrarSolicitud', 'cambiarEquipo', 'cambiarMiPin', 'cambiarPermiso', 'cancelarPermiso', 'confirmarPlanilla', 'confirmarRegistro', 'consolidado', 'copiarPresupuesto', 'costosTraslados', 'cotizarOrden', 'darDeBaja', 'datos', 'despacharSolicitudes', 'detalleGasto', 'editarProducto', 'eliminarPersonaCal', 'entrar', 'enviarEmergencia', 'enviarKpis', 'enviarKpisCmo', 'enviarSolicitud', 'enviarSugerencia', 'estadoCorreos', 'evaluarMerma', 'existencias', 'existenciasEmergencia', 'firmarTraslado', 'guardarAjustesInv', 'guardarBonoGeneral', 'guardarBonosCal', 'guardarBorradorCal', 'guardarComision', 'guardarConfigCal', 'guardarConteo', 'guardarEstudio', 'guardarHorario', 'guardarHorasApoyo', 'guardarHorasReales', 'guardarKpi', 'guardarKpiCmo', 'guardarLugar', 'guardarMando', 'guardarMedida', 'guardarMiCorreo', 'guardarMiPresupuesto', 'guardarObligacion', 'guardarOrden', 'guardarPersonaCal', 'guardarPrecios', 'guardarPresupuesto', 'guardarProducto', 'guardarProductoBodega', 'guardarProveedor', 'guardarProveedorInv', 'guardarReceta', 'guardarRepartidor', 'guardarTraslado', 'guardarTurnos', 'guardarUsuario', 'habilita', 'habilitarConteo', 'historialTraslados', 'indicadoresConta', 'leerBonoGeneral', 'leerSugerencias', 'listaBodega', 'listaCatalogo', 'listaConsultas', 'listaDiferencias', 'listaEntrada', 'listaFondos', 'listaImpuestos', 'listaKpis', 'listaKpisCmo', 'listaLugares', 'listaOrdenes', 'listaPermisos', 'listaPrecios', 'listaRepartidores', 'listaReportes', 'listaSolicitudes', 'listaUsuarios', 'llegoSolicitud', 'marcarPreparadas', 'medirAceite', 'miAvance', 'miCorreo', 'miPanel', 'miPresupuesto', 'notificaciones', 'ordenesPago', 'pagarFondos', 'pagarOrden', 'pagarRepartidor', 'pantallaCalendarios', 'pantallaConteo', 'pantallaEmergencias', 'pantallaFirmas', 'pantallaHorarios', 'pantallaKpi', 'pantallaMando', 'pantallaMant', 'pantallaMerma', 'pantallaMuestreo', 'pantallaPedidosBodega', 'pantallaProduccion', 'pantallaSolicitud', 'pantallaSugerencias', 'pdfCalendario', 'pdfOrden', 'pedirDescanso', 'pedirEmergencia', 'pedirFondos', 'pedirPermiso', 'ping', 'planillasPorPagar', 'ponPreciosGerentes', 'porConfirmar', 'preguntar', 'presupuestoMes', 'presupuestosAreas', 'probarCorreo', 'productosConfig', 'productosParaAnclar', 'productosSucursal', 'reabrirPlanilla', 'rechazarRegistro', 'recibirEfectivo', 'recibirEmergencia', 'recibirOrden', 'recibirSolicitud', 'registrarGasto', 'registrarIngreso', 'registrarKpis', 'registrarLote', 'registrarMant', 'registrarMerma', 'registrarObservacion', 'registrarPagoImpuesto', 'renombrarCategoria', 'reporteDiario', 'reporteTraslados', 'resolverDescanso', 'responderConsulta', 'responderMerma', 'resultadosKpi', 'resultadosKpiCmo', 'resultadosKpiRango', 'resultadosMuestreo', 'resumenInventario', 'resumenMes', 'revisarPermiso', 'seguimiento', 'sugerenciaCompra', 'tableroFinanzas', 'tableroKpi', 'terminarFondos', 'validarRegistro', 'ventas', 'verTraslado', 'verificarFondos', 'proveedoresProductos', 'guardarProveedorProd', 'eliminarProveedor', 'detalleAbastecimiento', 'pdfHistorialInventario', 'pantallaCierreMes', 'guardarCierreMes', 'misMenus', 'menusRol', 'guardarMenusRol', 'historialInventario', 'reiniciarPresupuestos', 'autorizarFondos', 'hechaFondos', 'listaPendientes', 'llegaPendiente', 'cancelarPendiente', 'despacharPendientes', 'devolverFondo', 'corregirFondo', 'pantallaEquipos', 'guardarEquipoA', 'bajaEquipo', 'revisarEquipos', 'confirmarRevisionEq', 'pedirEquipo', 'resolverPedidoEq', 'entregarCompraEq', 'recibirEquipo', 'devolverOrden', 'corregirOrden', 'reiniciarPrecios', 'guardarMezcla', 'registrarLoteMezcla', 'etiquetasLote', 'guardarConfigEtiquetas', 'listaKpisCoo', 'guardarKpiCoo', 'borrarKpiCoo', 'enviarKpisCoo', 'agregarRecomendadosCoo', 'resultadosKpiCoo', 'pantallaKpiCoo', 'registrarKpisCoo', 'resumenAreas', 'resumenAreasSenales', 'pantallaZonas', 'guardarZonas', 'listaKpisTec', 'guardarKpiTec', 'borrarKpiTec', 'enviarKpisTec', 'agregarRecomendadosTec', 'resultadosKpiTec', 'pantallaKpiTec', 'registrarKpisTec', 'cotizarFondo', 'recibirFondo', 'pantallaNivelacion', 'iniciarNivelacion', 'guardarConteoNivelacion', 'explicarNivelacion', 'vistoBuenoNivelacion', 'aprobarNivelacion', 'devolverNivelacion', 'anularNivelacion', 'pdfNivelacion', 'resumenSucursal', 'tableroBodega', 'permisosRol', 'guardarPermisosRol', 'guardarReglasCal', 'confirmarSemanaCal', 'pedirCambioCal', 'autorizarCambioCal'];/*API_FIN*/
+/*API_INI*/var API_PERMITIDAS = ['abrirSolicitud', 'abrirTraslado', 'aceptarSolicitud', 'aceptarYPreparar', 'aclararDiferencia', 'activarCorreos', 'activarObligacion', 'activarProducto', 'activarProductoSucursal', 'adjuntarCotizacion', 'agregarEquipo', 'agregarProducto', 'agregarRecomendados', 'agregarRecomendadosCmo', 'agregarRubro', 'anclarProducto', 'anular', 'anularOrden', 'anularPagoImpuesto', 'anularSolicitud', 'aprobarFondos', 'aprobarPresupuesto', 'aprobarPresupuestoArea', 'asignarDescanso', 'borrarKpi', 'borrarKpiCmo', 'borrarSolicitud', 'cambiarEquipo', 'cambiarMiPin', 'cambiarPermiso', 'cancelarPermiso', 'confirmarPlanilla', 'confirmarRegistro', 'consolidado', 'copiarPresupuesto', 'costosTraslados', 'cotizarOrden', 'darDeBaja', 'datos', 'despacharSolicitudes', 'detalleGasto', 'editarProducto', 'eliminarPersonaCal', 'entrar', 'enviarEmergencia', 'enviarKpis', 'enviarKpisCmo', 'enviarSolicitud', 'enviarSugerencia', 'estadoCorreos', 'evaluarMerma', 'existencias', 'existenciasEmergencia', 'firmarTraslado', 'guardarAjustesInv', 'guardarBonoGeneral', 'guardarBonosCal', 'guardarBorradorCal', 'guardarComision', 'guardarConfigCal', 'guardarConteo', 'guardarEstudio', 'guardarHorario', 'guardarHorasApoyo', 'guardarHorasReales', 'guardarKpi', 'guardarKpiCmo', 'guardarLugar', 'guardarMando', 'guardarMedida', 'guardarMiCorreo', 'guardarMiPresupuesto', 'guardarObligacion', 'guardarOrden', 'guardarPersonaCal', 'guardarPrecios', 'guardarPresupuesto', 'guardarProducto', 'guardarProductoBodega', 'guardarProveedor', 'guardarProveedorInv', 'guardarReceta', 'guardarRepartidor', 'guardarTraslado', 'guardarTurnos', 'guardarUsuario', 'habilita', 'habilitarConteo', 'historialTraslados', 'indicadoresConta', 'leerBonoGeneral', 'leerSugerencias', 'listaBodega', 'listaCatalogo', 'listaConsultas', 'listaDiferencias', 'listaEntrada', 'listaFondos', 'listaImpuestos', 'listaKpis', 'listaKpisCmo', 'listaLugares', 'listaOrdenes', 'listaPermisos', 'listaPrecios', 'listaRepartidores', 'listaReportes', 'listaSolicitudes', 'listaUsuarios', 'llegoSolicitud', 'marcarPreparadas', 'medirAceite', 'miAvance', 'miCorreo', 'miPanel', 'miPresupuesto', 'notificaciones', 'ordenesPago', 'pagarFondos', 'pagarOrden', 'pagarRepartidor', 'pantallaCalendarios', 'pantallaConteo', 'pantallaEmergencias', 'pantallaFirmas', 'pantallaHorarios', 'pantallaKpi', 'pantallaMando', 'pantallaMant', 'pantallaMerma', 'pantallaMuestreo', 'pantallaPedidosBodega', 'pantallaProduccion', 'pantallaSolicitud', 'pantallaSugerencias', 'pdfCalendario', 'pdfOrden', 'pedirDescanso', 'pedirEmergencia', 'pedirFondos', 'pedirPermiso', 'ping', 'planillasPorPagar', 'ponPreciosGerentes', 'porConfirmar', 'preguntar', 'presupuestoMes', 'presupuestosAreas', 'probarCorreo', 'productosConfig', 'productosParaAnclar', 'productosSucursal', 'reabrirPlanilla', 'rechazarRegistro', 'recibirEfectivo', 'recibirEmergencia', 'recibirOrden', 'recibirSolicitud', 'registrarGasto', 'registrarIngreso', 'registrarKpis', 'registrarLote', 'registrarMant', 'registrarMerma', 'registrarObservacion', 'registrarPagoImpuesto', 'renombrarCategoria', 'reporteDiario', 'reporteTraslados', 'resolverDescanso', 'responderConsulta', 'responderMerma', 'resultadosKpi', 'resultadosKpiCmo', 'resultadosKpiRango', 'resultadosMuestreo', 'resumenInventario', 'resumenMes', 'revisarPermiso', 'seguimiento', 'sugerenciaCompra', 'tableroFinanzas', 'tableroKpi', 'terminarFondos', 'validarRegistro', 'ventas', 'verTraslado', 'verificarFondos', 'proveedoresProductos', 'guardarProveedorProd', 'eliminarProveedor', 'detalleAbastecimiento', 'pdfHistorialInventario', 'pantallaCierreMes', 'guardarCierreMes', 'misMenus', 'menusRol', 'guardarMenusRol', 'historialInventario', 'reiniciarPresupuestos', 'autorizarFondos', 'hechaFondos', 'listaPendientes', 'llegaPendiente', 'cancelarPendiente', 'despacharPendientes', 'devolverFondo', 'corregirFondo', 'pantallaEquipos', 'guardarEquipoA', 'bajaEquipo', 'revisarEquipos', 'confirmarRevisionEq', 'pedirEquipo', 'resolverPedidoEq', 'entregarCompraEq', 'recibirEquipo', 'devolverOrden', 'corregirOrden', 'reiniciarPrecios', 'guardarMezcla', 'registrarLoteMezcla', 'etiquetasLote', 'guardarConfigEtiquetas', 'listaKpisCoo', 'guardarKpiCoo', 'borrarKpiCoo', 'enviarKpisCoo', 'agregarRecomendadosCoo', 'resultadosKpiCoo', 'pantallaKpiCoo', 'registrarKpisCoo', 'resumenAreas', 'resumenAreasSenales', 'pantallaZonas', 'guardarZonas', 'listaKpisTec', 'guardarKpiTec', 'borrarKpiTec', 'enviarKpisTec', 'agregarRecomendadosTec', 'resultadosKpiTec', 'pantallaKpiTec', 'registrarKpisTec', 'cotizarFondo', 'recibirFondo', 'pantallaNivelacion', 'iniciarNivelacion', 'guardarConteoNivelacion', 'explicarNivelacion', 'vistoBuenoNivelacion', 'aprobarNivelacion', 'devolverNivelacion', 'anularNivelacion', 'pdfNivelacion', 'resumenSucursal', 'tableroBodega', 'permisosRol', 'guardarPermisosRol', 'guardarReglasCal', 'confirmarSemanaCal', 'pedirCambioCal', 'autorizarCambioCal', 'ventasCajas', 'pantallaDirectores', 'guardarAreaDir', 'quitarDirector', 'pagarDirectores', 'reabrirDirectores'];/*API_FIN*/
 /** Solo contesta «aquí estoy»: sirve para despertar el servidor y medir la velocidad. No lee ni guarda nada. */
 function ping() { return { ok: true }; }
 function doPost(e) {
@@ -12914,7 +12914,7 @@ function tableroBodega(cred, desde, hasta) {
  * (Configuración del proyecto → Propiedades del script). La clave nunca está escrita en el código.
  * Aquí viajan los PIN: por eso es una puerta aparte, con clave larga, y el servidor nuevo los guarda ya transformados
  * (nunca en texto legible). */
-var INTERNAS = ['exportarUsuarios', 'exportarIndicadores', 'exportarResumenLibro', 'exportarHojaTipada', 'versionCodigo', 'aplicarCambios'];
+var INTERNAS = ['exportarUsuarios', 'exportarIndicadores', 'exportarResumenLibro', 'exportarHojaTipada', 'versionCodigo', 'aplicarCambios', 'cajaLote'];
 function igualesSeguro(a, b) {
   a = String(a); b = String(b);
   if (a.length !== b.length) return false;
@@ -12969,7 +12969,7 @@ function exportarIndicadores(q) {
 /* ════════════ COPIA COMPLETA PARA EL SERVIDOR PROPIO ════════════
  * El servidor propio guarda una copia de TODAS las pestañas y corre este mismo código sobre ella para contestar las lecturas.
  * Cada cambio que pasa por aquí avisa qué pestañas tocó («tocadas»), y el servidor solo vuelve a traer esas. */
-var VERSION_CODIGO = '2026-10-18-c';       // se cambia a mano cada vez que se cambia este archivo; el servidor compara que coincida con la suya
+var VERSION_CODIGO = '2026-10-20-a';       // se cambia a mano cada vez que se cambia este archivo; el servidor compara que coincida con la suya
 function versionCodigo() { return VERSION_CODIGO; }
 function huellaTexto(t) { return Utilities.base64Encode(Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, t)).slice(0, 22); }
 /** Un resumen barato de cada pestaña: cuántas filas y columnas tiene y una huella de sus últimas 25 filas. */
@@ -14932,6 +14932,7 @@ var PERM_CAT = [
     ['tarifa', 'Pago por hora y bono de cada persona', 'vc', 1, []],
     ['ajustes', 'Ajustes: horarios de turno, rangos de horas y reglas', 'vc', 0, ['cal:config']],
     ['salgte', 'Salario y bono de gerentes', 'vc', 1, []],
+    ['directores', 'Directores y áreas: sueldos, bonos y pago', 'vc', 1, []],
     ['ausp', 'Pedir permisos de ausencia', 'si', 0, []],
     ['ausa', 'Aprobar permisos de su equipo', 'si', 0, []]] },
   { id: 'inventario', n: 'Inventario', d: 'Conteos, pedidos, traslados y cierre', alc: 1, bod: 1, f: [
@@ -15023,7 +15024,7 @@ var PERM_HOY = {
 /* Lo que se le puede dar a un rol que no lo tenía. rol = el rol que el servidor «presta» para esa función. */
 var PERM_PUENTE = {
   'personal.turnos': {}, 'personal.apoyo': {}, 'personal.confirmar': {}, 'personal.desbloquear': {}, 'personal.pdfo': {}, 'personal.venta': {}, 'personal.costo': {}, 'personal.pagos': {},
-  'personal.planilla': {}, 'personal.reabrir': {}, 'personal.equipo': {}, 'personal.tarifa': {}, 'personal.ajustes': {}, 'personal.salgte': {},
+  'personal.planilla': {}, 'personal.reabrir': {}, 'personal.equipo': {}, 'personal.tarifa': {}, 'personal.ajustes': {}, 'personal.salgte': {}, 'personal.directores': {},
   'produccion.porcionar': { rol: 'produccion' }, 'produccion.recetas': { rol: 'produccion' }, 'produccion.lotes': { rol: 'produccion' },
   'compras.ocs': { rol: 'bodega' }, 'compras.recibir': { rol: 'bodega' },
   'finanzas.resumen': { rol: 'finanzas' }, 'finanzas.reportes': { rol: 'finanzas' }
@@ -15076,6 +15077,7 @@ var PERM_API = {
   listaKpisCmo: [['indicadores.cmo'], 1], guardarKpiCmo: [['indicadores.cmo'], 2], borrarKpiCmo: [['indicadores.cmo'], 2], enviarKpisCmo: [['indicadores.cmo'], 2],
   listaKpisTec: [['indicadores.tec'], 1], guardarKpiTec: [['indicadores.tec'], 2], borrarKpiTec: [['indicadores.tec'], 2], enviarKpisTec: [['indicadores.tec'], 2], registrarKpisTec: [['indicadores.tec'], 2],
   preguntar: [['comunicacion.preguntas'], 2], responderConsulta: [['comunicacion.preguntas'], 2], enviarSugerencia: [['comunicacion.sugerir'], 2], leerSugerencias: [['comunicacion.sugleer'], 1],
+  pantallaDirectores: [['personal.directores'], 1], guardarAreaDir: [['personal.directores'], 2], quitarDirector: [['personal.directores'], 2], pagarDirectores: [['personal.directores'], 2], reabrirDirectores: [['personal.directores'], 2],
   renombrarCategoria: [['config.catalogo'], 2], guardarZonas: [['config.zonas'], 2], guardarBonoGeneral: [['config.bono'], 2]
 };
 
@@ -15318,6 +15320,7 @@ function calPantalla(yo, ac, sid, fecha, D) {
   r.acceso = { turnos: ac.turnos, verTurnos: ac.verTurnos, equipo: ac.equipo, verEquipo: ac.verEquipo, pagos: ac.pagos, verPagos: ac.verPagos, dinero: ac.dinero,
     costo: ac.costo, venta: ac.venta, tarifa: ac.tarifa, verTarifa: ac.verTarifa, ajustes: ac.ajustes, verAjustes: ac.verAjustes, apoyo: ac.apoyo,
     salgte: ac.salgte, verSalgte: ac.verSalgte, confirma: ac.confirma, reabrir: ac.reabrir, pdfm: false, pdfo: ac.pdfo, confirmarSem: ac.confirmarSem, desbloquear: ac.desbloquear, bonoGeneral: ac.bonoGeneral, soloVer: false };
+  r.directores = dirNivel(yo);
   r.reglas = calReglas(m.cfg);
   r.semanas = calSemanas(r.sid, r.q.ini);
   if (!ac.venta) { r.venta = {}; r.tipica = {}; }
@@ -15561,4 +15564,423 @@ function avisosCalendario(yo, out, desde) {
     if (x.reviso && x.pidio === yo.nombre && x.revisadoEn && x.revisadoEn.slice(0, 10) >= desde) out.push({ id: 'calrev-' + x.sid + '-' + x.ini + '-' + x.sem + '-' + x.revisadoEn, tipo: 'Cambio de calendario', cuando: x.revisadoEn,
       titulo: (x.estado === 'Abierta' ? 'Autorizado: ' : 'No autorizado: ') + 'semana ' + x.sem + ' de ' + nombreUnidad(x.sid), texto: x.reviso + (x.comentario ? ' · ' + x.comentario : ''), abrir: { pag: 'cal', ct: 's' + x.sem, sid: x.sid, fecha: x.ini } });
   });
+}
+
+
+/* ════════════ VENTAS DE LAS CAJAS (Rey Pizza Caja · entrega 73) ════════════
+ * Las cajas de las sucursales mandan al servidor propio (Render) cada orden cobrada, cada anulación y el corte de cada turno.
+ * El servidor las guarda y las pasa aquí con la puerta interna (cajaLote, con SERVER_TOKEN):
+ *  · cada orden → «Ventas caja» (una fila) y sus platillos → «Ventas caja detalle»;
+ *  · el corte del turno → Ingresos, como lo anota el gerente (AM o PM), registrado por «Rey Pizza Caja (cajera)».
+ *    Si ya había un ingreso de ese turno con otra venta, se anula («Corregido con el corte de Rey Pizza Caja»); si un gerente
+ *    lo mandó por confirmar, queda rechazado. Si la caja vuelve a mandar el corte (se volvió a cerrar), se reemplaza.
+ *    Mientras las cajas están en prueba (el servidor manda cortes ≠ 'ingresos', que es lo normal hasta que se encienda CAJAS_CORTES=ingresos
+ *    en Render) el corte NO toca Ingresos: queda en la hoja «Cortes caja», para comparar con el que anota el gerente.
+ * Todo es idempotente: si llega dos veces, no se duplica. */
+var H_VCAJA = ['ID', 'Sucursal', 'Fecha', 'Hora', 'Turno', 'Tipo de orden', 'Total', 'Envío', 'Efectivo', 'Tarjeta', 'Estado',
+  'Cajera', 'Cliente', 'Llamada de', 'Motivo de anulación', 'Recibido en', 'Descuento', 'Personas', 'Clave'];
+var H_CCAJA = ['ID', 'Sucursal', 'Fecha', 'Turno', 'Venta', 'Efectivo', 'Tarjeta', 'Gastos de caja', 'En qué se gastó', 'Órdenes', 'Cajera', 'Abrió', 'Cerró', 'Recibido en', 'Corte del gerente'];
+var H_VCAJA_DET = ['ID orden', 'Sucursal', 'Fecha', 'Turno', 'Código', 'Platillo', 'Categoría', 'Cantidad', 'Precio', 'Total'];
+var SUC_CAJA = { CO: 'centro', AL: 'almendras', PE: 'parque' };
+var TIPO_CAJA = { rapida: 'Venta rápida', llevar: 'Para llevar', comer: 'Comer aquí', mesa: 'Mesa', pickup: 'Pickup', delivery: 'Delivery' };
+var QUIEN_CAJA = 'Rey Pizza Caja';
+
+function hojaVentasCaja(ss) {
+  var h = ss.getSheetByName('Ventas caja');
+  if (!h) { h = hojaLimpia(ss, 'Ventas caja', H_VCAJA); h.getRange('C:C').setNumberFormat('@'); h.getRange('G:J').setNumberFormat('"Q"#,##0.00'); }
+  var d = ss.getSheetByName('Ventas caja detalle');
+  if (!d) { d = hojaLimpia(ss, 'Ventas caja detalle', H_VCAJA_DET); d.getRange('C:C').setNumberFormat('@'); d.getRange('I:J').setNumberFormat('"Q"#,##0.00'); }
+  return { h: h, d: d };
+}
+
+function cajaLote(q) {
+  var evs = (q && q.eventos) || [];
+  var ss = libro();
+  var lock = LockService.getScriptLock();
+  lock.waitLock(30000); _LEE = {};
+  var hechos = [], errores = {};
+  try {
+    var hs = hojaVentasCaja(ss), hv = hs.h, hd = hs.d;
+    var filas = leeTodo(hv, H_VCAJA.length), donde = {};
+    filas.forEach(function (r, i) { donde[String(r[18] || r[0])] = i + 2; });      // la clave: caja + serie + orden (una caja que empieza de cero no choca con sus órdenes viejas)
+    var nuevas = [], det = [], ahora = new Date();
+    evs.forEach(function (e) {
+      try {
+        var pre = String(e.sucursal || '').toUpperCase(), sid = SUC_CAJA[pre], u = sid ? unidadPorId(sid) : null;
+        if (!u) throw new Error('Sucursal desconocida: ' + pre);
+        if (e.tipo === 'orden') {
+          var oid = String(e.orden || '').slice(0, 30), cl = String(e.clave || oid).slice(0, 60);
+          if (!oid) throw new Error('La orden no trae su número.');
+          if (donde[cl] || nuevas.some(function (n) { return n[18] === cl; })) { hechos.push(e.id); return; }
+          if (!esFecha(e.fecha)) throw new Error('Fecha inválida.');
+          nuevas.push([oid, u.nombre, e.fecha, String(e.hora || '').slice(0, 5), e.turno === 'AM' ? 'AM' : 'PM', TIPO_CAJA[e.tipoOrden] || String(e.tipoOrden || ''),
+            r2(e.total), r2(e.envio), r2(e.efectivo), r2(e.tarjeta), 'Cobrada', String(e.cajera || '').slice(0, 40), String(e.cliente || '').slice(0, 60),
+            String(e.llamadaDe || '').slice(0, 30), '', ahora, r2(e.descuento), e.personas ? Number(e.personas) : '', cl]);
+          (e.lineas || []).forEach(function (l) {
+            det.push([oid, u.nombre, e.fecha, e.turno === 'AM' ? 'AM' : 'PM', String(l.codigo || '').slice(0, 40), String(l.nombre || '').slice(0, 80),
+              String(l.categoria || '').slice(0, 40), Number(l.cant) || 0, r2(l.precio), r2(l.total)]);
+          });
+          hechos.push(e.id);
+        } else if (e.tipo === 'anulada') {
+          var aid = String(e.clave || e.orden || ''), fila = donde[aid];
+          if (!fila) {
+            var k = -1; nuevas.forEach(function (n, j) { if (n[18] === aid) k = j; });
+            if (k < 0) throw new Error('Todavía no está la orden ' + aid + '.');
+            nuevas[k][10] = 'Anulada'; nuevas[k][14] = String(e.motivo || '').slice(0, 120);
+          } else hv.getRange(fila, 11, 1, 5).setValues([['Anulada', hv.getRange(fila, 12).getValue(), hv.getRange(fila, 13).getValue(), hv.getRange(fila, 14).getValue(), String(e.motivo || '').slice(0, 120)]]);
+          hechos.push(e.id);
+        } else if (e.tipo === 'corte') {
+          if (q.cortes === 'ingresos') cajaCorte(ss, u, e, ahora); else cajaCortePrueba(ss, u, e, ahora);
+          hechos.push(e.id);
+        } else throw new Error('Tipo desconocido.');
+      } catch (x) { errores[e.id] = String(x && x.message ? x.message : x); }
+    });
+    if (nuevas.length) {
+      var f0 = hv.getLastRow() + 1;
+      hv.getRange(f0, 3, nuevas.length, 1).setNumberFormat('@');
+      hv.getRange(f0, 1, nuevas.length, H_VCAJA.length).setValues(nuevas);
+    }
+    if (det.length) {
+      var g0 = hd.getLastRow() + 1;
+      hd.getRange(g0, 3, det.length, 1).setNumberFormat('@');
+      hd.getRange(g0, 1, det.length, H_VCAJA_DET.length).setValues(det);
+    }
+    return { hechos: hechos, errores: errores, ordenes: nuevas.length, platillos: det.length };
+  } finally { lock.releaseLock(); }
+}
+
+/** Cajas en prueba: el corte queda aparte («Cortes caja»), con lo que anotó el gerente de ese turno para comparar. Si llega otra vez, se actualiza. */
+function cajaCortePrueba(ss, u, e, ahora) {
+  if (!esFecha(e.fecha)) throw new Error('Fecha inválida.');
+  var h = ss.getSheetByName('Cortes caja');
+  if (!h) { h = hojaLimpia(ss, 'Cortes caja', H_CCAJA); h.getRange('C:C').setNumberFormat('@'); h.getRange('E:H').setNumberFormat('"Q"#,##0.00'); }
+  var turno = e.turno === 'AM' ? 'AM' : 'PM', id = u.id + '|' + e.fecha + '|' + turno;
+  var ef = r2(e.efectivo), ta = r2(e.tarjeta), gerente = '';
+  var hi = ss.getSheetByName('Ingresos');
+  if (hi) leeTodo(hi, H_INGRESOS.length).forEach(function (r) {
+    if (String(r[4]) === u.nombre && String(r[10]).toLowerCase() !== 'sí' && fmtDia(r[5]) === e.fecha && String(r[7]) === turno) gerente = dinero(Number(r[8]) || 0) + ' (' + String(r[2] || '') + ')';
+  });
+  var fila = [id, u.nombre, e.fecha, turno, r2(ef + ta), ef, ta, r2(e.gastoCaja), String(e.detalleCaja || '').slice(0, 140), Number(e.ordenes) || 0,
+    String(e.cajera || '').slice(0, 60), String(e.abre || ''), String(e.cierra || ''), ahora, gerente];
+  var k = -1; leeTodo(h, 1).forEach(function (r, i) { if (String(r[0]) === id) k = i + 2; });
+  if (k > 0) h.getRange(k, 1, 1, fila.length).setValues([fila]);
+  else { var f0 = h.getLastRow() + 1; h.getRange(f0, 3).setNumberFormat('@'); h.getRange(f0, 1, 1, fila.length).setValues([fila]); }
+}
+
+/** El corte de un turno, como Ingreso. `e` = { fecha, turno, efectivo, tarjeta, gastoCaja, detalleCaja, cajera, ordenes, abre, cierra } */
+function cajaCorte(ss, u, e, ahora) {
+  if (!esFecha(e.fecha)) throw new Error('Fecha inválida.');
+  var turno = e.turno === 'AM' ? 'AM' : 'PM';
+  var ef = r2(e.efectivo), ta = r2(e.tarjeta), cajaTodo = r2(e.gastoCaja), caja = Math.min(cajaTodo, ef);
+  var detCaja = String(e.detalleCaja || '').trim() || 'Gastos anotados en Rey Pizza Caja';
+  if (cajaTodo > ef) detCaja = (detCaja + ' · OJO: en la caja se anotaron ' + dinero(cajaTodo) + ' de gastos, más que el efectivo del turno: revisar').slice(0, 140);
+  var h = ss.getSheetByName('Ingresos');
+  if (!h) throw new Error('Falta la hoja Ingresos.');
+  var quien = QUIEN_CAJA + (e.cajera ? ' (' + String(e.cajera).slice(0, 30) + ')' : '');
+  var nota = 'Corte de Rey Pizza Caja · ' + (e.ordenes || 0) + ' órdenes' + (e.abre ? ' · ' + e.abre + '–' + (e.cierra || '') : '');
+  // lo que ya hay de ese turno
+  _LEE = {};
+  var filasH = leeTodo(h, H_INGRESOS.length), ya = null;
+  filasH.forEach(function (r, i) {
+    if (String(r[4]) !== u.nombre || String(r[10]).toLowerCase() === 'sí' || fmtDia(r[5]) !== e.fecha || String(r[7]) !== turno) return;
+    ya = { fila: i + 2, monto: Number(r[8]) || 0, ef: Number(r[14]) || 0, ta: Number(r[15]) || 0, caja: Number(r[16]) || 0, quien: String(r[2] || '') };
+  });
+  var monto = r2(ef + ta);
+  if (ya && ya.quien.indexOf(QUIEN_CAJA) === 0 && Math.abs(ya.monto - monto) < 0.005 && Math.abs(ya.caja - caja) < 0.005 && Math.abs(ya.ta - ta) < 0.005) return;   // ya está igual
+  if (!(monto > 0)) {
+    if (ya && ya.quien.indexOf(QUIEN_CAJA) === 0) h.getRange(ya.fila, 11, 1, 4).setValues([['Sí', 'El turno quedó sin ventas en Rey Pizza Caja', QUIEN_CAJA, ahora]]);
+    return;                                      // turno sin ventas: no hay corte que anotar
+  }
+  var v = preparaIngreso({ unidad: u.id, fecha: e.fecha, turno: turno, efectivo: ef, tarjeta: ta, gastoCaja: caja, detalleCaja: caja > 0 ? detCaja : '', nota: nota });
+  if (ya) {
+    var motivo = ya.quien.indexOf(QUIEN_CAJA) === 0 ? 'Reemplazado por el corte actualizado de Rey Pizza Caja'
+      : 'Corregido con el corte de Rey Pizza Caja: venta ' + dinero(monto) + ' (estaba ' + dinero(ya.monto) + ')';
+    if (ya.quien.indexOf(QUIEN_CAJA) !== 0 && Math.abs(ya.monto - monto) < 0.005) motivo = 'Reemplazado por el corte de Rey Pizza Caja (misma venta)';
+    h.getRange(ya.fila, 11, 1, 4).setValues([['Sí', motivo, QUIEN_CAJA, ahora]]);
+  }
+  // cortes de gerentes por confirmar de ese turno: quedan rechazados (ya lo dice la caja)
+  var hp = null;
+  filasPorConfirmar().forEach(function (p) {
+    if (p.estado !== EST_PEND || p.tipo !== 'ingreso' || p.sucursal !== u.nombre || p.fecha !== e.fecha || p.turno !== turno) return;
+    hp = hp || hojaPorConfirmar();
+    hp.getRange(p.fila, 11, 1, 4).setValues([[EST_RECH, QUIEN_CAJA, ahora, 'Ese turno ya lo mandó la caja (Rey Pizza Caja)']]);
+  });
+  var id = 'I' + Utilities.formatDate(ahora, ZONA, 'yyyyMMddHHmmss') + 'CJ' + u.id.charAt(0).toUpperCase() + turno.charAt(0) + String(e.fecha).replace(/-/g, '').slice(2) + Math.floor(Math.random() * 900 + 100);
+  var pct = tasaComision(), com = comisionDe(v.tarjeta, pct);
+  h.appendRow([id, ahora, quien, '', u.nombre, aDate(v.fecha), String(v.fecha).slice(0, 7), v.turno, v.monto, v.nota, 'No', '', '', '',
+    v.efectivo, v.tarjeta, v.caja, v.detalleCaja, QUIEN_CAJA, ahora, '', '', '', '', com, r2(v.tarjeta - com), pct]);
+  h.getRange(h.getLastRow(), 7).setNumberFormat('@').setValue(String(v.fecha).slice(0, 7));
+}
+
+/** Reportes › Ventas de las cajas. Administrador, dueños, director operativo y finanzas: todas; el gerente: su sucursal. */
+function ventasCajas(cred, desde, hasta, sid) {
+  var yo = verifica(cred);
+  var todas = yo.esAdmin || ['dueno', 'operaciones', 'finanzas'].indexOf(yo.rol) >= 0;
+  if (!todas && yo.rol !== 'gerente') throw new Error('Su usuario no ve las ventas de las cajas.');
+  var hoy = Utilities.formatDate(new Date(), ZONA, 'yyyy-MM-dd');
+  desde = esFecha(desde) ? desde : hoy; hasta = esFecha(hasta) ? hasta : desde;
+  if (hasta < desde) { var t = desde; desde = hasta; hasta = t; }
+  if ((aDate(hasta) - aDate(desde)) / 86400000 > 92) throw new Error('Escoja hasta 3 meses.');
+  var suc = UNIDADES.filter(function (x) { return x.vende && x.tipo === 'sucursal'; });
+  if (!todas) suc = suc.filter(function (x) { return x.id === yo.sucursal; });
+  else if (sid) suc = suc.filter(function (x) { return x.id === sid; });
+  var nombres = suc.map(function (x) { return x.nombre; });
+  var ss = libro(), hv = ss.getSheetByName('Ventas caja'), hd = ss.getSheetByName('Ventas caja detalle');
+  var out = { desde: desde, hasta: hasta, hoy: hoy, todas: todas, sucursales: suc.map(function (x) { return { id: x.id, nombre: x.nombre, marca: x.marca }; }),
+    porSucursal: {}, porDia: {}, porTipo: {}, porHora: {}, porTurno: {}, platillos: [], llamadas: 0, anuladas: { n: 0, monto: 0 }, ultima: {} };
+  nombres.forEach(function (n) { out.porSucursal[n] = { ordenes: 0, venta: 0, envio: 0, efectivo: 0, tarjeta: 0, descuento: 0, anuladas: 0, llamadas: 0 }; });
+  if (!hv) return out;
+  var ok = {};
+  leeTodo(hv, H_VCAJA.length).forEach(function (r) {
+    var f = fmtDia(r[2]), n = String(r[1]);
+    if (f < desde || f > hasta || nombres.indexOf(n) < 0) return;
+    if (String(r[10]) === 'Anulada') { out.anuladas.n++; out.anuladas.monto = r2(out.anuladas.monto + (Number(r[6]) || 0)); out.porSucursal[n].anuladas++; return; }
+    ok[String(r[0])] = true;
+    var tot = Number(r[6]) || 0, s = out.porSucursal[n];
+    s.ordenes++; s.venta = r2(s.venta + tot); s.envio = r2(s.envio + (Number(r[7]) || 0)); s.efectivo = r2(s.efectivo + (Number(r[8]) || 0)); s.tarjeta = r2(s.tarjeta + (Number(r[9]) || 0));
+    s.descuento = r2(s.descuento + (Number(r[16]) || 0));
+    if (r[13]) { s.llamadas++; out.llamadas++; }
+    var dd = out.porDia[f] = out.porDia[f] || {}; dd[n] = r2((dd[n] || 0) + tot);
+    var tp = String(r[5] || '—'), x = out.porTipo[tp] = out.porTipo[tp] || { ordenes: 0, venta: 0 }; x.ordenes++; x.venta = r2(x.venta + tot);
+    var hr = String(r[3] || '').slice(0, 2), y = out.porHora[hr] = out.porHora[hr] || { ordenes: 0, venta: 0 }; y.ordenes++; y.venta = r2(y.venta + tot);
+    var tu = String(r[4] || ''), z = out.porTurno[tu] = out.porTurno[tu] || { ordenes: 0, venta: 0 }; z.ordenes++; z.venta = r2(z.venta + tot);
+    var u0 = f + ' ' + String(r[3] || ''); if (!out.ultima[n] || u0 > out.ultima[n]) out.ultima[n] = u0;
+  });
+  if (hd) {
+    var pl = {};
+    leeTodo(hd, H_VCAJA_DET.length).forEach(function (r) {
+      if (!ok[String(r[0])]) return;
+      var k = String(r[5]), p = pl[k] = pl[k] || { nombre: k, categoria: String(r[6] || ''), cant: 0, venta: 0, porSuc: {} };
+      p.cant += Number(r[7]) || 0; p.venta = r2(p.venta + (Number(r[9]) || 0)); p.porSuc[String(r[1])] = (p.porSuc[String(r[1])] || 0) + (Number(r[7]) || 0);
+    });
+    out.platillos = Object.keys(pl).map(function (k) { return pl[k]; }).sort(function (a, b) { return b.venta - a.venta; }).slice(0, 60);
+  }
+  return out;
+}
+
+
+/* ════════════ ENTREGA 74: DIRECTORES Y ÁREAS (Personal) ════════════
+ * Junto a las sucursales, en Personal: Dirección general, Operaciones, Finanzas y Marketing.
+ * Cada persona tiene su sueldo mensual; cada quincena se paga la mitad más los bonos de esa quincena.
+ * Al pagar un área queda como gasto de «Nómina y bonificaciones» en el lugar al que se carga cada persona
+ * (o repartido en partes iguales entre las tres sucursales). Lo ve y lo maneja quien tenga el permiso
+ * «personal.directores» (al principio, solo el administrador). */
+var DIR_AREAS = [
+  { k: 'direccion', n: 'Dirección general', d: 'Director general: sueldo y bonos' },
+  { k: 'operaciones', n: 'Operaciones', d: 'Director operativo, bodega y producción (las sucursales se pagan en cada sucursal)' },
+  { k: 'finanzas', n: 'Finanzas', d: 'Director financiero y contador' },
+  { k: 'marketing', n: 'Marketing', d: 'Marketing' }
+];
+var H_DIR = ['Id', 'Área', 'Nombre', 'Puesto', 'Sueldo mensual', 'Se carga a', 'Activo', 'Orden', 'Cambiado por', 'Cambiado en'];
+var H_DIR_BONO = ['Quincena', 'Id', 'Bono', 'Nota', 'Por', 'En'];
+var H_DIR_PL = ['Área', 'Quincena', 'Fin', 'Calculado', 'Pagado', 'Fecha de pago', 'Por', 'En', 'Gastos', 'Estado', 'Nota', 'Detalle (JSON)'];
+var DIR_REPARTO = 'reparto';
+
+function dirArea(k) { var r = null; DIR_AREAS.forEach(function (a) { if (a.k === k) r = a; }); return r; }
+function dirNivel(yo) { return yo.esAdmin ? 2 : tienePerm(yo, 'personal.directores', 2) ? 2 : tienePerm(yo, 'personal.directores', 1) ? 1 : 0; }
+function dirAcceso(yo, nivel) {
+  var n = dirNivel(yo);
+  if (n < (nivel || 1)) throw new Error(n ? 'Usted solo puede ver los pagos de directores y áreas.' : 'Los pagos de directores y áreas solo los ve el administrador.');
+  return n;
+}
+function dirHoja(nombre, enc, texto) {
+  var existe = libro().getSheetByName(nombre), h = hojaCat(nombre, enc);
+  if (!existe) (texto || []).forEach(function (c) { h.getRange(c + ':' + c).setNumberFormat('@'); });
+  return h;
+}
+/** Las personas de las áreas. Si la hoja todavía no existe, arranca con los usuarios de cada rol (sueldo 0). */
+function dirLeePersonas() {
+  var h = libro().getSheetByName('Directores y áreas');
+  if (!h || h.getLastRow() < 2) return dirSemilla();
+  return leeTodo(h, H_DIR.length).map(function (r, i) {
+    return { fila: i + 2, id: calTxt(r[0]), area: calTxt(r[1]), nombre: calTxt(r[2]), puesto: calTxt(r[3]), sueldo: calRed(r[4]),
+      carga: calTxt(r[5]) || DIR_REPARTO, activo: String(r[6]).toLowerCase() !== 'no', orden: Number(r[7]) || 0 };
+  }).filter(function (p) { return p.id && dirArea(p.area); });
+}
+function dirSemilla() {
+  var out = [], n = 0, us = [];
+  try { us = usuariosCache().filter(function (u) { return u.activo; }); } catch (e) {}
+  var pon = function (area, nombre, puesto, carga, sueldo) { n++; out.push({ fila: 0, id: 'D' + ('00' + n).slice(-3), area: area, nombre: nombre, puesto: puesto, sueldo: calRed(sueldo || 0), carga: carga, activo: true, orden: n, semilla: true }); };
+  var mkt = null; try { unidadPorId('centro'); UNIDADES.forEach(function (u) { if (!mkt && u.extra && /market|publicidad/i.test(u.id + ' ' + u.nombre)) mkt = u.id; }); } catch (e) {}
+  us.filter(function (u) { return u.rol === 'admin'; }).forEach(function (u) { pon('direccion', u.nombre, 'Director general', DIR_REPARTO); });
+  us.filter(function (u) { return u.rol === 'operaciones'; }).forEach(function (u) { pon('operaciones', u.nombre, 'Director operativo', DIR_REPARTO); });
+  us.filter(function (u) { return u.rol === 'bodega'; }).forEach(function (u) { pon('operaciones', u.nombre, 'Bodega', 'bodega'); });
+  us.filter(function (u) { return u.rol === 'produccion'; }).forEach(function (u) { pon('operaciones', u.nombre, 'Producción de insumos', 'bodega'); });
+  us.filter(function (u) { return u.rol === 'finanzas'; }).forEach(function (u) { pon('finanzas', u.nombre, 'Director financiero', DIR_REPARTO); });
+  us.filter(function (u) { return u.rol === 'registro' && u.confirma; }).forEach(function (u) { pon('finanzas', u.nombre, 'Contador', DIR_REPARTO); });
+  var sc = 0; try { sc = sueldoCmo(); } catch (e) {}
+  us.filter(function (u) { return u.rol === 'cmo'; }).forEach(function (u) { pon('marketing', u.nombre, 'Marketing', mkt || DIR_REPARTO, sc); });
+  return out;
+}
+function dirLeeBonos(ini) {
+  var h = libro().getSheetByName('Directores bonos'), o = {};
+  if (!h || h.getLastRow() < 2) return o;
+  leeTodo(h, H_DIR_BONO.length).forEach(function (r, i) {
+    if (calTxt(r[0]) === ini && calTxt(r[1])) o[calTxt(r[1])] = { fila: i + 2, bono: calRed(r[2]), nota: calTxt(r[3]) };
+  });
+  return o;
+}
+function dirLeePagos() {
+  var h = libro().getSheetByName('Directores planilla');
+  if (!h || h.getLastRow() < 2) return [];
+  return leeTodo(h, H_DIR_PL.length).map(function (r, i) {
+    return { fila: i + 2, area: calTxt(r[0]), ini: calTxt(r[1]), fin: calTxt(r[2]), calculado: calRed(r[3]), pagado: calRed(r[4]), fechaPago: calTxt(r[5]),
+      por: calTxt(r[6]), en: fmtSello(r[7]), gastos: calTxt(r[8]), estado: calTxt(r[9]), nota: calTxt(r[10]), detalle: calTxt(r[11]) };
+  }).filter(function (x) { return x.area && x.ini; });
+}
+function dirPagada(pagos, area, ini) { var r = null; pagos.forEach(function (x) { if (x.area === area && x.ini === ini && x.estado === 'Pagada') r = x; }); return r; }
+function dirCargas() {
+  var o = [{ id: DIR_REPARTO, nombre: 'Repartido entre las 3 sucursales' }];
+  try { unidadPorId('centro'); } catch (e) {}
+  UNIDADES.forEach(function (u) { if (u.activo !== false) o.push({ id: u.id, nombre: u.nombre }); });
+  return o;
+}
+function dirNombreCarga(id) { if (id === DIR_REPARTO) return 'Repartido entre las 3 sucursales'; var u = unidadPorId(id); return u ? u.nombre : id; }
+
+/** El modelo de una quincena: cada área con su gente, lo que toca y si ya se pagó. */
+function dirModelo(fecha) {
+  var q = calQuincena(fecha), ps = dirLeePersonas(), bo = dirLeeBonos(q.ini), pagos = dirLeePagos();
+  var areas = DIR_AREAS.map(function (a) {
+    var pg = dirPagada(pagos, a.k, q.ini);
+    if (pg) { var det = calJson(pg.detalle, null); if (det) { det.pagada = { pagado: pg.pagado, calculado: pg.calculado, fechaPago: pg.fechaPago, por: pg.por, en: pg.en, nota: pg.nota }; return det; } }
+    var filas = ps.filter(function (p) { return p.area === a.k && p.activo; }).sort(function (x, y) { return x.orden - y.orden; }).map(function (p) {
+      var b = bo[p.id] || { bono: 0, nota: '' }, mitad = calRed(p.sueldo / 2);
+      return { id: p.id, nombre: p.nombre, puesto: p.puesto, sueldo: p.sueldo, mitad: mitad, bono: b.bono, nota: b.nota, pago: calRed(mitad + b.bono),
+        carga: p.carga, cargaNombre: dirNombreCarga(p.carga) };
+    });
+    var t = { sueldos: 0, bonos: 0, total: 0 };
+    filas.forEach(function (f) { t.sueldos += f.mitad; t.bonos += f.bono; t.total += f.pago; });
+    t.sueldos = calRed(t.sueldos); t.bonos = calRed(t.bonos); t.total = calRed(t.total);
+    return { k: a.k, nombre: a.n, desc: a.d, filas: filas, tot: t, pagada: null };
+  });
+  return { q: q, areas: areas, semilla: ps.length && ps[0].semilla };
+}
+function pantallaDirectores(cred, fecha) {
+  var yo = quien(cred), nivel = dirAcceso(yo, 1), m = dirModelo(fecha), q = m.q, hoy = hoyISO();
+  // las sucursales (se pagan en Personal › cada sucursal): su planilla, para ver el total de la empresa
+  var D = calDatos(), sucs = ['centro', 'almendras', 'parque'].map(function (s) {
+    var mm = calModelo(D, s, q.ini), pl = calPlanillaDe(D, s, q.ini);
+    return { sid: s, nombre: nombreUnidad(s), total: pl ? pl.pagado : mm.tot.total, horas: mm.tot.horas, gerencia: mm.tot.gerencia, pagada: !!pl,
+      estado: pl ? 'pagada' : mm.tot.conReales ? 'con horas trabajadas' : 'proyectada' };
+  });
+  var tA = 0, tS = 0; m.areas.forEach(function (a) { tA += a.pagada ? a.pagada.pagado : a.tot.total; }); sucs.forEach(function (s) { tS += s.total; });
+  return { ok: true, hoy: hoy, edita: nivel >= 2,
+    q: { ini: q.ini, fin: q.fin, n: q.n, nombre: q.nombre, corto: q.corto, ant: q.ant, sig: q.sig },
+    areas: m.areas, sucursales: sucs, cargas: dirCargas(), semilla: !!m.semilla, puedePagar: hoy >= masDias(q.fin, -1),
+    tot: { areas: calRed(tA), sucursales: calRed(tS), total: calRed(tA + tS) } };
+}
+function dirEscribePersonas(ps, yo) {
+  var h = dirHoja('Directores y áreas', H_DIR, ['A']), ahora = new Date();
+  var filas = ps.map(function (p) { return [p.id, p.area, p.nombre, p.puesto, p.sueldo, p.carga, p.activo ? 'Sí' : 'No', p.orden, p.por || yo.nombre, p.en || ahora]; });
+  if (h.getLastRow() > 1) h.getRange(2, 1, h.getLastRow() - 1, H_DIR.length).clearContent();
+  if (filas.length) { h.getRange(2, 1, filas.length, 1).setNumberFormat('@'); h.getRange(2, 1, filas.length, H_DIR.length).setValues(filas); }
+  _LEE = {};
+}
+/** Guarda un área: nombres, puestos, sueldos, a dónde se carga cada uno y los bonos de la quincena. Una fila sin id es alguien nuevo. */
+function guardarAreaDir(cred, area, fecha, filas) {
+  var yo = quien(cred); dirAcceso(yo, 2);
+  if (!dirArea(area)) throw new Error('Escoja el área.');
+  var lock = LockService.getScriptLock(); lock.waitLock(15000); _LEE = {};
+  try {
+    var q = calQuincena(fecha);
+    if (dirPagada(dirLeePagos(), area, q.ini)) throw new Error('Esta quincena de ' + dirArea(area).n + ' ya se pagó. Para cambiarla, primero reábrala.');
+    var ps = dirLeePersonas(), max = 0, cargas = dirCargas().map(function (c) { return c.id; }), cambios = 0, nuevas = [];
+    ps.forEach(function (p) { var n = +String(p.id).replace(/\D/g, '') || 0; if (n > max) max = n; });
+    var bonos = [];
+    (filas || []).forEach(function (f) {
+      var nombre = String(f.nombre || '').trim().slice(0, 60), puesto = String(f.puesto || '').trim().slice(0, 60);
+      if (!nombre) throw new Error('Falta el nombre de una persona.');
+      var sueldo = f.sueldo === '' || f.sueldo == null ? 0 : calNumero(f.sueldo, 'El sueldo de ' + nombre, 200000);
+      var carga = cargas.indexOf(String(f.carga || '')) >= 0 ? String(f.carga) : DIR_REPARTO;
+      var p = null; ps.forEach(function (x) { if (x.id === f.id) p = x; });
+      if (!p) { max++; p = { id: 'D' + ('00' + max).slice(-3), area: area, activo: true, orden: max }; ps.push(p); nuevas.push(nombre); }
+      if (p.area !== area) throw new Error(nombre + ' es de otra área.');
+      if (p.nombre !== nombre || p.puesto !== puesto || p.sueldo !== sueldo || p.carga !== carga || p.semilla) { p.por = ''; p.en = ''; cambios++; }
+      p.nombre = nombre; p.puesto = puesto; p.sueldo = sueldo; p.carga = carga; delete p.semilla;
+      var b = f.bono === '' || f.bono == null ? 0 : calNumero(f.bono, 'El bono de ' + nombre, 100000);
+      bonos.push({ id: p.id, bono: b, nota: String(f.nota || '').trim().slice(0, 120) });
+    });
+    ps.forEach(function (p) { delete p.semilla; });
+    dirEscribePersonas(ps, yo);
+    // bonos de esta quincena (se reemplazan los del área)
+    var hb = dirHoja('Directores bonos', H_DIR_BONO, ['A', 'B']), viejos = dirLeeBonos(q.ini), ahora = new Date();
+    bonos.forEach(function (b) {
+      var v = viejos[b.id];
+      if (v) { if (v.bono !== b.bono || v.nota !== b.nota) hb.getRange(v.fila, 3, 1, 4).setValues([[b.bono, b.nota, yo.nombre, ahora]]); }
+      else if (b.bono > 0 || b.nota) { var fl = hb.getLastRow() + 1; hb.getRange(fl, 1, 1, 2).setNumberFormat('@'); hb.getRange(fl, 1, 1, H_DIR_BONO.length).setValues([[q.ini, b.id, b.bono, b.nota, yo.nombre, ahora]]); }
+    });
+    _LEE = {};
+    var r = pantallaDirectores(cred, q.ini);
+    r.mensaje = dirArea(area).n + ': guardado' + (nuevas.length ? ' (nueva: ' + nuevas.join(', ') + ')' : '') + '.';
+    return r;
+  } finally { lock.releaseLock(); }
+}
+function quitarDirector(cred, id, fecha) {
+  var yo = quien(cred); dirAcceso(yo, 2);
+  var lock = LockService.getScriptLock(); lock.waitLock(15000); _LEE = {};
+  try {
+    var ps = dirLeePersonas(), p = null; ps.forEach(function (x) { if (x.id === id) p = x; });
+    if (!p) throw new Error('No se encontró a esa persona.');
+    p.activo = false; ps.forEach(function (x) { delete x.semilla; });
+    dirEscribePersonas(ps, yo);
+    var r = pantallaDirectores(cred, fecha); r.mensaje = p.nombre + ' ya no aparece en ' + dirArea(p.area).n + '. Lo pagado antes se queda igual.'; return r;
+  } finally { lock.releaseLock(); }
+}
+/** Paga un área: un gasto de Nómina y bonificaciones por cada lugar al que se carga (repartido = un tercio a cada sucursal). */
+function pagarDirectores(cred, area, fecha, pagado, fechaPago, nota) {
+  var yo = quien(cred); dirAcceso(yo, 2);
+  var A = dirArea(area); if (!A) throw new Error('Escoja el área.');
+  var lock = LockService.getScriptLock(); lock.waitLock(15000); _LEE = {};
+  try {
+    var m = dirModelo(fecha), q = m.q, hoy = hoyISO(), ar = null; m.areas.forEach(function (a) { if (a.k === area) ar = a; });
+    if (ar.pagada) throw new Error('Esta quincena de ' + A.n + ' ya está pagada.');
+    if (hoy < masDias(q.fin, -1)) throw new Error('La quincena termina el ' + dia(q.fin) + '. Se puede pagar desde el ' + dia(masDias(q.fin, -1)) + '.');
+    if (!(ar.tot.total > 0)) throw new Error('No hay sueldos ni bonos en ' + A.n + '. Escriba primero los sueldos y toque «Guardar».');
+    var monto = pagado === '' || pagado == null ? ar.tot.total : calNumero(pagado, 'El monto pagado', 500000);
+    if (!(monto > 0)) throw new Error('Escriba lo que se pagó.');
+    var fp = fechaPago || hoy; if (!esFecha(fp) || fp > hoy) throw new Error('La fecha de pago no es válida.');
+    nota = String(nota || '').trim().slice(0, 120);
+    if (Math.abs(monto - ar.tot.total) >= 1 && nota.length < 4) throw new Error('Lo pagado (' + dinero(monto) + ') no es lo calculado (' + dinero(ar.tot.total) + '). Escriba por qué en la nota.');
+    // lo que va a cada lugar (si se pagó distinto a lo calculado, se reparte en la misma proporción)
+    var porU = {}, fac = monto / ar.tot.total;
+    ar.filas.forEach(function (f) {
+      if (!(f.pago > 0)) return;
+      var us = f.carga === DIR_REPARTO ? ['centro', 'almendras', 'parque'] : [f.carga];
+      us.forEach(function (u) { porU[u] = (porU[u] || 0) + f.pago * fac / us.length; });
+    });
+    var ids = Object.keys(porU), suma = 0, gastos = [];
+    ids.forEach(function (u, i) {
+      var v = i === ids.length - 1 ? calRed(monto - suma) : calRed(porU[u]); suma = calRed(suma + v);
+      if (!(v > 0)) return;
+      var g = preparaGasto({ unidad: u, fechaPago: fp, categoria: 'Nómina y bonificaciones', monto: v, proveedor: 'Planilla ' + A.n,
+        factura: ('DIR-' + area.slice(0, 5) + '-' + q.ini + (ids.length > 1 ? '-' + u.slice(0, 5) : '')).slice(0, 30), nota: ('Planilla ' + A.n + ' ' + q.corto + (nota ? ' · ' + nota : '')).slice(0, 140) });
+      g.mes = q.ini.slice(0, 7);
+      gastos.push(escribeGasto(g, yo.nombre, new Date(), null).nuevo.id);
+    });
+    var det = { k: ar.k, nombre: ar.nombre, desc: ar.desc, filas: ar.filas, tot: ar.tot };
+    var h = dirHoja('Directores planilla', H_DIR_PL, ['B', 'C', 'F']), fila = h.getLastRow() + 1;
+    h.getRange(fila, 1, 1, 3).setNumberFormat('@'); h.getRange(fila, 6).setNumberFormat('@');
+    h.getRange(fila, 1, 1, H_DIR_PL.length).setValues([[area, q.ini, q.fin, ar.tot.total, monto, fp, yo.nombre, new Date(), gastos.join(' '), 'Pagada', nota, JSON.stringify(det)]]);
+    _LEE = {};
+    var r = pantallaDirectores(cred, q.ini);
+    r.mensaje = A.n + ' pagado: ' + dinero(monto) + '. Quedó como gasto de Nómina y bonificaciones' + (ids.length > 1 ? ' (' + ids.map(nombreUnidad).join(', ') + ')' : ' en ' + nombreUnidad(ids[0])) + '.';
+    return r;
+  } finally { lock.releaseLock(); }
+}
+function reabrirDirectores(cred, area, fecha, motivo) {
+  var yo = quien(cred); dirAcceso(yo, 2);
+  var A = dirArea(area); if (!A) throw new Error('Escoja el área.');
+  motivo = String(motivo || '').trim(); if (motivo.length < 4) throw new Error('Escriba el motivo.');
+  var lock = LockService.getScriptLock(); lock.waitLock(15000); _LEE = {};
+  try {
+    var q = calQuincena(fecha), pg = dirPagada(dirLeePagos(), area, q.ini);
+    if (!pg) throw new Error('Esta quincena de ' + A.n + ' no estaba pagada.');
+    pg.gastos.split(/\s+/).filter(String).forEach(function (id) {
+      try { anular({ cred: cred, clase: 'gasto', id: id, motivo: 'Planilla ' + A.n + ' reabierta: ' + motivo }); } catch (e) { if (!/ya estaba anulado/.test(e.message)) throw e; }
+    });
+    var h = libro().getSheetByName('Directores planilla');
+    h.getRange(pg.fila, 10, 1, 2).setValues([['Reabierta', (pg.nota ? pg.nota + ' · ' : '') + 'reabierta: ' + motivo]]);
+    _LEE = {};
+    var r = pantallaDirectores(cred, q.ini); r.mensaje = A.n + ': se reabrió y se anularon sus gastos. Ya puede corregir y volver a pagar.'; return r;
+  } finally { lock.releaseLock(); }
 }
