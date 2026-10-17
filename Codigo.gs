@@ -927,7 +927,7 @@ function doGet() {
  * mismo proyecto por POST. Solo se pueden llamar las funciones de esta lista (las mismas
  * que usa la pantalla), y cada una revisa el código de quien pregunta, igual que antes.
  * La lista la pone sola el armado; no hace falta tocarla. */
-/*API_INI*/var API_PERMITIDAS = ['abrirSolicitud', 'abrirTraslado', 'aceptarSolicitud', 'aceptarYPreparar', 'aclararDiferencia', 'activarCorreos', 'activarObligacion', 'activarProducto', 'activarProductoSucursal', 'adjuntarCotizacion', 'agregarEquipo', 'agregarProducto', 'agregarRecomendados', 'agregarRecomendadosCmo', 'agregarRubro', 'anclarProducto', 'anular', 'anularOrden', 'anularPagoImpuesto', 'anularSolicitud', 'aprobarFondos', 'aprobarPresupuesto', 'aprobarPresupuestoArea', 'asignarDescanso', 'borrarKpi', 'borrarKpiCmo', 'borrarSolicitud', 'cambiarEquipo', 'cambiarMiPin', 'cambiarPermiso', 'cancelarPermiso', 'confirmarPlanilla', 'confirmarRegistro', 'consolidado', 'copiarPresupuesto', 'costosTraslados', 'cotizarOrden', 'darDeBaja', 'datos', 'despacharSolicitudes', 'detalleGasto', 'editarProducto', 'eliminarPersonaCal', 'entrar', 'enviarEmergencia', 'enviarKpis', 'enviarKpisCmo', 'enviarSolicitud', 'enviarSugerencia', 'estadoCorreos', 'evaluarMerma', 'existencias', 'existenciasEmergencia', 'firmarTraslado', 'guardarAjustesInv', 'guardarBonoGeneral', 'guardarBonosCal', 'guardarBorradorCal', 'guardarComision', 'guardarConfigCal', 'guardarConteo', 'guardarEstudio', 'guardarHorario', 'guardarHorasApoyo', 'guardarHorasReales', 'guardarKpi', 'guardarKpiCmo', 'guardarLugar', 'guardarMando', 'guardarMedida', 'guardarMiCorreo', 'guardarMiPresupuesto', 'guardarObligacion', 'guardarOrden', 'guardarPersonaCal', 'guardarPrecios', 'guardarPresupuesto', 'guardarProducto', 'guardarProductoBodega', 'guardarProveedor', 'guardarProveedorInv', 'guardarReceta', 'guardarRepartidor', 'guardarTraslado', 'guardarTurnos', 'guardarUsuario', 'habilita', 'habilitarConteo', 'historialTraslados', 'indicadoresConta', 'leerBonoGeneral', 'leerSugerencias', 'listaBodega', 'listaCatalogo', 'listaConsultas', 'listaDiferencias', 'listaEntrada', 'listaFondos', 'listaImpuestos', 'listaKpis', 'listaKpisCmo', 'listaLugares', 'listaOrdenes', 'listaPermisos', 'listaPrecios', 'listaRepartidores', 'listaReportes', 'listaSolicitudes', 'listaUsuarios', 'llegoSolicitud', 'marcarPreparadas', 'medirAceite', 'miAvance', 'miCorreo', 'miPanel', 'miPresupuesto', 'notificaciones', 'ordenesPago', 'pagarFondos', 'pagarOrden', 'pagarRepartidor', 'pantallaCalendarios', 'pantallaConteo', 'pantallaEmergencias', 'pantallaFirmas', 'pantallaHorarios', 'pantallaKpi', 'pantallaMando', 'pantallaMant', 'pantallaMerma', 'pantallaMuestreo', 'pantallaPedidosBodega', 'pantallaProduccion', 'pantallaSolicitud', 'pantallaSugerencias', 'pdfCalendario', 'pdfOrden', 'pedirDescanso', 'pedirEmergencia', 'pedirFondos', 'pedirPermiso', 'ping', 'planillasPorPagar', 'ponPreciosGerentes', 'porConfirmar', 'preguntar', 'presupuestoMes', 'presupuestosAreas', 'probarCorreo', 'productosConfig', 'productosParaAnclar', 'productosSucursal', 'reabrirPlanilla', 'rechazarRegistro', 'recibirEfectivo', 'recibirEmergencia', 'recibirOrden', 'recibirSolicitud', 'registrarGasto', 'registrarIngreso', 'registrarKpis', 'registrarLote', 'registrarMant', 'registrarMerma', 'registrarObservacion', 'registrarPagoImpuesto', 'renombrarCategoria', 'reporteDiario', 'reporteTraslados', 'resolverDescanso', 'responderConsulta', 'responderMerma', 'resultadosKpi', 'resultadosKpiCmo', 'resultadosKpiRango', 'resultadosMuestreo', 'resumenInventario', 'resumenMes', 'revisarPermiso', 'seguimiento', 'sugerenciaCompra', 'tableroFinanzas', 'tableroKpi', 'terminarFondos', 'validarRegistro', 'ventas', 'verTraslado', 'verificarFondos', 'proveedoresProductos', 'guardarProveedorProd', 'eliminarProveedor', 'detalleAbastecimiento', 'pdfHistorialInventario', 'pantallaCierreMes', 'guardarCierreMes', 'misMenus', 'menusRol', 'guardarMenusRol', 'historialInventario', 'reiniciarPresupuestos', 'autorizarFondos', 'hechaFondos', 'listaPendientes', 'llegaPendiente', 'cancelarPendiente', 'despacharPendientes', 'devolverFondo', 'corregirFondo', 'pantallaEquipos', 'guardarEquipoA', 'bajaEquipo', 'revisarEquipos', 'confirmarRevisionEq', 'pedirEquipo', 'resolverPedidoEq', 'entregarCompraEq', 'recibirEquipo', 'devolverOrden', 'corregirOrden', 'reiniciarPrecios', 'guardarMezcla', 'registrarLoteMezcla', 'etiquetasLote', 'guardarConfigEtiquetas', 'listaKpisCoo', 'guardarKpiCoo', 'borrarKpiCoo', 'enviarKpisCoo', 'agregarRecomendadosCoo', 'resultadosKpiCoo', 'pantallaKpiCoo', 'registrarKpisCoo', 'resumenAreas', 'resumenAreasSenales', 'pantallaZonas', 'guardarZonas', 'listaKpisTec', 'guardarKpiTec', 'borrarKpiTec', 'enviarKpisTec', 'agregarRecomendadosTec', 'resultadosKpiTec', 'pantallaKpiTec', 'registrarKpisTec', 'cotizarFondo', 'recibirFondo', 'pantallaNivelacion', 'iniciarNivelacion', 'guardarConteoNivelacion', 'explicarNivelacion', 'vistoBuenoNivelacion', 'aprobarNivelacion', 'devolverNivelacion', 'anularNivelacion', 'pdfNivelacion', 'resumenSucursal', 'tableroBodega', 'permisosRol', 'guardarPermisosRol', 'guardarReglasCal', 'confirmarSemanaCal', 'pedirCambioCal', 'autorizarCambioCal', 'ventasCajas', 'pantallaDirectores', 'guardarAreaDir', 'quitarDirector', 'pagarDirectores', 'reabrirDirectores'];/*API_FIN*/
+/*API_INI*/var API_PERMITIDAS = ['abrirSolicitud', 'abrirTraslado', 'aceptarSolicitud', 'aceptarYPreparar', 'aclararDiferencia', 'activarCorreos', 'activarObligacion', 'activarProducto', 'activarProductoSucursal', 'adjuntarCotizacion', 'agregarEquipo', 'agregarProducto', 'agregarRecomendados', 'agregarRecomendadosCmo', 'agregarRubro', 'anclarProducto', 'anular', 'anularOrden', 'anularPagoImpuesto', 'anularSolicitud', 'aprobarFondos', 'aprobarPresupuesto', 'aprobarPresupuestoArea', 'asignarDescanso', 'borrarKpi', 'borrarKpiCmo', 'borrarSolicitud', 'cambiarEquipo', 'cambiarMiPin', 'cambiarPermiso', 'cancelarPermiso', 'confirmarPlanilla', 'confirmarRegistro', 'consolidado', 'copiarPresupuesto', 'costosTraslados', 'cotizarOrden', 'darDeBaja', 'datos', 'despacharSolicitudes', 'detalleGasto', 'editarProducto', 'eliminarPersonaCal', 'entrar', 'enviarEmergencia', 'enviarKpis', 'enviarKpisCmo', 'enviarSolicitud', 'enviarSugerencia', 'estadoCorreos', 'evaluarMerma', 'existencias', 'existenciasEmergencia', 'firmarTraslado', 'guardarAjustesInv', 'guardarBonoGeneral', 'guardarBonosCal', 'guardarBorradorCal', 'guardarComision', 'guardarConfigCal', 'guardarConteo', 'guardarEstudio', 'guardarHorario', 'guardarHorasApoyo', 'guardarHorasReales', 'guardarKpi', 'guardarKpiCmo', 'guardarLugar', 'guardarMando', 'guardarMedida', 'guardarMiCorreo', 'guardarMiPresupuesto', 'guardarObligacion', 'guardarOrden', 'guardarPersonaCal', 'guardarPrecios', 'guardarPresupuesto', 'guardarProducto', 'guardarProductoBodega', 'guardarProveedor', 'guardarProveedorInv', 'guardarReceta', 'guardarRepartidor', 'guardarTraslado', 'guardarTurnos', 'guardarUsuario', 'habilita', 'habilitarConteo', 'historialTraslados', 'indicadoresConta', 'leerBonoGeneral', 'leerSugerencias', 'listaBodega', 'listaCatalogo', 'listaConsultas', 'listaDiferencias', 'listaEntrada', 'listaFondos', 'listaImpuestos', 'listaKpis', 'listaKpisCmo', 'listaLugares', 'listaOrdenes', 'listaPermisos', 'listaPrecios', 'listaRepartidores', 'listaReportes', 'listaSolicitudes', 'listaUsuarios', 'llegoSolicitud', 'marcarPreparadas', 'medirAceite', 'miAvance', 'miCorreo', 'miPanel', 'miPresupuesto', 'notificaciones', 'ordenesPago', 'pagarFondos', 'pagarOrden', 'pagarRepartidor', 'pantallaCalendarios', 'pantallaConteo', 'pantallaEmergencias', 'pantallaFirmas', 'pantallaHorarios', 'pantallaKpi', 'pantallaMando', 'pantallaMant', 'pantallaMerma', 'pantallaMuestreo', 'pantallaPedidosBodega', 'pantallaProduccion', 'pantallaSolicitud', 'pantallaSugerencias', 'pdfCalendario', 'pdfOrden', 'pedirDescanso', 'pedirEmergencia', 'pedirFondos', 'pedirPermiso', 'ping', 'planillasPorPagar', 'ponPreciosGerentes', 'porConfirmar', 'preguntar', 'presupuestoMes', 'presupuestosAreas', 'probarCorreo', 'productosConfig', 'productosParaAnclar', 'productosSucursal', 'reabrirPlanilla', 'rechazarRegistro', 'recibirEfectivo', 'recibirEmergencia', 'recibirOrden', 'recibirSolicitud', 'registrarGasto', 'registrarIngreso', 'registrarKpis', 'registrarLote', 'registrarMant', 'registrarMerma', 'registrarObservacion', 'registrarPagoImpuesto', 'renombrarCategoria', 'reporteDiario', 'reporteTraslados', 'resolverDescanso', 'responderConsulta', 'responderMerma', 'resultadosKpi', 'resultadosKpiCmo', 'resultadosKpiRango', 'resultadosMuestreo', 'resumenInventario', 'resumenMes', 'revisarPermiso', 'seguimiento', 'sugerenciaCompra', 'tableroFinanzas', 'tableroKpi', 'terminarFondos', 'validarRegistro', 'ventas', 'verTraslado', 'verificarFondos', 'proveedoresProductos', 'guardarProveedorProd', 'eliminarProveedor', 'detalleAbastecimiento', 'pdfHistorialInventario', 'pantallaCierreMes', 'guardarCierreMes', 'misMenus', 'menusRol', 'guardarMenusRol', 'historialInventario', 'reiniciarPresupuestos', 'autorizarFondos', 'hechaFondos', 'listaPendientes', 'llegaPendiente', 'cancelarPendiente', 'despacharPendientes', 'devolverFondo', 'corregirFondo', 'pantallaEquipos', 'guardarEquipoA', 'bajaEquipo', 'revisarEquipos', 'confirmarRevisionEq', 'pedirEquipo', 'resolverPedidoEq', 'entregarCompraEq', 'recibirEquipo', 'devolverOrden', 'corregirOrden', 'reiniciarPrecios', 'guardarMezcla', 'registrarLoteMezcla', 'etiquetasLote', 'guardarConfigEtiquetas', 'listaKpisCoo', 'guardarKpiCoo', 'borrarKpiCoo', 'enviarKpisCoo', 'agregarRecomendadosCoo', 'resultadosKpiCoo', 'pantallaKpiCoo', 'registrarKpisCoo', 'resumenAreas', 'resumenAreasSenales', 'pantallaZonas', 'guardarZonas', 'listaKpisTec', 'guardarKpiTec', 'borrarKpiTec', 'enviarKpisTec', 'agregarRecomendadosTec', 'resultadosKpiTec', 'pantallaKpiTec', 'registrarKpisTec', 'cotizarFondo', 'recibirFondo', 'pantallaNivelacion', 'iniciarNivelacion', 'guardarConteoNivelacion', 'explicarNivelacion', 'vistoBuenoNivelacion', 'aprobarNivelacion', 'devolverNivelacion', 'anularNivelacion', 'pdfNivelacion', 'resumenSucursal', 'tableroBodega', 'permisosRol', 'guardarPermisosRol', 'guardarReglasCal', 'confirmarSemanaCal', 'pedirCambioCal', 'autorizarCambioCal', 'ventasCajas', 'pantallaDirectores', 'guardarAreaDir', 'quitarDirector', 'pagarDirectores', 'reabrirDirectores', 'proponerContratacion', 'cancelarPropuesta', 'resolverPropuesta'];/*API_FIN*/
 /** Solo contesta «aquí estoy»: sirve para despertar el servidor y medir la velocidad. No lee ni guarda nada. */
 function ping() { return { ok: true }; }
 function doPost(e) {
@@ -953,7 +953,7 @@ function listaLugares(cred) {
       return { id: u.id, nombre: u.nombre, marca: u.marca, tipo: u.tipo || 'otro', vende: !!u.vende, extra: !!u.extra, activo: u.activo !== false };
     }), tipos: TIPOS_LUGAR, puedeCambiar: yo.esAdmin };
 }
-function guardarLugar(cred, d) {
+function guardarLugarBase(cred, d) {
   var yo = exigeAdmin(cred);
   d = d || {};
   var id = String(d.id || '').trim().toLowerCase(), nombre = String(d.nombre || '').replace(/\s+/g, ' ').trim();
@@ -12969,7 +12969,7 @@ function exportarIndicadores(q) {
 /* ════════════ COPIA COMPLETA PARA EL SERVIDOR PROPIO ════════════
  * El servidor propio guarda una copia de TODAS las pestañas y corre este mismo código sobre ella para contestar las lecturas.
  * Cada cambio que pasa por aquí avisa qué pestañas tocó («tocadas»), y el servidor solo vuelve a traer esas. */
-var VERSION_CODIGO = '2026-10-20-a';       // se cambia a mano cada vez que se cambia este archivo; el servidor compara que coincida con la suya
+var VERSION_CODIGO = '2026-10-22-a';       // se cambia a mano cada vez que se cambia este archivo; el servidor compara que coincida con la suya
 function versionCodigo() { return VERSION_CODIGO; }
 function huellaTexto(t) { return Utilities.base64Encode(Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, t)).slice(0, 22); }
 /** Un resumen barato de cada pestaña: cuántas filas y columnas tiene y una huella de sus últimas 25 filas. */
@@ -14933,6 +14933,7 @@ var PERM_CAT = [
     ['ajustes', 'Ajustes: horarios de turno, rangos de horas y reglas', 'vc', 0, ['cal:config']],
     ['salgte', 'Salario y bono de gerentes', 'vc', 1, []],
     ['directores', 'Directores y áreas: sueldos, bonos y pago', 'vc', 1, []],
+    ['dircontrata', 'Contratar en su área (propone el sueldo; lo aprueba el administrador)', 'si', 0, []],
     ['ausp', 'Pedir permisos de ausencia', 'si', 0, []],
     ['ausa', 'Aprobar permisos de su equipo', 'si', 0, []]] },
   { id: 'inventario', n: 'Inventario', d: 'Conteos, pedidos, traslados y cierre', alc: 1, bod: 1, f: [
@@ -15010,9 +15011,9 @@ var PERM_PERFILES = [['operaciones', 'Director operativo'], ['gerente', 'Gerente
 var PERM_ALC_DEF = { operaciones: 'todas', gerente: 'suya', finanzas: 'todas', bodega: 'todas', produccion: 'todas', contador: 'todas', cmo: 'suya', registro: 'todas', auxiliar: 'suya', dueno: 'todas' };
 /* Lo que cada rol tenía antes de los permisos. 2 = cambiar o sí, 1 = ver. */
 var PERM_HOY = {
-  operaciones: 'ventas.tablero1 ventas.validar2 sucursales.*2 sucursales.resumen1 sucursales.tablero1 sucursales.seguimiento1 personal.turnos2 personal.apoyo2 personal.confirmar2 personal.desbloquear2 personal.pdfo2 personal.venta1 personal.costo1 personal.pagos2 personal.equipo2 personal.tarifa2 personal.ajustes2 personal.salgte2 personal.ausp2 personal.ausa2 inventario.*2 inventario.exist1 inventario.hist1 inventario.tras1 inventario.costo1 inventario.contar0 inventario.pedir0 inventario.recibir0 inventario.despachar0 produccion.recetas1 produccion.lotes1 productos.lista1 productos.editar2 productos.sucs2 productos.precios1 productos.prov2 compras.ocs1 compras.costtras1 solicitudes.pedir2 solicitudes.vb2 solicitudes.todas1 indicadores.coo2 comunicacion.*2 comunicacion.sugleer1 config.zonas2 config.bono2',
+  operaciones: 'ventas.tablero1 ventas.validar2 sucursales.*2 sucursales.resumen1 sucursales.tablero1 sucursales.seguimiento1 personal.turnos2 personal.apoyo2 personal.confirmar2 personal.desbloquear2 personal.pdfo2 personal.venta1 personal.costo1 personal.pagos2 personal.equipo2 personal.tarifa2 personal.ajustes2 personal.salgte2 personal.ausp2 personal.ausa2 personal.dircontrata2 inventario.*2 inventario.exist1 inventario.hist1 inventario.tras1 inventario.costo1 inventario.contar0 inventario.pedir0 inventario.recibir0 inventario.despachar0 produccion.recetas1 produccion.lotes1 productos.lista1 productos.editar2 productos.sucs2 productos.precios1 productos.prov2 compras.ocs1 compras.costtras1 solicitudes.pedir2 solicitudes.vb2 solicitudes.todas1 indicadores.coo2 comunicacion.*2 comunicacion.sugleer1 config.zonas2 config.bono2',
   gerente: 'ventas.corte2 sucursales.tablero1 sucursales.mant2 sucursales.equipos2 personal.turnos2 personal.apoyo2 personal.confirmar2 personal.pdfo2 personal.venta1 personal.equipo2 personal.ausp2 inventario.contar2 inventario.pedir2 inventario.recibir2 inventario.firmas2 inventario.pend2 inventario.nivel2 inventario.dif2 inventario.merma2 inventario.emerg2 inventario.cierre2 productos.lista1 solicitudes.pedir2 comunicacion.preguntas2 comunicacion.sugerir2 config.zonas2',
-  finanzas: 'ventas.tablero1 sucursales.resumen1 sucursales.tablero1 personal.turnos1 personal.apoyo1 personal.pdfo2 personal.venta1 personal.costo1 personal.pagos1 personal.equipo1 personal.tarifa1 personal.ajustes1 personal.salgte1 personal.ausp2 inventario.exist1 inventario.hist1 inventario.cierre1 inventario.nivel2 inventario.costo1 productos.lista1 productos.precios2 compras.ocs1 compras.costtras1 solicitudes.pedir2 solicitudes.aprobar2 solicitudes.todas1 finanzas.resumen1 finanzas.presup2 finanzas.presupap2 finanzas.areas1 finanzas.imp2 finanzas.provpag1 finanzas.repart1 finanzas.reportes1 comunicacion.preguntas2 comunicacion.sugerir2',
+  finanzas: 'ventas.tablero1 sucursales.resumen1 sucursales.tablero1 personal.turnos1 personal.apoyo1 personal.pdfo2 personal.venta1 personal.costo1 personal.pagos1 personal.equipo1 personal.tarifa1 personal.ajustes1 personal.salgte1 personal.ausp2 personal.dircontrata2 inventario.exist1 inventario.hist1 inventario.cierre1 inventario.nivel2 inventario.costo1 productos.lista1 productos.precios2 compras.ocs1 compras.costtras1 solicitudes.pedir2 solicitudes.aprobar2 solicitudes.todas1 finanzas.resumen1 finanzas.presup2 finanzas.presupap2 finanzas.areas1 finanzas.imp2 finanzas.provpag1 finanzas.repart1 finanzas.reportes1 comunicacion.preguntas2 comunicacion.sugerir2',
   bodega: 'sucursales.equipos2 personal.ausp2 inventario.contar2 inventario.exist1 inventario.despachar2 inventario.pend2 inventario.nivel2 inventario.dif2 inventario.emerg2 inventario.tras1 productos.lista1 productos.editar2 productos.sucs2 productos.prov2 compras.ocs2 compras.cotizar2 compras.recibir2 solicitudes.pedir2 comunicacion.preguntas2 comunicacion.sugerir2',
   produccion: 'produccion.*2 sucursales.equipos2 personal.ausp2 solicitudes.pedir2 comunicacion.preguntas2 comunicacion.sugerir2',
   contador: 'ventas.tablero1 ventas.corte2 ventas.gasto2 ventas.efectivo2 ventas.banco2 compras.ocs1 compras.cotizar2 compras.pagar2 solicitudes.cotizar2 solicitudes.entregar2 solicitudes.todas1 finanzas.presup2 finanzas.provpag2 finanzas.repart2 finanzas.reportes1 personal.ausp2 comunicacion.preguntas2 comunicacion.sugerir2',
@@ -15024,7 +15025,7 @@ var PERM_HOY = {
 /* Lo que se le puede dar a un rol que no lo tenía. rol = el rol que el servidor «presta» para esa función. */
 var PERM_PUENTE = {
   'personal.turnos': {}, 'personal.apoyo': {}, 'personal.confirmar': {}, 'personal.desbloquear': {}, 'personal.pdfo': {}, 'personal.venta': {}, 'personal.costo': {}, 'personal.pagos': {},
-  'personal.planilla': {}, 'personal.reabrir': {}, 'personal.equipo': {}, 'personal.tarifa': {}, 'personal.ajustes': {}, 'personal.salgte': {}, 'personal.directores': {},
+  'personal.planilla': {}, 'personal.reabrir': {}, 'personal.equipo': {}, 'personal.tarifa': {}, 'personal.ajustes': {}, 'personal.salgte': {}, 'personal.directores': {}, 'personal.dircontrata': {},
   'produccion.porcionar': { rol: 'produccion' }, 'produccion.recetas': { rol: 'produccion' }, 'produccion.lotes': { rol: 'produccion' },
   'compras.ocs': { rol: 'bodega' }, 'compras.recibir': { rol: 'bodega' },
   'finanzas.resumen': { rol: 'finanzas' }, 'finanzas.reportes': { rol: 'finanzas' }
@@ -15077,7 +15078,7 @@ var PERM_API = {
   listaKpisCmo: [['indicadores.cmo'], 1], guardarKpiCmo: [['indicadores.cmo'], 2], borrarKpiCmo: [['indicadores.cmo'], 2], enviarKpisCmo: [['indicadores.cmo'], 2],
   listaKpisTec: [['indicadores.tec'], 1], guardarKpiTec: [['indicadores.tec'], 2], borrarKpiTec: [['indicadores.tec'], 2], enviarKpisTec: [['indicadores.tec'], 2], registrarKpisTec: [['indicadores.tec'], 2],
   preguntar: [['comunicacion.preguntas'], 2], responderConsulta: [['comunicacion.preguntas'], 2], enviarSugerencia: [['comunicacion.sugerir'], 2], leerSugerencias: [['comunicacion.sugleer'], 1],
-  pantallaDirectores: [['personal.directores'], 1], guardarAreaDir: [['personal.directores'], 2], quitarDirector: [['personal.directores'], 2], pagarDirectores: [['personal.directores'], 2], reabrirDirectores: [['personal.directores'], 2],
+  pantallaDirectores: [['personal.directores', 'personal.dircontrata'], 1], proponerContratacion: [['personal.dircontrata', 'personal.directores'], 2], resolverPropuesta: [['personal.directores'], 2], guardarAreaDir: [['personal.directores'], 2], quitarDirector: [['personal.directores'], 2], pagarDirectores: [['personal.directores'], 2], reabrirDirectores: [['personal.directores'], 2],
   renombrarCategoria: [['config.catalogo'], 2], guardarZonas: [['config.zonas'], 2], guardarBonoGeneral: [['config.bono'], 2]
 };
 
@@ -15320,7 +15321,7 @@ function calPantalla(yo, ac, sid, fecha, D) {
   r.acceso = { turnos: ac.turnos, verTurnos: ac.verTurnos, equipo: ac.equipo, verEquipo: ac.verEquipo, pagos: ac.pagos, verPagos: ac.verPagos, dinero: ac.dinero,
     costo: ac.costo, venta: ac.venta, tarifa: ac.tarifa, verTarifa: ac.verTarifa, ajustes: ac.ajustes, verAjustes: ac.verAjustes, apoyo: ac.apoyo,
     salgte: ac.salgte, verSalgte: ac.verSalgte, confirma: ac.confirma, reabrir: ac.reabrir, pdfm: false, pdfo: ac.pdfo, confirmarSem: ac.confirmarSem, desbloquear: ac.desbloquear, bonoGeneral: ac.bonoGeneral, soloVer: false };
-  r.directores = dirNivel(yo);
+  r.directores = dirNivel(yo); if (!r.directores) { try { var ma = dirMiArea(yo); if (ma) { r.directores = -1; r.dirArea = dirArea(ma).n; } } catch (e) {} }
   r.reglas = calReglas(m.cfg);
   r.semanas = calSemanas(r.sid, r.q.ini);
   if (!ac.venta) { r.venta = {}; r.tipica = {}; }
@@ -15554,6 +15555,7 @@ function guardarBorradorCal(cred, sid, fecha, cambios) {
 /* Campanita: a quien autoriza le llegan los pedidos; al que pidió, la respuesta. */
 function avisosCalendario(yo, out, desde) {
   avisosCalendarioBase(yo, out, desde);
+  try { avisosDirectores(yo, out, desde); } catch (e) {}
   var ac = null; try { ac = calAcceso(yo); } catch (e) { return; }
   var hoyQ = calQuincena(hoyISO()), inis = [hoyQ.ini, hoyQ.ant, hoyQ.sig];
   calLeeCo().forEach(function (x) {
@@ -15801,15 +15803,15 @@ function dirSemilla() {
   var out = [], n = 0, us = [];
   try { us = usuariosCache().filter(function (u) { return u.activo; }); } catch (e) {}
   var pon = function (area, nombre, puesto, carga, sueldo) { n++; out.push({ fila: 0, id: 'D' + ('00' + n).slice(-3), area: area, nombre: nombre, puesto: puesto, sueldo: calRed(sueldo || 0), carga: carga, activo: true, orden: n, semilla: true }); };
-  var mkt = null; try { unidadPorId('centro'); UNIDADES.forEach(function (u) { if (!mkt && u.extra && /market|publicidad/i.test(u.id + ' ' + u.nombre)) mkt = u.id; }); } catch (e) {}
+  var mkt = dirCargaArea('marketing'), fin = dirCargaArea('finanzas');
   us.filter(function (u) { return u.rol === 'admin'; }).forEach(function (u) { pon('direccion', u.nombre, 'Director general', DIR_REPARTO); });
   us.filter(function (u) { return u.rol === 'operaciones'; }).forEach(function (u) { pon('operaciones', u.nombre, 'Director operativo', DIR_REPARTO); });
   us.filter(function (u) { return u.rol === 'bodega'; }).forEach(function (u) { pon('operaciones', u.nombre, 'Bodega', 'bodega'); });
   us.filter(function (u) { return u.rol === 'produccion'; }).forEach(function (u) { pon('operaciones', u.nombre, 'Producción de insumos', 'bodega'); });
-  us.filter(function (u) { return u.rol === 'finanzas'; }).forEach(function (u) { pon('finanzas', u.nombre, 'Director financiero', DIR_REPARTO); });
-  us.filter(function (u) { return u.rol === 'registro' && u.confirma; }).forEach(function (u) { pon('finanzas', u.nombre, 'Contador', DIR_REPARTO); });
+  us.filter(function (u) { return u.rol === 'finanzas'; }).forEach(function (u) { pon('finanzas', u.nombre, 'Director financiero', fin); });
+  us.filter(function (u) { return u.rol === 'registro' && u.confirma; }).forEach(function (u) { pon('finanzas', u.nombre, 'Contador', fin); });
   var sc = 0; try { sc = sueldoCmo(); } catch (e) {}
-  us.filter(function (u) { return u.rol === 'cmo'; }).forEach(function (u) { pon('marketing', u.nombre, 'Marketing', mkt || DIR_REPARTO, sc); });
+  us.filter(function (u) { return u.rol === 'cmo'; }).forEach(function (u) { pon('marketing', u.nombre, 'Marketing', mkt, sc); });
   return out;
 }
 function dirLeeBonos(ini) {
@@ -15835,6 +15837,13 @@ function dirCargas() {
   UNIDADES.forEach(function (u) { if (u.activo !== false) o.push({ id: u.id, nombre: u.nombre }); });
   return o;
 }
+/** A dónde va el gasto de alguien nuevo en un área: Finanzas → su oficina (finanzas o contabilidad), Marketing → la suya (marketing o publicidad). */
+function dirCargaArea(area) {
+  var re = area === 'finanzas' ? /finanz|contab/i : area === 'marketing' ? /market|publicid/i : null, id = DIR_REPARTO;
+  if (!re) return area === 'operaciones' ? DIR_REPARTO : DIR_REPARTO;
+  try { unidadPorId('centro'); UNIDADES.forEach(function (u) { if (id === DIR_REPARTO && u.extra && u.activo !== false && re.test(u.nombre + ' ' + (u.marca || ''))) id = u.id; }); } catch (e) {}
+  return id;
+}
 function dirNombreCarga(id) { if (id === DIR_REPARTO) return 'Repartido entre las 3 sucursales'; var u = unidadPorId(id); return u ? u.nombre : id; }
 
 /** El modelo de una quincena: cada área con su gente, lo que toca y si ya se pagó. */
@@ -15856,7 +15865,8 @@ function dirModelo(fecha) {
   return { q: q, areas: areas, semilla: ps.length && ps[0].semilla };
 }
 function pantallaDirectores(cred, fecha) {
-  var yo = quien(cred), nivel = dirAcceso(yo, 1), m = dirModelo(fecha), q = m.q, hoy = hoyISO();
+  var yo0 = quien(cred); if (!dirNivel(yo0) && dirMiArea(yo0)) return pantallaMiArea(yo0, fecha);
+  var yo = yo0, nivel = dirAcceso(yo, 1), m = dirModelo(fecha), q = m.q, hoy = hoyISO();
   // las sucursales (se pagan en Personal › cada sucursal): su planilla, para ver el total de la empresa
   var D = calDatos(), sucs = ['centro', 'almendras', 'parque'].map(function (s) {
     var mm = calModelo(D, s, q.ini), pl = calPlanillaDe(D, s, q.ini);
@@ -15866,7 +15876,8 @@ function pantallaDirectores(cred, fecha) {
   var tA = 0, tS = 0; m.areas.forEach(function (a) { tA += a.pagada ? a.pagada.pagado : a.tot.total; }); sucs.forEach(function (s) { tS += s.total; });
   return { ok: true, hoy: hoy, edita: nivel >= 2,
     q: { ini: q.ini, fin: q.fin, n: q.n, nombre: q.nombre, corto: q.corto, ant: q.ant, sig: q.sig },
-    areas: m.areas, sucursales: sucs, cargas: dirCargas(), semilla: !!m.semilla, puedePagar: hoy >= masDias(q.fin, -1),
+    areas: m.areas.map(function (a) { a.propuestas = dirPropuestas().filter(function (x) { return x.area === a.k && x.estado === 'Pendiente'; }); a.cargaDef = dirCargaArea(a.k); return a; }),
+    sucursales: sucs, cargas: dirCargas(), semilla: !!m.semilla, puedePagar: hoy >= masDias(q.fin, -1),
     tot: { areas: calRed(tA), sucursales: calRed(tS), total: calRed(tA + tS) } };
 }
 function dirEscribePersonas(ps, yo) {
@@ -15983,4 +15994,309 @@ function reabrirDirectores(cred, area, fecha, motivo) {
     _LEE = {};
     var r = pantallaDirectores(cred, q.ini); r.mensaje = A.n + ': se reabrió y se anularon sus gastos. Ya puede corregir y volver a pagar.'; return r;
   } finally { lock.releaseLock(); }
+}
+
+/* ── Contratar en su área (entrega 75): Daniel en Finanzas y Álvaro en Operaciones agregan a alguien con su puesto y el
+ *  sueldo que proponen. Al administrador le llega a la campanita y lo aprueba (puede cambiar el sueldo) o lo rechaza.
+ *  Quien propone solo ve los nombres y puestos de su área y sus propias propuestas; nunca los sueldos de los demás. ── */
+var H_DIR_PROP = ['No.', 'Pedida en', 'Pidió', 'Área', 'Nombre', 'Puesto', 'Sueldo propuesto', 'Desde', 'Nota', 'Estado', 'Resuelto por', 'Resuelto en', 'Sueldo aprobado', 'Comentario', 'Id persona'];
+function dirPropuestas() {
+  var h = libro().getSheetByName('Directores propuestas');
+  if (!h || h.getLastRow() < 2) return [];
+  return leeTodo(h, H_DIR_PROP.length).map(function (r, i) {
+    return { fila: i + 2, no: calTxt(r[0]), en: fmtSello(r[1]), pidio: calTxt(r[2]), area: calTxt(r[3]), nombre: calTxt(r[4]), puesto: calTxt(r[5]), sueldo: calRed(r[6]),
+      desde: calTxt(r[7]), nota: calTxt(r[8]), estado: calTxt(r[9]) || 'Pendiente', reviso: calTxt(r[10]), revisadoEn: fmtSello(r[11]), sueldoOk: calRed(r[12]), comentario: calTxt(r[13]), idPersona: calTxt(r[14]) };
+  }).filter(function (x) { return x.no; });
+}
+/** El área donde trabaja esta persona (si tiene el permiso de contratar en ella). */
+function dirMiArea(yo) {
+  if (!tienePerm(yo, 'personal.dircontrata', 2)) return '';
+  var a = '', n = String(yo.nombre || '').toLowerCase();
+  dirLeePersonas().forEach(function (p) { if (!a && p.activo && p.nombre.toLowerCase() === n) a = p.area; });
+  if (!a) a = yo.rol === 'finanzas' ? 'finanzas' : yo.rol === 'operaciones' ? 'operaciones' : '';
+  return a === 'direccion' ? '' : a;
+}
+function pantallaMiArea(yo, fecha) {
+  var area = dirMiArea(yo); if (!area) throw new Error('Los pagos de directores y áreas solo los ve el administrador.');
+  var A = dirArea(area), q = calQuincena(fecha);
+  return { ok: true, delegado: true, hoy: hoyISO(), area: area, nombre: A.n, desc: A.d,
+    q: { ini: q.ini, fin: q.fin, n: q.n, nombre: q.nombre, corto: q.corto, ant: q.ant, sig: q.sig },
+    personas: dirLeePersonas().filter(function (p) { return p.area === area && p.activo; }).sort(function (x, y) { return x.orden - y.orden; }).map(function (p) { return { nombre: p.nombre, puesto: p.puesto }; }),
+    propuestas: dirPropuestas().filter(function (x) { return x.area === area; }).reverse().slice(0, 15).map(function (x) {
+      var o = { no: x.no, en: x.en, nombre: x.nombre, puesto: x.puesto, desde: x.desde, nota: x.nota, estado: x.estado, reviso: x.reviso, comentario: x.comentario };
+      if (x.pidio === yo.nombre) { o.sueldo = x.sueldo; o.mia = true; if (x.estado === 'Aprobada') o.sueldoOk = x.sueldoOk; }
+      return o; }) };
+}
+function proponerContratacion(cred, d) {
+  var yo = quien(cred), area = dirMiArea(yo);
+  if (!area && dirNivel(yo) >= 2) area = String((d || {}).area || '');
+  if (!dirArea(area) || area === 'direccion') throw new Error('Usted no tiene permiso para contratar en un área.');
+  d = d || {};
+  var nombre = String(d.nombre || '').replace(/\s+/g, ' ').trim().slice(0, 60), puesto = String(d.puesto || '').trim().slice(0, 60);
+  if (nombre.length < 3) throw new Error('Escriba el nombre completo de la persona.');
+  if (puesto.length < 3) throw new Error('Escriba el puesto (por ejemplo: Contador).');
+  var sueldo = calNumero(d.sueldo, 'El sueldo mensual propuesto', 200000); if (!(sueldo > 0)) throw new Error('Escriba el sueldo mensual que propone.');
+  var desde = esFecha(d.desde) ? d.desde : hoyISO(), nota = String(d.nota || '').trim().slice(0, 200);
+  var lock = LockService.getScriptLock(); lock.waitLock(15000); _LEE = {};
+  try {
+    var ps = dirPropuestas();
+    if (ps.some(function (x) { return x.estado === 'Pendiente' && x.nombre.toLowerCase() === nombre.toLowerCase(); })) throw new Error('Ya hay una propuesta pendiente para ' + nombre + '.');
+    var h = dirHoja('Directores propuestas', H_DIR_PROP, ['A', 'H']), no = 'CT-' + ('000' + (ps.length + 1)).slice(-4), fl = h.getLastRow() + 1;
+    h.getRange(fl, 1).setNumberFormat('@'); h.getRange(fl, 8).setNumberFormat('@');
+    h.getRange(fl, 1, 1, H_DIR_PROP.length).setValues([[no, new Date(), yo.nombre, area, nombre, puesto, sueldo, desde, nota, 'Pendiente', '', '', '', '', '']]);
+    _LEE = {};
+  } finally { lock.releaseLock(); }
+  var r = pantallaDirectores(cred, d.fecha || ''); r.mensaje = 'Propuesta enviada: ' + nombre + ' (' + puesto + '). Le llega al administrador para aprobar el sueldo.'; return r;
+}
+function cancelarPropuesta(cred, no, fecha) {
+  var yo = quien(cred);
+  var lock = LockService.getScriptLock(); lock.waitLock(15000); _LEE = {};
+  try {
+    var x = null; dirPropuestas().forEach(function (p) { if (p.no === no) x = p; });
+    if (!x || x.estado !== 'Pendiente') throw new Error('Esa propuesta ya no está pendiente.');
+    if (x.pidio !== yo.nombre && dirNivel(yo) < 2) throw new Error('Solo quien la propuso puede cancelarla.');
+    libro().getSheetByName('Directores propuestas').getRange(x.fila, 10, 1, 3).setValues([['Cancelada', yo.nombre, new Date()]]);
+    _LEE = {};
+  } finally { lock.releaseLock(); }
+  var r = pantallaDirectores(cred, fecha || ''); r.mensaje = 'Propuesta cancelada.'; return r;
+}
+/** El administrador aprueba (con el sueldo que diga) o rechaza una contratación. Al aprobar, la persona entra a su área. */
+function resolverPropuesta(cred, no, aprobar, sueldo, comentario, fecha) {
+  var yo = quien(cred); dirAcceso(yo, 2);
+  comentario = String(comentario || '').trim().slice(0, 200);
+  var lock = LockService.getScriptLock(); lock.waitLock(15000); _LEE = {};
+  var x = null, msg = '';
+  try {
+    dirPropuestas().forEach(function (p) { if (p.no === no) x = p; });
+    if (!x || x.estado !== 'Pendiente') throw new Error('Esa propuesta ya no está pendiente.');
+    var h = libro().getSheetByName('Directores propuestas');
+    if (!aprobar) {
+      if (comentario.length < 3) throw new Error('Escriba por qué no se aprueba.');
+      h.getRange(x.fila, 10, 1, 5).setValues([['Rechazada', yo.nombre, new Date(), '', comentario]]);
+      msg = 'No se aprobó a ' + x.nombre + '. Le llega a ' + x.pidio + '.';
+    } else {
+      var s = sueldo === '' || sueldo == null ? x.sueldo : calNumero(sueldo, 'El sueldo aprobado', 200000);
+      var ps = dirLeePersonas(), max = 0; ps.forEach(function (p) { var n = +String(p.id).replace(/\D/g, '') || 0; if (n > max) max = n; delete p.semilla; });
+      max++; var id = 'D' + ('00' + max).slice(-3);
+      ps.push({ id: id, area: x.area, nombre: x.nombre, puesto: x.puesto, sueldo: s, carga: dirCargaArea(x.area), activo: true, orden: max });
+      dirEscribePersonas(ps, yo);
+      h.getRange(x.fila, 10, 1, 6).setValues([['Aprobada', yo.nombre, new Date(), s, comentario, id]]);
+      msg = x.nombre + ' entró a ' + dirArea(x.area).n + ' con ' + dinero(s) + ' al mes. Le llega a ' + x.pidio + '.';
+    }
+    _LEE = {};
+  } finally { lock.releaseLock(); }
+  var r = pantallaDirectores(cred, fecha || ''); r.mensaje = msg; return r;
+}
+/** Campanita: al administrador, lo pendiente; a quien propuso, la respuesta. */
+function avisosDirectores(yo, out, desde) {
+  var ps = dirPropuestas(); if (!ps.length) return;
+  var adm = dirNivel(yo) >= 2;
+  ps.forEach(function (x) {
+    if (adm && x.estado === 'Pendiente') out.push({ id: 'dirprop-' + x.no, tipo: 'Contratación por aprobar', cuando: x.en, titulo: x.nombre + ' · ' + x.puesto,
+      texto: x.pidio + ' propone ' + dinero(x.sueldo) + ' al mes en ' + dirArea(x.area).n + (x.nota ? ' · ' + x.nota : ''), abrir: { pag: 'cal', dir: 1 } });
+    if (x.pidio === yo.nombre && x.estado !== 'Pendiente' && x.estado !== 'Cancelada' && x.revisadoEn && x.revisadoEn.slice(0, 10) >= desde)
+      out.push({ id: 'dirres-' + x.no, tipo: 'Contratación', cuando: x.revisadoEn, titulo: (x.estado === 'Aprobada' ? 'Aprobada: ' : 'No aprobada: ') + x.nombre,
+        texto: x.reviso + (x.estado === 'Aprobada' ? ' · ' + dinero(x.sueldoOk) + ' al mes' : '') + (x.comentario ? ' · ' + x.comentario : ''), abrir: { pag: 'cal', dir: 1 } });
+  });
+}
+
+
+/* ════════════ ENTREGA 75: CAMBIAR EL NOMBRE DE UN LUGAR ════════════
+ * Los gastos, presupuestos, solicitudes y reportes guardan el NOMBRE del lugar. Para que el historial siga
+ * sumando al mismo lugar, al cambiarle el nombre se cambia también en todas las hojas (solo celdas que dicen
+ * exactamente el nombre viejo; las fórmulas no se tocan), en su pestaña y en la bitácora «Lugares cambios». */
+var H_LUG_CAMBIOS = ['Fecha', 'Quién', 'Id', 'Antes', 'Después', 'Celdas cambiadas'];
+function guardarLugar(cred, d) {
+  d = d || {};
+  var id = String(d.id || '').trim().toLowerCase(), nuevo = String(d.nombre || '').replace(/\s+/g, ' ').trim(), msgNombre = '';
+  if (id && nuevo) {
+    exigeAdmin(cred);
+    var base = unidadPorId(id);
+    if (!base) throw new Error('No se encontró ese lugar.');
+    if (base.nombre !== nuevo) {
+      if (!base.extra) throw new Error(base.nombre + ' es una sucursal o la bodega de siempre: su nombre no se cambia aquí.');
+      var n = lugarRenombra(cred, base, nuevo);
+      msgNombre = ' Antes se llamaba ' + base.nombre + '. ' + (n ? 'Su historial (' + n + (n === 1 ? ' registro' : ' registros') + ') pasó al nombre nuevo.' : 'Todavía no tenía registros.');
+    }
+  }
+  var r = guardarLugarBase(cred, d);
+  if (msgNombre) r.mensaje = 'Ahora se llama ' + nuevo + '.' + msgNombre;
+  return r;
+}
+function lugarRenombra(cred, base, nuevo) {
+  var yo = exigeAdmin(cred), viejo = base.nombre;
+  if (nuevo.length < 3) throw new Error('Escriba el nombre del lugar (mínimo 3 letras).');
+  if (nuevo.length > 30) throw new Error('El nombre del lugar es muy largo (máximo 30).');
+  if (UNIDADES.some(function (u) { return u.id !== base.id && sinAcentoS(u.nombre).toLowerCase() === sinAcentoS(nuevo).toLowerCase(); }) || /^(rey pizza|caix)/i.test(sinAcentoS(nuevo)))
+    throw new Error('Ya hay un lugar con ese nombre.');
+  var ss = libro();
+  if (ss.getSheetByName(nuevo) && sinAcentoS(nuevo).toLowerCase() !== sinAcentoS(viejo).toLowerCase()) throw new Error('Ya hay una pestaña que se llama «' + nuevo + '». Escoja otro nombre.');
+  var lock = LockService.getScriptLock(); lock.waitLock(30000); _LEE = {};
+  var total = 0;
+  try {
+    // 1) la lista de lugares
+    var h = ss.getSheetByName('Lugares'), filas = h.getRange(2, 1, Math.max(h.getLastRow() - 1, 1), 2).getValues();
+    for (var i = 0; i < filas.length; i++) if (String(filas[i][0]).trim().toLowerCase() === base.id) h.getRange(i + 2, 2).setValue(nuevo);
+    // 2) la pestaña propia del lugar
+    var tab = ss.getSheetByName(viejo);
+    if (tab) {
+      tab.setName(nuevo);
+      try { tab.getRange('A1').setValue(nuevo + ' · ' + base.marca);
+        tab.getRange('A5').setFormula('=IFERROR(QUERY(Gastos!A:Q,"select G,O,F,I,Q,J,C,K where E = \'' + nuevo + '\' order by G desc label G \'Fecha de pago\', O \'Proveedor\', F \'Categoría\', I \'Total\', Q \'Artículos\', J \'Nota\', C \'Registró\', K \'Anulado\'",1),"Sin gastos todavía")'); } catch (e) {}
+    }
+    // 3) todas las demás hojas: solo las celdas que dicen exactamente el nombre viejo
+    ss.getSheets().forEach(function (s) {
+      var nom = s.getName();
+      if (nom === 'Lugares' || nom === 'Lugares cambios' || nom === nuevo) return;
+      total += lugarReemplaza(s, viejo, nuevo);
+    });
+    // 4) bitácora
+    var hb = hojaCat('Lugares cambios', H_LUG_CAMBIOS);
+    hb.appendRow([new Date(), yo.nombre, base.id, viejo, nuevo, total]);
+    _LEE = {};
+    recargaLugares();
+    try { olvidaUsuarios(); } catch (e) {}
+  } finally { lock.releaseLock(); }
+  return total;
+}
+function lugarReemplaza(s, viejo, nuevo) {
+  if (typeof s.createTextFinder === 'function') {
+    try { return s.createTextFinder(viejo).matchEntireCell(true).matchCase(true).matchFormulaText(false).replaceAllWith(nuevo) || 0; } catch (e) {}
+  }
+  var lr = s.getLastRow(), lc = s.getLastColumn(); if (lr < 1 || lc < 1) return 0;
+  var v = s.getRange(1, 1, lr, lc).getValues(), n = 0;
+  for (var i = 0; i < v.length; i++) for (var j = 0; j < v[i].length; j++) {
+    if (v[i][j] === viejo) { var c = s.getRange(i + 1, j + 1); if (!c.getFormula()) { c.setValue(nuevo); n++; } }
+  }
+  return n;
+}
+
+
+/* ════════════ ETAPA 1 DE SUPABASE: COPIA ESPEJO DE TODAS LAS HOJAS ════════════
+ * La hoja sigue mandando: la app sigue igual. Esto solo COPIA cada hoja a Supabase (tabla hoja_filas: una fila de la
+ * hoja = una fila en Supabase, con sus columnas en «datos»), para que la app nueva lea de ahí sin perder nada.
+ * - La llave de Supabase NUNCA va en el código: Apps Script › Configuración del proyecto › Propiedades de la secuencia
+ *   de comandos: SUPABASE_URL (https://xxxx.supabase.co) y SUPABASE_SERVICE_KEY (la clave service_role / secret).
+ * - supaProbar(): revisa la conexión.  supaCopiarTodo(): copia todo (si no le alcanza el tiempo, sigue sola en 1 minuto).
+ * - supaInstalarReloj(): cada 10 minutos copia solo las hojas que cambiaron.  supaQuitarReloj(): lo apaga.
+ * - En la hoja «Supabase copia» queda cada hoja con sus filas, cuándo se copió y si hubo error. */
+var SUPA_NO_COPIAR = ['Resumen', 'Estado de resultados', 'Supabase copia'];
+var SUPA_LOTE = 400, SUPA_TIEMPO = 270000;          // filas por envío; 4.5 min por corrida (el límite de Google es 6)
+/* Columnas que NUNCA se copian (los PIN y cualquier clave): en Supabase cada quien tendrá su propio acceso. */
+var SUPA_SECRETO = /^(pin|clave|contrase|token|secret|password)/i;
+var H_SUPA = ['Hoja', 'Filas', 'Columnas', 'Huella', 'Copiada en', 'Segundos', 'Estado'];
+
+function supaCfg() {
+  var p = PropertiesService.getScriptProperties();
+  var url = String(p.getProperty('SUPABASE_URL') || '').replace(/\/+$/, ''), key = String(p.getProperty('SUPABASE_SERVICE_KEY') || '');
+  if (!/^https:\/\/[a-z0-9-]+\.supabase\.co$/i.test(url)) throw new Error('Falta SUPABASE_URL en las propiedades del proyecto (ej. https://abcd.supabase.co).');
+  if (key.length < 20) throw new Error('Falta SUPABASE_SERVICE_KEY en las propiedades del proyecto.');
+  return { url: url, key: key };
+}
+/** Una llamada a la API REST de Supabase (PostgREST). Se separa para poder probarla sin internet. */
+function supaFetch(metodo, ruta, cuerpo, prefer) {
+  var c = supaCfg(), h = { apikey: c.key, Authorization: 'Bearer ' + c.key, 'Content-Type': 'application/json' };
+  if (prefer) h.Prefer = prefer;
+  var r = UrlFetchApp.fetch(c.url + '/rest/v1/' + ruta, { method: metodo, headers: h, payload: cuerpo == null ? undefined : JSON.stringify(cuerpo), muteHttpExceptions: true });
+  var code = r.getResponseCode(), t = r.getContentText();
+  if (code >= 300) throw new Error('Supabase ' + code + ': ' + String(t).slice(0, 300));
+  return t ? JSON.parse(t) : null;
+}
+function supaValor(v) {
+  if (v instanceof Date) return isNaN(v.getTime()) ? null : Utilities.formatDate(v, ZONA, "yyyy-MM-dd'T'HH:mm:ss");
+  if (v === '' || v == null) return null;
+  return v;
+}
+function supaEncabezados(fila) {
+  var vistos = {};
+  return fila.map(function (x, j) {
+    var n = String(x == null ? '' : x).trim() || ('col_' + (j + 1));
+    if (vistos[n]) n = n + ' (' + (j + 1) + ')'; vistos[n] = 1; return n;
+  });
+}
+/** Las hojas que se copian: las de datos (las pestañas de cada lugar y los resúmenes son fórmulas y se arman solas). */
+function supaHojas() {
+  var nombresLugar = {}; try { unidadPorId('centro'); UNIDADES.forEach(function (u) { nombresLugar[u.nombre] = 1; }); } catch (e) {}
+  return libro().getSheets().filter(function (h) { var n = h.getName(); return SUPA_NO_COPIAR.indexOf(n) < 0 && !nombresLugar[n]; });
+}
+function supaHuella(valores) {
+  var d = Utilities.computeDigest(Utilities.DigestAlgorithm.MD5, JSON.stringify(valores));
+  return d.map(function (b) { return ('0' + ((b + 256) % 256).toString(16)).slice(-2); }).join('');
+}
+/** Copia una hoja completa: sube todas sus filas (en lotes) y borra en Supabase las que ya no existen. */
+function supaCopiaHoja(h, valores, huella) {
+  var nom = h.getName(), t0 = Date.now();
+  var enc = supaEncabezados(valores[0] || []), filas = [];   // los encabezados se guardan todos; los datos secretos no
+  for (var i = 1; i < valores.length; i++) {
+    var f = valores[i]; if (!f.some(function (v) { return v !== '' && v != null; })) continue;
+    var o = {}; enc.forEach(function (c, j) { if (SUPA_SECRETO.test(c)) return; var v = supaValor(f[j]); if (v !== null) o[c] = v; });
+    filas.push({ hoja: nom, fila: i + 1, datos: o });
+  }
+  for (var k = 0; k < filas.length; k += SUPA_LOTE)
+    supaFetch('post', 'hoja_filas?on_conflict=hoja,fila', filas.slice(k, k + SUPA_LOTE), 'resolution=merge-duplicates,return=minimal');
+  // lo que ya no está en la hoja (filas borradas o vacías)
+  var vivas = {}; filas.forEach(function (x) { vivas[x.fila] = 1; });
+  supaFetch('delete', 'hoja_filas?hoja=eq.' + encodeURIComponent(nom) + '&fila=gt.' + valores.length, null, 'return=minimal');
+  var huecos = []; for (var r = 2; r <= valores.length; r++) if (!vivas[r]) huecos.push(r);
+  for (var q = 0; q < huecos.length; q += 300)
+    supaFetch('delete', 'hoja_filas?hoja=eq.' + encodeURIComponent(nom) + '&fila=in.(' + huecos.slice(q, q + 300).join(',') + ')', null, 'return=minimal');
+  supaFetch('post', 'hojas?on_conflict=hoja', [{ hoja: nom, encabezados: enc, filas: filas.length, huella: huella, copiada_en: new Date().toISOString() }], 'resolution=merge-duplicates,return=minimal');
+  return { filas: filas.length, cols: enc.length, seg: Math.round((Date.now() - t0) / 100) / 10 };
+}
+function supaBitacora(res) {
+  var h = hojaCat('Supabase copia', H_SUPA), vals = h.getLastRow() > 1 ? h.getRange(2, 1, h.getLastRow() - 1, 1).getValues() : [], pos = {};
+  vals.forEach(function (r, i) { pos[String(r[0])] = i + 2; });
+  res.forEach(function (x) {
+    var fila = [x.hoja, x.filas || 0, x.cols || 0, x.huella || '', new Date(), x.seg || 0, x.estado];
+    if (pos[x.hoja]) h.getRange(pos[x.hoja], 1, 1, H_SUPA.length).setValues([fila]); else { h.appendRow(fila); pos[x.hoja] = h.getLastRow(); }
+  });
+}
+function supaHuellasGuardadas() {
+  var h = libro().getSheetByName('Supabase copia'), o = {};
+  if (!h || h.getLastRow() < 2) return o;
+  h.getRange(2, 1, h.getLastRow() - 1, H_SUPA.length).getValues().forEach(function (r) { if (String(r[6]).indexOf('ok') === 0) o[String(r[0])] = String(r[3]); });
+  return o;
+}
+/** Corre la copia: todas (todo=true) o solo las que cambiaron. Si se acaba el tiempo, sigue en un minuto. */
+function supaCorre(todo) {
+  var t0 = Date.now(), guard = todo ? {} : supaHuellasGuardadas(), res = [], pend = false;
+  var lock = LockService.getScriptLock(); if (!lock.tryLock(1000)) return 'Ya hay una copia corriendo.';
+  try {
+    supaHojas().forEach(function (h) {
+      if (pend) return;
+      if (Date.now() - t0 > SUPA_TIEMPO) { pend = true; return; }
+      var nom = h.getName(), v = h.getDataRange().getValues(), hu = supaHuella(v);
+      if (guard[nom] === hu) return;
+      try { var r = supaCopiaHoja(h, v, hu); res.push({ hoja: nom, filas: r.filas, cols: r.cols, huella: hu, seg: r.seg, estado: 'ok' }); }
+      catch (e) { res.push({ hoja: nom, estado: 'error: ' + String(e.message).slice(0, 200) }); }
+      guard[nom] = hu;
+    });
+  } finally { lock.releaseLock(); }
+  if (res.length) supaBitacora(res);
+  if (pend) supaSigueLuego();
+  var ok = res.filter(function (x) { return x.estado === 'ok'; }), mal = res.length - ok.length;
+  return (res.length ? ok.length + ' hojas copiadas' + (mal ? ', ' + mal + ' con error (ver «Supabase copia»)' : '') : 'Nada cambió') + (pend ? '. Falta: sigue sola en un minuto.' : '.');
+}
+function supaSigueLuego() {
+  ScriptApp.getProjectTriggers().forEach(function (t) { if (t.getHandlerFunction() === 'supaSigue') ScriptApp.deleteTrigger(t); });
+  ScriptApp.newTrigger('supaSigue').timeBased().after(60 * 1000).create();
+}
+function supaSigue() { ScriptApp.getProjectTriggers().forEach(function (t) { if (t.getHandlerFunction() === 'supaSigue') ScriptApp.deleteTrigger(t); }); return supaCorre(false); }
+
+/* ── para correr desde el editor de Apps Script (botón ▶) ── */
+function supaProbar() {
+  var r = supaFetch('get', 'hojas?select=hoja&limit=1');
+  var m = 'Conexión con Supabase bien (' + supaCfg().url + '). Tabla «hojas» encontrada' + (r && r.length ? '' : ', todavía vacía') + '.';
+  Logger.log(m); return m;
+}
+function supaCopiarTodo() { var m = supaCorre(true); Logger.log(m); return m; }
+function supaSincronizar() { var m = supaCorre(false); Logger.log(m); return m; }
+function supaInstalarReloj() {
+  supaQuitarReloj();
+  ScriptApp.newTrigger('supaSincronizar').timeBased().everyMinutes(10).create();
+  var m = 'Listo: cada 10 minutos se copian a Supabase las hojas que cambiaron.'; Logger.log(m); return m;
+}
+function supaQuitarReloj() {
+  ScriptApp.getProjectTriggers().forEach(function (t) { if (['supaSincronizar', 'supaSigue'].indexOf(t.getHandlerFunction()) >= 0) ScriptApp.deleteTrigger(t); });
+  return 'Reloj de Supabase apagado.';
 }
