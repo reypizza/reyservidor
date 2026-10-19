@@ -9256,7 +9256,16 @@ function filasPerm() {
   }).filter(function (x) { return x.numero; });
 }
 function puedeAprobarPerm(yo, x) {
-  return x.por !== yo.nombre && jefeDe(x.por) === yo.nombre;
+  if (x.por === yo.nombre) return false;
+  var j = jefeDe(x.por);
+  if (j === yo.nombre) return true;
+  // 79f: el administrador puede aprobar cualquier permiso (manda sobre todos); le avisan solo los que no tienen jefe o los de otro administrador
+  return !!yo.esAdmin;
+}
+function permAvisaAdmin(yo, x) {
+  if (!yo.esAdmin || x.por === yo.nombre) return false;
+  var j = jefeDe(x.por), u = j ? usuarioPorNombre(j) : null;
+  return j === yo.nombre || !j || !u || !u.activo || u.rol === 'admin';
 }
 function quienApruebaTxt(nombre) {
   var j = jefeDe(nombre), u = usuarioPorNombre(j);
@@ -9272,6 +9281,8 @@ function listaPermisos(cred) {
   var mios = todos.filter(function (x) { return x.por === yo.nombre; }).reverse().slice(0, 20).map(function (x) {
     x.puedeCambiar = puedeCambiarPerm(yo, x, hoy); x.puedeCancelar = x.por === yo.nombre && (x.estado === 'Pedido' || (x.estado === 'Aprobado' && x.hasta >= hoy)); return x; });
   var porAprobar = todos.filter(function (x) { return x.estado === 'Pedido' && puedeAprobarPerm(yo, x); });
+  porAprobar.forEach(function (x) { var j = jefeDe(x.por); if (j && j !== yo.nombre) x.jefe = j; });
+  if (yo.esAdmin) aprueba = aprueba || porAprobar.length > 0;
   var fuera = aprueba ? todos.filter(function (x) { return x.estado === 'Aprobado' && equipo.indexOf(x.por) >= 0 && x.hasta >= hoy && x.desde <= masDias(hoy, 13); })
     .sort(function (a, b) { return a.desde < b.desde ? -1 : 1; }) : [];
   return { tipos: PERM_TIPOS, conHora: PERM_HORA, mios: mios, porAprobar: porAprobar, fuera: fuera, aprueba: aprueba, hoy: hoy, equipo: equipo,
@@ -9371,7 +9382,7 @@ function avisosNuevos(yo, out, cred) {
   // permisos
   try {
     filasPerm().forEach(function (x) {
-      if (x.estado === 'Pedido' && puedeAprobarPerm(yo, x))
+      if (x.estado === 'Pedido' && puedeAprobarPerm(yo, x) && (!yo.esAdmin || permAvisaAdmin(yo, x)))
         out.push({ id: 'perm-' + x.numero + (x.cambEn ? '-' + x.cambEn : ''), tipo: x.cambEn ? 'Permiso cambiado por aprobar' : 'Permiso por aprobar', cuando: x.en, titulo: x.por + ': ' + x.tipo,
           texto: dia(x.desde).slice(0, 5) + (x.hasta !== x.desde ? ' al ' + dia(x.hasta).slice(0, 5) : '') + ' · ' + x.motivo, abrir: { perm: true } });
       if (x.estado === 'Cancelado' && x.revPor && puedeAprobarPerm(yo, x) && x.cambEn.slice(0, 10) >= desde)
@@ -9558,7 +9569,7 @@ function correoValido(c) { return /^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(String(c 
  * correo sale del disparador automático, Google devuelve la dirección de prueba (/dev), que
  * solo abre para quien edita el proyecto («No se pudo abrir el archivo»). Cuando la app
  * instalable esté lista, aquí se pone https://app.caixsa.com */
-var URL_APP = 'https://script.google.com/macros/s/AKfycbyjF_gjAOBS6H-86bONREc26kGuHmG9UIYQD8QoCN0bahyxWWPcuQ-CQY9hkQdxHmPovQ/exec';
+var URL_APP = 'https://app.caixsa.com';
 function urlApp() { return URL_APP; }
 function cuotaCorreo() { try { return MailApp.getRemainingDailyQuota(); } catch (e) { anotaErrorCorreo(e); return 0; } }
 /** Lo último que pasó con los correos, para poder explicar por qué no llegan. */
@@ -9643,7 +9654,8 @@ function enviarCorreosPendientes() {
       if (!nuevos.length) return;
       var asunto = nuevos.length === 1 ? 'Rey Pizza · ' + nuevos[0].tipo + ': ' + nuevos[0].titulo : 'Rey Pizza · ' + nuevos.length + ' avisos nuevos';
       var ok = false;
-      try { ok = enviaCorreo(u.correo, asunto, htmlCorreo(nuevos.length === 1 ? nuevos[0].tipo : 'Tiene ' + nuevos.length + ' avisos nuevos', listaAvisosHtml(nuevos))); } catch (e) {}
+      try { ok = enviaCorreo(u.correo, asunto, htmlCorreo(nuevos.length === 1 ? nuevos[0].tipo : 'Tiene ' + nuevos.length + ' avisos nuevos', listaAvisosHtml(nuevos) +
+        '<div style="font-size:12px;color:#6c7079;margin-top:10px">Para el usuario <b>' + esHtml(u.nombre) + '</b> de la app.</div>')); } catch (e) {}
       if (ok) { anotaEnviados(u.nombre, nuevos.map(function (a) { return a.id; })); enviados++; }
     });
     limpiaCorreos();
@@ -12969,7 +12981,7 @@ function exportarIndicadores(q) {
 /* ════════════ COPIA COMPLETA PARA EL SERVIDOR PROPIO ════════════
  * El servidor propio guarda una copia de TODAS las pestañas y corre este mismo código sobre ella para contestar las lecturas.
  * Cada cambio que pasa por aquí avisa qué pestañas tocó («tocadas»), y el servidor solo vuelve a traer esas. */
-var VERSION_CODIGO = '2026-10-23-a';       // se cambia a mano cada vez que se cambia este archivo; el servidor compara que coincida con la suya
+var VERSION_CODIGO = '2026-10-25-a';       // se cambia a mano cada vez que se cambia este archivo; el servidor compara que coincida con la suya
 function versionCodigo() { return VERSION_CODIGO; }
 function huellaTexto(t) { return Utilities.base64Encode(Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, t)).slice(0, 22); }
 /** Un resumen barato de cada pestaña: cuántas filas y columnas tiene y una huella de sus últimas 25 filas. */
@@ -15085,7 +15097,7 @@ var PERM_API = {
 /* Con lo que arranca, antes de que el administrador guarde algo: Álvaro con Producción, Compras y ver Finanzas (aprobado el 15/10/2026). */
 var PERM_INICIAL = { operaciones: { 'produccion.porcionar': 2, 'produccion.recetas': 2, 'produccion.lotes': 2, 'compras.ocs': 2, 'compras.recibir': 2, 'finanzas.resumen': 1, 'finanzas.reportes': 1 } };
 /* ── lectura ── */
-var H_PERM = ['Perfil', 'Permisos (JSON)', 'Sucursales (JSON)', 'Cambiado por', 'Cambiado en'];
+var H_PERM_ROL = ['Perfil', 'Permisos (JSON)', 'Sucursales (JSON)', 'Cambiado por', 'Cambiado en'];
 var H_PERM_BIT = ['Fecha', 'Quién', 'Perfil', 'Cambio'];
 var _PERM_HOJA = null, _PRESTADO = null, _PERM_FN = '';
 function permMax(t) { return t === 'vc' || t === 'si' ? 2 : t === 'v' ? 1 : 0; }
@@ -15109,7 +15121,7 @@ function permAlcDefecto(perfil) {
 function hojaPermisos(ss) {
   ss = ss || libro();
   var h = ss.getSheetByName('Permisos por rol');
-  if (!h) { h = hojaLimpia(ss, 'Permisos por rol', H_PERM); h.getRange('E:E').setNumberFormat('dd/mm/yyyy hh:mm'); h.setColumnWidth(2, 420); h.setColumnWidth(3, 260); }
+  if (!h) { h = hojaLimpia(ss, 'Permisos por rol', H_PERM_ROL); h.getRange('E:E').setNumberFormat('dd/mm/yyyy hh:mm'); h.setColumnWidth(2, 420); h.setColumnWidth(3, 260); }
   return h;
 }
 function hojaPermBit(ss) {
@@ -15123,7 +15135,7 @@ function permLeeHoja() {
   if (_PERM_HOJA) return _PERM_HOJA;
   var out = {}, h = libro().getSheetByName('Permisos por rol');
   if (!h) Object.keys(PERM_INICIAL).forEach(function (k) { out[k] = { ex: PERM_INICIAL[k], alc: null, por: 'Entrega 72 (lo que aprobó el administrador)', en: '' }; });
-  if (h && h.getLastRow() > 1) leeTodo(h, H_PERM.length).forEach(function (r) {
+  if (h && h.getLastRow() > 1) leeTodo(h, H_PERM_ROL.length).forEach(function (r) {
     var k = String(r[0] || ''); if (!k) return;
     var ex = {}, alc = null; try { ex = JSON.parse(String(r[1] || '{}')) || {}; } catch (e) { ex = {}; } try { alc = JSON.parse(String(r[2] || 'null')); } catch (e) { alc = null; }
     out[k] = { ex: ex, alc: alc, por: String(r[3] || ''), en: r[4] instanceof Date ? fmtDia(r[4]) : String(r[4] || '') };
@@ -15265,9 +15277,9 @@ function guardarPermisosRol(cred, perfil, niveles, alc) {
   var lock = LockService.getScriptLock(); lock.waitLock(15000); _LEE = {}; _PERM_HOJA = null;
   try {
     var h = hojaPermisos(), fila = 0;
-    if (h.getLastRow() > 1) leeTodo(h, H_PERM.length).forEach(function (r, i) { if (String(r[0]) === perfil) fila = i + 2; });
+    if (h.getLastRow() > 1) leeTodo(h, H_PERM_ROL.length).forEach(function (r, i) { if (String(r[0]) === perfil) fila = i + 2; });
     var val = [[perfil, JSON.stringify(ex), JSON.stringify(alcOk), yo.nombre, new Date()]];
-    if (fila) h.getRange(fila, 1, 1, H_PERM.length).setValues(val); else h.appendRow(val[0]);
+    if (fila) h.getRange(fila, 1, 1, H_PERM_ROL.length).setValues(val); else h.appendRow(val[0]);
     if (cambios.length) hojaPermBit().appendRow([new Date(), yo.nombre, perfil, cambios.join(' · ').slice(0, 4000)]);
     // los «Menús por rol» de antes quedan dentro de los permisos: se limpian para ese rol
     var hm = libro().getSheetByName('Menús por rol');
@@ -16390,3 +16402,55 @@ function tokenSupabase(cred) {
     app_nombre: yo.nombre, app_rol: rolReal, app_admin: !!yo.esAdmin, app_sucursal: yo.sucursal || '' });
   return { url: c.url, anon: anon, token: token, exp: exp * 1000 };
 }
+
+/* ════════════ CAJAS 0.8 POR SUPABASE → HOJAS DE GOOGLE ════════════
+ * Desde Rey Pizza Caja 0.8 las cajas suben lo vendido directo a Supabase (pos_ordenes, pos_lineas, pos_cortes), sin pasar por Render.
+ * Cada minuto, esta función trae lo nuevo y lo pasa a las mismas hojas de siempre con cajaLote (la misma de la entrega 73):
+ *  · cada orden → «Ventas caja» y sus platillos → «Ventas caja detalle» (si ya estaba, no se duplica: se busca por su clave);
+ *  · cada anulación → la orden queda «Anulada» en la hoja;
+ *  · cada corte → «Cortes caja» mientras CAJAS_CORTES no sea «ingresos» (prueba); con CAJAS_CORTES = ingresos, a Ingresos (AM/PM).
+ * Después le avisa a Supabase qué pasó (pos_hoja_marcar). Si algo cambió mientras tanto, se vuelve a pasar en la siguiente vuelta.
+ * Propiedades: SUPABASE_URL y SUPABASE_SERVICE_KEY (las de la etapa 1) y, para encender los cortes de verdad, CAJAS_CORTES = ingresos. */
+var CAJAS_SUPA_MAX = 300;
+
+function cajasSupaPasar() {
+  var pr = PropertiesService.getScriptProperties();
+  var modo = String(pr.getProperty('CAJAS_CORTES') || '').trim().toLowerCase() === 'ingresos' ? 'ingresos' : 'prueba';
+  var ords = supaFetch('GET', 'pos_ordenes?select=clave,suc,orden,fecha,hora,turno,tipo,total,envio,efectivo,tarjeta,estado,cajera,cliente,llamada_de,motivo,descuento,personas,v,pos_lineas(n,codigo,nombre,categoria,cant,precio,total)&hoja=eq.pendiente&order=recibido.asc&limit=' + CAJAS_SUPA_MAX) || [];
+  var cortes = supaFetch('GET', 'pos_cortes?select=*&estado_hoja=eq.pendiente&order=recibido.asc&limit=60') || [];
+  if (!ords.length && !cortes.length) return { ordenes: 0, cortes: 0 };
+  var TIPO = {}; Object.keys(TIPO_CAJA).forEach(function (k) { TIPO[TIPO_CAJA[k]] = k; });       // «Para llevar» → llevar (cajaLote lo vuelve a escribir igual)
+  var ev = [], porOrden = {};
+  ords.forEach(function (o) {
+    var id = 'o:' + o.clave, lin = (o.pos_lineas || []).slice().sort(function (a, b) { return a.n - b.n; });
+    ev.push({ id: id, tipo: 'orden', sucursal: o.suc, orden: o.orden, clave: o.clave, fecha: String(o.fecha).slice(0, 10), hora: o.hora || '', turno: o.turno, tipoOrden: TIPO[o.tipo] || o.tipo,
+      total: Number(o.total), envio: Number(o.envio), efectivo: Number(o.efectivo), tarjeta: Number(o.tarjeta), cajera: o.cajera || '', cliente: o.cliente || '', llamadaDe: o.llamada_de || '',
+      descuento: Number(o.descuento) || 0, personas: o.personas || null,
+      lineas: lin.map(function (l) { return { codigo: l.codigo || '', nombre: l.nombre, categoria: l.categoria || '', cant: Number(l.cant), precio: Number(l.precio), total: Number(l.total) }; }) });
+    var ids = [id];
+    if (o.estado === 'Anulada') { ev.push({ id: 'a:' + o.clave, tipo: 'anulada', sucursal: o.suc, orden: o.orden, clave: o.clave, motivo: o.motivo || '' }); ids.push('a:' + o.clave); }
+    porOrden[o.clave] = { v: o.v, ids: ids };
+  });
+  cortes.forEach(function (c) {
+    ev.push({ id: 'c:' + c.id, tipo: 'corte', sucursal: c.suc, fecha: String(c.fecha).slice(0, 10), turno: c.turno, efectivo: Number(c.efectivo), tarjeta: Number(c.tarjeta),
+      gastoCaja: Number(c.gasto_caja), detalleCaja: c.detalle_caja || '', cajera: c.cajera || '', ordenes: c.ordenes, abre: c.abre || '', cierra: c.cierra || '' });
+  });
+  var r = cajaLote({ eventos: ev, cortes: modo });
+  var hechos = {}; (r.hechos || []).forEach(function (x) { hechos[x] = true; });
+  var marcaO = [], marcaC = [];
+  Object.keys(porOrden).forEach(function (cl) { var p = porOrden[cl]; if (p.ids.every(function (x) { return hechos[x]; })) marcaO.push({ clave: cl, v: p.v }); });
+  // un error de datos (sucursal o fecha que no existen) queda marcado; uno pasajero (Google ocupado, cupo) se reintenta en la siguiente vuelta
+  var deDatos = function (m) { return /desconocid|inválid|invalid/i.test(String(m || '')); };
+  cortes.forEach(function (c) { var id = 'c:' + c.id, er = r.errores[id]; if (hechos[id] || (er && deDatos(er))) marcaC.push({ id: c.id, version: c.version, error: er || '' }); });
+  var m = supaFetch('POST', 'rpc/pos_hoja_marcar', { p_ordenes: marcaO, p_cortes: marcaC });
+  return { ordenes: r.ordenes, platillos: r.platillos, cortes: marcaC.length, marcadas: m, errores: r.errores, modo: modo };
+}
+/** Para el reloj: no deja que un error de Supabase rompa nada; queda anotado en el registro de ejecuciones. */
+function cajasSupaReloj() { try { var x = cajasSupaPasar(); if (x.ordenes || x.cortes) Logger.log(JSON.stringify(x)); } catch (e) { Logger.log('cajasSupa: ' + e.message); } }
+/** ▶ Ejecutar una vez: deja el paso automático cada minuto. */
+function cajasSupaInstalarReloj() {
+  ScriptApp.getProjectTriggers().forEach(function (t) { if (t.getHandlerFunction() === 'cajasSupaReloj') ScriptApp.deleteTrigger(t); });
+  ScriptApp.newTrigger('cajasSupaReloj').timeBased().everyMinutes(1).create();
+  var x = cajasSupaPasar(); Logger.log('Listo: cada minuto pasa a las hojas lo que suben las cajas. Ahora: ' + JSON.stringify(x)); return x;
+}
+function cajasSupaQuitarReloj() { ScriptApp.getProjectTriggers().forEach(function (t) { if (t.getHandlerFunction() === 'cajasSupaReloj') ScriptApp.deleteTrigger(t); }); return 'Quitado.'; }
