@@ -7807,7 +7807,7 @@ function cotizarOrden(cred, numero, d) {
   var pagos = filasOCP();
   if (pagos[numero] && pagos[numero].pagadaEn) throw new Error('Esa orden ya se pagó; la cotización ya no se cambia.');
   if (pagos[numero] && pagos[numero].devueltaEn) throw new Error('Esa orden está devuelta a bodega: primero se corrige y se reenvía.');
-  var precios = d.precios || {}, total = 0, h = hojaOC();
+  var precios = d.precios || {}, cants = d.cantidades || {}, total = 0, h = hojaOC(), cambiosQ = [];
   var transp = Number(String(d.transporte == null ? '' : d.transporte).replace(/[Q,\s]/g, '')) || 0;
   if (transp < 0 || !isFinite(transp)) throw new Error('El costo de transporte no es válido.');
   transp = r2(transp);
@@ -7817,27 +7817,34 @@ function cotizarOrden(cred, numero, d) {
   lock.waitLock(15000); _LEE = {};
   try {
     ls.forEach(function (o) {
+      var tq = cants[o.codigo], q = tq == null || String(tq).trim() === '' ? o.pedido : Number(String(tq).replace(',', '.'));
+      if (!isFinite(q) || q < 0) throw new Error('La cantidad de «' + (o.compra || o.nombre) + '» no es válida.');
+      q = r3(q);
+      if (q > o.pedido + 1e-9 && o.pedido > 0 && q > o.pedido * 3) throw new Error('La cantidad de «' + (o.compra || o.nombre) + '» es más del triple de lo pedido. Revísela.');
       var p = Number(String(precios[o.codigo] == null ? '' : precios[o.codigo]).replace(/[Q,\s]/g, ''));
-      if (!(p > 0)) throw new Error('Falta el precio de «' + o.nombre + '» (por ' + o.presentacion + ').');
-      p = r2(p);
-      var sub = r2(p * o.pedido); total += sub;
+      if (q > 0 && !(p > 0)) throw new Error('Falta el precio de «' + o.nombre + '» (por ' + o.presentacion + ').');
+      p = p > 0 ? r2(p) : 0;
+      var sub = r2(p * q); total += sub;
+      if (q !== o.pedido) { h.getRange(o.fila, 8).setValue(q); cambiosQ.push((o.compra || o.nombre) + ' ' + numTxtS(o.pedido) + '→' + numTxtS(q)); o.pedido = q; }
       h.getRange(o.fila, 16, 1, 2).setValues([[p, sub]]);
     });
+    if (!(total > 0)) throw new Error('El proveedor no manda nada: mejor anule la orden.');
     total = r2(total + transp);
     try { sincronizaPreciosBodega(ls, precios, numero); } catch (e) {}      // el precio nuevo queda en el producto de bodega
     var fila = [numero, ls[0].proveedor, String(d.cotizacion || '').trim().slice(0, 40), total, new Date(), yo.nombre,
-      '', '', '', '', '', '', '', '', String(d.nota || '').slice(0, 200)];
+      '', '', '', '', '', '', '', '', (String(d.nota || '') + (cambiosQ.length ? (d.nota ? ' · ' : '') + 'El proveedor mandó otra cantidad: ' + cambiosQ.join(', ') : '')).slice(0, 300)];
     var hp = hojaOCP(), arch = pagos[numero] ? pagos[numero].archivo : '';
     if (arch0) arch = arch0;
     fila.push(arch); fila.push(transp);
     fila.push('', '', '', pagos[numero] && pagos[numero].facturaNit ? 'Sí' : '');      // sin devolución pendiente
     if (pagos[numero]) hp.getRange(pagos[numero].fila, 1, 1, H_OCP.length).setValues([fila]); else hp.appendRow(fila);
   } finally { lock.releaseLock(); }
-  var r = ordenesPago(cred); r.ok = true; r.mensaje = numero + ' cotizada: ' + dinero(total) + '. Ahora el contador la paga.';
+  var r = ordenesPago(cred); r.ok = true; r.mensaje = numero + ' cotizada: ' + dinero(total) + (cambiosQ.length ? ' (con las cantidades que manda el proveedor)' : '') + '. Ahora el contador la paga.';
   return r;
 }
 
 /** Lo que cotizó el proveedor es el precio más fresco: pasa al producto de bodega ligado a esa compra. */
+function numTxtS(n) { n = Math.round((Number(n) || 0) * 1000) / 1000; return String(n); }
 function sincronizaPreciosBodega(lineas, precios, numero) {
   var h = hojaBodega(), ahora = new Date(), hechos = 0;
   var bod = filasBodega();
@@ -7883,7 +7890,7 @@ function pagarOrden(cred, numero, d) {
   var factura = String(d.factura || '').trim().slice(0, 30) || numero;
   var cat = {};
   filasProductos().forEach(function (p) { cat[(p.nombre + '§' + p.proveedor).toLowerCase()] = p; if (!cat[p.nombre.toLowerCase()]) cat[p.nombre.toLowerCase()] = p; });
-  var lineas = o.lineas.map(function (l) {
+  var lineas = o.lineas.filter(function (l) { return l.pedido > 0; }).map(function (l) {
     var p = cat[(l.compra + '§' + o.proveedor).toLowerCase()] || cat[String(l.compra).toLowerCase()] || {};
     return { producto: l.compra || l.nombre, cantidad: l.pedido, medida: l.presentacion, precio: l.precio,
       categoria: p.categoria || 'Insumos de cocina', contenido: p.contenido || 0, base: p.base || '' };
@@ -13003,7 +13010,7 @@ function exportarIndicadores(q) {
 /* ════════════ COPIA COMPLETA PARA EL SERVIDOR PROPIO ════════════
  * El servidor propio guarda una copia de TODAS las pestañas y corre este mismo código sobre ella para contestar las lecturas.
  * Cada cambio que pasa por aquí avisa qué pestañas tocó («tocadas»), y el servidor solo vuelve a traer esas. */
-var VERSION_CODIGO = '2026-10-25-b';       // se cambia a mano cada vez que se cambia este archivo; el servidor compara que coincida con la suya
+var VERSION_CODIGO = '2026-10-25-c';       // se cambia a mano cada vez que se cambia este archivo; el servidor compara que coincida con la suya
 function versionCodigo() { return VERSION_CODIGO; }
 function huellaTexto(t) { return Utilities.base64Encode(Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, t)).slice(0, 22); }
 /** Un resumen barato de cada pestaña: cuántas filas y columnas tiene y una huella de sus últimas 25 filas. */
