@@ -13010,7 +13010,7 @@ function exportarIndicadores(q) {
 /* ════════════ COPIA COMPLETA PARA EL SERVIDOR PROPIO ════════════
  * El servidor propio guarda una copia de TODAS las pestañas y corre este mismo código sobre ella para contestar las lecturas.
  * Cada cambio que pasa por aquí avisa qué pestañas tocó («tocadas»), y el servidor solo vuelve a traer esas. */
-var VERSION_CODIGO = '2026-10-25-c';       // se cambia a mano cada vez que se cambia este archivo; el servidor compara que coincida con la suya
+var VERSION_CODIGO = '2026-10-26-a';       // se cambia a mano cada vez que se cambia este archivo; el servidor compara que coincida con la suya
 function versionCodigo() { return VERSION_CODIGO; }
 function huellaTexto(t) { return Utilities.base64Encode(Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, t)).slice(0, 22); }
 /** Un resumen barato de cada pestaña: cuántas filas y columnas tiene y una huella de sus últimas 25 filas. */
@@ -16314,6 +16314,7 @@ function supaCorre(todo) {
     });
   } finally { lock.releaseLock(); }
   if (res.length) supaBitacora(res);
+  if (todo || res.some(function (x) { return SUPA_HOJAS_CATALOGO.indexOf(x.hoja) >= 0; })) supaCatalogoSuave();
   if (pend) supaSigueLuego();
   var ok = res.filter(function (x) { return x.estado === 'ok'; }), mal = res.length - ok.length;
   return (res.length ? ok.length + ' hojas copiadas' + (mal ? ', ' + mal + ' con error (ver «Supabase copia»)' : '') : 'Nada cambió') + (pend ? '. Falta: sigue sola en un minuto.' : '.');
@@ -16381,6 +16382,7 @@ function supaFilaObj(enc, f) {
 function supaEmpuja() {
   var hojas = Object.keys(_SUPA_T); if (!hojas.length) return;
   var t = _SUPA_T; _SUPA_T = {};
+  var cambioCat = hojas.some(function (h) { return SUPA_HOJAS_CATALOGO.indexOf(h) >= 0; });
   if (!supaCfgSuave()) return;
   var lugares = {}; try { UNIDADES.forEach(function (u) { lugares[u.nombre] = 1; }); } catch (e) {}
   var t0 = Date.now();
@@ -16409,6 +16411,7 @@ function supaEmpuja() {
       if (borra.length) supaFetch('delete', 'hoja_filas?hoja=eq.' + encodeURIComponent(nom) + '&fila=in.(' + borra.join(',') + ')', null, 'return=minimal');
     } catch (e) { try { Logger.log('Supabase al instante (' + nom + '): ' + e.message); } catch (e2) {} }
   });
+  if (cambioCat) supaCatalogoSuave();
 }
 function supaTras(v) { try { supaEmpuja(); } catch (e) {} return v; }
 
@@ -16483,3 +16486,29 @@ function cajasSupaInstalarReloj() {
   var x = cajasSupaPasar(); Logger.log('Listo: cada minuto pasa a las hojas lo que suben las cajas. Ahora: ' + JSON.stringify(x)); return x;
 }
 function cajasSupaQuitarReloj() { ScriptApp.getProjectTriggers().forEach(function (t) { if (t.getHandlerFunction() === 'cajasSupaReloj') ScriptApp.deleteTrigger(t); }); return 'Quitado.'; }
+
+/* ════════════ ETAPA 1.1 · EL INVENTARIO EN TABLAS PROPIAS DE SUPABASE ════════════
+ * Supabase arma solo sus tablas con la copia de las hojas. El catálogo de bodega se manda ya acomodado desde aquí
+ * (unidad en singular, suelto, costo de cada producto…), para que Supabase calcule exactamente lo mismo que la app.
+ * Se manda cada vez que cambia «Productos de bodega», «Productos» (precios) o «Productos del proveedor». */
+var SUPA_HOJAS_CATALOGO = ['Productos de bodega', 'Productos', 'Productos del proveedor'];
+function supaCatalogoFilas() {
+  _BOD = null;
+  var idx = indiceCompras();
+  return filasBodega().filter(function (b) { return b.codigo; }).map(function (b) {
+    var c = costoBodega(b, idx);
+    return { codigo: b.codigo, fila: b.fila, nombre: b.nombre, area: b.area, grupo: b.grupo, categoria: b.categoria,
+      unidad: b.unidad, suelto: b.suelto || '', porUnidad: b.porUnidad || 0, mandaSuelto: !!b.mandaSuelto,
+      menor: b.menor || '', porSuelto: b.porSuelto || 0, pesoCada: b.pesoCada || 0, pesoEn: b.pesoEn || '', medida: b.medida,
+      estante: b.estante, almacen: b.almacen, activo: !!b.activo, centro: !!b.suc.centro, almendras: !!b.suc.almendras, parque: !!b.suc.parque,
+      idealCentro: b.ideal.centro || 0, idealAlmendras: b.ideal.almendras || 0, idealParque: b.ideal.parque || 0, idealBodega: b.ideal.bodega || 0,
+      costo: c.costo || 0, presentacion: b.presentacion || '' };
+  });
+}
+/** Manda el catálogo a Supabase. Se puede correr desde el editor (botón ▶). */
+function supaCatalogo() {
+  if (!supaCfgSuave()) return 'Supabase no está configurado.';
+  var r = supaFetch('post', 'rpc/inv_pon_catalogo', { p: supaCatalogoFilas() });
+  var m = 'Catálogo en Supabase: ' + r; try { Logger.log(m); } catch (e) {} return m;
+}
+function supaCatalogoSuave() { try { supaCatalogo(); } catch (e) { try { Logger.log('Catálogo a Supabase: ' + e.message); } catch (e2) {} } }
