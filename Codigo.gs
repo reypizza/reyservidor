@@ -927,7 +927,7 @@ function doGet() {
  * mismo proyecto por POST. Solo se pueden llamar las funciones de esta lista (las mismas
  * que usa la pantalla), y cada una revisa el código de quien pregunta, igual que antes.
  * La lista la pone sola el armado; no hace falta tocarla. */
-/*API_INI*/var API_PERMITIDAS = ['abrirSolicitud', 'abrirTraslado', 'aceptarSolicitud', 'aceptarYPreparar', 'aclararDiferencia', 'activarCorreos', 'activarObligacion', 'activarProducto', 'activarProductoSucursal', 'adjuntarCotizacion', 'agregarEquipo', 'agregarProducto', 'agregarRecomendados', 'agregarRecomendadosCmo', 'agregarRubro', 'anclarProducto', 'anular', 'anularOrden', 'anularPagoImpuesto', 'anularSolicitud', 'aprobarFondos', 'aprobarPresupuesto', 'aprobarPresupuestoArea', 'asignarDescanso', 'borrarKpi', 'borrarKpiCmo', 'borrarSolicitud', 'cambiarEquipo', 'cambiarMiPin', 'cambiarPermiso', 'cancelarPermiso', 'confirmarPlanilla', 'confirmarRegistro', 'consolidado', 'copiarPresupuesto', 'costosTraslados', 'cotizarOrden', 'darDeBaja', 'datos', 'despacharSolicitudes', 'detalleGasto', 'editarProducto', 'eliminarPersonaCal', 'entrar', 'enviarEmergencia', 'enviarKpis', 'enviarKpisCmo', 'enviarSolicitud', 'enviarSugerencia', 'estadoCorreos', 'evaluarMerma', 'existencias', 'existenciasEmergencia', 'firmarTraslado', 'guardarAjustesInv', 'guardarBonoGeneral', 'guardarBonosCal', 'guardarBorradorCal', 'guardarComision', 'guardarConfigCal', 'guardarConteo', 'guardarEstudio', 'guardarHorario', 'guardarHorasApoyo', 'guardarHorasReales', 'guardarKpi', 'guardarKpiCmo', 'guardarLugar', 'guardarMando', 'guardarMedida', 'guardarMiCorreo', 'guardarMiPresupuesto', 'guardarObligacion', 'guardarOrden', 'guardarPersonaCal', 'guardarPrecios', 'guardarPresupuesto', 'guardarProducto', 'guardarProductoBodega', 'guardarProveedor', 'guardarProveedorInv', 'guardarReceta', 'guardarRepartidor', 'guardarTraslado', 'guardarTurnos', 'guardarUsuario', 'habilita', 'habilitarConteo', 'historialTraslados', 'indicadoresConta', 'leerBonoGeneral', 'leerSugerencias', 'listaBodega', 'listaCatalogo', 'listaConsultas', 'listaDiferencias', 'listaEntrada', 'listaFondos', 'listaImpuestos', 'listaKpis', 'listaKpisCmo', 'listaLugares', 'listaOrdenes', 'listaPermisos', 'listaPrecios', 'listaRepartidores', 'listaReportes', 'listaSolicitudes', 'listaUsuarios', 'llegoSolicitud', 'marcarPreparadas', 'medirAceite', 'miAvance', 'miCorreo', 'miPanel', 'miPresupuesto', 'notificaciones', 'ordenesPago', 'pagarFondos', 'pagarOrden', 'pagarRepartidor', 'pantallaCalendarios', 'pantallaConteo', 'pantallaEmergencias', 'pantallaFirmas', 'pantallaHorarios', 'pantallaKpi', 'pantallaMando', 'pantallaMant', 'pantallaMerma', 'pantallaMuestreo', 'pantallaPedidosBodega', 'pantallaProduccion', 'pantallaSolicitud', 'pantallaSugerencias', 'pdfCalendario', 'pdfOrden', 'pedirDescanso', 'pedirEmergencia', 'pedirFondos', 'pedirPermiso', 'ping', 'planillasPorPagar', 'ponPreciosGerentes', 'porConfirmar', 'preguntar', 'presupuestoMes', 'presupuestosAreas', 'probarCorreo', 'productosConfig', 'productosParaAnclar', 'productosSucursal', 'reabrirPlanilla', 'rechazarRegistro', 'recibirEfectivo', 'recibirEmergencia', 'recibirOrden', 'recibirSolicitud', 'registrarGasto', 'registrarIngreso', 'registrarKpis', 'registrarLote', 'registrarMant', 'registrarMerma', 'registrarObservacion', 'registrarPagoImpuesto', 'renombrarCategoria', 'reporteDiario', 'reporteTraslados', 'resolverDescanso', 'responderConsulta', 'responderMerma', 'resultadosKpi', 'resultadosKpiCmo', 'resultadosKpiRango', 'resultadosMuestreo', 'resumenInventario', 'resumenMes', 'revisarPermiso', 'seguimiento', 'sugerenciaCompra', 'tableroFinanzas', 'tableroKpi', 'terminarFondos', 'validarRegistro', 'ventas', 'verTraslado', 'verificarFondos', 'proveedoresProductos', 'guardarProveedorProd', 'eliminarProveedor', 'detalleAbastecimiento', 'pdfHistorialInventario', 'pantallaCierreMes', 'guardarCierreMes', 'misMenus', 'menusRol', 'guardarMenusRol', 'historialInventario', 'reiniciarPresupuestos', 'autorizarFondos', 'hechaFondos', 'listaPendientes', 'llegaPendiente', 'cancelarPendiente', 'despacharPendientes', 'devolverFondo', 'corregirFondo', 'pantallaEquipos', 'guardarEquipoA', 'bajaEquipo', 'revisarEquipos', 'confirmarRevisionEq', 'pedirEquipo', 'resolverPedidoEq', 'entregarCompraEq', 'recibirEquipo', 'devolverOrden', 'corregirOrden', 'reiniciarPrecios', 'guardarMezcla', 'registrarLoteMezcla', 'etiquetasLote', 'guardarConfigEtiquetas', 'listaKpisCoo', 'guardarKpiCoo', 'borrarKpiCoo', 'enviarKpisCoo', 'agregarRecomendadosCoo', 'resultadosKpiCoo', 'pantallaKpiCoo', 'registrarKpisCoo', 'resumenAreas', 'resumenAreasSenales', 'pantallaZonas', 'guardarZonas', 'listaKpisTec', 'guardarKpiTec', 'borrarKpiTec', 'enviarKpisTec', 'agregarRecomendadosTec', 'resultadosKpiTec', 'pantallaKpiTec', 'registrarKpisTec', 'cotizarFondo', 'recibirFondo', 'pantallaNivelacion', 'iniciarNivelacion', 'guardarConteoNivelacion', 'explicarNivelacion', 'vistoBuenoNivelacion', 'aprobarNivelacion', 'devolverNivelacion', 'anularNivelacion', 'pdfNivelacion', 'resumenSucursal', 'tableroBodega', 'permisosRol', 'guardarPermisosRol', 'guardarReglasCal', 'confirmarSemanaCal', 'pedirCambioCal', 'autorizarCambioCal', 'ventasCajas', 'pantallaDirectores', 'guardarAreaDir', 'quitarDirector', 'pagarDirectores', 'reabrirDirectores', 'proponerContratacion', 'cancelarPropuesta', 'resolverPropuesta', 'tokenSupabase', 'ponSugeridoPedido', 'invSalidaYa'];/*API_FIN*/
+/*API_INI*/var API_PERMITIDAS = ['abrirSolicitud', 'abrirTraslado', 'aceptarSolicitud', 'aceptarYPreparar', 'aclararDiferencia', 'activarCorreos', 'activarObligacion', 'activarProducto', 'activarProductoSucursal', 'adjuntarCotizacion', 'agregarEquipo', 'agregarProducto', 'agregarRecomendados', 'agregarRecomendadosCmo', 'agregarRubro', 'anclarProducto', 'anular', 'anularOrden', 'anularPagoImpuesto', 'anularSolicitud', 'aprobarFondos', 'aprobarPresupuesto', 'aprobarPresupuestoArea', 'asignarDescanso', 'borrarKpi', 'borrarKpiCmo', 'borrarSolicitud', 'cambiarEquipo', 'cambiarMiPin', 'cambiarPermiso', 'cancelarPermiso', 'confirmarPlanilla', 'confirmarRegistro', 'consolidado', 'copiarPresupuesto', 'costosTraslados', 'cotizarOrden', 'darDeBaja', 'datos', 'despacharSolicitudes', 'detalleGasto', 'editarProducto', 'eliminarPersonaCal', 'entrar', 'enviarEmergencia', 'enviarKpis', 'enviarKpisCmo', 'enviarSolicitud', 'enviarSugerencia', 'estadoCorreos', 'evaluarMerma', 'existencias', 'existenciasEmergencia', 'firmarTraslado', 'guardarAjustesInv', 'guardarBonoGeneral', 'guardarBonosCal', 'guardarBorradorCal', 'guardarComision', 'guardarConfigCal', 'guardarConteo', 'guardarEstudio', 'guardarHorario', 'guardarHorasApoyo', 'guardarHorasReales', 'guardarKpi', 'guardarKpiCmo', 'guardarLugar', 'guardarMando', 'guardarMedida', 'guardarMiCorreo', 'guardarMiPresupuesto', 'guardarObligacion', 'guardarOrden', 'guardarPersonaCal', 'guardarPrecios', 'guardarPresupuesto', 'guardarProducto', 'guardarProductoBodega', 'guardarProveedor', 'guardarProveedorInv', 'guardarReceta', 'guardarRepartidor', 'guardarTraslado', 'guardarTurnos', 'guardarUsuario', 'habilita', 'habilitarConteo', 'historialTraslados', 'indicadoresConta', 'leerBonoGeneral', 'leerSugerencias', 'listaBodega', 'listaCatalogo', 'listaConsultas', 'listaDiferencias', 'listaEntrada', 'listaFondos', 'listaImpuestos', 'listaKpis', 'listaKpisCmo', 'listaLugares', 'listaOrdenes', 'listaPermisos', 'listaPrecios', 'listaRepartidores', 'listaReportes', 'listaSolicitudes', 'listaUsuarios', 'llegoSolicitud', 'marcarPreparadas', 'medirAceite', 'miAvance', 'miCorreo', 'miPanel', 'miPresupuesto', 'notificaciones', 'ordenesPago', 'pagarFondos', 'pagarOrden', 'pagarRepartidor', 'pantallaCalendarios', 'pantallaConteo', 'pantallaEmergencias', 'pantallaFirmas', 'pantallaHorarios', 'pantallaKpi', 'pantallaMando', 'pantallaMant', 'pantallaMerma', 'pantallaMuestreo', 'pantallaPedidosBodega', 'pantallaProduccion', 'pantallaSolicitud', 'pantallaSugerencias', 'pdfCalendario', 'pdfOrden', 'pedirDescanso', 'pedirEmergencia', 'pedirFondos', 'pedirPermiso', 'ping', 'planillasPorPagar', 'ponPreciosGerentes', 'porConfirmar', 'preguntar', 'presupuestoMes', 'presupuestosAreas', 'probarCorreo', 'productosConfig', 'productosParaAnclar', 'productosSucursal', 'reabrirPlanilla', 'rechazarRegistro', 'recibirEfectivo', 'recibirEmergencia', 'recibirOrden', 'recibirSolicitud', 'registrarGasto', 'registrarIngreso', 'registrarKpis', 'registrarLote', 'registrarMant', 'registrarMerma', 'registrarObservacion', 'registrarPagoImpuesto', 'renombrarCategoria', 'reporteDiario', 'reporteTraslados', 'resolverDescanso', 'responderConsulta', 'responderMerma', 'resultadosKpi', 'resultadosKpiCmo', 'resultadosKpiRango', 'resultadosMuestreo', 'resumenInventario', 'resumenMes', 'revisarPermiso', 'seguimiento', 'sugerenciaCompra', 'tableroFinanzas', 'tableroKpi', 'terminarFondos', 'validarRegistro', 'ventas', 'verTraslado', 'verificarFondos', 'proveedoresProductos', 'guardarProveedorProd', 'eliminarProveedor', 'detalleAbastecimiento', 'pdfHistorialInventario', 'pantallaCierreMes', 'guardarCierreMes', 'misMenus', 'menusRol', 'guardarMenusRol', 'historialInventario', 'reiniciarPresupuestos', 'autorizarFondos', 'hechaFondos', 'listaPendientes', 'llegaPendiente', 'cancelarPendiente', 'despacharPendientes', 'devolverFondo', 'corregirFondo', 'pantallaEquipos', 'guardarEquipoA', 'bajaEquipo', 'revisarEquipos', 'confirmarRevisionEq', 'pedirEquipo', 'resolverPedidoEq', 'entregarCompraEq', 'recibirEquipo', 'devolverOrden', 'corregirOrden', 'reiniciarPrecios', 'guardarMezcla', 'registrarLoteMezcla', 'etiquetasLote', 'guardarConfigEtiquetas', 'listaKpisCoo', 'guardarKpiCoo', 'borrarKpiCoo', 'enviarKpisCoo', 'agregarRecomendadosCoo', 'resultadosKpiCoo', 'pantallaKpiCoo', 'registrarKpisCoo', 'resumenAreas', 'resumenAreasSenales', 'pantallaZonas', 'guardarZonas', 'listaKpisTec', 'guardarKpiTec', 'borrarKpiTec', 'enviarKpisTec', 'agregarRecomendadosTec', 'resultadosKpiTec', 'pantallaKpiTec', 'registrarKpisTec', 'cotizarFondo', 'recibirFondo', 'pantallaNivelacion', 'iniciarNivelacion', 'guardarConteoNivelacion', 'explicarNivelacion', 'vistoBuenoNivelacion', 'aprobarNivelacion', 'devolverNivelacion', 'anularNivelacion', 'pdfNivelacion', 'resumenSucursal', 'tableroBodega', 'permisosRol', 'guardarPermisosRol', 'guardarReglasCal', 'confirmarSemanaCal', 'pedirCambioCal', 'autorizarCambioCal', 'ventasCajas', 'pantallaDirectores', 'guardarAreaDir', 'quitarDirector', 'pagarDirectores', 'reabrirDirectores', 'proponerContratacion', 'cancelarPropuesta', 'resolverPropuesta', 'tokenSupabase', 'ponSugeridoPedido', 'invSalidaYa', 'permisosCaja', 'guardarPermisosCaja', 'guardarPersonaCaja', 'guardarHorariosCaja', 'listaAvisosPersonal', 'guardarAvisoPersonal', 'quitarAvisoPersonal', 'listaReconocimientos', 'darReconocimiento', 'anularReconocimiento', 'accesoOperadores', 'guardarAccesoOperadores', 'pedirPrestamo', 'resolverPrestamo'];/*API_FIN*/
 /** Solo contesta «aquí estoy»: sirve para despertar el servidor y medir la velocidad. No lee ni guarda nada. */
 function ping() { return { ok: true }; }
 function doPost(e) {
@@ -11547,7 +11547,7 @@ function calSucursal(ac, sid) {
 }
 
 /* ── el cálculo de una quincena de una sucursal ── */
-function calModelo(D, sid, fecha) {
+function calModeloBase(D, sid, fecha) {
   var q = calQuincena(fecha), cfg = calCfg(sid, D.cf), hr = calHoras(cfg);
   var mapa = {}, ov = {}, rh = {};
   (D.hr || []).forEach(function (x) { if (x.sid === sid && x.ini === q.ini && x.horas != null) rh[x.id] = x.horas; });
@@ -13010,7 +13010,7 @@ function exportarIndicadores(q) {
 /* ════════════ COPIA COMPLETA PARA EL SERVIDOR PROPIO ════════════
  * El servidor propio guarda una copia de TODAS las pestañas y corre este mismo código sobre ella para contestar las lecturas.
  * Cada cambio que pasa por aquí avisa qué pestañas tocó («tocadas»), y el servidor solo vuelve a traer esas. */
-var VERSION_CODIGO = '2026-10-26-b';       // se cambia a mano cada vez que se cambia este archivo; el servidor compara que coincida con la suya
+var VERSION_CODIGO = '2026-10-27-a';       // se cambia a mano cada vez que se cambia este archivo; el servidor compara que coincida con la suya
 function versionCodigo() { return VERSION_CODIGO; }
 function huellaTexto(t) { return Utilities.base64Encode(Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, t)).slice(0, 22); }
 /** Un resumen barato de cada pestaña: cuántas filas y columnas tiene y una huella de sus últimas 25 filas. */
@@ -15355,7 +15355,7 @@ function calAcceso(yo) {
     confirma: n.planilla >= 2, reabrir: n.reabrir >= 2, pdfm: false, pdfo: n.pdfo >= 2, confirmarSem: n.confirmar >= 2, desbloquear: n.desbloquear >= 2, bonoGeneral: bonoG, soloVer: false };
 }
 /* calPantalla: arma lo de siempre y quita lo que la persona no puede ver. */
-function calPantalla(yo, ac, sid, fecha, D) {
+function calPantalla107(yo, ac, sid, fecha, D) {
   D = D || calDatos();
   var r = calPantallaBase(yo, ac, sid, fecha, D);
   var m = calModelo(D, r.sid, r.q.ini);
@@ -15447,7 +15447,7 @@ function guardarReglasCal(cred, sid, reglas, fecha) {
 }
 
 /* Configuración del calendario por partes: horarios y rangos (Ajustes), pago base (pago por hora) y gerentes (salario de gerentes). */
-function guardarConfigCal(cred, sid, cfg, fecha) {
+function guardarConfigCal107(cred, sid, cfg, fecha) {
   var yo = quien(cred), ac = calAcceso(yo);
   if (!ac.ajustes && !ac.tarifa && !ac.salgte) throw new Error('Su rol puede ver los ajustes, pero no cambiarlos.');
   if (ac.sucs.indexOf(sid) < 0) throw new Error('Escoja la sucursal.');
@@ -15580,7 +15580,7 @@ function autorizarCambioCal(cred, sid, fecha, sem, si, comentario) {
   return calRespuesta(yo, ac, sid, fecha, si ? 'Semana ' + sem + ' abierta para cambios. El gerente la vuelve a confirmar al terminar.' : 'No se autorizó el cambio. La semana ' + sem + ' sigue confirmada.');
 }
 /* Lo confirmado no se toca: guardar turnos y el avance dejan fuera las semanas confirmadas. */
-function guardarTurnos(cred, sid, fecha, cambios) {
+function guardarTurnos107(cred, sid, fecha, cambios) {
   if (quien(cred).esAdmin) return guardarTurnosBase(cred, sid, fecha, cambios);          // el administrador cambia directo, aunque esté confirmada
   var q = calQuincena(fecha), est = calSemanas(sid, q.ini);
   (cambios || []).forEach(function (c) { var s = calSemDe(q, String((c || {}).f || '')); if (s && est[s - 1].estado !== 'Abierta')
@@ -15594,7 +15594,7 @@ function guardarBorradorCal(cred, sid, fecha, cambios) {
   return guardarBorradorCalBase(cred, sid, fecha, cambios);
 }
 /* Campanita: a quien autoriza le llegan los pedidos; al que pidió, la respuesta. */
-function avisosCalendario(yo, out, desde) {
+function avisosCalendario107(yo, out, desde) {
   avisosCalendarioBase(yo, out, desde);
   try { avisosDirectores(yo, out, desde); } catch (e) {}
   var ac = null; try { ac = calAcceso(yo); } catch (e) { return; }
@@ -16412,6 +16412,7 @@ function supaEmpuja() {
     } catch (e) { try { Logger.log('Supabase al instante (' + nom + '): ' + e.message); } catch (e2) {} }
   });
   if (cambioCat) supaCatalogoSuave();
+  if (hojas.some(function (h) { return /^Calendario (turnos|equipo|horas reales|bonos|planilla|config)$/.test(h) || h === 'Personal caja'; })) perQuincenaSuave();
 }
 function supaTras(v) { try { supaEmpuja(); } catch (e) {} return v; }
 
@@ -16479,7 +16480,8 @@ function cajasSupaPasar() {
 }
 /** Para el reloj: no deja que un error de Supabase rompa nada; queda anotado en el registro de ejecuciones. */
 function cajasSupaReloj() { try { var x = cajasSupaPasar(); if (x.ordenes || x.cortes) Logger.log(JSON.stringify(x)); } catch (e) { Logger.log('cajasSupa: ' + e.message); }
-  try { var y = invSalida(); if (y.hechos || y.errores) Logger.log('inventario a hojas: ' + JSON.stringify(y)); } catch (e2) { Logger.log('invSalida: ' + e2.message); } }
+  try { var y = invSalida(); if (y.hechos || y.errores) Logger.log('inventario a hojas: ' + JSON.stringify(y)); } catch (e2) { Logger.log('invSalida: ' + e2.message); }
+  if (new Date().getMinutes() % 15 === 0) { try { cajaHorariosAsegura(); perQuincenaMandar(); } catch (e3) { Logger.log('personal: ' + e3.message); } } }
 /** ▶ Ejecutar una vez: deja el paso automático cada minuto. */
 function cajasSupaInstalarReloj() {
   ScriptApp.getProjectTriggers().forEach(function (t) { if (t.getHandlerFunction() === 'cajasSupaReloj') ScriptApp.deleteTrigger(t); });
@@ -16613,3 +16615,511 @@ function invSalida() {
 /** La app lo pide justo después de guardar algo en Supabase. */
 function invSalidaYa(cred) { quien(cred); var r = invSalida(); r.ok = true; return r; }
 function supaMaxSol() { try { return supaCfgSuave() ? Number(supaFetch('post', 'rpc/inv_max_sol', {})) || 0 : 0; } catch (e) { return 0; } }
+
+/* ════════════ ENTREGA 107 · PERSONAL Y CAJA (Rey Pizza Caja 0.9) ════════════
+ * Lo de la caja se configura aquí, por sucursal, y le llega sola a cada caja por Supabase (la copia espejo de estas hojas + el 010):
+ *  · Caja permisos: lo que puede hacer el cajero y la mesera en cada sucursal, excepciones por persona y el gerente en Configuración.
+ *  · Personal caja: el rol de cada persona en la caja de cada sucursal (Feliciano: mesera en Almendras) y dónde puede cubrir
+ *    (eso lo autoriza el director operativo). Quien cubre aparece en el calendario de esa sucursal; nadie queda en dos sucursales
+ *    el mismo turno, y el gerente que lo necesita se lo pide al otro («Pedírselo a…»).
+ *  · Caja horarios: los turnos de Ajustes (mañana y tarde) con los días que tienen otro horario y cuándo recordar el corte.
+ *  · Avisos personal y Reconocimientos: lo que ve cada operador en su app (con «Leído» y premios que se canjean en la caja).
+ *  · Acceso operadores: qué secciones ve el operador en su app, por sucursal.
+ *  · Lo calculado de la quincena (horas por día y pago) se manda a Supabase para la app del operador, con la misma cuenta de la planilla. */
+var H_CPERM = ['Sucursal', 'Tipo', 'Para', 'Permisos (JSON)', 'Cambiado por', 'Cambiado en'];
+var H_PCAJA = ['ID', 'Rol en la caja (JSON)', 'Cubre (JSON)', 'Autorizó cubrir', 'Cambiado por', 'Cambiado en'];
+var H_CHOR = ['Sucursal', 'Turnos (JSON)', 'Días con otro horario (JSON)', 'Recordar corte (min)', 'Cambiado por', 'Cambiado en'];
+var H_AVP = ['ID', 'Sucursal', 'Para', 'Tipo', 'Título', 'Texto', 'Fecha límite', 'Activo', 'Creado por', 'Creado en'];
+var H_RECO = ['ID', 'Persona', 'Sucursal', 'Motivo', 'Premio', 'Valor', 'Producto', 'Vence', 'Dio', 'Dado en', 'Estado', 'Nota'];
+var H_ACOP = ['Sucursal', 'Sección', 'Encendido', 'Cambiado por', 'Cambiado en'];
+var H_PRES = ['ID', 'Persona', 'Fecha', 'Turno', 'Está en', 'La pide', 'Pidió', 'Pedido en', 'Estado', 'Resolvió', 'Resuelto en', 'Nota'];
+var PC_SUCS = ['centro', 'almendras', 'parque'];
+/* Lo que se le da al cajero y a la mesera (igual que en la caja: lib/autoriza.js). */
+var CAJA_CAT = [
+  ['abrirTurno', 'Abrir su turno de caja', 'Turno', 0, { cajero: true, mesera: false }],
+  ['cajaAjena', 'Operar la caja abierta por otra persona sin autorización', 'Turno', 0, { cajero: false, mesera: false }],
+  ['cerrarTurno', 'Cerrar el turno sin el código del gerente', 'Turno', 0, { cajero: false, mesera: false }],
+  ['mesas', 'Mesas', 'Ventas', 0, { cajero: true, mesera: true }],
+  ['despacho', 'Despacho (delivery y pickup)', 'Ventas', 0, { cajero: true, mesera: false }],
+  ['agotados', 'Marcar agotados', 'Ventas', 0, { cajero: true, mesera: false }],
+  ['facturas', 'Facturas', 'Ventas', 0, { cajero: true, mesera: false }],
+  ['premios', 'Canjear premios del personal', 'Ventas', 0, { cajero: true, mesera: false }],
+  ['descuento', 'Dar descuentos sin el gerente, hasta', 'Dinero', 100, { cajero: 0, mesera: 0 }],
+  ['anular', 'Anular una venta sin el gerente', 'Dinero', 0, { cajero: false, mesera: false }],
+  ['tarifa', 'Cambiar la tarifa de envío sin el gerente', 'Dinero', 0, { cajero: false, mesera: false }],
+  ['gastos', 'Anotar gastos de caja', 'Dinero', 0, { cajero: true, mesera: false }],
+  ['efectivo', 'Retiro e ingreso de efectivo (con el código del gerente)', 'Dinero', 0, { cajero: true, mesera: false }],
+  ['efectivoSolo', 'Retiro e ingreso de efectivo sin el gerente', 'Dinero', 0, { cajero: false, mesera: false }],
+  ['historial', 'Ver el historial sin el gerente', 'Consultas', 0, { cajero: false, mesera: false }]
+];
+var PORTAL_SECC = [['turnos', 'Mis turnos'], ['horas', 'Mis horas'], ['pago', 'Mi pago'], ['bono', 'Cómo va mi bono'], ['descanso', 'Mi descanso'],
+  ['academia', 'Academia Real'], ['avisos', 'Avisos y reglamento'], ['premios', 'Mis premios'], ['pines', 'Cambiar mis PIN']];
+
+// los permisos nuevos de la app (Roles y permisos): sin llamar funciones al cargar (las partes de Apps Script cargan en cualquier orden)
+PERM_CAT.forEach(function (m) {
+  if (m.id === 'personal') m.f.push(['cubrir', 'Autorizar que alguien cubra en otra sucursal', 'si', 0, []],
+    ['avisos', 'Avisos y reglamento del personal', 'vc', 0, []], ['premios', 'Reconocimientos con premio', 'vc', 0, []], ['pin', 'Restablecer el PIN del personal', 'si', 0, []]);
+  if (m.id === 'config') m.f.push(['caja', 'Permisos de la caja (cajero y mesera)', 'vc', 0, []], ['portal', 'App de operadores: qué ve cada sucursal', 'vc', 0, []]);
+});
+PERM_HOY.operaciones += ' personal.cubrir2 personal.avisos2 personal.premios2 personal.pin2 config.caja2 config.portal2';
+PERM_HOY.gerente += ' personal.avisos2 personal.premios2 personal.pin2';
+PERM_HOY.finanzas += ' personal.avisos1 personal.premios1';
+['personal.cubrir', 'personal.avisos', 'personal.premios', 'personal.pin', 'config.caja', 'config.portal'].forEach(function (k) { PERM_PUENTE[k] = {}; });
+PERM_API.permisosCaja = [['config.caja'], 1]; PERM_API.guardarPermisosCaja = [['config.caja'], 2];
+PERM_API.guardarPersonaCaja = [['personal.equipo', 'personal.cubrir'], 2];
+PERM_API.guardarHorariosCaja = [['personal.ajustes'], 2];
+PERM_API.listaAvisosPersonal = [['personal.avisos'], 1]; PERM_API.guardarAvisoPersonal = [['personal.avisos'], 2]; PERM_API.quitarAvisoPersonal = [['personal.avisos'], 2];
+PERM_API.listaReconocimientos = [['personal.premios'], 1]; PERM_API.darReconocimiento = [['personal.premios'], 2]; PERM_API.anularReconocimiento = [['personal.premios'], 2];
+PERM_API.accesoOperadores = [['config.portal'], 1]; PERM_API.guardarAccesoOperadores = [['config.portal'], 2];
+
+/* ── ayudas ── */
+function pcHoja(nombre, enc) { return calHoja(nombre, enc, []); }
+function pcLee(nombre, enc) { var h = libro().getSheetByName(nombre); if (!h || h.getLastRow() < 2) return []; return leeTodo(h, enc.length).map(function (r, i) { r.fila = i + 2; return r; }); }
+function pcJson(t, d) { try { var v = JSON.parse(String(t || '')); return v == null ? d : v; } catch (e) { return d; } }
+function pcSello() { return new Date(); }
+function pcId(pre) { return pre + Utilities.formatDate(new Date(), ZONA, 'yyMMddHHmmss') + Math.floor(Math.random() * 900 + 100); }
+function pcNivel(yo, clave) { return yo.esAdmin ? 2 : (permDeYo(yo).ef[clave] || 0); }
+function pcPuede(yo, clave, nivel, sid) {
+  if (yo.esAdmin) return true;
+  if (pcNivel(yo, clave) < nivel) return false;
+  if (!sid) return true;
+  var m = clave.split('.')[0], P = permDeYo(yo), a = (P.alc || {})[m];
+  if (m === 'config') return true;                                        // Configuración: todas las sucursales
+  return a ? permSucOk(a, sid, yo) : (yo.rol !== 'gerente' || yo.sucursal === sid);
+}
+function pcExige(yo, clave, nivel, sid, que) { if (!pcPuede(yo, clave, nivel, sid)) throw new Error('Su rol no tiene permiso para ' + que + (sid ? ' en ' + nombreUnidad(sid) : '') + '. Pídaselo al administrador.'); }
+function pcSidOk(sid) { if (PC_SUCS.indexOf(sid) < 0) throw new Error('Escoja la sucursal.'); return sid; }
+/** Las personas del equipo (de Personal) con su rol en la caja y dónde cubren. */
+function pcPersonas() {
+  var extra = {};
+  pcLee('Personal caja', H_PCAJA).forEach(function (r) { extra[calTxt(r[0])] = { rol: pcJson(r[1], {}), cubre: pcJson(r[2], []), autorizo: calTxt(r[3]), fila: r.fila }; });
+  var hoy = hoyISO();
+  return calLeeEq().filter(function (p) { return !p.baja || p.baja >= hoy; }).map(function (p) {
+    var x = extra[p.id] || { rol: {}, cubre: [] };
+    return { id: p.id, nombre: p.nombre, sid: p.sid, area: p.area, rol: x.rol || {}, cubre: x.cubre || [], autorizo: x.autorizo || '' };
+  });
+}
+function pcCubre(sid) { return pcPersonas().filter(function (p) { return p.sid !== sid && (p.cubre || []).indexOf(sid) >= 0; }); }
+
+/* ════════ permisos de la caja ════════ */
+function pcCatalogo() { return CAJA_CAT.map(function (x) { return { k: x[0], t: x[1], g: x[2], n: x[3] ? '%' : '', max: x[3] || 0, def: x[4] }; }); }
+function pcValor(k, v) {
+  var c = null; CAJA_CAT.forEach(function (x) { if (x[0] === k) c = x; }); if (!c) return undefined;
+  if (c[3]) { var n = Math.round(Number(v) * 100) / 100; return isFinite(n) ? Math.max(0, Math.min(c[3], n)) : 0; }
+  return !!v;
+}
+function pcPermisosLee() {
+  var out = {};
+  PC_SUCS.forEach(function (s) {
+    var roles = {}; ['cajero', 'mesera'].forEach(function (r) { roles[r] = {}; CAJA_CAT.forEach(function (x) { roles[r][x[0]] = x[4][r]; }); });
+    out[s] = { roles: roles, personas: {}, gerenteConfig: false, por: '', en: '' };
+  });
+  pcLee('Caja permisos', H_CPERM).forEach(function (r) {
+    var s = calTxt(r[0]).toLowerCase(), t = calTxt(r[1]), para = calTxt(r[2]), P = pcJson(r[3], {}), o = out[s]; if (!o) return;
+    if (t === 'rol' && o.roles[para]) Object.keys(P).forEach(function (k) { var v = pcValor(k, P[k]); if (v !== undefined) o.roles[para][k] = v; });
+    else if (t === 'persona' && para) { var x = {}; Object.keys(P).forEach(function (k) { var v = pcValor(k, P[k]); if (v !== undefined) x[k] = v; }); o.personas[para] = x; }
+    else if (t === 'gerente') o.gerenteConfig = !!P.config;
+    var en = r[5] instanceof Date ? fmtSello(r[5]) : calTxt(r[5]);
+    if (en > o.en) { o.en = en; o.por = calTxt(r[4]); }
+  });
+  return out;
+}
+/** La pantalla «Permisos de la caja» (Configuración › Roles y permisos › Caja). */
+function permisosCaja(cred) {
+  var yo = quien(cred); pcExige(yo, 'config.caja', 1, null, 'ver los permisos de la caja');
+  return { ok: true, cat: pcCatalogo(), sucursales: PC_SUCS.map(function (s) { return { id: s, nombre: nombreUnidad(s) }; }), datos: pcPermisosLee(),
+    personas: pcPersonas().map(function (p) { return { id: p.id, nombre: p.nombre, sid: p.sid, area: p.area, rol: p.rol }; }), puedeCambiar: pcPuede(yo, 'config.caja', 2) };
+}
+/** Guarda lo de cada sucursal: { centro: { roles: { cajero: {...}, mesera: {...} }, personas: { id: {...} | null }, gerenteConfig } } */
+function guardarPermisosCaja(cred, cambios) {
+  var yo = quien(cred); pcExige(yo, 'config.caja', 2, null, 'cambiar los permisos de la caja');
+  if (!cambios || typeof cambios !== 'object') throw new Error('No hay cambios.');
+  var lock = LockService.getScriptLock(); lock.waitLock(15000);
+  try {
+    var h = pcHoja('Caja permisos', H_CPERM), filas = pcLee('Caja permisos', H_CPERM), idx = {}, ahora = pcSello(), n = 0, txt = [];
+    filas.forEach(function (r) { idx[calTxt(r[0]).toLowerCase() + '|' + calTxt(r[1]) + '|' + calTxt(r[2])] = r.fila; });
+    var pon = function (s, tipo, para, P) {
+      var k = s + '|' + tipo + '|' + para, v = [s, tipo, para, JSON.stringify(P), yo.nombre, ahora];
+      if (idx[k]) h.getRange(idx[k], 1, 1, H_CPERM.length).setValues([v]); else { h.appendRow(v); idx[k] = h.getLastRow(); }
+      n++;
+    };
+    Object.keys(cambios).forEach(function (s) {
+      pcSidOk(s); var c = cambios[s] || {};
+      ['cajero', 'mesera'].forEach(function (r) {
+        if (!c.roles || !c.roles[r]) return;
+        var P = {}; Object.keys(c.roles[r]).forEach(function (k) { var v = pcValor(k, c.roles[r][k]); if (v !== undefined) P[k] = v; });
+        pon(s, 'rol', r, P); txt.push(nombreUnidad(s) + ' · ' + r);
+      });
+      Object.keys(c.personas || {}).forEach(function (id) {
+        var x = c.personas[id], P = {};
+        Object.keys(x || {}).forEach(function (k) { var v = pcValor(k, x[k]); if (v !== undefined) P[k] = v; });
+        pon(s, 'persona', String(id), P); txt.push(nombreUnidad(s) + ' · persona ' + id);
+      });
+      if (c.gerenteConfig !== undefined) { pon(s, 'gerente', '', { config: !!c.gerenteConfig }); txt.push(nombreUnidad(s) + ' · gerente en Configuración: ' + (c.gerenteConfig ? 'sí' : 'no')); }
+    });
+    if (n) try { hojaPermBit().appendRow([ahora, yo.nombre, 'Caja', 'Permisos de la caja: ' + txt.join(', ')]); } catch (e) {}
+    var r = permisosCaja(cred); r.mensaje = n ? 'Permisos de la caja guardados. Les llegan a las cajas en un minuto.' : 'No había nada que guardar.';
+    return r;
+  } finally { lock.releaseLock(); }
+}
+
+/* ════════ el rol en la caja y dónde cubre ════════ */
+/** d = { rol: { centro: 'cajero' | 'mesera' | '' … }, cubre: ['almendras'] } (cada parte con su permiso). */
+function guardarPersonaCaja(cred, id, d) {
+  var yo = quien(cred); id = String(id || ''); d = d || {};
+  var p = calLeeEq().filter(function (x) { return x.id === id; })[0];
+  if (!p) throw new Error('Esa persona ya no está en el equipo.');
+  var lock = LockService.getScriptLock(); lock.waitLock(15000);
+  try {
+    var x = pcPersonas().filter(function (q) { return q.id === id; })[0] || { rol: {}, cubre: [], autorizo: '' };
+    var rol = JSON.parse(JSON.stringify(x.rol || {})), cubre = (x.cubre || []).slice(), autorizo = x.autorizo || '', txt = [];
+    if (d.cubre !== undefined) {
+      pcExige(yo, 'personal.cubrir', 2, null, 'autorizar que alguien cubra en otra sucursal');
+      var nuevo = (Array.isArray(d.cubre) ? d.cubre : []).map(String).filter(function (s) { return PC_SUCS.indexOf(s) >= 0 && s !== p.sid; });
+      if (JSON.stringify(nuevo.slice().sort()) !== JSON.stringify(cubre.slice().sort())) { cubre = nuevo; autorizo = yo.nombre; txt.push('puede cubrir en: ' + (cubre.length ? cubre.map(nombreUnidad).join(', ') : 'ninguna')); }
+    }
+    if (d.rol) Object.keys(d.rol).forEach(function (s) {
+      pcSidOk(s);
+      var v = d.rol[s] === 'cajero' || d.rol[s] === 'mesera' ? d.rol[s] : '';
+      if ((rol[s] || '') === v) return;
+      if (s !== p.sid && cubre.indexOf(s) < 0 && v) throw new Error(p.nombre + ' no puede cubrir en ' + nombreUnidad(s) + '. Primero el director operativo le da ese permiso.');
+      pcExige(yo, 'personal.equipo', 2, s, 'cambiar el rol en la caja');
+      if (v) rol[s] = v; else delete rol[s];
+      txt.push(nombreUnidad(s) + ': ' + (v || 'sin caja'));
+    });
+    Object.keys(rol).forEach(function (s) { if (s !== p.sid && cubre.indexOf(s) < 0) delete rol[s]; });     // si ya no cubre, tampoco opera esa caja
+    if (!txt.length) return { ok: true, mensaje: 'No había nada que guardar.', persona: { id: id, rol: rol, cubre: cubre } };
+    var h = pcHoja('Personal caja', H_PCAJA), v = [id, JSON.stringify(rol), JSON.stringify(cubre), autorizo, yo.nombre, pcSello()];
+    if (x.fila === undefined) { var f0 = null; pcLee('Personal caja', H_PCAJA).forEach(function (r) { if (calTxt(r[0]) === id) f0 = r.fila; }); x.fila = f0; }
+    if (x.fila) h.getRange(x.fila, 1, 1, H_PCAJA.length).setValues([v]); else h.appendRow(v);
+    try { hojaPermBit().appendRow([pcSello(), yo.nombre, 'Personal', p.nombre + ' · ' + txt.join(' · ')]); } catch (e) {}
+    return { ok: true, mensaje: 'Guardado: ' + p.nombre + ' · ' + txt.join(' · ') + '.', persona: { id: id, rol: rol, cubre: cubre, autorizo: autorizo } };
+  } finally { lock.releaseLock(); }
+}
+
+/* ════════ horarios de turno para la caja ════════ */
+function pcHorariosLee() {
+  var out = {}; pcLee('Caja horarios', H_CHOR).forEach(function (r) { out[calTxt(r[0]).toLowerCase()] = { fila: r.fila, excepciones: pcJson(r[2], []), recordar: r[3] === '' ? 10 : Number(r[3]) || 0 }; });
+  return out;
+}
+/** Escribe la fila de esa sucursal con los turnos de Ajustes (mañana y tarde). */
+function cajaHorariosEscribe(sid, yo, excepciones, recordar) {
+  var cfg = calCfg(sid, calLeeCf()), g = pcHorariosLee()[sid] || { excepciones: [], recordar: 10 };
+  var turnos = [{ nombre: 'Mañana', desde: cfg.am_i, hasta: cfg.am_f }, { nombre: 'Tarde', desde: cfg.pm_i, hasta: cfg.pm_f }];
+  var ex = excepciones !== undefined ? excepciones : g.excepciones, rc = recordar !== undefined ? recordar : g.recordar;
+  var h = pcHoja('Caja horarios', H_CHOR), v = [sid, JSON.stringify(turnos), JSON.stringify(ex || []), rc, yo ? yo.nombre : 'Ajustes', pcSello()];
+  if (g.fila) h.getRange(g.fila, 1, 1, H_CHOR.length).setValues([v]); else h.appendRow(v);
+  return { turnos: turnos, excepciones: ex || [], recordar: rc };
+}
+function cajaHorariosDe(sid) {
+  var cfg = calCfg(sid, calLeeCf()), g = pcHorariosLee()[sid] || { excepciones: [], recordar: 10 };
+  return { turnos: [{ nombre: 'Mañana', desde: cfg.am_i, hasta: cfg.am_f }, { nombre: 'Tarde', desde: cfg.pm_i, hasta: cfg.pm_f }], excepciones: g.excepciones || [], recordar: g.recordar };
+}
+/** Ajustes › Turnos de la caja: los días con otro horario y cuándo recordar el corte. */
+function guardarHorariosCaja(cred, sid, d) {
+  var yo = quien(cred); pcSidOk(sid); pcExige(yo, 'personal.ajustes', 2, sid, 'cambiar los horarios');
+  d = d || {};
+  var hh = function (s) { return /^([01]\d|2[0-3]):[0-5]\d$/.test(String(s || '')) ? String(s) : null; };
+  var ex = (Array.isArray(d.excepciones) ? d.excepciones : []).map(function (e) {
+    var f = String((e && e.fecha) || ''); if (!esFecha(f)) throw new Error('Una fecha no es válida.');
+    var tu = (e.turnos || []).map(function (t) { var a = hh(t.desde), b = hh(t.hasta); if (!a || !b) throw new Error('Revise las horas del ' + dia(f) + '.'); return { nombre: String(t.nombre || 'Turno').slice(0, 30), desde: a, hasta: b }; });
+    return { fecha: f, cerrado: !!e.cerrado, turnos: e.cerrado ? [] : tu, nota: String(e.nota || '').slice(0, 80) };
+  }).sort(function (a, b) { return a.fecha < b.fecha ? -1 : 1; });
+  var rc = Math.max(0, Math.min(60, Math.round(Number(d.recordar)) || 0));
+  var lock = LockService.getScriptLock(); lock.waitLock(15000);
+  try { var r = cajaHorariosEscribe(sid, yo, ex, rc); return { ok: true, mensaje: 'Horarios de la caja guardados. Le llegan a la caja de ' + nombreUnidad(sid) + ' en un minuto.', horarios: r }; }
+  finally { lock.releaseLock(); }
+}
+/* Al guardar los horarios de Ajustes, también la caja. */
+function guardarConfigCal(cred, sid, cfg, fecha) {
+  var r = guardarConfigCal107(cred, sid, cfg, fecha);
+  try { cajaHorariosEscribe(sid, quien(cred)); } catch (e) { try { Logger.log('Caja horarios: ' + e.message); } catch (e2) {} }
+  return r;
+}
+
+/* ════════ el calendario: quien cubre y nadie en dos sucursales a la vez ════════ */
+/** En el calendario de una sucursal entra también quien puede cubrir ahí (sin su bono: el bono lo paga su sucursal). Cada día dice si ya está en otra. */
+function calModelo(D, sid, fecha) {
+  var cub = {}, extra = [];
+  try { pcPersonas().forEach(function (p) { if (p.sid !== sid && (p.cubre || []).indexOf(sid) >= 0) cub[p.id] = p.sid; }); } catch (e) {}
+  D.eq.forEach(function (p) { if (cub[p.id] && p.sid === cub[p.id]) { var c = {}; Object.keys(p).forEach(function (k) { c[k] = p[k]; }); c.sid = sid; c.de = p.sid; c.fila = null; extra.push(c); } });
+  var D2 = D; if (extra.length) { D2 = {}; Object.keys(D).forEach(function (k) { D2[k] = D[k]; }); D2.eq = D.eq.concat(extra); }
+  var m = calModeloBase(D2, sid, fecha);
+  // en otra sucursal: qué turno tiene cada persona ese día
+  var otras = {}; D.tu.forEach(function (r) { if (r.sid !== sid && r.f >= m.q.ini && r.f <= m.q.fin && (r.am || r.pm)) (otras[r.id + '|' + r.f] = otras[r.id + '|' + r.f] || []).push(r); });
+  m.personas.forEach(function (p) {
+    if (cub[p.id]) {
+      p.de = cub[p.id];
+      var b = p.bono || 0, bp = p.pagoProy - calRed(p.hq * p.tarifa);
+      if (b || bp) {
+        m.areas.forEach(function (a) { if (a.area === p.area) { a.bonos = calRed(a.bonos - b); a.pago = calRed(a.pago - b); a.proy = calRed(a.proy - bp); } });
+        m.tot.bonos = calRed(m.tot.bonos - b); m.tot.personal = calRed(m.tot.personal - b); m.tot.total = calRed(m.tot.total - b); m.tot.proy = calRed(m.tot.proy - bp);
+      }
+      p.bono = 0; p.bonoOrigen = 'su sucursal'; p.pagoProy = calRed(p.hq * p.tarifa); p.pago = calRed(p.hp * p.tarifa);
+    }
+    p.dias.forEach(function (x) { var o = otras[p.id + '|' + x.f]; if (o) x.otra = o.map(function (r) { return { sid: r.sid, am: r.am, pm: r.pm }; }); });
+  });
+  return m;
+}
+/** Revisa que nadie quede en dos sucursales el mismo turno, y guarda lo de quien cubre (las demás personas, como siempre). */
+function guardarTurnos(cred, sid, fecha, cambios) {
+  var yo = quien(cred), D = calDatos(), q = calQuincena(fecha);
+  var cub = {}; pcPersonas().forEach(function (p) { if (p.sid !== sid && (p.cubre || []).indexOf(sid) >= 0) cub[p.id] = p; });
+  var nombres = {}; D.eq.forEach(function (p) { nombres[p.id] = p.nombre; });
+  var otra = {}; D.tu.forEach(function (r) { if (r.sid !== sid) (otra[r.id + '|' + r.f] = otra[r.id + '|' + r.f] || []).push(r); });
+  var ultimo = {};
+  (cambios || []).forEach(function (c) { c = c || {}; ultimo[String(c.id) + '|' + String(c.f)] = c; });
+  Object.keys(ultimo).forEach(function (k) {
+    var c = ultimo[k], am = c.am === true || c.am === 'x', pm = !!c.pm;
+    (otra[k] || []).forEach(function (r) {
+      if ((am && r.am) || (pm && r.pm)) {
+        var por = ''; try { por = pcPorQuien(r); } catch (e) {}
+        throw new Error((nombres[c.id] || 'Esa persona') + ' ya está en ' + nombreUnidad(r.sid) + ' el ' + dia(c.f) + ' (' + (am && r.am ? 'mañana' : 'tarde') + ')' + (por ? ', lo puso ' + por : '') +
+          '. Pídaselo a ' + (por || 'su gerente') + ' con «Pedírselo», o escoja a otra persona.');
+      }
+    });
+  });
+  var deCubre = [], propias = [];
+  Object.keys(ultimo).forEach(function (k) { var c = ultimo[k]; (cub[String(c.id)] ? deCubre : propias).push(c); });
+  if (!deCubre.length) return guardarTurnos107(cred, sid, fecha, cambios);
+  // quien cubre: con las mismas reglas (semana confirmada, planilla pagada, su permiso en esta sucursal)
+  var ac = calAcceso(yo); soloVerCal(ac);
+  if (!ac.turnos) throw new Error('Su usuario solo consulta los calendarios.');
+  if (ac.sucs.indexOf(sid) < 0) throw new Error('Ese calendario no es de su sucursal.');
+  if (!yo.esAdmin) { var est = calSemanas(sid, q.ini); deCubre.forEach(function (c) { var s = calSemDe(q, String(c.f || '')); if (s && est[s - 1].estado !== 'Abierta') throw new Error('La semana ' + s + ' ya está confirmada. Para cambiarla, toque «Pedir cambio» y espere la autorización.'); }); }
+  var lock = LockService.getScriptLock(); lock.waitLock(15000); _LEE = {};
+  var n = 0;
+  try {
+    if (calPlanillaDe(D, sid, q.ini)) throw new Error('La planilla de esta quincena ya está pagada: el calendario quedó cerrado.');
+    var idx = {}; D.tu.forEach(function (r) { if (r.sid === sid) idx[r.id + '|' + r.f] = r; });
+    var h = calHoja('Calendario turnos', H_CTU, ['B']), ahora = new Date(), nuevos = [];
+    deCubre.forEach(function (c) {
+      var f = String(c.f || ''); if (q.dias.indexOf(f) < 0) throw new Error('Una fecha no es de esta quincena.');
+      var am = (c.am === true || c.am === 'x') ? 'x' : '', pm = c.pm === 'x' || c.pm === 'xa' || c.pm === 'xb' ? c.pm : '', r = idx[c.id + '|' + f];
+      if (r) { if (r.am === am && r.pm === pm) return; h.getRange(r.fila, 4, 1, 4).setValues([[am, pm, yo.nombre, ahora]]); n++; }
+      else if (am || pm) { nuevos.push([sid, f, String(c.id), am, pm, yo.nombre, ahora]); n++; }
+    });
+    if (nuevos.length) { var d0 = h.getLastRow() + 1; h.getRange(d0, 2, nuevos.length, 1).setNumberFormat('@'); h.getRange(d0, 1, nuevos.length, H_CTU.length).setValues(nuevos); }
+  } finally { lock.releaseLock(); }
+  if (propias.length) { var r2 = guardarTurnos107(cred, sid, fecha, propias); if (n) r2.mensaje = String(r2.mensaje || '').replace(/\((\d+) cambios?\)/, function (a, b) { var t = Number(b) + n; return '(' + t + (t === 1 ? ' cambio' : ' cambios') + ')'; }); return r2; }
+  return calRespuesta(yo, ac, sid, fecha, n ? 'Calendario guardado (' + n + (n === 1 ? ' cambio' : ' cambios') + ').' : 'No había nada nuevo que guardar.');
+}
+/** Quién puso ese turno (para decir a quién pedírselo). */
+function pcPorQuien(r) {
+  var h = libro().getSheetByName('Calendario turnos'); if (!h || !r.fila) return '';
+  return calTxt(h.getRange(r.fila, 6).getValue());
+}
+
+/* ── «Pedírselo»: el gerente que necesita a alguien que ya está en otra sucursal se lo pide al que lo puso ── */
+PERM_API.pedirPrestamo = [['personal.turnos'], 2]; PERM_API.resolverPrestamo = [['personal.turnos'], 2];
+function pcPrestamos() {
+  return pcLee('Personal préstamos', H_PRES).map(function (r) {
+    return { fila: r.fila, id: calTxt(r[0]), persona: calTxt(r[1]), f: calTxt(r[2]), turno: calTxt(r[3]), en: calTxt(r[4]).toLowerCase(), para: calTxt(r[5]).toLowerCase(), pidio: calTxt(r[6]),
+      cuando: r[7] instanceof Date ? fmtSello(r[7]) : calTxt(r[7]), estado: calTxt(r[8]) || 'Pedido', resolvio: calTxt(r[9]), resuelto: r[10] instanceof Date ? fmtSello(r[10]) : calTxt(r[10]), nota: calTxt(r[11]) };
+  });
+}
+function pedirPrestamo(cred, sid, id, f, turno) {
+  var yo = quien(cred), ac = calAcceso(yo); pcSidOk(sid);
+  if (!ac.turnos || ac.sucs.indexOf(sid) < 0) throw new Error('Ese calendario no es de su sucursal.');
+  if (!esFecha(f) || ['am', 'pm'].indexOf(turno) < 0) throw new Error('Escoja el día y el turno.');
+  var D = calDatos(), r = D.tu.filter(function (x) { return x.id === id && x.f === f && x.sid !== sid && (turno === 'am' ? x.am : x.pm); })[0];
+  if (!r) throw new Error('Esa persona ya está libre ese turno: póngala en el calendario.');
+  var p = D.eq.filter(function (x) { return x.id === id; })[0] || { nombre: id };
+  if (pcPrestamos().some(function (x) { return x.persona === id && x.f === f && x.turno === turno && x.para === sid && x.estado === 'Pedido'; })) throw new Error('Ya lo pidió: espere la respuesta.');
+  pcHoja('Personal préstamos', H_PRES).appendRow([pcId('PR'), id, f, turno, r.sid, sid, yo.nombre, pcSello(), 'Pedido', '', '', '']);
+  return { ok: true, mensaje: 'Se le pidió a ' + nombreUnidad(r.sid) + ' que suelte a ' + p.nombre + ' el ' + dia(f) + ' (' + (turno === 'am' ? 'mañana' : 'tarde') + '). Le llega en la campanita.' };
+}
+/** El gerente de la sucursal donde está la persona lo suelta (se quita su turno de allá) o dice que no. */
+function resolverPrestamo(cred, idPr, si, nota) {
+  var yo = quien(cred), x = pcPrestamos().filter(function (y) { return y.id === String(idPr); })[0];
+  if (!x) throw new Error('Ese pedido ya no existe.');
+  if (x.estado !== 'Pedido') throw new Error('Ese pedido ya está ' + x.estado.toLowerCase() + '.');
+  var ac = calAcceso(yo);
+  if (!yo.esAdmin && (!ac.turnos || ac.sucs.indexOf(x.en) < 0)) throw new Error('Esto lo resuelve el gerente de ' + nombreUnidad(x.en) + '.');
+  var lock = LockService.getScriptLock(); lock.waitLock(15000); _LEE = {};
+  try {
+    if (si) {
+      var q = calQuincena(x.f), D = calDatos();
+      if (calPlanillaDe(D, x.en, q.ini)) throw new Error('La planilla de esa quincena ya está pagada.');
+      if (!yo.esAdmin) { var est = calSemanas(x.en, q.ini), s = calSemDe(q, x.f); if (s && est[s - 1].estado !== 'Abierta') throw new Error('Esa semana ya está confirmada en ' + nombreUnidad(x.en) + '. Pida a Álvaro que la abra.'); }
+      var r = D.tu.filter(function (t) { return t.id === x.persona && t.f === x.f && t.sid === x.en; })[0];
+      if (r) { var am = x.turno === 'am' ? '' : r.am, pm = x.turno === 'pm' ? '' : r.pm; calHoja('Calendario turnos', H_CTU, ['B']).getRange(r.fila, 4, 1, 4).setValues([[am, pm, yo.nombre, new Date()]]); }
+    }
+    pcHoja('Personal préstamos', H_PRES).getRange(x.fila, 9, 1, 4).setValues([[si ? 'Soltado' : 'No', yo.nombre, pcSello(), String(nota || '').slice(0, 120)]]);
+  } finally { lock.releaseLock(); }
+  return { ok: true, mensaje: si ? 'Listo: ya lo pueden poner en ' + nombreUnidad(x.para) + '.' : 'Se le avisó que no.' };
+}
+/* Campanita: lo que le piden (y lo que le respondieron). */
+function avisosCalendario(yo, out, desde) {
+  avisosCalendario107(yo, out, desde);
+  try {
+    var ac = null; try { ac = calAcceso(yo); } catch (e) { return; }
+    var nom = {}; calLeeEq().forEach(function (p) { nom[p.id] = p.nombre; });
+    pcPrestamos().forEach(function (x) {
+      var t = (x.turno === 'am' ? 'mañana' : 'tarde');
+      if (x.estado === 'Pedido' && (yo.esAdmin || ac.sucs.indexOf(x.en) >= 0) && x.pidio !== yo.nombre)
+        out.push({ id: 'pr-' + x.id, tipo: 'Le piden a alguien de su equipo', cuando: x.cuando, titulo: (nom[x.persona] || x.persona) + ' · ' + dia(x.f) + ' (' + t + ')',
+          texto: x.pidio + ' lo necesita en ' + nombreUnidad(x.para) + '. Ábralo en Personal › Turnos para soltarlo o decir que no.', abrir: { pag: 'cal', ct: 'turnos', sid: x.en, fecha: x.f } });
+      else if (x.estado !== 'Pedido' && x.pidio === yo.nombre && x.resuelto.slice(0, 10) >= desde)
+        out.push({ id: 'prr-' + x.id, tipo: x.estado === 'Soltado' ? 'Se lo soltaron' : 'No se lo soltaron', cuando: x.resuelto, titulo: (nom[x.persona] || x.persona) + ' · ' + dia(x.f) + ' (' + t + ')',
+          texto: x.estado === 'Soltado' ? x.resolvio + ' lo soltó: ya lo puede poner en su calendario.' : x.resolvio + ' dijo que no' + (x.nota ? ': ' + x.nota : '') + '.', abrir: { pag: 'cal', ct: 'turnos', sid: x.para, fecha: x.f } });
+    });
+  } catch (e) {}
+}
+/* En la pantalla de Personal: los pedidos para soltar (de esta sucursal) y los que hizo. */
+function calPantalla(yo, ac, sid, fecha, D) {
+  var r = calPantalla107(yo, ac, sid, fecha, D);
+  try {
+    D = D || calDatos();
+    var nom = {}; D.eq.forEach(function (p) { nom[p.id] = p.nombre; });
+    // quien viene de otra sucursal y, cada día, si ya está en otra
+    var cubD = {}; pcPersonas().forEach(function (p) { if (p.sid !== (r.sid || sid) && (p.cubre || []).indexOf(r.sid || sid) >= 0) cubD[p.id] = p.sid; });
+    var otras = {}; D.tu.forEach(function (t) { if (t.sid !== (r.sid || sid) && (t.am || t.pm)) (otras[t.id + '|' + t.f] = otras[t.id + '|' + t.f] || []).push({ sid: t.sid, am: t.am, pm: t.pm }); });
+    (r.personas || []).forEach(function (p) { if (cubD[p.id]) p.de = cubD[p.id]; (p.dias || []).forEach(function (x) { var o = otras[p.id + '|' + x.f]; if (o) x.otra = o; }); });
+    var s0 = r.sid || sid;
+    r.prestamos = pcPrestamos().filter(function (x) { return x.estado === 'Pedido' && (x.en === s0 || x.para === s0); })
+      .map(function (x) { return { id: x.id, persona: x.persona, nombre: nom[x.persona] || x.persona, f: x.f, turno: x.turno, en: x.en, para: x.para, pidio: x.pidio, cuando: x.cuando, mio: x.para === s0 }; });
+    r.cajaHorarios = cajaHorariosDe(r.sid || sid);
+    r.puedeCubrir = pcPuede(yo, 'personal.cubrir', 2);
+    var cajaRol = {}; pcPersonas().forEach(function (p) { cajaRol[p.id] = { rol: p.rol, cubre: p.cubre, autorizo: p.autorizo, sid: p.sid }; });
+    r.cajaPersonas = cajaRol;
+  } catch (e) {}
+  return r;
+}
+
+/* ════════ avisos y reglamento ════════ */
+function pcAvisos() {
+  return pcLee('Avisos personal', H_AVP).map(function (r) {
+    return { fila: r.fila, id: calTxt(r[0]), sid: calTxt(r[1]).toLowerCase() || '*', para: calTxt(r[2]) || 'todos', tipo: calTxt(r[3]) || 'aviso', titulo: calTxt(r[4]), texto: calTxt(r[5]),
+      limite: calTxt(r[6]), activo: String(r[7]).toLowerCase() !== 'no', por: calTxt(r[8]), en: r[9] instanceof Date ? fmtSello(r[9]) : calTxt(r[9]) };
+  });
+}
+function listaAvisosPersonal(cred, sid) {
+  var yo = quien(cred); pcSidOk(sid); pcExige(yo, 'personal.avisos', 1, sid, 'ver los avisos');
+  var gente = pcPersonas().filter(function (p) { return p.sid === sid; }).map(function (p) { return { id: p.id, nombre: p.nombre, area: p.area }; });
+  return { ok: true, sid: sid, avisos: pcAvisos().filter(function (a) { return a.activo && (a.sid === sid || a.sid === '*'); }), gente: gente, puedeCambiar: pcPuede(yo, 'personal.avisos', 2, sid), todas: pcPuede(yo, 'personal.avisos', 2, null) && (yo.esAdmin || yo.rol === 'operaciones') };
+}
+function guardarAvisoPersonal(cred, d) {
+  var yo = quien(cred); d = d || {};
+  var sid = String(d.sid || ''); if (sid !== '*') pcSidOk(sid);
+  pcExige(yo, 'personal.avisos', 2, sid === '*' ? null : sid, 'publicar avisos');
+  if (sid === '*' && !(yo.esAdmin || yo.rol === 'operaciones')) throw new Error('Para todas las sucursales, lo publica el director operativo.');
+  var titulo = String(d.titulo || '').trim().slice(0, 80), texto = String(d.texto || '').trim().slice(0, 2000);
+  if (!titulo) throw new Error('Escriba el título.');
+  var para = ['todos', 'Cocina', 'Barra'].indexOf(d.para) >= 0 ? d.para : 'todos', tipo = d.tipo === 'reglamento' ? 'reglamento' : 'aviso';
+  var lim = d.limite && esFecha(d.limite) ? d.limite : '';
+  var h = pcHoja('Avisos personal', H_AVP);
+  if (d.id) {
+    var a = pcAvisos().filter(function (x) { return x.id === d.id; })[0]; if (!a) throw new Error('Ese aviso ya no existe.');
+    h.getRange(a.fila, 2, 1, 7).setValues([[sid, para, tipo, titulo, texto, lim, 'sí']]);
+  } else h.appendRow([pcId('AV'), sid, para, tipo, titulo, texto, lim, 'sí', yo.nombre, pcSello()]);
+  var r = listaAvisosPersonal(cred, sid === '*' ? (yo.sucursal && PC_SUCS.indexOf(yo.sucursal) >= 0 ? yo.sucursal : 'centro') : sid);
+  r.mensaje = tipo === 'reglamento' ? 'Reglamento publicado.' : 'Aviso publicado: le llega a cada uno en su app.';
+  return r;
+}
+function quitarAvisoPersonal(cred, id) {
+  var yo = quien(cred), a = pcAvisos().filter(function (x) { return x.id === String(id); })[0];
+  if (!a) throw new Error('Ese aviso ya no existe.');
+  pcExige(yo, 'personal.avisos', 2, a.sid === '*' ? null : a.sid, 'quitar avisos');
+  pcHoja('Avisos personal', H_AVP).getRange(a.fila, 8).setValue('no');
+  var r = listaAvisosPersonal(cred, a.sid === '*' ? 'centro' : a.sid); r.mensaje = 'Aviso quitado.'; return r;
+}
+
+/* ════════ reconocimientos con premio ════════ */
+function pcPremios() {
+  return pcLee('Reconocimientos', H_RECO).map(function (r) {
+    return { fila: r.fila, id: calTxt(r[0]), persona: calTxt(r[1]), sid: calTxt(r[2]).toLowerCase(), motivo: calTxt(r[3]), premio: calTxt(r[4]) || 'ninguno', valor: Number(r[5]) || 0,
+      producto: calTxt(r[6]), vence: calTxt(r[7]), dio: calTxt(r[8]), en: r[9] instanceof Date ? fmtSello(r[9]) : calTxt(r[9]), estado: calTxt(r[10]) || 'vigente', nota: calTxt(r[11]) };
+  });
+}
+function pcTope() {
+  var t = { n: 0, q: 0 };
+  calLeeCf().forEach(function (x) { if (x.sid === '*' && x.k === 'premios_tope_n') t.n = Number(x.v) || 0; if (x.sid === '*' && x.k === 'premios_tope_q') t.q = Number(x.v) || 0; });
+  return t;
+}
+function listaReconocimientos(cred, sid) {
+  var yo = quien(cred); pcSidOk(sid); pcExige(yo, 'personal.premios', 1, sid, 'ver los reconocimientos');
+  var gente = pcPersonas().filter(function (p) { return p.sid === sid || (p.cubre || []).indexOf(sid) >= 0; }).map(function (p) { return { id: p.id, nombre: p.nombre, area: p.area }; });
+  var mes = hoyISO().slice(0, 7), mios = pcPremios().filter(function (x) { return x.dio === yo.nombre && x.en.slice(0, 7) === mes && x.estado !== 'anulado' && x.premio !== 'ninguno'; });
+  return { ok: true, sid: sid, premios: pcPremios().filter(function (x) { return x.sid === sid; }).reverse(), gente: gente, tope: pcTope(),
+    usado: { n: mios.length, q: mios.reduce(function (a, x) { return a + (x.premio === 'producto' ? x.valor : 0); }, 0) }, puedeCambiar: pcPuede(yo, 'personal.premios', 2, sid), esAdmin: !!yo.esAdmin };
+}
+function darReconocimiento(cred, d) {
+  var yo = quien(cred); d = d || {}; var sid = pcSidOk(String(d.sid || ''));
+  pcExige(yo, 'personal.premios', 2, sid, 'dar reconocimientos');
+  var p = pcPersonas().filter(function (x) { return x.id === String(d.persona || ''); })[0];
+  if (!p) throw new Error('Escoja a la persona.');
+  var motivo = String(d.motivo || '').trim().slice(0, 80); if (!motivo) throw new Error('Escriba el motivo (ej. Empleado del mes).');
+  var premio = ['descuento', 'producto', 'ninguno'].indexOf(d.premio) >= 0 ? d.premio : 'ninguno';
+  var valor = Math.max(0, Math.round(Number(d.valor) * 100) / 100 || 0), producto = String(d.producto || '').trim().slice(0, 60);
+  if (premio === 'descuento' && !(valor > 0 && valor <= 100)) throw new Error('Escriba el descuento (1 a 100 %).');
+  if (premio === 'producto' && (!producto || !(valor > 0))) throw new Error('Escriba el producto y hasta cuánto vale (Q).');
+  var vence = d.vence && esFecha(d.vence) ? d.vence : masDias(hoyISO(), 30);
+  if (premio !== 'ninguno' && !yo.esAdmin) {
+    var L = listaReconocimientos(cred, sid), t = L.tope;
+    if (t.n && L.usado.n >= t.n) throw new Error('Ya dio ' + L.usado.n + ' premios este mes (el tope es ' + t.n + '). El reconocimiento puede ir sin premio.');
+    if (t.q && premio === 'producto' && L.usado.q + valor > t.q) throw new Error('Con este premio pasa el tope del mes en productos (Q' + t.q + '). Lleva Q' + L.usado.q + '.');
+  }
+  pcHoja('Reconocimientos', H_RECO).appendRow([pcId('RC'), p.id, sid, motivo, premio, valor, producto, vence, yo.nombre, pcSello(), 'vigente', '']);
+  var r = listaReconocimientos(cred, sid); r.mensaje = 'Reconocimiento para ' + p.nombre + (premio !== 'ninguno' ? ': le llega el premio en su app y lo canjea en la caja.' : '.'); return r;
+}
+function anularReconocimiento(cred, id) {
+  var yo = quien(cred), x = pcPremios().filter(function (y) { return y.id === String(id); })[0];
+  if (!x) throw new Error('Ese reconocimiento ya no existe.');
+  pcExige(yo, 'personal.premios', 2, x.sid, 'anular reconocimientos');
+  pcHoja('Reconocimientos', H_RECO).getRange(x.fila, 11).setValue('anulado');
+  var r = listaReconocimientos(cred, x.sid); r.mensaje = 'Anulado (si ya se canjeó en la caja, eso queda).'; return r;
+}
+
+/* ════════ la app de operadores: qué ve cada sucursal ════════ */
+function accesoOperadores(cred) {
+  var yo = quien(cred); pcExige(yo, 'config.portal', 1, null, 'ver la app de operadores');
+  var v = {}; PC_SUCS.forEach(function (s) { v[s] = {}; PORTAL_SECC.forEach(function (x) { v[s][x[0]] = true; }); });
+  pcLee('Acceso operadores', H_ACOP).forEach(function (r) { var s = calTxt(r[0]).toLowerCase(), k = calTxt(r[1]); if (v[s] && v[s].hasOwnProperty(k)) v[s][k] = String(r[2]).toLowerCase() !== 'no'; });
+  return { ok: true, secciones: PORTAL_SECC.map(function (x) { return { k: x[0], t: x[1] }; }), sucursales: PC_SUCS.map(function (s) { return { id: s, nombre: nombreUnidad(s) }; }), valores: v, tope: pcTope(),
+    puedeCambiar: pcPuede(yo, 'config.portal', 2), esAdmin: !!yo.esAdmin };
+}
+function guardarAccesoOperadores(cred, valores, tope) {
+  var yo = quien(cred); pcExige(yo, 'config.portal', 2, null, 'cambiar la app de operadores');
+  var lock = LockService.getScriptLock(); lock.waitLock(15000);
+  try {
+    var h = pcHoja('Acceso operadores', H_ACOP), idx = {}, ahora = pcSello();
+    pcLee('Acceso operadores', H_ACOP).forEach(function (r) { idx[calTxt(r[0]).toLowerCase() + '|' + calTxt(r[1])] = r.fila; });
+    Object.keys(valores || {}).forEach(function (s) {
+      pcSidOk(s);
+      PORTAL_SECC.forEach(function (x) {
+        if (valores[s][x[0]] === undefined) return;
+        var v = [s, x[0], valores[s][x[0]] ? 'sí' : 'no', yo.nombre, ahora], k = s + '|' + x[0];
+        if (idx[k]) h.getRange(idx[k], 1, 1, H_ACOP.length).setValues([v]); else { h.appendRow(v); idx[k] = h.getLastRow(); }
+      });
+    });
+  } finally { lock.releaseLock(); }
+  if (tope && yo.esAdmin) calEscribeCfg(yo, '*', [['premios_tope_n', String(Math.max(0, Math.round(Number(tope.n)) || 0))], ['premios_tope_q', String(Math.max(0, Number(tope.q) || 0))]]);
+  var r = accesoOperadores(cred); r.mensaje = 'Guardado: los operadores lo ven la próxima vez que abran su app.'; return r;
+}
+
+/* ════════ la quincena de cada persona, para su app (Supabase per_quincena) ════════ */
+function perQuincenaFilas(D, fecha) {
+  var out = [], q = calQuincena(fecha);
+  PC_SUCS.forEach(function (sid) {
+    var m = calModelo(D, sid, q.ini), pl = calPlanillaDe(D, sid, q.ini);
+    m.personas.forEach(function (p) {
+      if (!(p.hq > 0) && p.hreal == null) return;
+      out.push({ persona: p.id, suc: sid, ini: q.ini, fin: q.fin, confirmada: !!pl, datos: {
+        dias: p.dias.filter(function (x) { return x.h > 0; }).map(function (x) { return { f: x.f, am: x.am, pm: x.pm, h: x.h }; }),
+        horas: p.hq, reales: p.hreal, horasPago: p.hp, tarifa: p.tarifa, bono: p.de ? 0 : p.bono, deOtra: !!p.de,
+        proyectado: p.pagoProy, pago: p.pago, pagado: pl ? p.pago : null, fechaPago: pl ? pl.fechaPago || '' : '' } });
+    });
+  });
+  return out;
+}
+/** Manda la quincena de ahora y la anterior. Se puede correr a mano (▶). */
+function perQuincenaMandar() {
+  if (!supaCfgSuave()) return 'Supabase no está configurado.';
+  var D = calDatos(), hoy = hoyISO(), filas = perQuincenaFilas(D, hoy).concat(perQuincenaFilas(D, masDias(calQuincena(hoy).ini, -1)));
+  var n = supaFetch('post', 'rpc/per_quincena_poner', { p: filas });
+  return 'Quincenas a Supabase: ' + n;
+}
+function perQuincenaSuave() { try { perQuincenaMandar(); } catch (e) { try { Logger.log('Quincena a Supabase: ' + e.message); } catch (e2) {} } }
+/** Que cada sucursal tenga su fila de horarios (la caja la necesita aunque nadie haya tocado Ajustes). */
+function cajaHorariosAsegura() { var g = pcHorariosLee(); PC_SUCS.forEach(function (s) { if (!g[s]) try { cajaHorariosEscribe(s, null); } catch (e) {} }); }
