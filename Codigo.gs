@@ -9598,7 +9598,7 @@ function correoValido(c) { return /^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(String(c 
  * correo sale del disparador automático, Google devuelve la dirección de prueba (/dev), que
  * solo abre para quien edita el proyecto («No se pudo abrir el archivo»). Cuando la app
  * instalable esté lista, aquí se pone https://app.caixsa.com */
-var URL_APP = 'https://app.caixsa.com';
+var URL_APP = 'https://adm.reypizza.gt';
 function urlApp() { return URL_APP; }
 function cuotaCorreo() { try { return MailApp.getRemainingDailyQuota(); } catch (e) { anotaErrorCorreo(e); return 0; } }
 /** Lo último que pasó con los correos, para poder explicar por qué no llegan. */
@@ -13010,7 +13010,7 @@ function exportarIndicadores(q) {
 /* ════════════ COPIA COMPLETA PARA EL SERVIDOR PROPIO ════════════
  * El servidor propio guarda una copia de TODAS las pestañas y corre este mismo código sobre ella para contestar las lecturas.
  * Cada cambio que pasa por aquí avisa qué pestañas tocó («tocadas»), y el servidor solo vuelve a traer esas. */
-var VERSION_CODIGO = '2026-10-27-a';       // se cambia a mano cada vez que se cambia este archivo; el servidor compara que coincida con la suya
+var VERSION_CODIGO = '2026-10-28-a';       // se cambia a mano cada vez que se cambia este archivo; el servidor compara que coincida con la suya
 function versionCodigo() { return VERSION_CODIGO; }
 function huellaTexto(t) { return Utilities.base64Encode(Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, t)).slice(0, 22); }
 /** Un resumen barato de cada pestaña: cuántas filas y columnas tiene y una huella de sus últimas 25 filas. */
