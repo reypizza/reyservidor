@@ -927,7 +927,7 @@ function doGet() {
  * mismo proyecto por POST. Solo se pueden llamar las funciones de esta lista (las mismas
  * que usa la pantalla), y cada una revisa el código de quien pregunta, igual que antes.
  * La lista la pone sola el armado; no hace falta tocarla. */
-/*API_INI*/var API_PERMITIDAS = ['abrirSolicitud', 'abrirTraslado', 'aceptarSolicitud', 'aceptarYPreparar', 'aclararDiferencia', 'activarCorreos', 'activarObligacion', 'activarProducto', 'activarProductoSucursal', 'adjuntarCotizacion', 'agregarEquipo', 'agregarProducto', 'agregarRecomendados', 'agregarRecomendadosCmo', 'agregarRubro', 'anclarProducto', 'anular', 'anularOrden', 'anularPagoImpuesto', 'anularSolicitud', 'aprobarFondos', 'aprobarPresupuesto', 'aprobarPresupuestoArea', 'asignarDescanso', 'borrarKpi', 'borrarKpiCmo', 'borrarSolicitud', 'cambiarEquipo', 'cambiarMiPin', 'cambiarPermiso', 'cancelarPermiso', 'confirmarPlanilla', 'confirmarRegistro', 'consolidado', 'copiarPresupuesto', 'costosTraslados', 'cotizarOrden', 'darDeBaja', 'datos', 'despacharSolicitudes', 'detalleGasto', 'editarProducto', 'eliminarPersonaCal', 'entrar', 'enviarEmergencia', 'enviarKpis', 'enviarKpisCmo', 'enviarSolicitud', 'enviarSugerencia', 'estadoCorreos', 'evaluarMerma', 'existencias', 'existenciasEmergencia', 'firmarTraslado', 'guardarAjustesInv', 'guardarBonoGeneral', 'guardarBonosCal', 'guardarBorradorCal', 'guardarComision', 'guardarConfigCal', 'guardarConteo', 'guardarEstudio', 'guardarHorario', 'guardarHorasApoyo', 'guardarHorasReales', 'guardarKpi', 'guardarKpiCmo', 'guardarLugar', 'guardarMando', 'guardarMedida', 'guardarMiCorreo', 'guardarMiPresupuesto', 'guardarObligacion', 'guardarOrden', 'guardarPersonaCal', 'guardarPrecios', 'guardarPresupuesto', 'guardarProducto', 'guardarProductoBodega', 'guardarProveedor', 'guardarProveedorInv', 'guardarReceta', 'guardarRepartidor', 'guardarTraslado', 'guardarTurnos', 'guardarUsuario', 'habilita', 'habilitarConteo', 'historialTraslados', 'indicadoresConta', 'leerBonoGeneral', 'leerSugerencias', 'listaBodega', 'listaCatalogo', 'listaConsultas', 'listaDiferencias', 'listaEntrada', 'listaFondos', 'listaImpuestos', 'listaKpis', 'listaKpisCmo', 'listaLugares', 'listaOrdenes', 'listaPermisos', 'listaPrecios', 'listaRepartidores', 'listaReportes', 'listaSolicitudes', 'listaUsuarios', 'llegoSolicitud', 'marcarPreparadas', 'medirAceite', 'miAvance', 'miCorreo', 'miPanel', 'miPresupuesto', 'notificaciones', 'ordenesPago', 'pagarFondos', 'pagarOrden', 'pagarRepartidor', 'pantallaCalendarios', 'pantallaConteo', 'pantallaEmergencias', 'pantallaFirmas', 'pantallaHorarios', 'pantallaKpi', 'pantallaMando', 'pantallaMant', 'pantallaMerma', 'pantallaMuestreo', 'pantallaPedidosBodega', 'pantallaProduccion', 'pantallaSolicitud', 'pantallaSugerencias', 'pdfCalendario', 'pdfOrden', 'pedirDescanso', 'pedirEmergencia', 'pedirFondos', 'pedirPermiso', 'ping', 'planillasPorPagar', 'ponPreciosGerentes', 'porConfirmar', 'preguntar', 'presupuestoMes', 'presupuestosAreas', 'probarCorreo', 'productosConfig', 'productosParaAnclar', 'productosSucursal', 'reabrirPlanilla', 'rechazarRegistro', 'recibirEfectivo', 'recibirEmergencia', 'recibirOrden', 'recibirSolicitud', 'registrarGasto', 'registrarIngreso', 'registrarKpis', 'registrarLote', 'registrarMant', 'registrarMerma', 'registrarObservacion', 'registrarPagoImpuesto', 'renombrarCategoria', 'reporteDiario', 'reporteTraslados', 'resolverDescanso', 'responderConsulta', 'responderMerma', 'resultadosKpi', 'resultadosKpiCmo', 'resultadosKpiRango', 'resultadosMuestreo', 'resumenInventario', 'resumenMes', 'revisarPermiso', 'seguimiento', 'sugerenciaCompra', 'tableroFinanzas', 'tableroKpi', 'terminarFondos', 'validarRegistro', 'ventas', 'verTraslado', 'verificarFondos', 'proveedoresProductos', 'guardarProveedorProd', 'eliminarProveedor', 'detalleAbastecimiento', 'pdfHistorialInventario', 'pantallaCierreMes', 'guardarCierreMes', 'misMenus', 'menusRol', 'guardarMenusRol', 'historialInventario', 'reiniciarPresupuestos', 'autorizarFondos', 'hechaFondos', 'listaPendientes', 'llegaPendiente', 'cancelarPendiente', 'despacharPendientes', 'devolverFondo', 'corregirFondo', 'pantallaEquipos', 'guardarEquipoA', 'bajaEquipo', 'revisarEquipos', 'confirmarRevisionEq', 'pedirEquipo', 'resolverPedidoEq', 'entregarCompraEq', 'recibirEquipo', 'devolverOrden', 'corregirOrden', 'reiniciarPrecios', 'guardarMezcla', 'registrarLoteMezcla', 'etiquetasLote', 'guardarConfigEtiquetas', 'listaKpisCoo', 'guardarKpiCoo', 'borrarKpiCoo', 'enviarKpisCoo', 'agregarRecomendadosCoo', 'resultadosKpiCoo', 'pantallaKpiCoo', 'registrarKpisCoo', 'resumenAreas', 'resumenAreasSenales', 'pantallaZonas', 'guardarZonas', 'listaKpisTec', 'guardarKpiTec', 'borrarKpiTec', 'enviarKpisTec', 'agregarRecomendadosTec', 'resultadosKpiTec', 'pantallaKpiTec', 'registrarKpisTec', 'cotizarFondo', 'recibirFondo', 'pantallaNivelacion', 'iniciarNivelacion', 'guardarConteoNivelacion', 'explicarNivelacion', 'vistoBuenoNivelacion', 'aprobarNivelacion', 'devolverNivelacion', 'anularNivelacion', 'pdfNivelacion', 'resumenSucursal', 'tableroBodega', 'permisosRol', 'guardarPermisosRol', 'guardarReglasCal', 'confirmarSemanaCal', 'pedirCambioCal', 'autorizarCambioCal', 'ventasCajas', 'pantallaDirectores', 'guardarAreaDir', 'quitarDirector', 'pagarDirectores', 'reabrirDirectores', 'proponerContratacion', 'cancelarPropuesta', 'resolverPropuesta', 'tokenSupabase', 'ponSugeridoPedido', 'invSalidaYa', 'permisosCaja', 'guardarPermisosCaja', 'guardarPersonaCaja', 'guardarHorariosCaja', 'listaAvisosPersonal', 'guardarAvisoPersonal', 'quitarAvisoPersonal', 'listaReconocimientos', 'darReconocimiento', 'anularReconocimiento', 'accesoOperadores', 'guardarAccesoOperadores', 'pedirPrestamo', 'resolverPrestamo'];/*API_FIN*/
+/*API_INI*/var API_PERMITIDAS = ['abrirSolicitud', 'abrirTraslado', 'aceptarSolicitud', 'aceptarYPreparar', 'aclararDiferencia', 'activarCorreos', 'activarObligacion', 'activarProducto', 'activarProductoSucursal', 'adjuntarCotizacion', 'agregarEquipo', 'agregarProducto', 'agregarRecomendados', 'agregarRecomendadosCmo', 'agregarRubro', 'anclarProducto', 'anular', 'anularOrden', 'anularPagoImpuesto', 'anularSolicitud', 'aprobarFondos', 'aprobarPresupuesto', 'aprobarPresupuestoArea', 'asignarDescanso', 'borrarKpi', 'borrarKpiCmo', 'borrarSolicitud', 'cambiarEquipo', 'cambiarMiPin', 'cambiarPermiso', 'cancelarPermiso', 'confirmarPlanilla', 'confirmarRegistro', 'consolidado', 'copiarPresupuesto', 'costosTraslados', 'cotizarOrden', 'darDeBaja', 'datos', 'despacharSolicitudes', 'detalleGasto', 'editarProducto', 'eliminarPersonaCal', 'entrar', 'enviarEmergencia', 'enviarKpis', 'enviarKpisCmo', 'enviarSolicitud', 'enviarSugerencia', 'estadoCorreos', 'evaluarMerma', 'existencias', 'existenciasEmergencia', 'firmarTraslado', 'guardarAjustesInv', 'guardarBonoGeneral', 'guardarBonosCal', 'guardarBorradorCal', 'guardarComision', 'guardarConfigCal', 'guardarConteo', 'guardarEstudio', 'guardarHorario', 'guardarHorasApoyo', 'guardarHorasReales', 'guardarKpi', 'guardarKpiCmo', 'guardarLugar', 'guardarMando', 'guardarMedida', 'guardarMiCorreo', 'guardarMiPresupuesto', 'guardarObligacion', 'guardarOrden', 'guardarPersonaCal', 'guardarPrecios', 'guardarPresupuesto', 'guardarProducto', 'guardarProductoBodega', 'guardarProveedor', 'guardarProveedorInv', 'guardarReceta', 'guardarRepartidor', 'guardarTraslado', 'guardarTurnos', 'guardarUsuario', 'habilita', 'habilitarConteo', 'historialTraslados', 'indicadoresConta', 'leerBonoGeneral', 'leerSugerencias', 'listaBodega', 'listaCatalogo', 'listaConsultas', 'listaDiferencias', 'listaEntrada', 'listaFondos', 'listaImpuestos', 'listaKpis', 'listaKpisCmo', 'listaLugares', 'listaOrdenes', 'listaPermisos', 'listaPrecios', 'listaRepartidores', 'listaReportes', 'listaSolicitudes', 'listaUsuarios', 'llegoSolicitud', 'marcarPreparadas', 'medirAceite', 'miAvance', 'miCorreo', 'miPanel', 'miPresupuesto', 'notificaciones', 'ordenesPago', 'pagarFondos', 'pagarOrden', 'pagarRepartidor', 'pantallaCalendarios', 'pantallaConteo', 'pantallaEmergencias', 'pantallaFirmas', 'pantallaHorarios', 'pantallaKpi', 'pantallaMando', 'pantallaMant', 'pantallaMerma', 'pantallaMuestreo', 'pantallaPedidosBodega', 'pantallaProduccion', 'pantallaSolicitud', 'pantallaSugerencias', 'pdfCalendario', 'pdfOrden', 'pedirDescanso', 'pedirEmergencia', 'pedirFondos', 'pedirPermiso', 'ping', 'planillasPorPagar', 'ponPreciosGerentes', 'porConfirmar', 'preguntar', 'presupuestoMes', 'presupuestosAreas', 'probarCorreo', 'productosConfig', 'productosParaAnclar', 'productosSucursal', 'reabrirPlanilla', 'rechazarRegistro', 'recibirEfectivo', 'recibirEmergencia', 'recibirOrden', 'recibirSolicitud', 'registrarGasto', 'registrarIngreso', 'registrarKpis', 'registrarLote', 'registrarMant', 'registrarMerma', 'registrarObservacion', 'registrarPagoImpuesto', 'renombrarCategoria', 'reporteDiario', 'reporteTraslados', 'resolverDescanso', 'responderConsulta', 'responderMerma', 'resultadosKpi', 'resultadosKpiCmo', 'resultadosKpiRango', 'resultadosMuestreo', 'resumenInventario', 'resumenMes', 'revisarPermiso', 'seguimiento', 'sugerenciaCompra', 'tableroFinanzas', 'tableroKpi', 'terminarFondos', 'validarRegistro', 'ventas', 'verTraslado', 'verificarFondos', 'proveedoresProductos', 'guardarProveedorProd', 'eliminarProveedor', 'detalleAbastecimiento', 'pdfHistorialInventario', 'pantallaCierreMes', 'guardarCierreMes', 'misMenus', 'menusRol', 'guardarMenusRol', 'historialInventario', 'reiniciarPresupuestos', 'autorizarFondos', 'hechaFondos', 'listaPendientes', 'llegaPendiente', 'cancelarPendiente', 'despacharPendientes', 'devolverFondo', 'corregirFondo', 'pantallaEquipos', 'guardarEquipoA', 'bajaEquipo', 'revisarEquipos', 'confirmarRevisionEq', 'pedirEquipo', 'resolverPedidoEq', 'entregarCompraEq', 'recibirEquipo', 'devolverOrden', 'corregirOrden', 'reiniciarPrecios', 'guardarMezcla', 'registrarLoteMezcla', 'etiquetasLote', 'guardarConfigEtiquetas', 'listaKpisCoo', 'guardarKpiCoo', 'borrarKpiCoo', 'enviarKpisCoo', 'agregarRecomendadosCoo', 'resultadosKpiCoo', 'pantallaKpiCoo', 'registrarKpisCoo', 'resumenAreas', 'resumenAreasSenales', 'pantallaZonas', 'guardarZonas', 'listaKpisTec', 'guardarKpiTec', 'borrarKpiTec', 'enviarKpisTec', 'agregarRecomendadosTec', 'resultadosKpiTec', 'pantallaKpiTec', 'registrarKpisTec', 'cotizarFondo', 'recibirFondo', 'pantallaNivelacion', 'iniciarNivelacion', 'guardarConteoNivelacion', 'explicarNivelacion', 'vistoBuenoNivelacion', 'aprobarNivelacion', 'devolverNivelacion', 'anularNivelacion', 'pdfNivelacion', 'resumenSucursal', 'tableroBodega', 'permisosRol', 'guardarPermisosRol', 'guardarReglasCal', 'confirmarSemanaCal', 'pedirCambioCal', 'autorizarCambioCal', 'ventasCajas', 'pantallaDirectores', 'guardarAreaDir', 'quitarDirector', 'pagarDirectores', 'reabrirDirectores', 'proponerContratacion', 'cancelarPropuesta', 'resolverPropuesta', 'tokenSupabase', 'ponSugeridoPedido', 'invSalidaYa', 'permisosCaja', 'guardarPermisosCaja', 'guardarPersonaCaja', 'guardarHorariosCaja', 'listaAvisosPersonal', 'guardarAvisoPersonal', 'quitarAvisoPersonal', 'listaReconocimientos', 'darReconocimiento', 'anularReconocimiento', 'accesoOperadores', 'guardarAccesoOperadores', 'pedirPrestamo', 'resolverPrestamo', 'moverPersonaSucursal', 'autorizarAscenso'];/*API_FIN*/
 /** Solo contesta «aquí estoy»: sirve para despertar el servidor y medir la velocidad. No lee ni guarda nada. */
 function ping() { return { ok: true }; }
 function doPost(e) {
@@ -13010,7 +13010,7 @@ function exportarIndicadores(q) {
 /* ════════════ COPIA COMPLETA PARA EL SERVIDOR PROPIO ════════════
  * El servidor propio guarda una copia de TODAS las pestañas y corre este mismo código sobre ella para contestar las lecturas.
  * Cada cambio que pasa por aquí avisa qué pestañas tocó («tocadas»), y el servidor solo vuelve a traer esas. */
-var VERSION_CODIGO = '2026-10-28-a';       // se cambia a mano cada vez que se cambia este archivo; el servidor compara que coincida con la suya
+var VERSION_CODIGO = '2026-10-29-a';       // se cambia a mano cada vez que se cambia este archivo; el servidor compara que coincida con la suya
 function versionCodigo() { return VERSION_CODIGO; }
 function huellaTexto(t) { return Utilities.base64Encode(Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, t)).slice(0, 22); }
 /** Un resumen barato de cada pestaña: cuántas filas y columnas tiene y una huella de sus últimas 25 filas. */
@@ -17123,3 +17123,86 @@ function perQuincenaMandar() {
 function perQuincenaSuave() { try { perQuincenaMandar(); } catch (e) { try { Logger.log('Quincena a Supabase: ' + e.message); } catch (e2) {} } }
 /** Que cada sucursal tenga su fila de horarios (la caja la necesita aunque nadie haya tocado Ajustes). */
 function cajaHorariosAsegura() { var g = pcHorariosLee(); PC_SUCS.forEach(function (s) { if (!g[s]) try { cajaHorariosEscribe(s, null); } catch (e) {} }); }
+
+/* ════════════ Etapa 1 · usuario único: lo que cambia en las hojas (el resto vive en Supabase, 012) ════════════
+ * - moverPersonaSucursal: la misma persona (mismo código) pasa a otra sucursal. Nunca se crea otra persona.
+ * - autorizarAscenso: Álvaro (o el administrador) autoriza un ascenso ya confirmado por el gerente; aquí se cambia el puesto
+ *   en el mismo expediente (área o rol en la caja) y, si aplica, el pago por hora. Luego Supabase lo marca autorizado.
+ * Todo queda en la bitácora de Supabase (quién, cuándo, desde Administración, antes y después). */
+function idDirector(yo) {
+  var r = yo.rolReal || yo.rol;
+  if (!(yo.esAdmin || r === 'operaciones')) throw new Error('Esto lo hace el director operativo o el administrador.');
+}
+function idBitacora(yo, que, persona, antes, despues) {
+  try { if (supaCfgSuave()) supaFetch('post', 'rpc/per_bitacora_poner', { p: { quien: yo.nombre, que: que, persona: persona, antes: antes, despues: despues } }); }
+  catch (e) { try { Logger.log('bitácora: ' + e.message); } catch (e2) {} }
+}
+/** La persona pasa a otra sucursal con su mismo código y su historial. Lo trabajado antes se queda en su sucursal anterior. */
+function moverPersonaSucursal(cred, id, sidNuevo) {
+  var yo = quien(cred); idDirector(yo);
+  id = String(id || ''); sidNuevo = String(sidNuevo || '').toLowerCase();
+  if (PC_SUCS.indexOf(sidNuevo) < 0) throw new Error('Escoja la sucursal nueva.');
+  var lock = LockService.getScriptLock(); lock.waitLock(15000); _LEE = {};
+  try {
+    var hoy = hoyISO(), eq = calLeeEq(), p = null;
+    eq.forEach(function (x) { if (x.id === id && (!x.baja || x.baja >= hoy)) p = x; });
+    if (!p) throw new Error('Esa persona ya no está en el equipo.');
+    if (p.sid === sidNuevo) throw new Error(p.nombre + ' ya es de ' + nombreUnidad(sidNuevo) + '.');
+    eq.forEach(function (x) {
+      if (x.sid === sidNuevo && x.id !== id && (!x.baja || x.baja >= hoy) && x.nombre.toLowerCase() === p.nombre.toLowerCase())
+        throw new Error('En ' + nombreUnidad(sidNuevo) + ' ya hay alguien que se llama «' + p.nombre + '». Cámbiele el nombre antes (agregue el apellido).');
+    });
+    var antes = p.sid, ahora = new Date();
+    var h = calHoja('Calendario equipo', H_CEQ, ['G', 'H']);
+    h.getRange(p.fila, 2).setValue(sidNuevo);
+    h.getRange(p.fila, 12, 1, 2).setValues([[yo.nombre, ahora]]);
+    // los turnos que tenía puestos desde mañana en la sucursal anterior se quitan (los de hoy y antes se quedan)
+    var ht = calHoja('Calendario turnos', H_CTU, ['B']), quitados = 0;
+    calLeeTu().forEach(function (r) { if (r.id === id && r.sid === antes && r.f > hoy && (r.am || r.pm)) { ht.getRange(r.fila, 4, 1, 2).setValues([['', '']]); quitados++; } });
+    // en la caja: deja de operar la caja de la sucursal anterior y ya no «cubre» la nueva (ahora es la suya)
+    var x = pcPersonas().filter(function (q) { return q.id === id; })[0];
+    if (x && x.fila) {
+      var rol = JSON.parse(JSON.stringify(x.rol || {})), cubre = (x.cubre || []).filter(function (s) { return s !== sidNuevo; });
+      if (cubre.indexOf(antes) < 0) delete rol[antes];
+      pcHoja('Personal caja', H_PCAJA).getRange(x.fila, 1, 1, H_PCAJA.length).setValues([[id, JSON.stringify(rol), JSON.stringify(cubre), x.autorizo || '', yo.nombre, pcSello()]]);
+    }
+    try { hojaPermBit().appendRow([pcSello(), yo.nombre, 'Personal', p.nombre + ' pasó de ' + nombreUnidad(antes) + ' a ' + nombreUnidad(sidNuevo) + ' (mismo código ' + id + ')']); } catch (e) {}
+    idBitacora(yo, 'cambio de sucursal', id, { sid: antes }, { sid: sidNuevo, desde: hoy, turnos_quitados: quitados });
+    return { ok: true, mensaje: p.nombre + ' ya es de ' + nombreUnidad(sidNuevo) + ', con su mismo código y su historial.' + (quitados ? ' Se quitaron ' + quitados + ' turnos que tenía en ' + nombreUnidad(antes) + ' desde mañana.' : '') };
+  } finally { lock.releaseLock(); }
+}
+/** Autoriza un ascenso confirmado por el gerente: cambia el puesto en el mismo expediente y, si se escribe, el pago por hora. */
+function autorizarAscenso(cred, idAscenso, pago) {
+  var yo = quien(cred); idDirector(yo);
+  var a = supaFetch('post', 'rpc/per_ascenso_ver', { p_id: Number(idAscenso) });
+  if (!a || a.estado !== 'confirmado') throw new Error('Esa solicitud todavía no la confirma el gerente (o ya se resolvió).');
+  var pg = null;
+  if (pago !== '' && pago != null) {
+    if (!pcPuede(yo, 'personal.tarifa', 2)) throw new Error('Su rol no cambia el pago por hora. Autorice sin pago o pídaselo al administrador.');
+    pg = calNumero(pago, 'El pago por hora', 500);
+  }
+  var lock = LockService.getScriptLock(); lock.waitLock(15000); _LEE = {};
+  var txt = '';
+  try {
+    var hoy = hoyISO(), p = null;
+    calLeeEq().forEach(function (x) { if (x.id === a.persona && (!x.baja || x.baja >= hoy)) p = x; });
+    if (!p) throw new Error('Esa persona ya no está en el equipo.');
+    var h = calHoja('Calendario equipo', H_CEQ, ['G', 'H']);
+    if (a.puesto === 'Cocina' || a.puesto === 'Barra') { h.getRange(p.fila, 4).setValue(a.puesto); txt = 'área ' + a.puesto; }
+    else if (a.puesto === 'Cajero' || a.puesto === 'Mesero') {
+      var x = pcPersonas().filter(function (q) { return q.id === p.id; })[0] || { rol: {}, cubre: [], autorizo: '' };
+      var rol = JSON.parse(JSON.stringify(x.rol || {})); rol[p.sid] = a.puesto === 'Cajero' ? 'cajero' : 'mesera';
+      if (a.puesto === 'Cajero' && p.area !== 'Barra') { h.getRange(p.fila, 4).setValue('Barra'); }
+      var v = [p.id, JSON.stringify(rol), JSON.stringify(x.cubre || []), x.autorizo || '', yo.nombre, pcSello()], hp = pcHoja('Personal caja', H_PCAJA);
+      if (x.fila) hp.getRange(x.fila, 1, 1, H_PCAJA.length).setValues([v]); else hp.appendRow(v);
+      txt = (a.puesto === 'Cajero' ? 'cajero' : 'mesero') + ' en la caja de ' + nombreUnidad(p.sid);
+    } else txt = a.puesto;
+    if (pg != null) { h.getRange(p.fila, 5).setValue(pg); txt += ' · pago Q' + pg + ' por hora'; }
+    h.getRange(p.fila, 12, 1, 2).setValues([[yo.nombre, new Date()]]);
+    try { hojaPermBit().appendRow([pcSello(), yo.nombre, 'Personal', 'Ascenso autorizado: ' + p.nombre + ' · ' + txt]); } catch (e) {}
+  } finally { lock.releaseLock(); }
+  supaFetch('post', 'rpc/per_ascenso_autorizado', { p_id: Number(idAscenso), p_quien: yo.nombre, p_pago: pg });
+  return { ok: true, mensaje: 'Autorizado: ' + a.nombre + ' · ' + txt + '.' + (a.puesto === 'Cajero' ? ' Su gerente le restablece el PIN de la caja si no tiene.' : a.puesto === 'Encargado de turno' ? ' Si necesita usuario de Administración, créelo en Configuración › Usuarios.' : '') };
+}
+PERM_API.moverPersonaSucursal = [['personal.equipo'], 2];
+PERM_API.autorizarAscenso = [['personal.equipo'], 2];
