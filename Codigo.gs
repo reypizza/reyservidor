@@ -11389,16 +11389,18 @@ function aceptarYPreparar(cred, envios, opciones) {
         else h.getRange(l.fila, 17, 1, 2).setValues([['', '']]);
       });
       // lo que la bodega manda sin que la sucursal lo haya pedido
-      var nuevas = [];
+      var nuevas = [], nuevasIds = [];
       Object.keys(envios).forEach(function (k) {
         if (vistas[k]) return;
         var p = catT[k]; if (!p) return;
         var n = lee((envios[k] || {})[sid], p.nombre);
         if (!(n > 0)) return;
         nuevas.push([x.s.numero, x.s.sucursal, p.codigo, p.nombre, p.unidad, k, '', 0, 'lo agregó la bodega', 0, n, '', '', '', '', '', '', '', '', '', '']);
+        nuevasIds.push((opciones.ids || {})[k + '|' + sid] || '');
         x.n += n; total += n;
       });
-      if (nuevas.length) h.getRange(h.getLastRow() + 1, 1, nuevas.length, H_SOLD.length).setValues(nuevas);
+      if (nuevas.length) { var f0n = h.getLastRow() + 1; h.getRange(f0n, 1, nuevas.length, H_SOLD.length).setValues(nuevas);
+        if (nuevasIds.some(function (z) { return z; })) { var cId = invColId(h, H_SOLD.length); h.getRange(f0n, cId, nuevas.length, 1).setValues(nuevasIds.map(function (z) { return [z]; })); } }
     });
     Object.keys(porSol).forEach(function (num0) {
       var x = porSol[num0];
@@ -13010,7 +13012,7 @@ function exportarIndicadores(q) {
 /* ════════════ COPIA COMPLETA PARA EL SERVIDOR PROPIO ════════════
  * El servidor propio guarda una copia de TODAS las pestañas y corre este mismo código sobre ella para contestar las lecturas.
  * Cada cambio que pasa por aquí avisa qué pestañas tocó («tocadas»), y el servidor solo vuelve a traer esas. */
-var VERSION_CODIGO = '2026-10-29-a';       // se cambia a mano cada vez que se cambia este archivo; el servidor compara que coincida con la suya
+var VERSION_CODIGO = '2026-10-29-b';       // se cambia a mano cada vez que se cambia este archivo; el servidor compara que coincida con la suya
 function versionCodigo() { return VERSION_CODIGO; }
 function huellaTexto(t) { return Utilities.base64Encode(Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, t)).slice(0, 22); }
 /** Un resumen barato de cada pestaña: cuántas filas y columnas tiene y una huella de sus últimas 25 filas. */
@@ -16591,6 +16593,37 @@ function invAnulaConteo(x) {
   }
   return quitar.length;
 }
+/* ── etapa 2 · las apps por áreas (stock, prep…) guardan en Supabase y piden que se haga en las hojas con las MISMAS funciones de hoy ──
+ * Trabajo «accion»: { fn, args, usuario, que }. Solo funciones de la lista; se corren a nombre de ese usuario de Administración.
+ * Cada trabajo queda en la hoja «Acciones de las apps»: si se repite (Apps Script lo retoma), no se hace dos veces. */
+var AREA_FN = ['aceptarYPreparar', 'despacharSolicitudes', 'aclararDiferencia', 'despacharPendientes', 'cancelarPendiente', 'registrarLote', 'registrarLoteMezcla'];
+var H_ACCIONES = ['Trabajo', 'Función', 'Usuario', 'Qué', 'Empezó', 'Terminó', 'Estado', 'Resultado'];
+function areaHojaAcc() {
+  var h = libro().getSheetByName('Acciones de las apps');
+  if (!h) { h = libro().insertSheet('Acciones de las apps'); h.getRange(1, 1, 1, H_ACCIONES.length).setValues([H_ACCIONES]); h.setFrozenRows(1); }
+  return h;
+}
+/** El «cred» de un usuario de Administración, solo para correr el trabajo aquí adentro (nunca sale de Apps Script). */
+function areaCred(nombre) {
+  var u = null; usuariosCache().forEach(function (x) { if (x.nombre.toLowerCase() === String(nombre || '').toLowerCase()) u = x; });
+  if (!u || !u.activo) throw new Error('El usuario «' + nombre + '» no existe o está inactivo en Administración.');
+  return { usuario: u.nombre, pin: String(u.pin) };
+}
+function areaAccion(t) {
+  var d = t.datos || {}, fn = String(d.fn || '');
+  if (AREA_FN.indexOf(fn) < 0 || typeof globalThis[fn] !== 'function') { var e0 = new Error('Función no permitida: ' + fn); e0.final = true; throw e0; }
+  var h = areaHojaAcc(), lr = h.getLastRow(), fila = 0;
+  if (lr > 1) { var n = Math.min(lr - 1, 3000), v = h.getRange(lr - n + 1, 1, n, 7).getValues();
+    for (var i = v.length - 1; i >= 0; i--) if (String(v[i][0]) === String(t.id)) { fila = lr - n + 1 + i;
+      if (v[i][6] === 'Hecho') return 'ya'; if (v[i][6] === 'Empezó') { var e1 = new Error('Este trabajo quedó a medias la vez pasada: revíselo en la hoja «Acciones de las apps» antes de repetirlo.'); e1.revisar = true; throw e1; } break; } }
+  if (!fila) { h.appendRow([t.id, fn, d.usuario || '', d.que || '', new Date(), '', 'Empezó', '']); fila = h.getLastRow(); }
+  else h.getRange(fila, 5, 1, 4).setValues([[new Date(), '', 'Empezó', '']]);
+  var cred = areaCred(d.usuario), r;
+  try { r = globalThis[fn].apply(null, [cred].concat(d.args || [])); }
+  catch (e) { h.getRange(fila, 6, 1, 3).setValues([[new Date(), 'No se hizo', String(e.message || e).slice(0, 300)]]); var e2 = new Error(String(e.message || e)); e2.final = true; throw e2; }
+  h.getRange(fila, 6, 1, 3).setValues([[new Date(), 'Hecho', String((r && r.mensaje) || 'listo').slice(0, 300)]]);
+  return 'hecho';
+}
 function invSalida() {
   if (!supaCfgSuave()) return { hechos: 0 };
   var trab = supaFetch('post', 'rpc/inv_salida_toma', { p_max: 20 }) || [];
@@ -16598,13 +16631,18 @@ function invSalida() {
   var ok = [], mal = [], lock = LockService.getScriptLock();
   lock.waitLock(25000); _LEE = {};
   try {
-    trab.forEach(function (t) {
+    trab.sort(function (a, b) { return a.id - b.id; }).forEach(function (t) {
       try {
         if (t.tipo === 'filas') (t.datos.partes || []).forEach(invPonFilas);
         else if (t.tipo === 'anular_conteo') invAnulaConteo(t.datos);
+        else if (t.tipo === 'accion') {
+          // las funciones de hoy toman su propio candado: se suelta mientras corren
+          lock.releaseLock(); _LEE = {}; _MEMO = {};
+          try { areaAccion(t); } finally { lock.waitLock(25000); _LEE = {}; _MEMO = {}; }
+        }
         else throw new Error('Trabajo desconocido: ' + t.tipo);
         ok.push(t.id);
-      } catch (e) { mal.push({ id: t.id, error: String(e.message || e) }); }
+      } catch (e) { mal.push({ id: t.id, error: String(e.message || e), final: !!e.final, revisar: !!e.revisar }); }
     });
   } finally { lock.releaseLock(); }
   _MEMO = {}; _LEE = {};
