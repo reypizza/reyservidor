@@ -12564,7 +12564,7 @@ function pantallaNivelacion(cred, numero) {
   var yo = quien(cred), todas = filasNiv();
   var lugares = UNIDADES.filter(function (u) { return u.vende || u.id === 'bodega'; });
   var mias = todas.filter(function (n) { var u = unidadNivDe(n); return u && veNiv(yo, u.id); });
-  var out = { puedeIniciar: yo.esAdmin || yo.rol === 'operaciones', puedeVB: yo.esAdmin || yo.rol === 'operaciones', puedeAprobar: !!yo.esAdmin,
+  var out = { puedeIniciar: yo.esAdmin || yo.rol === 'operaciones', puedeVB: yo.esAdmin || yo.rol === 'operaciones', puedeAprobar: !!yo.esAdmin || (yo.rol === 'operaciones' && _AREA_EN_PUENTE),
     lugares: lugares.map(function (u) { return { id: u.id, nombre: u.nombre, abierta: (todas.filter(function (n) { return n.unidad === u.nombre && nivAbierta(n); })[0] || {}).numero || '' }; }),
     motivos: NIV_MOTIVOS, lista: mias.slice().reverse().map(resumenNiv) };
   // comparación: la última aprobada de cada lugar, por área; y el historial (todas las aprobadas, en orden)
@@ -12592,7 +12592,7 @@ function detalleNivPara(yo, numero) {
   d.puedeContar = (n.estado === NIV.CON) && cuentaNiv(yo, u.id);
   d.puedeExplicar = (n.estado === NIV.EXP) && cuentaNiv(yo, u.id);
   d.puedeVB = (n.estado === NIV.REV) && (yo.esAdmin || yo.rol === 'operaciones');
-  d.puedeAprobar = (n.estado === NIV.REV || n.estado === NIV.APR) && !!yo.esAdmin;
+  d.puedeAprobar = (n.estado === NIV.REV || n.estado === NIV.APR) && (!!yo.esAdmin || !opsNoAprobarNiv(yo, n));
   d.puedeDevolver = (n.estado === NIV.EXP || n.estado === NIV.REV || n.estado === NIV.APR) && (yo.esAdmin || yo.rol === 'operaciones');
   d.puedeAnular = nivAbierta(n) && (yo.esAdmin || yo.rol === 'operaciones');
   if (n.estado === NIV.CON) {
@@ -12709,7 +12709,7 @@ function anularNivelacion(cred, numero, motivo) {
 /** Aprobar: lo contado pasa a ser la existencia del lugar (desde la hora en que se contó), y el acta llega por correo. */
 function aprobarNivelacion(cred, numero, nota) {
   var x = exigeNiv(cred, numero), yo = x.yo, n = x.n, u = x.u;
-  if (!yo.esAdmin) throw new Error('La nivelación la aprueba el administrador.');
+  if (!yo.esAdmin) opsExigeAprobarNiv(yo, n);
   if (!(n.estado === NIV.REV || n.estado === NIV.APR)) throw new Error('Esta nivelación no está lista para aprobar (' + n.estado.toLowerCase() + ').');
   var lineas = detalleNiv(n.numero); if (!lineas.length) throw new Error('Esta nivelación no tiene conteo.');
   var ahora = new Date(), contadaEn = hojaNiv().getRange(n.fila, 7).getValue();
@@ -13015,7 +13015,7 @@ function exportarIndicadores(q) {
 /* ════════════ COPIA COMPLETA PARA EL SERVIDOR PROPIO ════════════
  * El servidor propio guarda una copia de TODAS las pestañas y corre este mismo código sobre ella para contestar las lecturas.
  * Cada cambio que pasa por aquí avisa qué pestañas tocó («tocadas»), y el servidor solo vuelve a traer esas. */
-var VERSION_CODIGO = '2026-11-02-a';       // se cambia a mano cada vez que se cambia este archivo; el servidor compara que coincida con la suya
+var VERSION_CODIGO = '2026-11-03-a';       // se cambia a mano cada vez que se cambia este archivo; el servidor compara que coincida con la suya
 function versionCodigo() { return VERSION_CODIGO; }
 function huellaTexto(t) { return Utilities.base64Encode(Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, t)).slice(0, 22); }
 /** Un resumen barato de cada pestaña: cuántas filas y columnas tiene y una huella de sus últimas 25 filas. */
@@ -14104,7 +14104,7 @@ function listaFondos(cred) {
       x.deCmo = x.rolSol === 'cmo';
       x.estadoTxt = estadoTxtFondo(x); x.etapa = etapaTxtFondo(x); x.pasos = pasosFondo(x);
       x.puedeVerificar = (yo.rol === 'operaciones' || yo.esAdmin) && x.estado === FONDO_EST.VER;
-      x.puedeAutorizar = !!yo.esAdmin && x.estado === FONDO_ADM;
+      x.puedeAutorizar = (!!yo.esAdmin || !opsNoAutorizar(yo, x)) && x.estado === FONDO_ADM; if (!yo.esAdmin && yo.rol === 'operaciones' && x.estado === FONDO_ADM && !x.puedeAutorizar) x.porqueNoAutoriza = opsNoAutorizar(yo, x);
       x.puedeAprobar = (yo.rol === 'finanzas' || yo.esAdmin) && x.estado === FONDO_EST.PED;
       x.puedePagar = (esContador(yo) || yo.esAdmin) && x.estado === FONDO_EST.APR;
       x.puedeDevolver = (esContador(yo) || yo.esAdmin) && (x.estado === FONDO_EST.APR || x.estado === FONDO_COT);
@@ -14206,8 +14206,9 @@ function verificarFondos(cred, numero, confirmar, comentario) {
 /** El administrador autoriza (o rechaza). Sin dinero, aquí termina el camino y la solicitud regresa a quien la pidió para que proceda. */
 function autorizarFondos(cred, numero, autorizar, comentario) {
   var yo = quien(cred);
-  if (!yo.esAdmin) throw new Error('Las solicitudes las autoriza el administrador.');
+  if (!(yo.esAdmin || yo.rol === 'operaciones')) throw new Error('Las solicitudes las autoriza el director operativo o el administrador.');
   var x = buscaFondo(numero);
+  if (!yo.esAdmin) { var noAut = opsNoAutorizar(yo, x); if (noAut) throw new Error(noAut); }
   if (x.estado !== FONDO_ADM) throw new Error('Esa solicitud no está por autorizar (' + estadoTxtFondo(x).toLowerCase() + ').');
   comentario = String(comentario || '').trim().slice(0, 200);
   if (!autorizar && comentario.length < 4) throw new Error('Escriba por qué se rechaza.');
@@ -15057,7 +15058,7 @@ var PERM_PERFILES = [['operaciones', 'Director operativo'], ['gerente', 'Gerente
 var PERM_ALC_DEF = { operaciones: 'todas', gerente: 'suya', finanzas: 'todas', bodega: 'todas', produccion: 'todas', contador: 'todas', cmo: 'suya', registro: 'todas', auxiliar: 'suya', dueno: 'todas' };
 /* Lo que cada rol tenía antes de los permisos. 2 = cambiar o sí, 1 = ver. */
 var PERM_HOY = {
-  operaciones: 'ventas.tablero1 ventas.validar2 sucursales.*2 sucursales.resumen1 sucursales.tablero1 sucursales.seguimiento1 personal.turnos2 personal.apoyo2 personal.confirmar2 personal.desbloquear2 personal.pdfo2 personal.venta1 personal.costo1 personal.pagos2 personal.equipo2 personal.tarifa2 personal.ajustes2 personal.salgte2 personal.ausp2 personal.ausa2 personal.dircontrata2 inventario.*2 inventario.exist1 inventario.hist1 inventario.tras1 inventario.costo1 inventario.contar0 inventario.pedir0 inventario.recibir0 inventario.despachar0 produccion.recetas1 produccion.lotes1 productos.lista1 productos.editar2 productos.sucs2 productos.precios1 productos.prov2 compras.ocs1 compras.costtras1 solicitudes.pedir2 solicitudes.vb2 solicitudes.todas1 indicadores.coo2 comunicacion.*2 comunicacion.sugleer1 config.zonas2 config.bono2',
+  operaciones: 'ventas.tablero1 ventas.validar2 sucursales.*2 sucursales.resumen1 sucursales.tablero1 sucursales.seguimiento1 personal.turnos2 personal.apoyo2 personal.confirmar2 personal.desbloquear2 personal.pdfo2 personal.venta1 personal.costo1 personal.pagos2 personal.equipo2 personal.tarifa2 personal.ajustes2 personal.salgte2 personal.ausp2 personal.ausa2 personal.dircontrata2 inventario.*2 inventario.exist1 inventario.hist1 inventario.tras1 inventario.costo1 inventario.contar0 inventario.pedir0 inventario.recibir0 inventario.despachar0 produccion.recetas1 produccion.lotes1 productos.lista1 productos.editar2 productos.sucs2 productos.precios1 productos.prov2 compras.ocs1 compras.costtras1 solicitudes.pedir2 solicitudes.vb2 solicitudes.autorizar2 solicitudes.todas1 indicadores.coo2 comunicacion.*2 comunicacion.sugleer1 config.zonas2 config.bono2',
   gerente: 'ventas.corte2 sucursales.tablero1 sucursales.mant2 sucursales.equipos2 personal.turnos2 personal.apoyo2 personal.confirmar2 personal.pdfo2 personal.venta1 personal.equipo2 personal.ausp2 inventario.contar2 inventario.pedir2 inventario.recibir2 inventario.firmas2 inventario.pend2 inventario.nivel2 inventario.dif2 inventario.merma2 inventario.emerg2 inventario.cierre2 productos.lista1 solicitudes.pedir2 comunicacion.preguntas2 comunicacion.sugerir2 config.zonas2',
   finanzas: 'ventas.tablero1 sucursales.resumen1 sucursales.tablero1 personal.turnos1 personal.apoyo1 personal.pdfo2 personal.venta1 personal.costo1 personal.pagos1 personal.equipo1 personal.tarifa1 personal.ajustes1 personal.salgte1 personal.ausp2 personal.dircontrata2 inventario.exist1 inventario.hist1 inventario.cierre1 inventario.nivel2 inventario.costo1 productos.lista1 productos.precios2 compras.ocs1 compras.costtras1 solicitudes.pedir2 solicitudes.aprobar2 solicitudes.todas1 finanzas.resumen1 finanzas.presup2 finanzas.presupap2 finanzas.areas1 finanzas.imp2 finanzas.provpag1 finanzas.repart1 finanzas.reportes1 comunicacion.preguntas2 comunicacion.sugerir2',
   bodega: 'sucursales.equipos2 personal.ausp2 inventario.contar2 inventario.exist1 inventario.despachar2 inventario.pend2 inventario.nivel2 inventario.dif2 inventario.emerg2 inventario.tras1 productos.lista1 productos.editar2 productos.sucs2 productos.prov2 compras.ocs2 compras.cotizar2 compras.recibir2 solicitudes.pedir2 comunicacion.preguntas2 comunicacion.sugerir2',
@@ -17478,6 +17479,41 @@ function exigeNoSoloApp(u) {
   if (_AREA_EN_PUENTE || !u || u.rol === 'admin') return;
   if (soloAppLista().indexOf(String(u.nombre).toLowerCase()) < 0) return;
   throw new Error('Su usuario ya trabaja solo en su app' + (SOLO_APP_DE_ROL[u.rol] ? ': ' + SOLO_APP_DE_ROL[u.rol] : '') + '. Entre por ahí con su teléfono y su código.');
+}
+
+/* ── 125 · Operaciones (Álvaro) supervisa Bodega y Producción desde su app: nivelaciones, solicitudes de pago, permisos y mensajes.
+ * Corre con su usuario de Administración (sus permisos por rol siguen valiendo: el administrador los quita en «Permisos por rol»)
+ * y con las funciones de su app (el administrador las baja en Datos del personal › Funciones de sus apps). */
+AREA_GAS.ops = {
+  pantallaNivelacion: ['nivelacion', 1], vistoBuenoNivelacion: ['nivelacion', 2], aprobarNivelacion: ['nivelacion_aprobar', 2], devolverNivelacion: ['nivelacion', 2],
+  listaFondos: ['solicitudes', 1, 'dinero'], verificarFondos: ['solicitudes', 2, 'dinero'], autorizarFondos: ['solicitudes_autorizar', 2, 'dinero'],
+  listaPermisos: ['permisos', 1], revisarPermiso: ['permisos', 2],
+  listaConsultas: ['preguntas', 1], preguntar: ['preguntas', 2], responderConsulta: ['preguntas', 2],
+  pantallaSugerencias: ['preguntas', 1], enviarSugerencia: ['preguntas', 2]
+};
+
+/* 125 · los límites del director operativo (revisión de seguridad):
+ *  - lo hace solo desde su app de Operaciones (ahí el administrador le baja cada función por persona);
+ *  - una nivelación que él mismo contó la aprueba el administrador (siempre dos personas);
+ *  - una solicitud suya, del director financiero o del administrador, o de más de Q1,000, la autoriza el administrador. */
+var OPS_TOPE_AUT = 1000;
+function opsNoAprobarNiv(yo, n) {
+  if (yo.esAdmin) return '';
+  if (yo.rol !== 'operaciones') return 'La nivelación la aprueba el director operativo o el administrador.';
+  if (!_AREA_EN_PUENTE) return 'La nivelación apruébela desde su app de Operaciones (ops.reypizza.gt).';
+  if (n && String(n.contadaPor || '').toLowerCase() === String(yo.nombre).toLowerCase()) return 'Usted contó esta nivelación: la aprueba el administrador.';
+  return '';
+}
+function opsExigeAprobarNiv(yo, n) { var m = opsNoAprobarNiv(yo, n); if (m) throw new Error(m); }
+function opsNoAutorizar(yo, x) {
+  if (yo.esAdmin) return '';
+  if (yo.rol !== 'operaciones' || !x) return 'Las solicitudes las autoriza el director operativo o el administrador.';
+  if (!_AREA_EN_PUENTE) return 'Autorícela desde su app de Operaciones (ops.reypizza.gt).';
+  if (String(x.por || '').toLowerCase() === String(yo.nombre).toLowerCase()) return 'Nadie autoriza su propia solicitud: la autoriza el administrador.';
+  var rs = rolDe(x.por); if (rs === 'finanzas' || rs === 'admin' || rs === 'dueno' || rs === 'operaciones') return 'Las solicitudes de la dirección las autoriza el administrador.';
+  var m = Number(x.monto) || 0; if (x.clase) { try { m = Math.max(m, totalFondo(x.renglones, x.extras, false)); } catch (e) {} }
+  if (m > OPS_TOPE_AUT) return 'Es de más de Q' + OPS_TOPE_AUT.toLocaleString('en-US') + ': la autoriza el administrador.';
+  return '';
 }
 
 /* ── 124 · Administración con huella o rostro ──
