@@ -917,9 +917,7 @@ function estadoResultados(ss) {
 /* ════════════ LA PÁGINA ════════════ */
 
 function doGet() {
-  return HtmlService.createHtmlOutputFromFile('index')
-    .setTitle('REY PIZZA · CAIX, S.A.')
-    .addMetaTag('viewport', 'width=device-width, initial-scale=1');
+  return ContentService.createTextOutput('Administración de Rey Pizza está en https://adm.reypizza.gt').setMimeType(ContentService.MimeType.TEXT);
 }
 
 /* ════════════ API PARA LA APP INSTALADA ════════════
@@ -927,7 +925,7 @@ function doGet() {
  * mismo proyecto por POST. Solo se pueden llamar las funciones de esta lista (las mismas
  * que usa la pantalla), y cada una revisa el código de quien pregunta, igual que antes.
  * La lista la pone sola el armado; no hace falta tocarla. */
-/*API_INI*/var API_PERMITIDAS = ['abrirSolicitud', 'abrirTraslado', 'aceptarSolicitud', 'aceptarYPreparar', 'aclararDiferencia', 'activarCorreos', 'activarObligacion', 'activarProducto', 'activarProductoSucursal', 'adjuntarCotizacion', 'agregarEquipo', 'agregarProducto', 'agregarRecomendados', 'agregarRecomendadosCmo', 'agregarRubro', 'anclarProducto', 'anular', 'anularOrden', 'anularPagoImpuesto', 'anularSolicitud', 'aprobarFondos', 'aprobarPresupuesto', 'aprobarPresupuestoArea', 'asignarDescanso', 'borrarKpi', 'borrarKpiCmo', 'borrarSolicitud', 'cambiarEquipo', 'cambiarMiPin', 'cambiarPermiso', 'cancelarPermiso', 'confirmarPlanilla', 'confirmarRegistro', 'consolidado', 'copiarPresupuesto', 'costosTraslados', 'cotizarOrden', 'darDeBaja', 'datos', 'despacharSolicitudes', 'detalleGasto', 'editarProducto', 'eliminarPersonaCal', 'entrar', 'enviarEmergencia', 'enviarKpis', 'enviarKpisCmo', 'enviarSolicitud', 'enviarSugerencia', 'estadoCorreos', 'evaluarMerma', 'existencias', 'existenciasEmergencia', 'firmarTraslado', 'guardarAjustesInv', 'guardarBonoGeneral', 'guardarBonosCal', 'guardarBorradorCal', 'guardarComision', 'guardarConfigCal', 'guardarConteo', 'guardarEstudio', 'guardarHorario', 'guardarHorasApoyo', 'guardarHorasReales', 'guardarKpi', 'guardarKpiCmo', 'guardarLugar', 'guardarMando', 'guardarMedida', 'guardarMiCorreo', 'guardarMiPresupuesto', 'guardarObligacion', 'guardarOrden', 'guardarPersonaCal', 'guardarPrecios', 'guardarPresupuesto', 'guardarProducto', 'guardarProductoBodega', 'guardarProveedor', 'guardarProveedorInv', 'guardarReceta', 'guardarRepartidor', 'guardarTraslado', 'guardarTurnos', 'guardarUsuario', 'habilita', 'habilitarConteo', 'historialTraslados', 'indicadoresConta', 'leerBonoGeneral', 'leerSugerencias', 'listaBodega', 'listaCatalogo', 'listaConsultas', 'listaDiferencias', 'listaEntrada', 'listaFondos', 'listaImpuestos', 'listaKpis', 'listaKpisCmo', 'listaLugares', 'listaOrdenes', 'listaPermisos', 'listaPrecios', 'listaRepartidores', 'listaReportes', 'listaSolicitudes', 'listaUsuarios', 'llegoSolicitud', 'marcarPreparadas', 'medirAceite', 'miAvance', 'miCorreo', 'miPanel', 'miPresupuesto', 'notificaciones', 'ordenesPago', 'pagarFondos', 'pagarOrden', 'pagarRepartidor', 'pantallaCalendarios', 'pantallaConteo', 'pantallaEmergencias', 'pantallaFirmas', 'pantallaHorarios', 'pantallaKpi', 'pantallaMando', 'pantallaMant', 'pantallaMerma', 'pantallaMuestreo', 'pantallaPedidosBodega', 'pantallaProduccion', 'pantallaSolicitud', 'pantallaSugerencias', 'pdfCalendario', 'pdfOrden', 'pedirDescanso', 'pedirEmergencia', 'pedirFondos', 'pedirPermiso', 'ping', 'planillasPorPagar', 'ponPreciosGerentes', 'porConfirmar', 'preguntar', 'presupuestoMes', 'presupuestosAreas', 'probarCorreo', 'productosConfig', 'productosParaAnclar', 'productosSucursal', 'reabrirPlanilla', 'rechazarRegistro', 'recibirEfectivo', 'recibirEmergencia', 'recibirOrden', 'recibirSolicitud', 'registrarGasto', 'registrarIngreso', 'registrarKpis', 'registrarLote', 'registrarMant', 'registrarMerma', 'registrarObservacion', 'registrarPagoImpuesto', 'renombrarCategoria', 'reporteDiario', 'reporteTraslados', 'resolverDescanso', 'responderConsulta', 'responderMerma', 'resultadosKpi', 'resultadosKpiCmo', 'resultadosKpiRango', 'resultadosMuestreo', 'resumenInventario', 'resumenMes', 'revisarPermiso', 'seguimiento', 'sugerenciaCompra', 'tableroFinanzas', 'tableroKpi', 'terminarFondos', 'validarRegistro', 'ventas', 'verTraslado', 'verificarFondos', 'proveedoresProductos', 'guardarProveedorProd', 'eliminarProveedor', 'detalleAbastecimiento', 'pdfHistorialInventario', 'pantallaCierreMes', 'guardarCierreMes', 'misMenus', 'menusRol', 'guardarMenusRol', 'historialInventario', 'reiniciarPresupuestos', 'autorizarFondos', 'hechaFondos', 'listaPendientes', 'llegaPendiente', 'cancelarPendiente', 'despacharPendientes', 'devolverFondo', 'corregirFondo', 'pantallaEquipos', 'guardarEquipoA', 'bajaEquipo', 'revisarEquipos', 'confirmarRevisionEq', 'pedirEquipo', 'resolverPedidoEq', 'entregarCompraEq', 'recibirEquipo', 'devolverOrden', 'corregirOrden', 'reiniciarPrecios', 'guardarMezcla', 'registrarLoteMezcla', 'etiquetasLote', 'guardarConfigEtiquetas', 'listaKpisCoo', 'guardarKpiCoo', 'borrarKpiCoo', 'enviarKpisCoo', 'agregarRecomendadosCoo', 'resultadosKpiCoo', 'pantallaKpiCoo', 'registrarKpisCoo', 'resumenAreas', 'resumenAreasSenales', 'pantallaZonas', 'guardarZonas', 'listaKpisTec', 'guardarKpiTec', 'borrarKpiTec', 'enviarKpisTec', 'agregarRecomendadosTec', 'resultadosKpiTec', 'pantallaKpiTec', 'registrarKpisTec', 'cotizarFondo', 'recibirFondo', 'pantallaNivelacion', 'iniciarNivelacion', 'guardarConteoNivelacion', 'explicarNivelacion', 'vistoBuenoNivelacion', 'aprobarNivelacion', 'devolverNivelacion', 'anularNivelacion', 'pdfNivelacion', 'resumenSucursal', 'tableroBodega', 'permisosRol', 'guardarPermisosRol', 'guardarReglasCal', 'confirmarSemanaCal', 'pedirCambioCal', 'autorizarCambioCal', 'ventasCajas', 'pantallaDirectores', 'guardarAreaDir', 'quitarDirector', 'pagarDirectores', 'reabrirDirectores', 'proponerContratacion', 'cancelarPropuesta', 'resolverPropuesta', 'tokenSupabase', 'ponSugeridoPedido', 'invSalidaYa', 'permisosCaja', 'guardarPermisosCaja', 'guardarPersonaCaja', 'guardarHorariosCaja', 'listaAvisosPersonal', 'guardarAvisoPersonal', 'quitarAvisoPersonal', 'listaReconocimientos', 'darReconocimiento', 'anularReconocimiento', 'accesoOperadores', 'guardarAccesoOperadores', 'pedirPrestamo', 'resolverPrestamo', 'moverPersonaSucursal', 'autorizarAscenso'];/*API_FIN*/
+/*API_INI*/var API_PERMITIDAS = ['abrirSolicitud', 'abrirTraslado', 'aceptarSolicitud', 'aceptarYPreparar', 'aclararDiferencia', 'activarCorreos', 'activarObligacion', 'activarProducto', 'activarProductoSucursal', 'adjuntarCotizacion', 'agregarEquipo', 'agregarProducto', 'agregarRecomendados', 'agregarRecomendadosCmo', 'agregarRubro', 'anclarProducto', 'anular', 'anularOrden', 'anularPagoImpuesto', 'anularSolicitud', 'aprobarFondos', 'aprobarPresupuesto', 'aprobarPresupuestoArea', 'asignarDescanso', 'borrarKpi', 'borrarKpiCmo', 'borrarSolicitud', 'cambiarEquipo', 'cambiarMiPin', 'cambiarPermiso', 'cancelarPermiso', 'confirmarPlanilla', 'confirmarRegistro', 'consolidado', 'copiarPresupuesto', 'costosTraslados', 'cotizarOrden', 'darDeBaja', 'datos', 'despacharSolicitudes', 'detalleGasto', 'editarProducto', 'eliminarPersonaCal', 'entrar', 'enviarEmergencia', 'enviarKpis', 'enviarKpisCmo', 'enviarSolicitud', 'enviarSugerencia', 'estadoCorreos', 'evaluarMerma', 'existencias', 'existenciasEmergencia', 'firmarTraslado', 'guardarAjustesInv', 'guardarBonoGeneral', 'guardarBonosCal', 'guardarBorradorCal', 'guardarComision', 'guardarConfigCal', 'guardarConteo', 'guardarEstudio', 'guardarHorario', 'guardarHorasApoyo', 'guardarHorasReales', 'guardarKpi', 'guardarKpiCmo', 'guardarLugar', 'guardarMando', 'guardarMedida', 'guardarMiCorreo', 'guardarMiPresupuesto', 'guardarObligacion', 'guardarOrden', 'guardarPersonaCal', 'guardarPrecios', 'guardarPresupuesto', 'guardarProducto', 'guardarProductoBodega', 'guardarProveedor', 'guardarProveedorInv', 'guardarReceta', 'guardarRepartidor', 'guardarTraslado', 'guardarTurnos', 'guardarUsuario', 'habilita', 'habilitarConteo', 'historialTraslados', 'indicadoresConta', 'leerBonoGeneral', 'leerSugerencias', 'listaBodega', 'listaCatalogo', 'listaConsultas', 'listaDiferencias', 'listaEntrada', 'listaFondos', 'listaImpuestos', 'listaKpis', 'listaKpisCmo', 'listaLugares', 'listaOrdenes', 'listaPermisos', 'listaPrecios', 'listaRepartidores', 'listaReportes', 'listaSolicitudes', 'listaUsuarios', 'llegoSolicitud', 'marcarPreparadas', 'medirAceite', 'miAvance', 'miCorreo', 'miPanel', 'miPresupuesto', 'notificaciones', 'ordenesPago', 'pagarFondos', 'pagarOrden', 'pagarRepartidor', 'pantallaCalendarios', 'pantallaConteo', 'pantallaEmergencias', 'pantallaFirmas', 'pantallaHorarios', 'pantallaKpi', 'pantallaMando', 'pantallaMant', 'pantallaMerma', 'pantallaMuestreo', 'pantallaPedidosBodega', 'pantallaProduccion', 'pantallaSolicitud', 'pantallaSugerencias', 'pdfCalendario', 'pdfOrden', 'pedirDescanso', 'pedirEmergencia', 'pedirFondos', 'pedirPermiso', 'ping', 'planillasPorPagar', 'ponPreciosGerentes', 'porConfirmar', 'preguntar', 'presupuestoMes', 'presupuestosAreas', 'probarCorreo', 'productosConfig', 'productosParaAnclar', 'productosSucursal', 'reabrirPlanilla', 'rechazarRegistro', 'recibirEfectivo', 'recibirEmergencia', 'recibirOrden', 'recibirSolicitud', 'registrarGasto', 'registrarIngreso', 'registrarKpis', 'registrarLote', 'registrarMant', 'registrarMerma', 'registrarObservacion', 'registrarPagoImpuesto', 'renombrarCategoria', 'reporteDiario', 'reporteTraslados', 'resolverDescanso', 'responderConsulta', 'responderMerma', 'resultadosKpi', 'resultadosKpiCmo', 'resultadosKpiRango', 'resultadosMuestreo', 'resumenInventario', 'resumenMes', 'revisarPermiso', 'seguimiento', 'sugerenciaCompra', 'tableroFinanzas', 'tableroKpi', 'terminarFondos', 'validarRegistro', 'ventas', 'verTraslado', 'verificarFondos', 'proveedoresProductos', 'guardarProveedorProd', 'eliminarProveedor', 'detalleAbastecimiento', 'pdfHistorialInventario', 'pantallaCierreMes', 'guardarCierreMes', 'misMenus', 'menusRol', 'guardarMenusRol', 'historialInventario', 'reiniciarPresupuestos', 'autorizarFondos', 'hechaFondos', 'listaPendientes', 'llegaPendiente', 'cancelarPendiente', 'despacharPendientes', 'devolverFondo', 'corregirFondo', 'pantallaEquipos', 'guardarEquipoA', 'bajaEquipo', 'revisarEquipos', 'confirmarRevisionEq', 'pedirEquipo', 'resolverPedidoEq', 'entregarCompraEq', 'recibirEquipo', 'devolverOrden', 'corregirOrden', 'reiniciarPrecios', 'guardarMezcla', 'registrarLoteMezcla', 'etiquetasLote', 'guardarConfigEtiquetas', 'listaKpisCoo', 'guardarKpiCoo', 'borrarKpiCoo', 'enviarKpisCoo', 'agregarRecomendadosCoo', 'resultadosKpiCoo', 'pantallaKpiCoo', 'registrarKpisCoo', 'resumenAreas', 'resumenAreasSenales', 'pantallaZonas', 'guardarZonas', 'listaKpisTec', 'guardarKpiTec', 'borrarKpiTec', 'enviarKpisTec', 'agregarRecomendadosTec', 'resultadosKpiTec', 'pantallaKpiTec', 'registrarKpisTec', 'cotizarFondo', 'recibirFondo', 'pantallaNivelacion', 'iniciarNivelacion', 'guardarConteoNivelacion', 'explicarNivelacion', 'vistoBuenoNivelacion', 'aprobarNivelacion', 'devolverNivelacion', 'anularNivelacion', 'pdfNivelacion', 'resumenSucursal', 'tableroBodega', 'permisosRol', 'guardarPermisosRol', 'guardarReglasCal', 'confirmarSemanaCal', 'pedirCambioCal', 'autorizarCambioCal', 'ventasCajas', 'pantallaDirectores', 'guardarAreaDir', 'quitarDirector', 'pagarDirectores', 'reabrirDirectores', 'proponerContratacion', 'cancelarPropuesta', 'resolverPropuesta', 'tokenSupabase', 'ponSugeridoPedido', 'invSalidaYa', 'permisosCaja', 'guardarPermisosCaja', 'guardarPersonaCaja', 'guardarHorariosCaja', 'listaAvisosPersonal', 'guardarAvisoPersonal', 'quitarAvisoPersonal', 'listaReconocimientos', 'darReconocimiento', 'anularReconocimiento', 'accesoOperadores', 'guardarAccesoOperadores', 'pedirPrestamo', 'resolverPrestamo', 'moverPersonaSucursal', 'autorizarAscenso', 'entrarAparato', 'aparatoCrear', 'aparatoQuitar'];/*API_FIN*/
 /** Solo contesta «aquí estoy»: sirve para despertar el servidor y medir la velocidad. No lee ni guarda nada. */
 function ping() { return { ok: true }; }
 function doPost(e) {
@@ -1009,6 +1007,7 @@ function llamar(fn, rid, args) {
   if (API_PERMITIDAS.indexOf(fn) < 0 || typeof globalThis[fn] !== 'function')
     throw new Error('La app pidió algo que no existe (' + fn + '). Falta pegar el Codigo.gs nuevo y crear una versión nueva de la implementación.');
   args = Array.isArray(args) ? args : [];
+  if (fn !== 'entrarAparato') apaCred(args); else _POR_APARATO = false;
   permAntes(fn, args);
   rid = String(rid || '').replace(/[^A-Za-z0-9_-]/g, '').slice(0, 40);
   if (!rid) return supaTras(globalThis[fn].apply(null, args));
@@ -3458,13 +3457,14 @@ function costosTraslados(cred, dias) {
 function listaUsuarios(cred) {
   exigeAdmin(cred);
   return filasUsuarios().map(function (u) {
-    return { nombre: u.nombre, rol: u.rol, activo: u.activo, pin: u.pin,
+    return { nombre: u.nombre, rol: u.rol, activo: u.activo, pin: _POR_APARATO ? '' : u.pin,
       sucursal: u.sucursal, confirma: u.confirma };
   });
 }
 
 /** Crea o modifica. `original` es el nombre anterior cuando se está editando. */
 function guardarUsuario(cred, u) {
+  apaExigeCodigo();             // 124: crear o cambiar usuarios y sus códigos pide el código escrito
   var yo = exigeAdmin(cred);
   u = u || {};
   var nombre = String(u.nombre || '').trim();
@@ -3560,6 +3560,7 @@ function darDeBaja(cred, nombre) {
 /** Cada quien puede cambiar su propio PIN sin ser administrador. */
 function cambiarMiPin(cred, nuevo) {
   permiteAux();
+  apaExigeCodigo();
   var yo = quien(cred);
   nuevo = String(nuevo || '').trim();
   revisaCodigo(nuevo, yo.nombre);
@@ -13014,7 +13015,7 @@ function exportarIndicadores(q) {
 /* ════════════ COPIA COMPLETA PARA EL SERVIDOR PROPIO ════════════
  * El servidor propio guarda una copia de TODAS las pestañas y corre este mismo código sobre ella para contestar las lecturas.
  * Cada cambio que pasa por aquí avisa qué pestañas tocó («tocadas»), y el servidor solo vuelve a traer esas. */
-var VERSION_CODIGO = '2026-11-01-a';       // se cambia a mano cada vez que se cambia este archivo; el servidor compara que coincida con la suya
+var VERSION_CODIGO = '2026-11-02-a';       // se cambia a mano cada vez que se cambia este archivo; el servidor compara que coincida con la suya
 function versionCodigo() { return VERSION_CODIGO; }
 function huellaTexto(t) { return Utilities.base64Encode(Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, t)).slice(0, 22); }
 /** Un resumen barato de cada pestaña: cuántas filas y columnas tiene y una huella de sus últimas 25 filas. */
@@ -17477,4 +17478,82 @@ function exigeNoSoloApp(u) {
   if (_AREA_EN_PUENTE || !u || u.rol === 'admin') return;
   if (soloAppLista().indexOf(String(u.nombre).toLowerCase()) < 0) return;
   throw new Error('Su usuario ya trabaja solo en su app' + (SOLO_APP_DE_ROL[u.rol] ? ': ' + SOLO_APP_DE_ROL[u.rol] : '') + '. Entre por ahí con su teléfono y su código.');
+}
+
+/* ── 124 · Administración con huella o rostro ──
+ * El celular guarda una llave propia (nunca el código). El servidor guarda solo la huella digital (SHA-256) de esa llave,
+ * a quién es y con qué código se creó: si la persona cambia su código, se desactiva o pasan 90 días, la llave deja de valer.
+ * Cada llamada que llega con {usuario, aparato, llave} se convierte aquí, en el servidor, en la persona de siempre. */
+var APA_MAX = 4, APA_DIAS = 90, _POR_APARATO = false;
+function apaHash(t) { return Utilities.base64EncodeWebSafe(Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, String(t))).replace(/=+$/, ''); }
+/** La «versión del código»: con una sal propia y al azar (no se puede adivinar el código desde aquí). */
+function apaSal() { var p = apaProps(), s = p.getProperty('APA_SAL'); if (!s) { s = (Utilities.getUuid() + Utilities.getUuid()).replace(/-/g, ''); p.setProperty('APA_SAL', s); } return s; }
+function apaPv(pin, sal) { return apaHash(sal + '|pv|' + String(pin == null ? '' : pin).trim() + '|' + sal).slice(0, 22); }
+var APA_DIAS_ADMIN = 30;
+function apaProps() { return PropertiesService.getScriptProperties(); }
+function apaLee(id) { if (!/^[a-f0-9]{32}$/.test(String(id || ''))) return null; try { return JSON.parse(apaProps().getProperty('apa_' + id) || 'null'); } catch (e) { return null; } }
+function apaTodos() { var p = apaProps().getProperties(), r = []; Object.keys(p).forEach(function (k) { if (k.indexOf('apa_') === 0) { try { var x = JSON.parse(p[k]); x.id = k.slice(4); r.push(x); } catch (e) {} } }); return r; }
+/** La llave de un celular: si vale, devuelve el usuario de la hoja; si no, un error para que el celular la olvide. */
+function apaValida(id, llave) {
+  var a = apaLee(id);
+  var fallo = function () { var e = new Error('Este celular ya no está guardado para entrar con huella. Entre con su código.'); e.apaOlvidar = true; return e; };
+  if (!a || !llave || apaHash(llave) !== a.h) return { error: fallo() };
+  if (Date.now() - Number(a.t || 0) > APA_DIAS * 86400000) return { error: fallo() };     // (aquí no se borra nada: esto también corre en las lecturas del servidor propio)
+  var u = null; usuariosCache().forEach(function (x) { if (x.nombre.toLowerCase() === String(a.u || '').toLowerCase()) u = x; });
+  var sal = apaProps().getProperty('APA_SAL');
+  if (!u || !u.activo || !sal || apaPv(u.pin, sal) !== a.pv) return { error: fallo() };
+  if (u.rol === 'admin' && Date.now() - Number(a.t || 0) > APA_DIAS_ADMIN * 86400000) return { error: fallo() };   // el administrador: 30 días
+  return { u: u, a: a };
+}
+/** En la puerta única (llamar): una credencial de celular se vuelve la credencial normal, solo dentro del servidor. */
+function apaCred(args) {
+  _POR_APARATO = false;
+  var c = args && args[0]; if (!c || typeof c !== 'object') return;
+  var dentro = c.cred && typeof c.cred === 'object' ? c.cred : null;
+  [c, dentro].forEach(function (x) {
+    if (!x || !x.aparato) return;
+    if (x.pin) throw new Error('Vuelva a entrar.');
+    var v = apaValida(x.aparato, x.llave);
+    if (v.error) throw v.error;
+    if (x.usuario && String(x.usuario).trim().toLowerCase() !== v.u.nombre.toLowerCase()) throw new Error('Vuelva a entrar.');
+    x.usuario = v.u.nombre; x.pin = String(v.u.pin); delete x.aparato; delete x.llave;
+    _POR_APARATO = true;
+  });
+}
+function apaExigeCodigo() { if (_POR_APARATO) throw new Error('Por seguridad, para esto entre con su código (no con la huella).'); }
+
+/** Activar en este celular: solo después de entrar con el código. */
+function aparatoCrear(cred, nombre) {
+  apaExigeCodigo();
+  var yo = quien(cred);
+  if (yo.codigoCorto) throw new Error('Primero cambie su código por uno de 6 a 8 números.');
+  var u = null; usuariosCache().forEach(function (x) { if (x.nombre.toLowerCase() === yo.nombre.toLowerCase()) u = x; });
+  var lock = LockService.getScriptLock(); lock.waitLock(15000);
+  try {
+    var mios = apaTodos().filter(function (x) { return String(x.u || '').toLowerCase() === yo.nombre.toLowerCase(); }).sort(function (a, b) { return b.t - a.t; });
+    mios.slice(APA_MAX - 1).forEach(function (x) { apaProps().deleteProperty('apa_' + x.id); });
+    apaTodos().forEach(function (x) { if (Date.now() - Number(x.t || 0) > APA_DIAS * 86400000) apaProps().deleteProperty('apa_' + x.id); });   // las vencidas de todos
+    var id = Utilities.getUuid().replace(/-/g, '').toLowerCase(), llave = (Utilities.getUuid() + Utilities.getUuid()).replace(/-/g, '');
+    apaProps().setProperty('apa_' + id, JSON.stringify({ u: yo.nombre, h: apaHash(llave), pv: apaPv(u.pin, apaSal()), t: Date.now(), n: String(nombre || '').replace(/[^\w ÁÉÍÓÚáéíóúñÑ.,()-]/g, '').slice(0, 40) }));
+  } finally { lock.releaseLock(); }
+  _TOCADAS['Usuarios'] = 1;        // el servidor propio vuelve a copiar (con las propiedades) antes de contestar otra lectura
+  return { ok: true, id: id, llave: llave, dias: u.rol === 'admin' ? APA_DIAS_ADMIN : APA_DIAS };
+}
+/** Quitar la huella de este celular (o, el administrador, de cualquiera). */
+function aparatoQuitar(cred, id) {
+  var yo = quien(cred), a = apaLee(id);
+  if (a && (String(a.u).toLowerCase() === yo.nombre.toLowerCase() || yo.esAdmin)) { apaProps().deleteProperty('apa_' + id); _TOCADAS['Usuarios'] = 1; }
+  return { ok: true, mensaje: 'Listo: este celular ya no entra con huella.' };
+}
+/** Entrar con la llave del celular (después de que el celular revisó la huella o el rostro). */
+function entrarAparato(c) {
+  permiteAux();
+  c = c || {};
+  var v = apaValida(c.aparato, c.llave);       // la llave no se puede adivinar: no se cuenta en los intentos del código (así nadie bloquea la entrada de los demás)
+  if (v.error) { return { entro: false, olvidar: true, aviso: v.error.message }; }
+  var cred = { usuario: v.u.nombre, pin: String(v.u.pin) };
+  quien(cred, true);
+  var d = datos(cred);
+  d.cred = { usuario: v.u.nombre, aparato: String(c.aparato), llave: String(c.llave) };     // el código nunca sale del servidor
+  return d;
 }
