@@ -936,6 +936,7 @@ function doPost(e) {
     var q = JSON.parse((e && e.postData && e.postData.contents) || '{}');
     var t0 = Date.now();
     if (q.interno === true) out = { ok: true, v: interno(String(q.fn || ''), q) };       // el servidor propio, con su clave secreta
+    else if (q.area === true) out = { ok: true, v: areaPuente(q) };                      // las apps por áreas, con el pase de su app
     else out = { ok: true, v: llamar(String(q.fn || ''), String(q.rid || ''), Array.isArray(q.args) ? q.args : []) };
     out.ms = Date.now() - t0;
   } catch (err) {
@@ -1011,7 +1012,7 @@ function llamar(fn, rid, args) {
   permAntes(fn, args);
   rid = String(rid || '').replace(/[^A-Za-z0-9_-]/g, '').slice(0, 40);
   if (!rid) return supaTras(globalThis[fn].apply(null, args));
-  var c = null, k = 'rq_' + rid;
+  var c = null, k = 'rq_' + rid + '_' + rqDe(fn, args);
   try { c = CacheService.getScriptCache(); } catch (e) { c = null; }
   if (c) {
     var previo = c.get(k);
@@ -13012,7 +13013,7 @@ function exportarIndicadores(q) {
 /* ════════════ COPIA COMPLETA PARA EL SERVIDOR PROPIO ════════════
  * El servidor propio guarda una copia de TODAS las pestañas y corre este mismo código sobre ella para contestar las lecturas.
  * Cada cambio que pasa por aquí avisa qué pestañas tocó («tocadas»), y el servidor solo vuelve a traer esas. */
-var VERSION_CODIGO = '2026-10-29-b';       // se cambia a mano cada vez que se cambia este archivo; el servidor compara que coincida con la suya
+var VERSION_CODIGO = '2026-10-31-a';       // se cambia a mano cada vez que se cambia este archivo; el servidor compara que coincida con la suya
 function versionCodigo() { return VERSION_CODIGO; }
 function huellaTexto(t) { return Utilities.base64Encode(Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, t)).slice(0, 22); }
 /** Un resumen barato de cada pestaña: cuántas filas y columnas tiene y una huella de sus últimas 25 filas. */
@@ -16596,7 +16597,9 @@ function invAnulaConteo(x) {
 /* ── etapa 2 · las apps por áreas (stock, prep…) guardan en Supabase y piden que se haga en las hojas con las MISMAS funciones de hoy ──
  * Trabajo «accion»: { fn, args, usuario, que }. Solo funciones de la lista; se corren a nombre de ese usuario de Administración.
  * Cada trabajo queda en la hoja «Acciones de las apps»: si se repite (Apps Script lo retoma), no se hace dos veces. */
-var AREA_FN = ['aceptarYPreparar', 'despacharSolicitudes', 'aclararDiferencia', 'despacharPendientes', 'cancelarPendiente', 'registrarLote', 'registrarLoteMezcla'];
+var AREA_FN = ['aceptarYPreparar', 'despacharSolicitudes', 'aclararDiferencia', 'despacharPendientes', 'cancelarPendiente', 'registrarLote', 'registrarLoteMezcla',
+  'gastoCompraApp', 'avisoApp', 'autorizarFondos', 'aprobarFondos', 'pagarFondos', 'confirmarPlanilla'];
+var AREA_SOLO_ADMIN = ['gastoCompraApp', 'autorizarFondos', 'aprobarFondos', 'pagarFondos', 'confirmarPlanilla'];
 var H_ACCIONES = ['Trabajo', 'Función', 'Usuario', 'Qué', 'Empezó', 'Terminó', 'Estado', 'Resultado'];
 function areaHojaAcc() {
   var h = libro().getSheetByName('Acciones de las apps');
@@ -16618,6 +16621,9 @@ function areaAccion(t) {
       if (v[i][6] === 'Hecho') return 'ya'; if (v[i][6] === 'Empezó') { var e1 = new Error('Este trabajo quedó a medias la vez pasada: revíselo en la hoja «Acciones de las apps» antes de repetirlo.'); e1.revisar = true; throw e1; } break; } }
   if (!fila) { h.appendRow([t.id, fn, d.usuario || '', d.que || '', new Date(), '', 'Empezó', '']); fila = h.getLastRow(); }
   else h.getRange(fila, 5, 1, 4).setValues([[new Date(), '', 'Empezó', '']]);
+  // segunda revisión (además de la de Supabase): lo de dinero solo corre a nombre de un administrador
+  if (AREA_SOLO_ADMIN.indexOf(fn) >= 0) { var ua = null; usuariosCache().forEach(function (x) { if (x.nombre.toLowerCase() === String(d.usuario || '').toLowerCase()) ua = x; });
+    if (!ua || ua.rol !== 'admin') { h.getRange(fila, 6, 1, 3).setValues([[new Date(), 'No se hizo', 'Solo un administrador']]); var e3 = new Error('«' + fn + '» solo corre a nombre de un administrador.'); e3.final = true; throw e3; } }
   var cred = areaCred(d.usuario), r;
   try { r = globalThis[fn].apply(null, [cred].concat(d.args || [])); }
   catch (e) { h.getRange(fila, 6, 1, 3).setValues([[new Date(), 'No se hizo', String(e.message || e).slice(0, 300)]]); var e2 = new Error(String(e.message || e)); e2.final = true; throw e2; }
@@ -17156,6 +17162,17 @@ function perQuincenaMandar() {
   if (!supaCfgSuave()) return 'Supabase no está configurado.';
   var D = calDatos(), hoy = hoyISO(), filas = perQuincenaFilas(D, hoy).concat(perQuincenaFilas(D, masDias(calQuincena(hoy).ini, -1)));
   var n = supaFetch('post', 'rpc/per_quincena_poner', { p: filas });
+  // los totales de cada sucursal (con gerencia y bonos), para pagar la planilla desde Finanzas
+  try {
+    var tots = [];
+    [calQuincena(hoy).ini, calQuincena(masDias(calQuincena(hoy).ini, -1)).ini].forEach(function (ini) {
+      PC_SUCS.forEach(function (sid) { var m = calModelo(D, sid, ini), pl = calPlanillaDe(D, sid, m.q.ini);
+        if (!(m.tot.total > 0)) return;
+        tots.push({ suc: sid, ini: m.q.ini, fin: m.q.fin, total: m.tot.total, horas: m.tot.horas, proy: m.tot.proy, personal: m.tot.personal, bonos: m.tot.bonos, gerencia: m.tot.gerencia,
+          sinReales: m.tot.sinReales, conReales: m.tot.conReales, confirmada: !!pl }); });
+    });
+    supaFetch('post', 'rpc/fin_quincena_poner', { p: tots });
+  } catch (e) { try { Logger.log('Totales de quincena a Supabase: ' + e.message); } catch (e2) {} }
   return 'Quincenas a Supabase: ' + n;
 }
 function perQuincenaSuave() { try { perQuincenaMandar(); } catch (e) { try { Logger.log('Quincena a Supabase: ' + e.message); } catch (e2) {} } }
@@ -17244,3 +17261,169 @@ function autorizarAscenso(cred, idAscenso, pago) {
 }
 PERM_API.moverPersonaSucursal = [['personal.equipo'], 2];
 PERM_API.autorizarAscenso = [['personal.equipo'], 2];
+
+/* ════════════ ETAPAS 3 Y 4 · COMPRAS Y FINANZAS DESDE LAS APPS ════════════
+ * Supabase guarda la orden con todas sus etapas (pedido, cotizaciones, aprobación, recepción, factura y pago).
+ * Aquí solo se hace lo que todavía vive en las hojas, como trabajos de la cola (areaAccion, a nombre del usuario que lo pidió):
+ * - gastoCompraApp: al marcar pagada una factura, entra el gasto a «Gastos» de la Bodega Central (igual que pagarOrden) y el precio pagado queda en el producto.
+ * - avisoApp: los correos de aviso (a Samuel cuando un proveedor cotiza; a Marcc cuando hay algo por aprobar, de lunes a miércoles). */
+function gastoCompraApp(cred, d) {
+  var yo = quien(cred);
+  if (!yo.esAdmin) throw new Error('El pago de compras lo marca el administrador.');
+  d = d || {};
+  var numero = String(d.numero || '').trim(), prov = String(d.proveedor || '').trim();
+  if (!/^OCA-\d{4,}$/.test(numero)) throw new Error('Falta el número de la orden.');
+  if (!prov) throw new Error('Falta el proveedor.');
+  var fecha = esFecha(d.fecha) ? d.fecha : hoyISO();
+  if (fecha > hoyISO()) throw new Error('La fecha de pago no puede ser de un día que no ha llegado.');
+  var forma = FORMAS_PAGO.indexOf(d.forma) >= 0 ? d.forma : 'Transferencia';
+  var ref = String(d.referencia || '').trim().slice(0, 40), factura = String(d.factura || '').trim().slice(0, 30) || numero;
+  var cat = {};
+  filasProductos().forEach(function (p) { cat[(p.nombre + '§' + p.proveedor).toLowerCase()] = p; if (!cat[p.nombre.toLowerCase()]) cat[p.nombre.toLowerCase()] = p; });
+  var lineas = (d.lineas || []).filter(function (l) { return Number(l.cantidad) > 0 && Number(l.precio) > 0; }).map(function (l) {
+    var p = cat[(String(l.producto) + '§' + prov).toLowerCase()] || cat[String(l.producto).toLowerCase()] || {};
+    return { producto: String(l.producto || '').slice(0, 70), cantidad: Number(l.cantidad), medida: String(l.medida || 'unidad'), precio: Number(l.precio),
+      categoria: p.categoria || 'Insumos de cocina', contenido: p.contenido || 0, base: p.base || '' };
+  });
+  if (Number(d.transporte) > 0) lineas.push({ producto: 'Costo de transporte', cantidad: 1, medida: 'servicio', precio: Number(d.transporte), categoria: 'Combustible y transporte', contenido: 0, base: '' });
+  if (!lineas.length) throw new Error('La factura no trae nada que pagar.');
+  var v = preparaGasto({ unidad: 'bodega', fechaPago: fecha, proveedor: prov, factura: factura, lineas: lineas,
+    nota: ('Orden ' + numero + ' (app) · ' + forma + (ref ? ' ' + ref : '')).slice(0, 140) });
+  var r = escribeGasto(v, yo.nombre, new Date(), null);
+  try { aseguraProveedor(prov, yo.nombre); } catch (e) {}
+  try { recuerdaPrecios(v.lineas); } catch (e) {}
+  // el precio pagado (por presentación) queda como el de la última compra del producto, de ese proveedor
+  try {
+    var bod = filasBodega(), ahora = new Date(), h = hojaBodega();
+    (d.lineas || []).forEach(function (l) {
+      var p = Math.round((Number(l.precio) || 0) * 100) / 100; if (!(p > 0) || !l.codigo) return;
+      bod.forEach(function (b) {
+        if (b.codigo !== l.codigo) return;
+        actualizaAncla(b, { proveedor: prov, presentacion: l.medida, rinde: Number(l.rinde) || 0, compra: l.producto, codProv: '' }, p, 'Factura ' + numero, ahora);
+        if (p === b.precioPres && Number(l.rinde) === b.rinde) return;
+        h.getRange(b.fila, 35, 1, 3).setValues([[p, ahora, 'Factura ' + numero]]);
+      });
+    });
+    _BOD = null;
+  } catch (e) {}
+  return { ok: true, mensaje: numero + ': gasto ' + r.nuevo.id + ' en ' + nombreBodega() + ' por ' + dinero(v.monto || 0) + '.' };
+}
+function avisoApp(cred, d) {
+  quien(cred);
+  d = d || {};
+  var para = (d.para || []).map(String), n = 0, sin = [];
+  var esc = function (t) { return String(t == null ? '' : t).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
+  var lineas = (d.lineas || []).slice(0, 60).map(function (t) { return '<li style="margin:4px 0">' + esc(t) + '</li>'; }).join('');
+  var enlace = /^https:\/\/[a-z]+\.reypizza\.gt\/?$/.test(String(d.enlace || '')) ? String(d.enlace) : '';
+  var cuerpo = '<ul style="padding-left:18px">' + lineas + '</ul>' + (enlace ? '<p><a href="' + enlace + '" style="background:#14284B;color:#fff;padding:10px 16px;border-radius:8px;text-decoration:none;display:inline-block">Abrir</a></p>' : '');
+  usuariosCache().forEach(function (u) {
+    if (para.indexOf(u.nombre) < 0 || !u.activo) return;
+    if (!correoValido(u.correo)) { sin.push(u.nombre); return; }
+    if (enviaCorreo(u.correo, 'Rey Pizza · ' + String(d.asunto || 'Aviso').slice(0, 100), htmlCorreo(String(d.asunto || 'Aviso'), cuerpo))) n++;
+  });
+  return { ok: true, mensaje: 'Aviso a ' + n + (sin.length ? ' (sin correo: ' + sin.join(', ') + ')' : '') };
+}
+
+/* ════════════ PUENTE DE LAS APPS POR ÁREAS (entrega 119) ════════════
+ * Las apps por áreas (stock, prep, books, fin) piden aquí lo que todavía vive en las hojas (productos, proveedores,
+ * emergencias, traslados, nivelación, equipos, solicitudes de pago, permisos, preguntas…), con el pase de su app.
+ *  1) Supabase dice quién es, su usuario de Administración y si esa función está encendida para esa persona
+ *     (rpc area_puente, pedido con EL PASE DE LA PERSONA: un pase vencido, cambiado o de otra persona no sirve).
+ *  2) Aquí corre la función de siempre con ese usuario: sus permisos de Administración siguen valiendo.
+ * Solo las funciones de esta lista. En Bodega nunca salen precios ni costos, ni de ida ni de vuelta.
+ * Lo marcado «mov» mueve inventario: el administrador lo ve (Revisión) pero no lo hace desde la app de la bodega. */
+var AREA_GAS = {
+  stock: {
+    pantallaEmergencias: ['emergencias', 1], enviarEmergencia: ['emergencias', 2, 'mov'], recibirEmergencia: ['emergencias', 2, 'mov'],
+    pantallaFirmas: ['traslados', 1],
+    productosConfig: ['productos', 1], agregarProducto: ['producto_nuevo', 2], editarProducto: ['producto_editar', 2], guardarMedida: ['producto_editar', 2],
+    renombrarCategoria: ['producto_editar', 2], activarProducto: ['producto_activo', 2],
+    productosParaAnclar: ['proveedor_productos', 1], anclarProducto: ['proveedor_productos', 2],
+    proveedoresProductos: ['proveedores', 1], guardarProveedorProd: ['proveedor_editar', 2],
+    pantallaNivelacion: ['nivelacion', 1], guardarConteoNivelacion: ['nivelacion', 2, 'mov'], explicarNivelacion: ['nivelacion', 2, 'mov'],
+    pantallaEquipos: ['equipos', 1], pedirEquipo: ['equipos', 2], recibirEquipo: ['equipos', 2], confirmarRevisionEq: ['equipos', 2],
+    listaFondos: ['solicitudes', 1, 'dinero'], pedirFondos: ['solicitudes', 2, 'dinero'], recibirFondo: ['solicitudes', 2, 'dinero'],
+    hechaFondos: ['solicitudes', 2, 'dinero'], corregirFondo: ['solicitudes', 2, 'dinero'],
+    listaPermisos: ['permiso', 1], pedirPermiso: ['permiso', 2], cancelarPermiso: ['permiso', 2],
+    pantallaSugerencias: ['preguntas', 1], enviarSugerencia: ['preguntas', 2],
+    listaConsultas: ['preguntas', 1], preguntar: ['preguntas', 2], responderConsulta: ['preguntas', 2]
+  }
+};
+var AREA_SIN_PRECIOS = { stock: true };
+// lo que es dinero: precios, costos y lo que se valora con ellos (en la nivelación: valor, faltante, sobrante, neto; en firmas: total)
+var AREA_PRECIO = /precio|costo|^valor$|^monto|importe|unitario|^faltante$|^sobrante$|^neto$|^total$/i;
+
+/** Quién pide y si puede (lo contesta Supabase con el pase de la persona). Se recuerda 30 segundos por pase y función. */
+function areaQuien(tok, app, fn, nivel) {
+  var c = supaCfg(), anon = String(PropertiesService.getScriptProperties().getProperty('SUPABASE_ANON_KEY') || '');
+  if (anon.length < 20) throw new Error('Falta SUPABASE_ANON_KEY en las propiedades del proyecto.');
+  var llave = 'apq_' + Utilities.base64EncodeWebSafe(Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, tok + '|' + app + '|' + fn + '|' + nivel)).slice(0, 40), cache = null;
+  try { cache = CacheService.getScriptCache(); var v = cache.get(llave); if (v) return JSON.parse(v); } catch (e) { cache = null; }
+  var r = UrlFetchApp.fetch(c.url + '/rest/v1/rpc/area_puente', { method: 'post', muteHttpExceptions: true,
+    headers: { apikey: anon, Authorization: 'Bearer ' + tok, 'Content-Type': 'application/json' },
+    payload: JSON.stringify({ p_app: app, p_fn: fn, p_nivel: nivel }) });
+  var code = r.getResponseCode(), t = r.getContentText(), j = null;
+  try { j = t ? JSON.parse(t) : null; } catch (e) { j = null; }
+  if (code >= 300) throw new Error((j && j.message) || (code === 401 ? 'Vuelva a entrar a la app.' : 'No se pudo revisar su acceso (' + code + ').'));
+  if (!j || !j.usuario) throw new Error('No se pudo revisar su acceso.');
+  try { if (cache) cache.put(llave, JSON.stringify(j), 30); } catch (e) {}
+  return j;
+}
+/** La llave de lo ya hecho (llamar): la función, el usuario y su PIN (en huella), para que una respuesta guardada no salga en otra llamada. */
+function rqDe(fn, args) {
+  var c = args && args[0] && typeof args[0] === 'object' ? args[0] : {}, u = String(c.usuario || '').toLowerCase() + '|' + String(c.pin || '');
+  return Utilities.base64EncodeWebSafe(Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, String(fn) + '|' + u)).replace(/=+$/, '').slice(0, 22);
+}
+/** En los textos (mensajes y errores) de Bodega no salen quetzales. */
+function areaSinQ(t) { return String(t == null ? '' : t).replace(/Q\s?-?[\d,]+(\.\d+)?/g, 'Q…'); }
+/** Quita precios y costos de lo que sale (por el nombre del campo). */
+function areaSinPrecios(v, prof) {
+  prof = prof || 0;
+  if (prof > 12 || v == null || typeof v !== 'object') return v;
+  if (Array.isArray(v)) return v.map(function (x) { return areaSinPrecios(x, prof + 1); });
+  var o = {};
+  Object.keys(v).forEach(function (k) { if (!AREA_PRECIO.test(k)) o[k] = areaSinPrecios(v[k], prof + 1); });
+  return o;
+}
+/** La llamada de una app por áreas: { area: true, app, fn, args, rid, tok }. */
+function areaPuente(q) {
+  var app = String(q.app || ''), fn = String(q.fn || ''), lista = Object.prototype.hasOwnProperty.call(AREA_GAS, app) ? AREA_GAS[app] : null;
+  var regla = lista && Object.prototype.hasOwnProperty.call(lista, fn) ? lista[fn] : null;
+  if (!regla) throw new Error('Esa función no está en la app (' + fn + ').');
+  var tok = String(q.tok || '');
+  if (!/^[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+$/.test(tok) || tok.length > 4000) throw new Error('Vuelva a entrar a la app.');
+  var args = Array.isArray(q.args) ? q.args.slice(0, 8) : [];
+  var sinPrecios = !!AREA_SIN_PRECIOS[app] && regla[2] !== 'dinero';      // en sus propias solicitudes de pago sí ve lo que pidió
+  var funcion = regla[0], nivel = regla[1];
+  // Un proveedor nuevo es otra función que editar uno
+  if (fn === 'guardarProveedorProd' && !(args[0] && args[0].original)) funcion = 'proveedor_nuevo';
+  else if (fn === 'guardarProveedorProd' && args[0] && args[0].activo === false) funcion = 'proveedor_quitar';   // quitar = deshabilitar (no se pierde su historia)
+  var yo = areaQuien(tok, app, funcion, nivel);
+  // el administrador desde las apps por áreas solo ve (Revisión): lo que cambia algo lo hace en Administración
+  if (yo.rol === 'admin' && nivel >= 2) throw new Error('Desde aquí usted solo revisa. Para cambiarlo, hágalo en Administración.');
+  if (regla[2] === 'mov' && app === 'stock' && yo.rol !== 'bodega')
+    throw new Error('Esto mueve inventario: lo hace la bodega. Desde aquí usted lo puede ver (Revisión).');
+  // Cambiar en qué sucursales está un producto es su propia función: sin ella, no se toca
+  if (fn === 'editarProducto' && args[1] && typeof args[1] === 'object' && args[1].sucursales) {
+    try { areaQuien(tok, app, 'producto_sucursales', 2); } catch (e) { delete args[1].sucursales; }
+  }
+  // La ficha: el precio no se cambia desde aquí; lo de los proveedores (quién lo vende, presentación, cuántas trae) es «Lo que nos vende cada uno»
+  if (fn === 'editarProducto' && args[1] && typeof args[1] === 'object') {
+    var d1 = args[1]; delete d1.precio; delete d1.confirmaCambio;
+    var tocaProv = ['anclas', 'proveedor', 'proveedor2', 'presCompra', 'rinde'].some(function (k) { return d1[k] != null; });
+    if (tocaProv) { var okProv = true; try { areaQuien(tok, app, 'proveedor_productos', 2); } catch (e) { okProv = false; }
+      if (!okProv) ['anclas', 'proveedor', 'proveedor2', 'presCompra', 'rinde'].forEach(function (k) { delete d1[k]; }); }
+    if (Array.isArray(d1.anclas)) {      // cada proveedor conserva el precio que ya tenía
+      var b0 = null; filasBodega().forEach(function (x) { if (x.codigo === String(args[0])) b0 = x; });
+      var antes = {}; _MEMO = {}; if (b0) anclasDe(b0).forEach(function (a) { antes[String(a.proveedor).toLowerCase()] = a.precio || 0; });
+      d1.anclas = d1.anclas.map(function (a) { a = a && typeof a === 'object' ? a : {}; delete a.precio; a.precio = antes[String(a.proveedor || '').trim().toLowerCase()] || ''; return a; });
+    }
+  }
+  var cred = areaCred(yo.usuario), v;
+  try { v = llamar(fn, String(q.rid || ''), [cred].concat(args)); }
+  catch (e) { if (sinPrecios) throw new Error(areaSinQ(e && e.message ? e.message : e)); throw e; }
+  if (!sinPrecios) return v;
+  v = areaSinPrecios(v);
+  if (v && typeof v === 'object' && v.mensaje) v.mensaje = areaSinQ(v.mensaje);
+  return v;
+}
