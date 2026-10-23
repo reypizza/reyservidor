@@ -1200,6 +1200,7 @@ function quien(cred, cuenta) {
     throw new Error('Nombre o PIN incorrectos.');
   }
   if (cache) cache.remove(llave);
+  exigeNoSoloApp(hallado);          // 120: quien ya trabaja solo en su app no entra a Administración
   if (hallado.rol === 'auxiliar' && !_AUXOK)
     throw new Error('Su usuario tiene acceso limitado: solo registra los gastos de su lugar.');
   if (hallado.rol === 'cmo' && !_AUXOK && !_CMOOK)
@@ -8190,10 +8191,10 @@ function registrarObservacion(cred, d) {
 }
 /** Los resultados de un estudio: % del tiempo en cada actividad, con su margen de error. */
 function resultadosMuestreo(cred, id) {
-  exigeMuestreo(cred, false);
+  var yoM = exigeMuestreo(cred, false);
   var e = null;
   filasEstudios().forEach(function (x) { if (x.id === String(id)) e = x; });
-  if (!e) throw new Error('No se encontró el estudio.');
+  if (!e || (yoM.rol === 'gerente' && e.sid !== yoM.sucursal)) throw new Error('No se encontró el estudio.');
   var obs = filasObs().filter(function (o) { return o.estudio === e.id; });
   var tot = {}, n = 0, porHora = {}, porDia = {}, porTurno = { AM: {}, PM: {} }, nT = { AM: 0, PM: 0 };
   var pm = INICIO_PM[e.sid] || '13:00';
@@ -13013,7 +13014,7 @@ function exportarIndicadores(q) {
 /* ════════════ COPIA COMPLETA PARA EL SERVIDOR PROPIO ════════════
  * El servidor propio guarda una copia de TODAS las pestañas y corre este mismo código sobre ella para contestar las lecturas.
  * Cada cambio que pasa por aquí avisa qué pestañas tocó («tocadas»), y el servidor solo vuelve a traer esas. */
-var VERSION_CODIGO = '2026-10-31-a';       // se cambia a mano cada vez que se cambia este archivo; el servidor compara que coincida con la suya
+var VERSION_CODIGO = '2026-11-01-a';       // se cambia a mano cada vez que se cambia este archivo; el servidor compara que coincida con la suya
 function versionCodigo() { return VERSION_CODIGO; }
 function huellaTexto(t) { return Utilities.base64Encode(Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, t)).slice(0, 22); }
 /** Un resumen barato de cada pestaña: cuántas filas y columnas tiene y una huella de sus últimas 25 filas. */
@@ -17347,6 +17348,31 @@ var AREA_GAS = {
     listaPermisos: ['permiso', 1], pedirPermiso: ['permiso', 2], cancelarPermiso: ['permiso', 2],
     pantallaSugerencias: ['preguntas', 1], enviarSugerencia: ['preguntas', 2],
     listaConsultas: ['preguntas', 1], preguntar: ['preguntas', 2], responderConsulta: ['preguntas', 2]
+  },
+  // 120 · Gerentes: lo de su sucursal, con su usuario de Administración (sus permisos de gerente siguen valiendo)
+  mng: {
+    pantallaCalendarios: ['calendario', 1], guardarTurnos: ['calendario', 2], confirmarSemanaCal: ['confirmar', 2], pedirCambioCal: ['confirmar', 2],
+    pdfCalendario: ['pdf', 2], guardarHorasApoyo: ['apoyo', 2], guardarPersonaCal: ['equipo', 2], eliminarPersonaCal: ['equipo', 2],
+    listaAvisosPersonal: ['avisos', 1], guardarAvisoPersonal: ['avisos', 2], quitarAvisoPersonal: ['avisos', 2],
+    listaReconocimientos: ['reconocimientos', 1], darReconocimiento: ['reconocimientos', 2], anularReconocimiento: ['reconocimientos', 2],
+    registrarIngreso: ['corte', 2], ventas: ['venta_dia', 1],
+    pantallaSolicitud: ['recibir', 1], listaSolicitudes: ['recibir', 1], abrirSolicitud: ['recibir', 1], llegoSolicitud: ['recibir', 2], recibirSolicitud: ['recibir', 2],
+    pantallaFirmas: ['firmar', 1], firmarTraslado: ['firmar', 2],
+    listaPendientes: ['pendientes', 1], llegaPendiente: ['pendientes', 2], listaDiferencias: ['diferencias', 1],
+    pantallaEmergencias: ['emergencias', 1], existenciasEmergencia: ['emergencias', 1], pedirEmergencia: ['emergencias', 2], recibirEmergencia: ['emergencias', 2], enviarEmergencia: ['emergencias', 2],
+    pantallaMerma: ['merma', 1], registrarMerma: ['merma', 2],
+    pantallaNivelacion: ['nivelacion', 1], guardarConteoNivelacion: ['nivelacion', 2], explicarNivelacion: ['nivelacion', 2],
+    pantallaCierreMes: ['cierre', 1], guardarCierreMes: ['cierre', 2],
+    productosSucursal: ['productos', 1], activarProductoSucursal: ['productos', 2], productosConfig: ['productos', 1], guardarMedida: ['productos', 2],
+    pantallaZonas: ['zonas', 1], guardarZonas: ['zonas', 2],
+    pantallaKpi: ['indicadores', 1], registrarKpis: ['indicadores', 2], resultadosKpi: ['indicadores', 1], pantallaMuestreo: ['indicadores', 1], registrarObservacion: ['indicadores', 2], resultadosMuestreo: ['indicadores', 1],
+    pantallaEquipos: ['equipos', 1], pedirEquipo: ['equipos', 2], recibirEquipo: ['equipos', 2], confirmarRevisionEq: ['equipos', 2],
+    pantallaMant: ['mantenimiento', 1], registrarMant: ['mantenimiento', 2], medirAceite: ['mantenimiento', 2],
+    listaFondos: ['solicitudes', 1, 'dinero'], pedirFondos: ['solicitudes', 2, 'dinero'], recibirFondo: ['solicitudes', 2, 'dinero'],
+    hechaFondos: ['solicitudes', 2, 'dinero'], corregirFondo: ['solicitudes', 2, 'dinero'],
+    listaPermisos: ['permiso', 1], pedirPermiso: ['permiso', 2], cancelarPermiso: ['permiso', 2], revisarPermiso: ['permiso', 2],
+    pantallaSugerencias: ['preguntas', 1], enviarSugerencia: ['preguntas', 2],
+    listaConsultas: ['preguntas', 1], preguntar: ['preguntas', 2], responderConsulta: ['preguntas', 2]
   }
 };
 var AREA_SIN_PRECIOS = { stock: true };
@@ -17371,7 +17397,8 @@ function areaQuien(tok, app, fn, nivel) {
 }
 /** La llave de lo ya hecho (llamar): la función, el usuario y su PIN (en huella), para que una respuesta guardada no salga en otra llamada. */
 function rqDe(fn, args) {
-  var c = args && args[0] && typeof args[0] === 'object' ? args[0] : {}, u = String(c.usuario || '').toLowerCase() + '|' + String(c.pin || '');
+  var c = args && args[0] && typeof args[0] === 'object' ? args[0] : {}; if (c.cred && typeof c.cred === 'object') c = c.cred;   // registrarIngreso lleva el cred adentro
+  var u = String(c.usuario || '').toLowerCase() + '|' + String(c.pin || '');
   return Utilities.base64EncodeWebSafe(Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, String(fn) + '|' + u)).replace(/=+$/, '').slice(0, 22);
 }
 /** En los textos (mensajes y errores) de Bodega no salen quetzales. */
@@ -17419,11 +17446,35 @@ function areaPuente(q) {
       d1.anclas = d1.anclas.map(function (a) { a = a && typeof a === 'object' ? a : {}; delete a.precio; a.precio = antes[String(a.proveedor || '').trim().toLowerCase()] || ''; return a; });
     }
   }
-  var cred = areaCred(yo.usuario), v;
-  try { v = llamar(fn, String(q.rid || ''), [cred].concat(args)); }
+  var cred = areaCred(yo.usuario), v, todo = [cred].concat(args);
+  if (fn === 'registrarIngreso') { var d0 = args[0] && typeof args[0] === 'object' ? args[0] : {}; d0.cred = cred; todo = [d0]; }
+  _AREA_EN_PUENTE = true;
+  try { v = llamar(fn, String(q.rid || ''), todo); }
   catch (e) { if (sinPrecios) throw new Error(areaSinQ(e && e.message ? e.message : e)); throw e; }
+  finally { _AREA_EN_PUENTE = false; }
   if (!sinPrecios) return v;
   v = areaSinPrecios(v);
   if (v && typeof v === 'object' && v.mensaje) v.mensaje = areaSinQ(v.mensaje);
   return v;
+}
+
+/* ════════════ 120 · «SOLO SU APP»: quien ya trabaja en su app no entra a Administración ════════════
+ * El administrador lo prende por persona (Datos del personal › Funciones de sus apps). La lista vive en Supabase (per.solo_app);
+ * aquí se recuerda 60 segundos y también en las propiedades del proyecto (así la ve el servidor propio, que no llama a Supabase).
+ * Por el puente (desde su app) sí corre: ahí las funciones las decide el administrador. */
+var _AREA_EN_PUENTE = false;
+var SOLO_APP_DE_ROL = { bodega: 'stock.reypizza.gt (Bodega)', produccion: 'prep.reypizza.gt (Producción)', gerente: 'mng.reypizza.gt (Gerentes)',
+  registro: 'books.reypizza.gt (Contabilidad)', finanzas: 'fin.reypizza.gt (Finanzas)', operaciones: 'ops.reypizza.gt (Operaciones)' };
+function soloAppLista() {
+  var c = null; try { c = CacheService.getScriptCache(); var v = c.get('solo_app'); if (v) return JSON.parse(v); } catch (e) { c = null; }
+  var props = null, l = null; try { props = PropertiesService.getScriptProperties(); } catch (e) {}
+  try { if (supaCfgSuave()) { l = supaFetch('post', 'rpc/area_solo_app_lista', {}) || []; var t = JSON.stringify(l); if (props && props.getProperty('SOLO_APP') !== t) props.setProperty('SOLO_APP', t); } } catch (e) { l = null; }
+  if (!l) { try { l = JSON.parse((props && props.getProperty('SOLO_APP')) || '[]'); } catch (e) { l = []; } }
+  try { if (c) c.put('solo_app', JSON.stringify(l), 60); } catch (e) {}
+  return Array.isArray(l) ? l : [];
+}
+function exigeNoSoloApp(u) {
+  if (_AREA_EN_PUENTE || !u || u.rol === 'admin') return;
+  if (soloAppLista().indexOf(String(u.nombre).toLowerCase()) < 0) return;
+  throw new Error('Su usuario ya trabaja solo en su app' + (SOLO_APP_DE_ROL[u.rol] ? ': ' + SOLO_APP_DE_ROL[u.rol] : '') + '. Entre por ahí con su teléfono y su código.');
 }
