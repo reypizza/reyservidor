@@ -925,7 +925,7 @@ function doGet() {
  * mismo proyecto por POST. Solo se pueden llamar las funciones de esta lista (las mismas
  * que usa la pantalla), y cada una revisa el código de quien pregunta, igual que antes.
  * La lista la pone sola el armado; no hace falta tocarla. */
-/*API_INI*/var API_PERMITIDAS = ['abrirSolicitud', 'abrirTraslado', 'aceptarSolicitud', 'aceptarYPreparar', 'aclararDiferencia', 'activarCorreos', 'activarObligacion', 'activarProducto', 'activarProductoSucursal', 'adjuntarCotizacion', 'agregarEquipo', 'agregarProducto', 'agregarRecomendados', 'agregarRecomendadosCmo', 'agregarRubro', 'anclarProducto', 'anular', 'anularOrden', 'anularPagoImpuesto', 'anularSolicitud', 'aprobarFondos', 'aprobarPresupuesto', 'aprobarPresupuestoArea', 'asignarDescanso', 'borrarKpi', 'borrarKpiCmo', 'borrarSolicitud', 'cambiarEquipo', 'cambiarMiPin', 'cambiarPermiso', 'cancelarPermiso', 'confirmarPlanilla', 'confirmarRegistro', 'consolidado', 'copiarPresupuesto', 'costosTraslados', 'cotizarOrden', 'darDeBaja', 'datos', 'despacharSolicitudes', 'detalleGasto', 'editarProducto', 'eliminarPersonaCal', 'entrar', 'enviarEmergencia', 'enviarKpis', 'enviarKpisCmo', 'enviarSolicitud', 'enviarSugerencia', 'estadoCorreos', 'evaluarMerma', 'existencias', 'existenciasEmergencia', 'firmarTraslado', 'guardarAjustesInv', 'guardarBonoGeneral', 'guardarBonosCal', 'guardarBorradorCal', 'guardarComision', 'guardarConfigCal', 'guardarConteo', 'guardarEstudio', 'guardarHorario', 'guardarHorasApoyo', 'guardarHorasReales', 'guardarKpi', 'guardarKpiCmo', 'guardarLugar', 'guardarMando', 'guardarMedida', 'guardarMiCorreo', 'guardarMiPresupuesto', 'guardarObligacion', 'guardarOrden', 'guardarPersonaCal', 'guardarPrecios', 'guardarPresupuesto', 'guardarProducto', 'guardarProductoBodega', 'guardarProveedor', 'guardarProveedorInv', 'guardarReceta', 'guardarRepartidor', 'guardarTraslado', 'guardarTurnos', 'guardarUsuario', 'habilita', 'habilitarConteo', 'historialTraslados', 'indicadoresConta', 'leerBonoGeneral', 'leerSugerencias', 'listaBodega', 'listaCatalogo', 'listaConsultas', 'listaDiferencias', 'listaEntrada', 'listaFondos', 'listaImpuestos', 'listaKpis', 'listaKpisCmo', 'listaLugares', 'listaOrdenes', 'listaPermisos', 'listaPrecios', 'listaRepartidores', 'listaReportes', 'listaSolicitudes', 'listaUsuarios', 'llegoSolicitud', 'marcarPreparadas', 'medirAceite', 'miAvance', 'miCorreo', 'miPanel', 'miPresupuesto', 'notificaciones', 'ordenesPago', 'pagarFondos', 'pagarOrden', 'pagarRepartidor', 'pantallaCalendarios', 'pantallaConteo', 'pantallaEmergencias', 'pantallaFirmas', 'pantallaHorarios', 'pantallaKpi', 'pantallaMando', 'pantallaMant', 'pantallaMerma', 'pantallaMuestreo', 'pantallaPedidosBodega', 'pantallaProduccion', 'pantallaSolicitud', 'pantallaSugerencias', 'pdfCalendario', 'pdfOrden', 'pedirDescanso', 'pedirEmergencia', 'pedirFondos', 'pedirPermiso', 'ping', 'planillasPorPagar', 'ponPreciosGerentes', 'porConfirmar', 'preguntar', 'presupuestoMes', 'presupuestosAreas', 'probarCorreo', 'productosConfig', 'productosParaAnclar', 'productosSucursal', 'reabrirPlanilla', 'rechazarRegistro', 'recibirEfectivo', 'recibirEmergencia', 'recibirOrden', 'recibirSolicitud', 'registrarGasto', 'registrarIngreso', 'registrarKpis', 'registrarLote', 'registrarMant', 'registrarMerma', 'registrarObservacion', 'registrarPagoImpuesto', 'renombrarCategoria', 'reporteDiario', 'reporteTraslados', 'resolverDescanso', 'responderConsulta', 'responderMerma', 'resultadosKpi', 'resultadosKpiCmo', 'resultadosKpiRango', 'resultadosMuestreo', 'resumenInventario', 'resumenMes', 'revisarPermiso', 'seguimiento', 'sugerenciaCompra', 'tableroFinanzas', 'tableroKpi', 'terminarFondos', 'validarRegistro', 'ventas', 'verTraslado', 'verificarFondos', 'proveedoresProductos', 'guardarProveedorProd', 'eliminarProveedor', 'detalleAbastecimiento', 'pdfHistorialInventario', 'pantallaCierreMes', 'guardarCierreMes', 'misMenus', 'menusRol', 'guardarMenusRol', 'historialInventario', 'reiniciarPresupuestos', 'autorizarFondos', 'hechaFondos', 'listaPendientes', 'llegaPendiente', 'cancelarPendiente', 'despacharPendientes', 'devolverFondo', 'corregirFondo', 'pantallaEquipos', 'guardarEquipoA', 'bajaEquipo', 'revisarEquipos', 'confirmarRevisionEq', 'pedirEquipo', 'resolverPedidoEq', 'entregarCompraEq', 'recibirEquipo', 'devolverOrden', 'corregirOrden', 'reiniciarPrecios', 'guardarMezcla', 'registrarLoteMezcla', 'etiquetasLote', 'guardarConfigEtiquetas', 'listaKpisCoo', 'guardarKpiCoo', 'borrarKpiCoo', 'enviarKpisCoo', 'agregarRecomendadosCoo', 'resultadosKpiCoo', 'pantallaKpiCoo', 'registrarKpisCoo', 'resumenAreas', 'resumenAreasSenales', 'pantallaZonas', 'guardarZonas', 'listaKpisTec', 'guardarKpiTec', 'borrarKpiTec', 'enviarKpisTec', 'agregarRecomendadosTec', 'resultadosKpiTec', 'pantallaKpiTec', 'registrarKpisTec', 'cotizarFondo', 'recibirFondo', 'pantallaNivelacion', 'iniciarNivelacion', 'guardarConteoNivelacion', 'explicarNivelacion', 'vistoBuenoNivelacion', 'aprobarNivelacion', 'devolverNivelacion', 'anularNivelacion', 'pdfNivelacion', 'resumenSucursal', 'tableroBodega', 'permisosRol', 'guardarPermisosRol', 'guardarReglasCal', 'confirmarSemanaCal', 'pedirCambioCal', 'autorizarCambioCal', 'ventasCajas', 'pantallaDirectores', 'guardarAreaDir', 'quitarDirector', 'pagarDirectores', 'reabrirDirectores', 'proponerContratacion', 'cancelarPropuesta', 'resolverPropuesta', 'tokenSupabase', 'ponSugeridoPedido', 'invSalidaYa', 'permisosCaja', 'guardarPermisosCaja', 'guardarPersonaCaja', 'guardarHorariosCaja', 'listaAvisosPersonal', 'guardarAvisoPersonal', 'quitarAvisoPersonal', 'listaReconocimientos', 'darReconocimiento', 'anularReconocimiento', 'accesoOperadores', 'guardarAccesoOperadores', 'pedirPrestamo', 'resolverPrestamo', 'moverPersonaSucursal', 'autorizarAscenso', 'entrarAparato', 'aparatoCrear', 'aparatoQuitar'];/*API_FIN*/
+/*API_INI*/var API_PERMITIDAS = ['abrirSolicitud', 'abrirTraslado', 'aceptarSolicitud', 'aceptarYPreparar', 'aclararDiferencia', 'activarCorreos', 'activarObligacion', 'activarProducto', 'activarProductoSucursal', 'adjuntarCotizacion', 'agregarEquipo', 'agregarProducto', 'agregarRecomendados', 'agregarRecomendadosCmo', 'agregarRubro', 'anclarProducto', 'anular', 'anularOrden', 'anularPagoImpuesto', 'anularSolicitud', 'aprobarFondos', 'aprobarPresupuesto', 'aprobarPresupuestoArea', 'asignarDescanso', 'borrarKpi', 'borrarKpiCmo', 'borrarSolicitud', 'cambiarEquipo', 'cambiarMiPin', 'cambiarPermiso', 'cancelarPermiso', 'confirmarPlanilla', 'confirmarRegistro', 'consolidado', 'copiarPresupuesto', 'costosTraslados', 'cotizarOrden', 'darDeBaja', 'datos', 'despacharSolicitudes', 'detalleGasto', 'editarProducto', 'eliminarPersonaCal', 'entrar', 'enviarEmergencia', 'enviarKpis', 'enviarKpisCmo', 'enviarSolicitud', 'enviarSugerencia', 'estadoCorreos', 'evaluarMerma', 'existencias', 'existenciasEmergencia', 'firmarTraslado', 'guardarAjustesInv', 'guardarBonoGeneral', 'guardarBonosCal', 'guardarBorradorCal', 'guardarComision', 'guardarConfigCal', 'guardarConteo', 'guardarEstudio', 'guardarHorario', 'guardarHorasApoyo', 'guardarHorasReales', 'guardarKpi', 'guardarKpiCmo', 'guardarLugar', 'guardarMando', 'guardarMedida', 'guardarMiCorreo', 'guardarMiPresupuesto', 'guardarObligacion', 'guardarOrden', 'guardarPersonaCal', 'guardarPrecios', 'guardarPresupuesto', 'guardarProducto', 'guardarProductoBodega', 'guardarProveedor', 'guardarProveedorInv', 'guardarReceta', 'guardarRepartidor', 'guardarTraslado', 'guardarTurnos', 'guardarUsuario', 'habilita', 'habilitarConteo', 'historialTraslados', 'indicadoresConta', 'leerBonoGeneral', 'leerSugerencias', 'listaBodega', 'listaCatalogo', 'listaConsultas', 'listaDiferencias', 'listaEntrada', 'listaFondos', 'listaImpuestos', 'listaKpis', 'listaKpisCmo', 'listaLugares', 'listaOrdenes', 'listaPermisos', 'listaPrecios', 'listaRepartidores', 'listaReportes', 'listaSolicitudes', 'listaUsuarios', 'llegoSolicitud', 'marcarPreparadas', 'medirAceite', 'miAvance', 'miCorreo', 'miPanel', 'miPresupuesto', 'notificaciones', 'ordenesPago', 'pagarFondos', 'pagarOrden', 'pagarRepartidor', 'pantallaCalendarios', 'pantallaConteo', 'pantallaEmergencias', 'pantallaFirmas', 'pantallaHorarios', 'pantallaKpi', 'pantallaMando', 'pantallaMant', 'pantallaMerma', 'pantallaMuestreo', 'pantallaPedidosBodega', 'pantallaProduccion', 'pantallaSolicitud', 'pantallaSugerencias', 'pdfCalendario', 'pdfOrden', 'pedirDescanso', 'pedirEmergencia', 'pedirFondos', 'pedirPermiso', 'ping', 'planillasPorPagar', 'ponPreciosGerentes', 'porConfirmar', 'preguntar', 'presupuestoMes', 'presupuestosAreas', 'probarCorreo', 'productosConfig', 'productosParaAnclar', 'productosSucursal', 'reabrirPlanilla', 'rechazarRegistro', 'recibirEfectivo', 'recibirEmergencia', 'recibirOrden', 'recibirSolicitud', 'registrarGasto', 'registrarIngreso', 'registrarKpis', 'registrarLote', 'registrarMant', 'registrarMerma', 'registrarObservacion', 'registrarPagoImpuesto', 'renombrarCategoria', 'reporteDiario', 'reporteTraslados', 'resolverDescanso', 'responderConsulta', 'responderMerma', 'resultadosKpi', 'resultadosKpiCmo', 'resultadosKpiRango', 'resultadosMuestreo', 'resumenInventario', 'resumenMes', 'revisarPermiso', 'seguimiento', 'sugerenciaCompra', 'tableroFinanzas', 'tableroKpi', 'terminarFondos', 'validarRegistro', 'ventas', 'verTraslado', 'verificarFondos', 'proveedoresProductos', 'guardarProveedorProd', 'eliminarProveedor', 'detalleAbastecimiento', 'pdfHistorialInventario', 'pantallaCierreMes', 'guardarCierreMes', 'misMenus', 'menusRol', 'guardarMenusRol', 'historialInventario', 'reiniciarPresupuestos', 'autorizarFondos', 'hechaFondos', 'listaPendientes', 'llegaPendiente', 'cancelarPendiente', 'despacharPendientes', 'devolverFondo', 'corregirFondo', 'pantallaEquipos', 'guardarEquipoA', 'bajaEquipo', 'revisarEquipos', 'confirmarRevisionEq', 'pedirEquipo', 'resolverPedidoEq', 'entregarCompraEq', 'recibirEquipo', 'devolverOrden', 'corregirOrden', 'reiniciarPrecios', 'guardarMezcla', 'registrarLoteMezcla', 'etiquetasLote', 'guardarConfigEtiquetas', 'listaKpisCoo', 'guardarKpiCoo', 'borrarKpiCoo', 'enviarKpisCoo', 'agregarRecomendadosCoo', 'resultadosKpiCoo', 'pantallaKpiCoo', 'registrarKpisCoo', 'resumenAreas', 'resumenAreasSenales', 'pantallaZonas', 'guardarZonas', 'listaKpisTec', 'guardarKpiTec', 'borrarKpiTec', 'enviarKpisTec', 'agregarRecomendadosTec', 'resultadosKpiTec', 'pantallaKpiTec', 'registrarKpisTec', 'cotizarFondo', 'recibirFondo', 'pantallaNivelacion', 'iniciarNivelacion', 'guardarConteoNivelacion', 'explicarNivelacion', 'vistoBuenoNivelacion', 'aprobarNivelacion', 'devolverNivelacion', 'anularNivelacion', 'pdfNivelacion', 'resumenSucursal', 'tableroBodega', 'permisosRol', 'guardarPermisosRol', 'guardarReglasCal', 'confirmarSemanaCal', 'pedirCambioCal', 'autorizarCambioCal', 'ventasCajas', 'pantallaDirectores', 'guardarAreaDir', 'quitarDirector', 'pagarDirectores', 'reabrirDirectores', 'proponerContratacion', 'cancelarPropuesta', 'resolverPropuesta', 'tokenSupabase', 'ponSugeridoPedido', 'invSalidaYa', 'permisosCaja', 'guardarPermisosCaja', 'guardarPersonaCaja', 'guardarHorariosCaja', 'listaAvisosPersonal', 'guardarAvisoPersonal', 'quitarAvisoPersonal', 'listaReconocimientos', 'darReconocimiento', 'anularReconocimiento', 'accesoOperadores', 'guardarAccesoOperadores', 'pedirPrestamo', 'resolverPrestamo', 'moverPersonaSucursal', 'autorizarAscenso', 'entrarAparato', 'aparatoCrear', 'aparatoQuitar', 'reabrirSemanaCal', 'guardarAsistencia', 'pantallaCoberturas', 'pedirCobertura', 'resolverCobertura', 'opsTurnos', 'guardarHorarioSucursal'];/*API_FIN*/
 /** Solo contesta «aquí estoy»: sirve para despertar el servidor y medir la velocidad. No lee ni guarda nada. */
 function ping() { return { ok: true }; }
 function doPost(e) {
@@ -1008,6 +1008,7 @@ function llamar(fn, rid, args) {
     throw new Error('La app pidió algo que no existe (' + fn + '). Falta pegar el Codigo.gs nuevo y crear una versión nueva de la implementación.');
   args = Array.isArray(args) ? args : [];
   if (fn !== 'entrarAparato') apaCred(args); else _POR_APARATO = false;
+  t127Freno(fn, args);
   permAntes(fn, args);
   rid = String(rid || '').replace(/[^A-Za-z0-9_-]/g, '').slice(0, 40);
   if (!rid) return supaTras(globalThis[fn].apply(null, args));
@@ -11968,7 +11969,7 @@ function guardarBonoGeneral(cred, valor, reemplazar, sid, fecha) {
 }
 
 /* ── horas reales: al final de la quincena se anotan las que de verdad trabajó cada persona y sobre ellas se paga ── */
-function guardarHorasReales(cred, sid, fecha, horas) {
+function guardarHorasReales127(cred, sid, fecha, horas) {
   var yo = quien(cred), ac = calAcceso(yo); soloVerCal(ac);
   if (!ac.pagos) throw new Error('Las horas trabajadas las anota el administrador o el director operativo.');
   if (ac.sucs.indexOf(sid) < 0) throw new Error('Escoja la sucursal.');
@@ -12960,7 +12961,7 @@ function tableroBodega(cred, desde, hasta) {
  * (Configuración del proyecto → Propiedades del script). La clave nunca está escrita en el código.
  * Aquí viajan los PIN: por eso es una puerta aparte, con clave larga, y el servidor nuevo los guarda ya transformados
  * (nunca en texto legible). */
-var INTERNAS = ['exportarUsuarios', 'exportarIndicadores', 'exportarResumenLibro', 'exportarHojaTipada', 'versionCodigo', 'aplicarCambios', 'cajaLote'];
+var INTERNAS = ['exportarUsuarios', 'exportarIndicadores', 'exportarResumenLibro', 'exportarHojaTipada', 'versionCodigo', 'aplicarCambios', 'cajaLote', 'supaCredencial'];
 function igualesSeguro(a, b) {
   a = String(a); b = String(b);
   if (a.length !== b.length) return false;
@@ -13015,7 +13016,7 @@ function exportarIndicadores(q) {
 /* ════════════ COPIA COMPLETA PARA EL SERVIDOR PROPIO ════════════
  * El servidor propio guarda una copia de TODAS las pestañas y corre este mismo código sobre ella para contestar las lecturas.
  * Cada cambio que pasa por aquí avisa qué pestañas tocó («tocadas»), y el servidor solo vuelve a traer esas. */
-var VERSION_CODIGO = '2026-11-03-a';       // se cambia a mano cada vez que se cambia este archivo; el servidor compara que coincida con la suya
+var VERSION_CODIGO = '2026-11-05-a';       // se cambia a mano cada vez que se cambia este archivo; el servidor compara que coincida con la suya
 function versionCodigo() { return VERSION_CODIGO; }
 function huellaTexto(t) { return Utilities.base64Encode(Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, t)).slice(0, 22); }
 /** Un resumen barato de cada pestaña: cuántas filas y columnas tiene y una huella de sus últimas 25 filas. */
@@ -15542,7 +15543,7 @@ function calCoPon(sid, ini, sem, cambios) {
   _LEE = {};
 }
 function calAhora() { return Utilities.formatDate(new Date(), ZONA, 'yyyy-MM-dd HH:mm'); }
-function confirmarSemanaCal(cred, sid, fecha, sem) {
+function confirmarSemanaCal127(cred, sid, fecha, sem) {
   var yo = quien(cred), ac = calAcceso(yo);
   if (!ac.confirmarSem) throw new Error('Su rol no confirma el calendario.');
   if (ac.sucs.indexOf(sid) < 0) throw new Error('Ese calendario no es de su sucursal.');
@@ -15571,7 +15572,7 @@ function pedirCambioCal(cred, sid, fecha, sem, motivo) {
   return calRespuesta(yo, ac, sid, fecha, 'Cambio pedido. Le llega a quien autoriza (director operativo o administrador).');
 }
 /** Autorizar (la semana vuelve a quedar abierta) o no autorizar (sigue confirmada). También sirve para abrirla sin que nadie lo pida. */
-function autorizarCambioCal(cred, sid, fecha, sem, si, comentario) {
+function autorizarCambioCal127(cred, sid, fecha, sem, si, comentario) {
   var yo = quien(cred), ac = calAcceso(yo);
   if (!ac.desbloquear) throw new Error('Los cambios a un calendario confirmado los autoriza el director operativo o el administrador.');
   if (ac.sucs.indexOf(sid) < 0) throw new Error('Escoja la sucursal.');
@@ -15593,7 +15594,7 @@ function guardarTurnos107(cred, sid, fecha, cambios) {
     throw new Error('La semana ' + s + ' ya está confirmada. Para cambiarla, toque «Pedir cambio» y espere la autorización.'); });
   return guardarTurnosBase(cred, sid, fecha, cambios);
 }
-function guardarBorradorCal(cred, sid, fecha, cambios) {
+function guardarBorradorCal127(cred, sid, fecha, cambios) {
   if (quien(cred).esAdmin) return guardarBorradorCalBase(cred, sid, fecha, cambios);
   var q = calQuincena(fecha), est = calSemanas(sid, q.ini);
   cambios = (cambios || []).filter(function (c) { var s = calSemDe(q, String((c || {}).f || '')); return !s || est[s - 1].estado === 'Abierta'; });
@@ -16487,7 +16488,9 @@ function cajasSupaPasar() {
 /** Para el reloj: no deja que un error de Supabase rompa nada; queda anotado en el registro de ejecuciones. */
 function cajasSupaReloj() { try { var x = cajasSupaPasar(); if (x.ordenes || x.cortes) Logger.log(JSON.stringify(x)); } catch (e) { Logger.log('cajasSupa: ' + e.message); }
   try { var y = invSalida(); if (y.hechos || y.errores) Logger.log('inventario a hojas: ' + JSON.stringify(y)); } catch (e2) { Logger.log('invSalida: ' + e2.message); }
-  if (new Date().getMinutes() % 15 === 0) { try { cajaHorariosAsegura(); perQuincenaMandar(); } catch (e3) { Logger.log('personal: ' + e3.message); } } }
+  if (new Date().getMinutes() % 15 === 0) { try { cajaHorariosAsegura(); perQuincenaMandar(); } catch (e3) { Logger.log('personal: ' + e3.message); }
+    try { t127SemanasRepaso(); } catch (e5) { Logger.log('semanas: ' + e5.message); }
+    try { if (supaCfgSuave()) supaFetch('post', 'rpc/com_recordatorios', {}); } catch (e4) { Logger.log('recordatorios: ' + e4.message); } } }
 /** ▶ Ejecutar una vez: deja el paso automático cada minuto. */
 function cajasSupaInstalarReloj() {
   ScriptApp.getProjectTriggers().forEach(function (t) { if (t.getHandlerFunction() === 'cajasSupaReloj') ScriptApp.deleteTrigger(t); });
@@ -16737,7 +16740,7 @@ function pcPuede(yo, clave, nivel, sid) {
 function pcExige(yo, clave, nivel, sid, que) { if (!pcPuede(yo, clave, nivel, sid)) throw new Error('Su rol no tiene permiso para ' + que + (sid ? ' en ' + nombreUnidad(sid) : '') + '. Pídaselo al administrador.'); }
 function pcSidOk(sid) { if (PC_SUCS.indexOf(sid) < 0) throw new Error('Escoja la sucursal.'); return sid; }
 /** Las personas del equipo (de Personal) con su rol en la caja y dónde cubren. */
-function pcPersonas() {
+function pcPersonasBase() {
   var extra = {};
   pcLee('Personal caja', H_PCAJA).forEach(function (r) { extra[calTxt(r[0])] = { rol: pcJson(r[1], {}), cubre: pcJson(r[2], []), autorizo: calTxt(r[3]), fila: r.fila }; });
   var hoy = hoyISO();
@@ -16772,7 +16775,7 @@ function pcPermisosLee() {
   return out;
 }
 /** La pantalla «Permisos de la caja» (Configuración › Roles y permisos › Caja). */
-function permisosCaja(cred) {
+function permisosCaja127(cred) {
   var yo = quien(cred); pcExige(yo, 'config.caja', 1, null, 'ver los permisos de la caja');
   return { ok: true, cat: pcCatalogo(), sucursales: PC_SUCS.map(function (s) { return { id: s, nombre: nombreUnidad(s) }; }), datos: pcPermisosLee(),
     personas: pcPersonas().map(function (p) { return { id: p.id, nombre: p.nombre, sid: p.sid, area: p.area, rol: p.rol }; }), puedeCambiar: pcPuede(yo, 'config.caja', 2) };
@@ -16812,7 +16815,7 @@ function guardarPermisosCaja(cred, cambios) {
 
 /* ════════ el rol en la caja y dónde cubre ════════ */
 /** d = { rol: { centro: 'cajero' | 'mesera' | '' … }, cubre: ['almendras'] } (cada parte con su permiso). */
-function guardarPersonaCaja(cred, id, d) {
+function guardarPersonaCaja127(cred, id, d) {
   var yo = quien(cred); id = String(id || ''); d = d || {};
   var p = calLeeEq().filter(function (x) { return x.id === id; })[0];
   if (!p) throw new Error('Esa persona ya no está en el equipo.');
@@ -16886,7 +16889,7 @@ function guardarConfigCal(cred, sid, cfg, fecha) {
 
 /* ════════ el calendario: quien cubre y nadie en dos sucursales a la vez ════════ */
 /** En el calendario de una sucursal entra también quien puede cubrir ahí (sin su bono: el bono lo paga su sucursal). Cada día dice si ya está en otra. */
-function calModelo(D, sid, fecha) {
+function calModelo127(D, sid, fecha) {
   var cub = {}, extra = [];
   try { pcPersonas().forEach(function (p) { if (p.sid !== sid && (p.cubre || []).indexOf(sid) >= 0) cub[p.id] = p.sid; }); } catch (e) {}
   D.eq.forEach(function (p) { if (cub[p.id] && p.sid === cub[p.id]) { var c = {}; Object.keys(p).forEach(function (k) { c[k] = p[k]; }); c.sid = sid; c.de = p.sid; c.fila = null; extra.push(c); } });
@@ -16909,7 +16912,7 @@ function calModelo(D, sid, fecha) {
   return m;
 }
 /** Revisa que nadie quede en dos sucursales el mismo turno, y guarda lo de quien cubre (las demás personas, como siempre). */
-function guardarTurnos(cred, sid, fecha, cambios) {
+function guardarTurnos127(cred, sid, fecha, cambios) {
   var yo = quien(cred), D = calDatos(), q = calQuincena(fecha);
   var cub = {}; pcPersonas().forEach(function (p) { if (p.sid !== sid && (p.cubre || []).indexOf(sid) >= 0) cub[p.id] = p; });
   var nombres = {}; D.eq.forEach(function (p) { nombres[p.id] = p.nombre; });
@@ -16977,7 +16980,7 @@ function pedirPrestamo(cred, sid, id, f, turno) {
   return { ok: true, mensaje: 'Se le pidió a ' + nombreUnidad(r.sid) + ' que suelte a ' + p.nombre + ' el ' + dia(f) + ' (' + (turno === 'am' ? 'mañana' : 'tarde') + '). Le llega en la campanita.' };
 }
 /** El gerente de la sucursal donde está la persona lo suelta (se quita su turno de allá) o dice que no. */
-function resolverPrestamo(cred, idPr, si, nota) {
+function resolverPrestamo127(cred, idPr, si, nota) {
   var yo = quien(cred), x = pcPrestamos().filter(function (y) { return y.id === String(idPr); })[0];
   if (!x) throw new Error('Ese pedido ya no existe.');
   if (x.estado !== 'Pedido') throw new Error('Ese pedido ya está ' + x.estado.toLowerCase() + '.');
@@ -16997,7 +17000,7 @@ function resolverPrestamo(cred, idPr, si, nota) {
   return { ok: true, mensaje: si ? 'Listo: ya lo pueden poner en ' + nombreUnidad(x.para) + '.' : 'Se le avisó que no.' };
 }
 /* Campanita: lo que le piden (y lo que le respondieron). */
-function avisosCalendario(yo, out, desde) {
+function avisosCalendario127(yo, out, desde) {
   avisosCalendario107(yo, out, desde);
   try {
     var ac = null; try { ac = calAcceso(yo); } catch (e) { return; }
@@ -17014,7 +17017,7 @@ function avisosCalendario(yo, out, desde) {
   } catch (e) {}
 }
 /* En la pantalla de Personal: los pedidos para soltar (de esta sucursal) y los que hizo. */
-function calPantalla(yo, ac, sid, fecha, D) {
+function calPantalla127(yo, ac, sid, fecha, D) {
   var r = calPantalla107(yo, ac, sid, fecha, D);
   try {
     D = D || calDatos();
@@ -17218,7 +17221,7 @@ function moverPersonaSucursal(cred, id, sidNuevo) {
     var ht = calHoja('Calendario turnos', H_CTU, ['B']), quitados = 0;
     calLeeTu().forEach(function (r) { if (r.id === id && r.sid === antes && r.f > hoy && (r.am || r.pm)) { ht.getRange(r.fila, 4, 1, 2).setValues([['', '']]); quitados++; } });
     // en la caja: deja de operar la caja de la sucursal anterior y ya no «cubre» la nueva (ahora es la suya)
-    var x = pcPersonas().filter(function (q) { return q.id === id; })[0];
+    var x = pcCajaFila(id);
     if (x && x.fila) {
       var rol = JSON.parse(JSON.stringify(x.rol || {})), cubre = (x.cubre || []).filter(function (s) { return s !== sidNuevo; });
       if (cubre.indexOf(antes) < 0) delete rol[antes];
@@ -17248,7 +17251,7 @@ function autorizarAscenso(cred, idAscenso, pago) {
     var h = calHoja('Calendario equipo', H_CEQ, ['G', 'H']);
     if (a.puesto === 'Cocina' || a.puesto === 'Barra') { h.getRange(p.fila, 4).setValue(a.puesto); txt = 'área ' + a.puesto; }
     else if (a.puesto === 'Cajero' || a.puesto === 'Mesero') {
-      var x = pcPersonas().filter(function (q) { return q.id === p.id; })[0] || { rol: {}, cubre: [], autorizo: '' };
+      var x = pcCajaFila(p.id) || { rol: {}, cubre: [], autorizo: '' };
       var rol = JSON.parse(JSON.stringify(x.rol || {})); rol[p.sid] = a.puesto === 'Cajero' ? 'cajero' : 'mesera';
       if (a.puesto === 'Cajero' && p.area !== 'Barra') { h.getRange(p.fila, 4).setValue('Barra'); }
       var v = [p.id, JSON.stringify(rol), JSON.stringify(x.cubre || []), x.autorizo || '', yo.nombre, pcSello()], hp = pcHoja('Personal caja', H_PCAJA);
@@ -17592,4 +17595,488 @@ function entrarAparato(c) {
   var d = datos(cred);
   d.cred = { usuario: v.u.nombre, aparato: String(c.aparato), llave: String(c.llave) };     // el código nunca sale del servidor
   return d;
+}
+
+/* ════════════ 127 · TURNOS Y COBERTURAS ════════════
+ * - Cada gerente arma y confirma su calendario. Si necesita cambiar una semana confirmada, ella misma la abre (con el motivo) y a Álvaro le llega el aviso.
+ * - Al confirmar, la semana va a Supabase: cada tripulante la ve en Tripulación Real (con su hora de entrada y salida) y le suena el celular.
+ * - Asistencia: la gerente anota quién llegó a tiempo, tarde, faltó o se quedó más. Con eso salen las horas reales de la quincena
+ *   (si el administrador escribe las horas reales a mano, valen las de él).
+ * - Coberturas: una gerente pide a alguien de otra sucursal; la gerente de esa persona dice sí o no. Álvaro solo ve, pregunta y sugiere.
+ * - Álvaro cambia el horario de entrada y cierre de cada sucursal (Operaciones › Turnos). */
+var H_CAS = ['Sucursal', 'Fecha', 'ID', 'Turno', 'Estado', 'Tarde', 'Antes', 'Extra', 'Nota', 'Anotó', 'Anotado en'];
+var H_CCA = ['Sucursal', 'Inicio', 'Semana', 'Qué', 'Detalle', 'Quién', 'Cuándo'];
+var H_COB = ['ID', 'Persona', 'Fecha', 'Turno', 'De', 'Para', 'Pidió', 'Pedido en', 'Nota del pedido', 'Estado', 'Resolvió', 'Resuelto en', 'Nota'];
+var T127_TURNOS = { am: 'Mañana', pm: 'Tarde', xa: 'Apoyo 1', xb: 'Apoyo 2' };
+
+function t127Txt(v) { return v instanceof Date ? Utilities.formatDate(v, ZONA, 'yyyy-MM-dd HH:mm') : String(v == null ? '' : v).trim(); }
+function t127Dia(v) { return v instanceof Date ? Utilities.formatDate(v, ZONA, 'yyyy-MM-dd') : String(v == null ? '' : v).trim(); }
+function t127Ops(yo) { return yo.rol === 'operaciones' && !yo.esAdmin; }
+function t127Limpia() { _LEE = {}; try { CacheService.getScriptCache().removeAll(usuariosCache().map(function (u) { return 'notif_' + u.nombre.toLowerCase(); })); } catch (e) {} }
+
+/* ── las hojas ── */
+function calLeeAs() {
+  return pcLee('Calendario asistencia', H_CAS).map(function (r) {
+    var n = function (v) { var x = Math.round(Number(v)); return isFinite(x) && x > 0 ? x : 0; };
+    return { fila: r.fila, sid: calTxt(r[0]).toLowerCase(), f: t127Dia(r[1]), id: calTxt(r[2]), turno: calTxt(r[3]), estado: calTxt(r[4]), tarde: n(r[5]), antes: n(r[6]), extra: n(r[7]),
+      nota: calTxt(r[8]), por: calTxt(r[9]), en: t127Txt(r[10]) };
+  }).filter(function (x) { return x.sid && x.f && x.id && (x.turno === 'am' || x.turno === 'pm') && x.estado; });
+}
+function t127Cambios() {
+  return pcLee('Calendario cambios', H_CCA).map(function (r) {
+    return { sid: calTxt(r[0]).toLowerCase(), ini: t127Dia(r[1]), sem: Number(r[2]) || 0, que: calTxt(r[3]), detalle: calTxt(r[4]), por: calTxt(r[5]), en: t127Txt(r[6]) };
+  });
+}
+function t127Anota(sid, ini, sem, que, detalle, por) {
+  pcHoja('Calendario cambios', H_CCA).appendRow([sid, ini || '', sem || '', t127Seguro(String(que).slice(0, 120)), t127Seguro(String(detalle || '').slice(0, 1500)), por, new Date()]);
+  t127Limpia();
+}
+function t127Cob() {
+  return pcLee('Personal coberturas', H_COB).map(function (r) {
+    return { fila: r.fila, id: calTxt(r[0]), persona: calTxt(r[1]), f: t127Dia(r[2]), turno: calTxt(r[3]), de: calTxt(r[4]).toLowerCase(), para: calTxt(r[5]).toLowerCase(),
+      pidio: calTxt(r[6]), cuando: t127Txt(r[7]), notaPedido: calTxt(r[8]), estado: calTxt(r[9]) || 'Pedida', resolvio: calTxt(r[10]), resuelto: t127Txt(r[11]), nota: calTxt(r[12]) };
+  }).filter(function (x) { return x.id && x.persona; });
+}
+
+/* ── quien cubre: también quien ya tiene una cobertura aceptada (solo para el calendario y la caja; el permiso fijo no cambia) ── */
+var _PC_SOLO_PERMISO = false, _T127_VISTA = 0;
+function pcPersonas() {
+  var ps = pcPersonasBase(); if (_PC_SOLO_PERMISO || !_T127_VISTA) return ps;      // solo al mostrar el calendario y al calcular el pago
+  var hoy = hoyISO(), d0 = masDias(hoy, -45), d1 = masDias(hoy, 45), add = {};
+  try { t127Cob().forEach(function (c) { if (c.estado === 'Aceptada' && c.f >= d0 && c.f <= d1) (add[c.persona] = add[c.persona] || {})[c.para] = true; }); } catch (e) {}
+  ps.forEach(function (p) { var a = add[p.id]; if (a) Object.keys(a).forEach(function (s) { if (s !== p.sid && (p.cubre || []).indexOf(s) < 0) p.cubre = (p.cubre || []).concat([s]); }); });
+  return ps;
+}
+/** La fila de «Personal caja» de una persona, tal como está guardada (sin coberturas). */
+function pcCajaFila(id) {
+  var x = null; pcLee('Personal caja', H_PCAJA).forEach(function (r) { if (calTxt(r[0]) === String(id)) x = { rol: pcJson(r[1], {}), cubre: pcJson(r[2], []), autorizo: calTxt(r[3]), fila: r.fila }; });
+  return x;
+}
+/** Lo que se escribe en la hoja nunca empieza como fórmula. */
+function t127Seguro(t) { t = String(t == null ? '' : t); return /^[=+\-@\t\r]/.test(t) ? "'" + t : t; }
+function guardarPersonaCaja(cred, id, d) { _PC_SOLO_PERMISO = true; try { return guardarPersonaCaja127(cred, id, d); } finally { _PC_SOLO_PERMISO = false; } }
+function permisosCaja(cred) { _PC_SOLO_PERMISO = true; try { return permisosCaja127(cred); } finally { _PC_SOLO_PERMISO = false; } }
+
+/* ── la asistencia hace las horas reales (si nadie las escribió a mano) ── */
+function t127HorasTurno(t, hr) { return { am: t.am === 'x' ? hr.am : 0, pm: t.pm === 'x' ? hr.pm : t.pm === 'xa' ? hr.ap : t.pm === 'xb' ? hr.ap2 : 0 }; }
+function t127Asis(D, sid, q) {
+  var as = D.as || (D.as = calLeeAs()), hr = calHoras(calCfg(sid, D.cf)), hoy = hoyISO(), rec = {}, porP = {};
+  as.forEach(function (a) { if (a.sid === sid && a.f >= q.ini && a.f <= q.fin) rec[a.id + '|' + a.f + '|' + a.turno] = a; });
+  D.tu.forEach(function (t) {
+    if (t.sid !== sid || t.f < q.ini || t.f > q.fin) return;
+    var hh = t127HorasTurno(t, hr);
+    ['am', 'pm'].forEach(function (k) {
+      if (!hh[k]) return;
+      var a = rec[t.id + '|' + t.f + '|' + k], o = porP[t.id] || (porP[t.id] = { h: 0, plan: 0, n: 0, faltas: 0, tardes: 0, tarde: 0, antes: 0, extra: 0, pend: 0 });
+      o.plan += hh[k];
+      if (!a) { o.h += hh[k]; if (t.f < hoy) o.pend++; return; }
+      o.n++;
+      if (a.estado === 'falto') { o.faltas++; return; }
+      if (a.tarde > 0) o.tardes++;
+      o.tarde += a.tarde; o.antes += a.antes; o.extra += a.extra;
+      o.h += Math.max(0, hh[k] - (a.tarde + a.antes) / 60 + a.extra / 60);
+    });
+  });
+  return { porP: porP, rec: rec };
+}
+function calModelo(D, sid, fecha) {
+  var q = calQuincena(fecha), A = t127Asis(D, sid, q), manual = {};
+  (D.hr || []).forEach(function (x) { if (x.sid === sid && x.ini === q.ini && x.horas != null) manual[x.id] = true; });
+  var extra = Object.keys(A.porP).filter(function (id) { return A.porP[id].n > 0 && !manual[id]; }).map(function (id) { return { sid: sid, ini: q.ini, id: id, horas: calRed(A.porP[id].h) }; });
+  var D2 = D;
+  if (extra.length) { D2 = {}; Object.keys(D).forEach(function (k) { D2[k] = D[k]; }); D2.hr = (D.hr || []).concat(extra); }
+  var m; _T127_VISTA++; try { m = calModelo127(D2, sid, fecha); } finally { _T127_VISTA--; }
+  m.personas.forEach(function (p) {
+    var o = A.porP[p.id];
+    p.asis = o ? { horas: calRed(o.h), plan: calRed(o.plan), anotados: o.n, pendientes: o.pend, faltas: o.faltas, tardes: o.tardes, minTarde: o.tarde, minAntes: o.antes, minExtra: o.extra } : null;
+    if (o && o.n > 0 && !manual[p.id]) p.hrealOrigen = 'asistencia';
+  });
+  return m;
+}
+/** En la pantalla del calendario: la asistencia anotada y el resumen de cada persona, y las coberturas pendientes. */
+function calPantalla(yo, ac, sid, fecha, D) {
+  D = D || calDatos();
+  var r; _T127_VISTA++; try { r = calPantalla127(yo, ac, sid, fecha, D); } finally { _T127_VISTA--; }
+  try {
+    var s = r.sid || sid, q = r.q || calQuincena(fecha), m = calModelo(D, s, q.ini), res = {};
+    m.personas.forEach(function (p) { if (p.asis) res[p.id] = p.asis; });
+    r.asistencia = (D.as || calLeeAs()).filter(function (a) { return a.sid === s && a.f >= q.ini && a.f <= q.fin; })
+      .map(function (a) { return { id: a.id, f: a.f, turno: a.turno, estado: a.estado, tarde: a.tarde, antes: a.antes, extra: a.extra, nota: a.nota, por: a.por }; });
+    r.asisResumen = res;
+    (r.personas || []).forEach(function (p) { if (res[p.id]) p.asis = res[p.id]; });
+    var hoy = hoyISO();
+    r.coberturas = t127Cob().filter(function (c) { return (c.para === s || c.de === s) && c.f >= masDias(hoy, -7); })
+      .map(function (c) { return t127CobVista(c); });
+    r.t127 = { reabre: !t127Ops(yo) && !!ac.confirmarSem, asistencia: !t127Ops(yo) && !!ac.turnos, coberturas: !t127Ops(yo) && !!ac.turnos };
+  } catch (e) { r.t127error = String(e.message || e); }
+  return r;
+}
+function t127CobVista(c) {
+  var nom = ''; try { calLeeEq().forEach(function (p) { if (p.id === c.persona) nom = p.nombre; }); } catch (e) {}
+  return { id: c.id, persona: c.persona, nombre: nom || c.persona, f: c.f, turno: c.turno, turnoTxt: T127_TURNOS[c.turno] || c.turno, de: c.de, deNombre: nombreUnidad(c.de), para: c.para, paraNombre: nombreUnidad(c.para),
+    pidio: c.pidio, cuando: c.cuando, notaPedido: c.notaPedido, estado: c.estado, resolvio: c.resolvio, resuelto: c.resuelto, nota: c.nota };
+}
+
+/* ════════ la semana confirmada va a Tripulación Real ════════ */
+function t127Tramos(cfg, am, pm) {
+  var t = [];
+  if (am === 'x') t.push({ n: 'Mañana', de: cfg.am_i, a: cfg.am_f });
+  if (pm === 'x') t.push({ n: 'Tarde', de: cfg.pm_i, a: cfg.pm_f });
+  else if (pm === 'xa') t.push({ n: 'Apoyo', de: cfg.ap_i, a: cfg.ap_f });
+  else if (pm === 'xb') t.push({ n: 'Apoyo', de: cfg.ap2_i, a: cfg.ap2_f });
+  return t;
+}
+/** La semana tal como queda (persona|día → turno y horas) y lo que se manda a Supabase. */
+function t127Semana(D, sid, ini, sem) {
+  var m = calModelo(D, sid, ini), q = m.q, dias = sem === 2 ? q.dias.slice(q.n1) : q.dias.slice(0, q.n1), filas = [], mapa = {};
+  m.personas.forEach(function (p) {
+    p.dias.forEach(function (d) {
+      if (dias.indexOf(d.f) < 0 || !(d.am || d.pm)) return;
+      var tr = t127Tramos(m.cfg, d.am, d.pm);
+      filas.push({ persona: p.id, f: d.f, am: d.am, pm: d.pm, tramos: tr, horas: d.h });
+      mapa[p.id + '|' + d.f] = { n: p.nombre, t: tr.map(function (x) { return x.n + ' ' + x.de + '–' + x.a; }).join(' y ') };
+    });
+  });
+  return { dias: dias, filas: filas, mapa: mapa, m: m };
+}
+function t127LlaveSem(sid, ini, sem) { return 'sem127_' + sid + '_' + ini + '_' + sem; }
+/** Manda la semana confirmada. Devuelve lo que cambió contra la última vez que se confirmó (para avisarle a Álvaro). */
+function t127MandaSemana(sid, ini, sem, por, D) {
+  D = D || calDatos();
+  var s = t127Semana(D, sid, ini, sem), props = PropertiesService.getScriptProperties(), k = t127LlaveSem(sid, ini, sem), antes = null;
+  try { antes = JSON.parse(props.getProperty(k) || 'null'); } catch (e) { antes = null; }
+  var dif = [];
+  if (antes && antes.mapa) {
+    var todas = {}; Object.keys(antes.mapa).concat(Object.keys(s.mapa)).forEach(function (x) { todas[x] = true; });
+    Object.keys(todas).sort(function (a, b) { return a.split('|')[1] < b.split('|')[1] ? -1 : 1; }).forEach(function (x) {
+      var a = antes.mapa[x], b = s.mapa[x]; if (a && b && a.t === b.t) return;
+      var nom = (b || a).n, f = x.split('|')[1];
+      dif.push(nom + ', ' + dia(f) + ': ' + (a ? a.t : 'descansaba') + ' → ' + (b ? b.t : 'descansa'));
+    });
+  }
+  if (supaCfgSuave()) supaFetch('post', 'rpc/per_semana_poner', { p: { sid: sid, ini: ini, sem: sem, dias: s.dias, filas: s.filas, estado: 'Confirmada', por: por || '' } });
+  try { props.setProperty(k, JSON.stringify({ mapa: s.mapa, estado: 'Confirmada' }).slice(0, 8500)); } catch (e) {}
+  return dif;
+}
+function t127MandaAbierta(sid, ini, sem, por) {
+  if (supaCfgSuave()) supaFetch('post', 'rpc/per_semana_poner', { p: { sid: sid, ini: ini, sem: sem, estado: 'Abierta', por: por || '' } });
+  var props = PropertiesService.getScriptProperties(), k = t127LlaveSem(sid, ini, sem);
+  try { var v = JSON.parse(props.getProperty(k) || 'null'); if (v) { v.estado = 'Abierta'; props.setProperty(k, JSON.stringify(v).slice(0, 8500)); } } catch (e) {}
+}
+/** Repaso (cada 15 minutos): lo confirmado que cambió por otro lado (el administrador, un horario nuevo) también llega. */
+function t127SemanasRepaso() {
+  try { t127HorariosAplica(); } catch (e) { Logger.log('horarios: ' + e.message); }
+  var props = PropertiesService.getScriptProperties(), hoy = hoyISO(), q0 = calQuincena(hoy), viejo = q0.ant;
+  try { props.getKeys().forEach(function (k) { var m = /^sem127_[a-z]+_(\d{4}-\d{2}-\d{2})_\d$/.exec(k); if (m && m[1] < viejo) props.deleteProperty(k); }); } catch (e) {}
+  if (!supaCfgSuave()) return;
+  _LEE = {}; var D = calDatos();
+  [q0.ini, q0.sig].forEach(function (ini) {
+    PC_SUCS.forEach(function (sid) {
+      var est = calSemanas(sid, ini);
+      [1, 2].forEach(function (sem) {
+        var e = est[sem - 1].estado, k = t127LlaveSem(sid, ini, sem), v = null;
+        try { v = JSON.parse(props.getProperty(k) || 'null'); } catch (x) { v = null; }
+        if (e === 'Confirmada' || e === 'Pedido') {
+          var s = t127Semana(D, sid, ini, sem);
+          if (!v || v.estado !== 'Confirmada' || JSON.stringify(v.mapa) !== JSON.stringify(s.mapa)) { try { t127MandaSemana(sid, ini, sem, 'Repaso', D); } catch (x) { Logger.log('semana ' + sid + ': ' + x.message); } }
+        } else if (v && v.estado === 'Confirmada') { try { t127MandaAbierta(sid, ini, sem, 'Repaso'); } catch (x) {} }
+      });
+    });
+  });
+}
+
+/* ════════ confirmar y volver a abrir (lo hace la gerente; Álvaro ve el aviso) ════════ */
+function confirmarSemanaCal(cred, sid, fecha, sem) {
+  var yo = quien(cred), s = Number(sem) === 2 ? 2 : 1, ini = calQuincena(fecha).ini;
+  if (t127Ops(yo)) throw new Error('El calendario lo confirma la gerente de la sucursal. Usted lo ve y puede preguntarle.');
+  var r = confirmarSemanaCal127(cred, sid, fecha, sem);
+  var abierta = false, hs = t127Cambios().filter(function (c) { return c.sid === sid && c.ini === ini && c.sem === s; });
+  if (hs.length && hs[hs.length - 1].que === 'Abierta para cambios') abierta = true;
+  var dif = [];
+  try { dif = t127MandaSemana(sid, ini, s, yo.nombre); r.mensaje = String(r.mensaje || '') + ' A cada persona le llega su horario en Tripulación Real.'; }
+  catch (e) { r.mensaje = String(r.mensaje || '') + ' (No se pudo mandar a Tripulación Real: se vuelve a intentar sola en 15 minutos.)'; }
+  var est = calSemanas(sid, ini)[s - 1];
+  t127Anota(sid, ini, s, abierta ? 'Confirmada otra vez' : 'Confirmada', (abierta && dif.length ? 'Cambió: ' + dif.join(' · ') : '') + (est.avisos ? (abierta && dif.length ? ' — ' : '') + 'Avisos: ' + est.avisos : ''), yo.nombre);
+  return r;
+}
+/** La gerente abre su semana confirmada para cambiarla (escribe el motivo). Álvaro recibe el aviso. */
+function reabrirSemanaCal(cred, sid, fecha, sem, motivo) {
+  var yo = quien(cred), ac = calAcceso(yo);
+  if (t127Ops(yo)) throw new Error('La semana la abre la gerente de la sucursal. Usted puede preguntarle.');
+  if (!ac.confirmarSem) throw new Error('Su rol no confirma ni abre el calendario.');
+  if (ac.sucs.indexOf(sid) < 0) throw new Error('Ese calendario no es de su sucursal.');
+  sem = Number(sem) === 2 ? 2 : 1; motivo = String(motivo || '').replace(/\s+/g, ' ').trim();
+  if (motivo.length < 5) throw new Error('Escriba qué va a cambiar y por qué (mínimo 5 letras).');
+  var D = calDatos(), ini = calQuincena(fecha).ini, est = calSemanas(sid, ini)[sem - 1];
+  if (calPlanillaDe(D, sid, ini)) throw new Error('La planilla de esta quincena ya está pagada: el calendario quedó cerrado.');
+  if (est.estado !== 'Confirmada' && est.estado !== 'Pedido') throw new Error('La semana ' + sem + ' ya está abierta: cámbiela directamente.');
+  calCoPon(sid, ini, sem, { 'Estado': 'Abierta', 'Pidió cambio': yo.nombre, 'Motivo': t127Seguro(motivo.slice(0, 300)), 'Pedido en': calAhora(), 'Revisó': yo.nombre, 'Revisado en': calAhora(), 'Comentario': 'La abrió ' + yo.nombre });
+  try { t127MandaAbierta(sid, ini, sem, yo.nombre); } catch (e) {}
+  t127Anota(sid, ini, sem, 'Abierta para cambios', motivo, yo.nombre);
+  return calRespuesta(yo, ac, sid, fecha, 'Semana ' + sem + ' abierta para cambios. Al terminar, vuelva a confirmarla: a cada persona le llega su horario nuevo. Álvaro recibe el aviso.');
+}
+
+/* ════════ asistencia (la anota la gerente) ════════ */
+function guardarAsistencia(cred, sid, f, lista) {
+  var yo = quien(cred), ac = calAcceso(yo); pcSidOk(sid);
+  if (t127Ops(yo)) throw new Error('La asistencia la anota la gerente de la sucursal.');
+  if (!ac.turnos || ac.sucs.indexOf(sid) < 0) throw new Error('Ese calendario no es de su sucursal.');
+  var hoy = hoyISO();
+  if (!esFecha(f) || f > hoy) throw new Error('La asistencia se anota de hoy para atrás.');
+  if (f < masDias(hoy, -20)) throw new Error('Esa fecha ya pasó hace mucho: pídale al administrador que corrija las horas reales.');
+  var D = calDatos(), q = calQuincena(f);
+  if (calPlanillaDe(D, sid, q.ini)) throw new Error('La planilla de esa quincena ya está pagada.');
+  var tiene = {}; D.tu.forEach(function (t) { if (t.sid === sid && t.f === f) { if (t.am === 'x') tiene[t.id + '|am'] = true; if (t.pm) tiene[t.id + '|pm'] = true; } });
+  var nom = {}; D.eq.forEach(function (p) { nom[p.id] = p.nombre; });
+  var min = function (v, campo) { if (v === '' || v == null) return 0; var n = Math.round(Number(v)); if (!isFinite(n) || n < 0 || n > 600) throw new Error(campo + ': de 0 a 600 minutos.'); return n; };
+  var filas = (Array.isArray(lista) ? lista : []).slice(0, 80).map(function (x) {
+    x = x || {}; var id = String(x.id || ''), tu = x.turno === 'pm' ? 'pm' : x.turno === 'am' ? 'am' : '';
+    if (!tu || !tiene[id + '|' + tu]) throw new Error((nom[id] || 'Esa persona') + ' no tiene ese turno el ' + dia(f) + '.');
+    var est = String(x.estado || ''); if (['', 'ok', 'tarde', 'falto'].indexOf(est) < 0) throw new Error('Escoja: a tiempo, tarde o faltó.');
+    var ta = min(x.tarde, 'Tarde'), an = min(x.antes, 'Salió antes'), ex = min(x.extra, 'Se quedó más');
+    if (ex > 180) throw new Error('Se quedó más: hasta 180 minutos por turno. Si fue más, que el administrador corrija las horas.');
+    if (est === 'falto') { ta = 0; an = 0; ex = 0; }
+    if (est === 'ok' && ta > 0) est = 'tarde';
+    if (est === 'tarde' && !ta) throw new Error('Escriba cuántos minutos llegó tarde ' + (nom[id] || '') + '.');
+    return { id: id, turno: tu, estado: est, tarde: ta, antes: an, extra: ex, nota: t127Seguro(String(x.nota || '').replace(/\s+/g, ' ').trim().slice(0, 120)) };
+  });
+  if (!filas.length) throw new Error('No hay nada que guardar.');
+  var lock = LockService.getScriptLock(); lock.waitLock(15000); _LEE = {};
+  var n = 0;
+  try {
+    var idx = {}; calLeeAs().forEach(function (a) { if (a.sid === sid && a.f === f) idx[a.id + '|' + a.turno] = a; });
+    var h = calHoja('Calendario asistencia', H_CAS, ['B']), ahora = new Date(), nuevas = [];
+    filas.forEach(function (x) {
+      var v = [sid, f, x.id, x.turno, x.estado, x.tarde || '', x.antes || '', x.extra || '', x.nota, yo.nombre, ahora], a = idx[x.id + '|' + x.turno];
+      if (a) { if (a.estado === x.estado && a.tarde === x.tarde && a.antes === x.antes && a.extra === x.extra && a.nota === x.nota) return; h.getRange(a.fila, 1, 1, H_CAS.length).setValues([v]); n++; }
+      else if (x.estado) { nuevas.push(v); n++; }
+    });
+    if (nuevas.length) { var d0 = h.getLastRow() + 1; h.getRange(d0, 2, nuevas.length, 1).setNumberFormat('@'); h.getRange(d0, 1, nuevas.length, H_CAS.length).setValues(nuevas); }
+  } finally { lock.releaseLock(); }
+  _LEE = {};
+  var mucho = filas.filter(function (x) { return x.extra > 60; });
+  if (mucho.length) t127Anota(sid, q.ini, calSemDe(q, f), 'Tiempo de más', mucho.map(function (x) { return (nom[x.id] || x.id) + ' ' + x.extra + ' min'; }).join(' · ') + ' (' + dia(f) + ')', yo.nombre);
+  try { perQuincenaMandar(); } catch (e) {}
+  return calRespuesta(yo, ac, sid, f, n ? 'Asistencia del ' + dia(f) + ' guardada (' + n + (n === 1 ? ' persona' : ' personas') + ').' : 'No había nada nuevo que guardar.');
+}
+
+/* ════════ coberturas entre sucursales (las acuerdan las gerentes) ════════ */
+PERM_API.pedirCobertura = [['personal.turnos'], 2]; PERM_API.resolverCobertura = [['personal.turnos'], 2]; PERM_API.guardarAsistencia = [['personal.turnos'], 2];
+/** Para un día: la gente de las otras sucursales (si ya trabaja ese día y dónde) y las coberturas de su sucursal. */
+function pantallaCoberturas(cred, sid, fecha) {
+  var yo = quien(cred), ac = calAcceso(yo); pcSidOk(sid);
+  if (!ac.verTurnos || ac.sucs.indexOf(sid) < 0) throw new Error('Ese calendario no es de su sucursal.');
+  var hoy = hoyISO(), f = esFecha(fecha) ? fecha : hoy, D = calDatos(), tu = {};
+  D.tu.forEach(function (t) { if (t.f === f && (t.am || t.pm)) (tu[t.id] = tu[t.id] || []).push({ sid: t.sid, suc: nombreUnidad(t.sid), am: t.am, pm: t.pm }); });
+  var personas = D.eq.filter(function (p) { return p.sid !== sid && PC_SUCS.indexOf(p.sid) >= 0 && (!p.baja || p.baja >= f) && (!p.alta || p.alta <= f); })
+    .map(function (p) { return { id: p.id, nombre: p.nombre, area: p.area, sid: p.sid, suc: nombreUnidad(p.sid), dia: tu[p.id] || [] }; })
+    .sort(function (a, b) { return a.sid < b.sid ? -1 : a.sid > b.sid ? 1 : a.area < b.area ? -1 : a.area > b.area ? 1 : a.nombre < b.nombre ? -1 : 1; });
+  var cob = t127Cob().filter(function (c) { return (c.para === sid || c.de === sid) && c.f >= masDias(hoy, -14); }).map(t127CobVista);
+  return { ok: true, sid: sid, suc: nombreUnidad(sid), fecha: f, personas: personas,
+    pedidas: cob.filter(function (c) { return c.para === sid; }), recibidas: cob.filter(function (c) { return c.de === sid; }),
+    puede: !t127Ops(yo) && !!ac.turnos };
+}
+function pedirCobertura(cred, sid, d) {
+  var yo = quien(cred), ac = calAcceso(yo); pcSidOk(sid); d = d || {};
+  if (t127Ops(yo)) throw new Error('Las coberturas las acuerdan las gerentes. Usted puede sugerirla con «Preguntar».');
+  if (!ac.turnos || ac.sucs.indexOf(sid) < 0) throw new Error('Ese calendario no es de su sucursal.');
+  var hoy = hoyISO(), f = String(d.f || ''), tu = String(d.turno || ''), per = String(d.persona || ''), nota = String(d.nota || '').replace(/\s+/g, ' ').trim().slice(0, 160);
+  if (!esFecha(f) || f < hoy || f > masDias(hoy, 28)) throw new Error('Escoja un día de hoy a 4 semanas.');
+  if (!T127_TURNOS[tu]) throw new Error('Escoja el turno: mañana, tarde o apoyo.');
+  var D = calDatos(), p = D.eq.filter(function (x) { return x.id === per; })[0];
+  if (!p || p.sid === sid || (p.baja && p.baja < f)) throw new Error('Escoja a alguien de otra sucursal.');
+  var q = calQuincena(f), s = calSemDe(q, f), est = calSemanas(sid, q.ini)[s - 1];
+  if (est.estado !== 'Abierta') throw new Error('Su semana ' + s + ' está confirmada: ábrala primero para poner a alguien más.');
+  if (calPlanillaDe(D, sid, q.ini)) throw new Error('La planilla de esa quincena ya está pagada.');
+  var ya = D.tu.filter(function (t) { return t.id === per && t.f === f && t.sid === sid; })[0];
+  if (ya && ((tu === 'am' && ya.am) || (tu !== 'am' && ya.pm))) throw new Error(p.nombre + ' ya está en su calendario ese turno.');
+  if (t127Cob().some(function (c) { return c.persona === per && c.f === f && c.para === sid && c.estado === 'Pedida'; })) throw new Error('Ya la pidió: espere la respuesta.');
+  if (p.alta && p.alta > f) throw new Error(p.nombre + ' entra a trabajar después de ese día.');
+  pcHoja('Personal coberturas', H_COB).appendRow([pcId('CB'), per, f, tu, p.sid, sid, yo.nombre, new Date(), t127Seguro(nota), 'Pedida', '', '', '']);
+  t127Limpia();
+  return { ok: true, mensaje: 'Se le pidió a la gerente de ' + nombreUnidad(p.sid) + ' que le preste a ' + p.nombre + ' el ' + dia(f) + ' (' + T127_TURNOS[tu].toLowerCase() + '). Le llega el aviso.' };
+}
+/** La gerente de la persona dice sí (queda en el calendario de la otra sucursal; si ese turno estaba en el suyo, se le quita) o no. */
+function resolverCobertura(cred, idCob, si, nota) {
+  var yo = quien(cred), ac = calAcceso(yo), x = t127Cob().filter(function (c) { return c.id === String(idCob); })[0];
+  if (!x) throw new Error('Ese pedido ya no existe.');
+  var pAhora = calLeeEq().filter(function (p) { return p.id === x.persona; })[0];
+  if (x.estado === 'Pedida' && (!pAhora || (pAhora.baja && pAhora.baja < x.f))) throw new Error('Esa persona ya no trabaja ese día.');
+  if (pAhora && pAhora.sid !== x.de) x.de = pAhora.sid;      // si cambió de sucursal, responde su gerente de ahora
+  if (x.estado !== 'Pedida') throw new Error('Ese pedido ya está ' + x.estado.toLowerCase() + '.');
+  if (t127Ops(yo)) throw new Error('Esto lo responde la gerente de ' + nombreUnidad(x.de) + '.');
+  if (!yo.esAdmin && (!ac.turnos || ac.sucs.indexOf(x.de) < 0)) throw new Error('Esto lo responde la gerente de ' + nombreUnidad(x.de) + '.');
+  nota = String(nota || '').replace(/\s+/g, ' ').trim().slice(0, 160);
+  if (!si && nota.length < 3) throw new Error('Escriba por qué no (por ejemplo: ese día lo necesito).');
+  var nombre = x.persona, cambioDe = null;
+  var lock = LockService.getScriptLock(); lock.waitLock(15000); _LEE = {};
+  try {
+    var D = calDatos(), q = calQuincena(x.f), s = calSemDe(q, x.f);
+    D.eq.forEach(function (p) { if (p.id === x.persona) nombre = p.nombre; });
+    if (si) {
+      if (x.f < hoyISO()) throw new Error('Ese día ya pasó.');
+      if (calSemanas(x.para, q.ini)[s - 1].estado !== 'Abierta') throw new Error('La semana de ' + nombreUnidad(x.para) + ' ya se confirmó: que la abran primero y lo vuelvan a pedir.');
+      if (calPlanillaDe(D, x.para, q.ini) || calPlanillaDe(D, x.de, q.ini)) throw new Error('La planilla de esa quincena ya está pagada.');
+      var am = x.turno === 'am', h = calHoja('Calendario turnos', H_CTU, ['B']), ahora = new Date();
+      D.tu.forEach(function (t) {
+        if (t.id !== x.persona || t.f !== x.f || t.sid === x.para) return;
+        var choca = am ? t.am === 'x' : !!t.pm; if (!choca) return;
+        if (t.sid !== x.de) throw new Error(nombre + ' ya está en ' + nombreUnidad(t.sid) + ' ese turno.');
+        h.getRange(t.fila, 4, 1, 4).setValues([[am ? '' : t.am, am ? t.pm : '', yo.nombre, ahora]]);      // se le quita ese turno en su sucursal
+        cambioDe = t;
+      });
+      var r = D.tu.filter(function (t) { return t.id === x.persona && t.f === x.f && t.sid === x.para; })[0];
+      var nAm = am ? 'x' : (r ? r.am : ''), nPm = am ? (r ? r.pm : '') : (x.turno === 'pm' ? 'x' : x.turno);
+      if (r) h.getRange(r.fila, 4, 1, 4).setValues([[nAm, nPm, yo.nombre, ahora]]);
+      else { var d0 = h.getLastRow() + 1; h.getRange(d0, 2, 1, 1).setNumberFormat('@'); h.getRange(d0, 1, 1, H_CTU.length).setValues([[x.para, x.f, x.persona, nAm, nPm, yo.nombre, ahora]]); }
+    }
+    pcHoja('Personal coberturas', H_COB).getRange(x.fila, 10, 1, 4).setValues([[si ? 'Aceptada' : 'No', yo.nombre, new Date(), t127Seguro(nota)]]);
+  } finally { lock.releaseLock(); }
+  _LEE = {};
+  var q2 = calQuincena(x.f), s2 = calSemDe(q2, x.f), txt = nombre + ' de ' + nombreUnidad(x.de) + ' a ' + nombreUnidad(x.para) + ', ' + dia(x.f) + ' (' + (T127_TURNOS[x.turno] || x.turno).toLowerCase() + ')';
+  if (si) {
+    t127Anota(x.para, q2.ini, s2, 'Cobertura', txt + '. La pidió ' + x.pidio + ', la aceptó ' + yo.nombre + '.', yo.nombre);
+    if (cambioDe) {
+      var e2 = calSemanas(x.de, q2.ini)[s2 - 1].estado;
+      if (e2 === 'Confirmada' || e2 === 'Pedido') { t127Anota(x.de, q2.ini, s2, 'Cambio en semana confirmada', 'Prestó a ' + txt + '.', yo.nombre); try { t127MandaSemana(x.de, q2.ini, s2, yo.nombre); } catch (e) {} }
+    }
+  } else t127Limpia();
+  return { ok: true, mensaje: si ? 'Listo: ' + nombre + ' quedó en el calendario de ' + nombreUnidad(x.para) + ' el ' + dia(x.f) + '.' + (cambioDe ? ' Se le quitó ese turno aquí.' : '') : 'Se le avisó que no.' };
+}
+
+/* ════════ Operaciones: ver, preguntar y el horario de entrada y cierre ════════ */
+function t127ExigeOps(yo) { if (!(yo.esAdmin || yo.rol === 'operaciones')) throw new Error('Esto es del director de operaciones.'); }
+/** Resumen de las 3 sucursales: estado de cada semana, avisos, coberturas, cambios y asistencia (solo ver). */
+function opsTurnos(cred, fecha) {
+  var yo = quien(cred); t127ExigeOps(yo);
+  var hoy = hoyISO(), f = esFecha(fecha) ? fecha : hoy, D = calDatos(), q = calQuincena(f), cam = t127Cambios(), cob = t127Cob(), as = D.as || (D.as = calLeeAs());
+  var d14 = masDias(hoy, -14), d7 = masDias(hoy, -7);
+  var sucs = PC_SUCS.map(function (sid) {
+    var m = calModelo(D, sid, q.ini), est = calSemanas(sid, q.ini), cfg = m.cfg;
+    var semanas = [1, 2].map(function (s) { var ds = s === 1 ? m.q.dias.slice(0, m.q.n1) : m.q.dias.slice(m.q.n1);
+      return { sem: s, desde: ds[0], hasta: ds[ds.length - 1], estado: est[s - 1].estado, por: est[s - 1].por || '', en: est[s - 1].en || '', avisos: calAvisosSemana(m, s), motivo: est[s - 1].motivo || '' }; });
+    var nom = {}; D.eq.forEach(function (p) { nom[p.id] = p.nombre; });
+    var asis = {}; as.forEach(function (a) { if (a.sid === sid && a.f >= d7 && a.f <= hoy && (a.estado === 'falto' || a.estado === 'tarde' || a.extra > 0)) {
+      var o = asis[a.id] || (asis[a.id] = { nombre: nom[a.id] || a.id, faltas: 0, tardes: 0, minTarde: 0, minExtra: 0 });
+      if (a.estado === 'falto') o.faltas++; if (a.estado === 'tarde') { o.tardes++; o.minTarde += a.tarde; } o.minExtra += a.extra; } });
+    var pend = t127HorarioPend(sid, D.cf);
+    return { sid: sid, nombre: nombreUnidad(sid), horario: { am: [cfg.am_i, cfg.am_f], pm: [cfg.pm_i, cfg.pm_f], ap: [cfg.ap_i, cfg.ap_f], ap2: [cfg.ap2_i, cfg.ap2_f] },
+      horarioNuevo: pend ? { desde: pend.desde, lista: pend.lista, por: pend.por } : null,
+      semanas: semanas, horas: calRed(m.personas.reduce(function (t, p) { return t + p.hq; }, 0)),
+      cambios: cam.filter(function (c) { return c.sid === sid && c.en.slice(0, 10) >= d14; }).reverse().slice(0, 30),
+      coberturas: cob.filter(function (c) { return (c.para === sid || c.de === sid) && c.f >= d14; }).map(t127CobVista),
+      asistencia: Object.keys(asis).map(function (k) { return asis[k]; }),
+      gerentes: usuariosCache().filter(function (u) { return u.activo && u.rol === 'gerente' && u.sucursal === sid; }).map(function (u) { return u.nombre; }) };
+  });
+  return { ok: true, q: { ini: q.ini, fin: q.fin, nombre: q.nombre, ant: q.ant, sig: q.sig }, hoy: hoy, sucursales: sucs };
+}
+/** Álvaro cambia el horario de entrada y cierre (mañana, tarde y apoyos) de una sucursal. Rige desde la siguiente quincena:
+ *  así no cambian las horas (ni el pago) de lo que ya se trabajó. La caja y Tripulación Real lo reciben solos ese día. */
+function guardarHorarioSucursal(cred, sid, t) {
+  var yo = quien(cred); t127ExigeOps(yo); pcSidOk(sid); t = t || {};
+  if (!yo.esAdmin && !_AREA_EN_PUENTE) throw new Error('El horario se cambia desde la app de Operaciones.');
+  var lista = [], txt = [];
+  [['am', 'La mañana'], ['pm', 'La tarde'], ['ap', 'El apoyo 1'], ['ap2', 'El apoyo 2']].forEach(function (a) {
+    var par = t[a[0]]; if (!par) return;
+    if (!horaValida(par[0]) || !horaValida(par[1])) throw new Error(a[1] + ': escriba la hora de entrada y de salida.');
+    var i = horaNorm(par[0]), f = horaNorm(par[1]), d = calMin(f) - calMin(i);
+    if (d <= 0) throw new Error(a[1] + ': la salida va después de la entrada.');
+    if (d < 120 || d > 540) throw new Error(a[1] + ': un turno es de 2 a 9 horas.');
+    if (calMin(i) < 300 || calMin(f) > 1380) throw new Error(a[1] + ': entre las 5:00 y las 23:00.');
+    lista.push([a[0] + '_i', i], [a[0] + '_f', f]); txt.push(a[1].replace(/^(La|El) /, '') + ' ' + i + '–' + f);
+  });
+  if (!lista.length) throw new Error('No hay nada que guardar.');
+  var desde = calQuincena(hoyISO()).sig;
+  calEscribeCfg(yo, sid, [['horario_pend', JSON.stringify({ desde: desde, lista: lista, por: yo.nombre })]]);
+  t127Anota(sid, '', 0, 'Horario nuevo desde el ' + dia(desde), txt.join(' · '), yo.nombre);
+  return { ok: true, mensaje: 'Horario de ' + nombreUnidad(sid) + ' guardado: ' + txt.join(' · ') + '. Rige desde el ' + dia(desde) + ' (la siguiente quincena), en cuanto se pague la quincena de ahora: así no cambia lo ya trabajado. Ese día le llega a la caja y a cada persona.' };
+}
+function t127HorarioPend(sid, cf) { var x = null; (cf || calLeeCf()).forEach(function (r) { if (r.sid === sid && r.k === 'horario_pend' && r.v) { try { x = JSON.parse(r.v); } catch (e) {} } }); return x; }
+/** En el repaso: el horario que ya rige se pone, y se le avisa a la caja. */
+function t127HorariosAplica() {
+  var hoy = hoyISO();
+  PC_SUCS.forEach(function (sid) {
+    var x = t127HorarioPend(sid); if (!x || !x.desde || x.desde > hoy || !Array.isArray(x.lista)) return;
+    // espera a que la quincena de antes esté pagada: así sus horas (y su pago) nunca cambian con el horario nuevo
+    if (!calPlanillaDe(calDatos(), sid, calQuincena(masDias(x.desde, -1)).ini)) return;
+    var yo = { nombre: x.por || 'Operaciones' };
+    calEscribeCfg(yo, sid, x.lista.concat([['horario_pend', '']]));
+    try { cajaHorariosEscribe(sid, yo); } catch (e) {}
+    t127Anota(sid, '', 0, 'Horario nuevo ya rige', x.lista.map(function (p) { return p[0] + ' ' + p[1]; }).join(' · '), yo.nombre);
+  });
+}
+
+/* ════════ la campanita: coberturas y, para Álvaro, los cambios ════════ */
+function avisosCalendario(yo, out, desde) {
+  avisosCalendario127(yo, out, desde);
+  try {
+    var ac = null; try { ac = calAcceso(yo); } catch (e) { return; }
+    var nom = {}; calLeeEq().forEach(function (p) { nom[p.id] = p.nombre; });
+    t127Cob().forEach(function (x) {
+      var t = (T127_TURNOS[x.turno] || x.turno).toLowerCase();
+      if (x.estado === 'Pedida' && !t127Ops(yo) && (yo.esAdmin || ac.sucs.indexOf(x.de) >= 0) && x.pidio !== yo.nombre)
+        out.push({ id: 'cb-' + x.id, tipo: 'Le piden a alguien de su equipo', cuando: x.cuando, titulo: (nom[x.persona] || x.persona) + ' · ' + dia(x.f) + ' (' + t + ')',
+          texto: x.pidio + ' lo necesita en ' + nombreUnidad(x.para) + (x.notaPedido ? ': ' + x.notaPedido : '') + '. Respóndalo en Gerentes › Calendario › Coberturas.', abrir: { pag: 'cal', sid: x.de, fecha: x.f } });
+      else if (x.estado !== 'Pedida' && x.pidio === yo.nombre && x.resuelto.slice(0, 10) >= desde)
+        out.push({ id: 'cbr-' + x.id, tipo: x.estado === 'Aceptada' ? 'Cobertura aceptada' : 'Cobertura: no', cuando: x.resuelto, titulo: (nom[x.persona] || x.persona) + ' · ' + dia(x.f) + ' (' + t + ')',
+          texto: x.estado === 'Aceptada' ? x.resolvio + ' dijo que sí: ya está en su calendario.' : x.resolvio + ' dijo que no' + (x.nota ? ': ' + x.nota : '') + '.', abrir: { pag: 'cal', sid: x.para, fecha: x.f } });
+    });
+    if (yo.rol === 'operaciones' || yo.esAdmin) {
+      var d3 = masDias(hoyISO(), -3);
+      t127Cambios().forEach(function (c, i) {
+        if (c.en.slice(0, 10) < d3 || c.en.slice(0, 10) < desde || c.que === 'Confirmada') return;
+        out.push({ id: 'tc-' + c.sid + '-' + i + '-' + c.en, tipo: 'Cambio en el calendario', cuando: c.en, titulo: nombreUnidad(c.sid) + ' · ' + c.que + (c.sem ? ' (semana ' + c.sem + ')' : ''),
+          texto: c.por + (c.detalle ? ': ' + c.detalle.slice(0, 300) : ''), abrir: { pag: 'cal', sid: c.sid, fecha: c.ini || hoyISO() } });
+      });
+    }
+  } catch (e) {}
+}
+
+/* ── el puente: Gerentes y Operaciones ── */
+AREA_GAS.mng.guardarAsistencia = ['asistencia', 2];
+AREA_GAS.mng.pantallaCoberturas = ['coberturas', 1]; AREA_GAS.mng.pedirCobertura = ['coberturas', 2]; AREA_GAS.mng.resolverCobertura = ['coberturas', 2];
+AREA_GAS.mng.reabrirSemanaCal = ['confirmar', 2];
+AREA_GAS.ops.pantallaCalendarios = ['turnos', 1]; AREA_GAS.ops.pantallaCoberturas = ['turnos', 1]; AREA_GAS.ops.opsTurnos = ['turnos', 1];
+AREA_GAS.ops.guardarHorarioSucursal = ['horarios', 2];
+
+/** Puerta interna (con la clave del servidor): la dirección y la llave de Supabase, para que el servidor propio mande los avisos al celular. */
+function supaCredencial(q) { var c = supaCfg(); return { url: c.url, key: c.key }; }
+
+/* ── Álvaro (operaciones) solo ve y pregunta: no cambia turnos, ni horas reales, ni abre semanas (tampoco desde Administración) ── */
+function guardarTurnos(cred, sid, fecha, cambios) {
+  if (t127Ops(quien(cred))) throw new Error('El calendario lo arma la gerente de la sucursal. Usted lo ve y puede preguntarle.');
+  // quien viene a cubrir (por una cobertura aceptada) no se cambia desde aquí: eso se acordó con su gerente
+  var suyos = {}; calLeeEq().forEach(function (p) { if (p.sid === sid) suyos[p.id] = true; });
+  var fijos = {}; pcPersonasBase().forEach(function (p) { if ((p.cubre || []).indexOf(sid) >= 0) fijos[p.id] = true; });
+  var cob = {}; t127Cob().forEach(function (c) { if (c.para === sid && c.estado === 'Aceptada') cob[c.persona] = c; });
+  (cambios || []).forEach(function (c) { var id = String((c || {}).id || ''); if (!suyos[id] && !fijos[id] && cob[id])
+    throw new Error('Esa persona viene a cubrir de ' + nombreUnidad(cob[id].de) + ': su turno se acordó con su gerente. Para otro día u otro turno, pídalo en Coberturas.'); });
+  return guardarTurnos127(cred, sid, fecha, cambios);
+}
+function guardarBorradorCal(cred, sid, fecha, cambios) {
+  if (t127Ops(quien(cred))) throw new Error('El calendario lo arma la gerente de la sucursal.');
+  return guardarBorradorCal127(cred, sid, fecha, cambios);
+}
+function autorizarCambioCal(cred, sid, fecha, sem, si, comentario) {
+  if (t127Ops(quien(cred))) throw new Error('La semana la abre la gerente de la sucursal (usted recibe el aviso).');
+  return autorizarCambioCal127(cred, sid, fecha, sem, si, comentario);
+}
+function guardarHorasReales(cred, sid, fecha, horas) {
+  if (t127Ops(quien(cred))) throw new Error('Las horas reales salen de la asistencia que anota la gerente; si hay que corregirlas, lo hace el administrador.');
+  return guardarHorasReales127(cred, sid, fecha, horas);
+}
+
+var T127_SOLO_SUCURSAL = ['guardarTurnos', 'guardarBorradorCal', 'confirmarSemanaCal', 'reabrirSemanaCal', 'pedirCambioCal', 'autorizarCambioCal', 'guardarAsistencia', 'pedirCobertura', 'resolverCobertura',
+  'pedirPrestamo', 'resolverPrestamo', 'guardarPersonaCal', 'eliminarPersonaCal', 'guardarHorasApoyo', 'guardarHorasReales', 'guardarConfigCal', 'guardarReglasCal', 'moverPersonaSucursal'];
+function t127Freno(fn, args) {
+  if (T127_SOLO_SUCURSAL.indexOf(fn) < 0) return;
+  var c = args && args[0]; if (!c || typeof c !== 'object' || !c.usuario) return;
+  var u = null; try { usuariosCache().forEach(function (x) { if (x.nombre.toLowerCase() === String(c.usuario).trim().toLowerCase()) u = x; }); } catch (e) { return; }
+  if (u && u.activo && u.rol === 'operaciones') throw new Error('Esto lo hace la gerente de la sucursal (o el administrador). Usted lo ve y puede preguntarle.');
+}
+/** «Pedírselo»: quien lo pidió no se lo responde a sí mismo. */
+function resolverPrestamo(cred, idPr, si, nota) {
+  var yo = quien(cred), x = pcPrestamos().filter(function (y) { return y.id === String(idPr); })[0];
+  if (x && !yo.esAdmin && x.pidio === yo.nombre) throw new Error('Esto lo responde la gerente de ' + nombreUnidad(x.en) + '.');
+  return resolverPrestamo127(cred, idPr, si, t127Seguro(nota));
 }
