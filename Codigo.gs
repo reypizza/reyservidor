@@ -818,8 +818,9 @@ function estadoResultados(ss) {
     }
     if (cat === CAT_CAJA) {
       return function (L) {
-        return '=SUMIFS(Ingresos!$Q:$Q,Ingresos!$E:$E,' + L +
-          '$6,Ingresos!$G:$G,$B$4,Ingresos!$K:$K,"No")';
+        return '=MAX(0,SUMIFS(Ingresos!$Q:$Q,Ingresos!$E:$E,' + L +
+          '$6,Ingresos!$G:$G,$B$4,Ingresos!$K:$K,"No")-SUMIFS(Gastos!$I:$I,Gastos!$E:$E,' + L +
+          '$6,Gastos!$H:$H,$B$4,Gastos!$C:$C,"' + QUIEN_CAJA + '",Gastos!$K:$K,"No"))';
       };
     }
     return function (L) {
@@ -1009,6 +1010,7 @@ function llamar(fn, rid, args) {
   args = Array.isArray(args) ? args : [];
   if (fn !== 'entrarAparato') apaCred(args); else _POR_APARATO = false;
   t127Freno(fn, args);
+  acu129Freno(fn, args);
   permAntes(fn, args);
   rid = String(rid || '').replace(/[^A-Za-z0-9_-]/g, '').slice(0, 40);
   if (!rid) return supaTras(globalThis[fn].apply(null, args));
@@ -1803,7 +1805,7 @@ function ocupadosDe(sucursal) {
 
 /** `max` es cuántos movimientos se devuelven. La app pide los últimos 300; el
  *  reporte del mes pide muchos más, porque tiene que traer el mes completo. */
-function movimientosCalc(max) {
+function movimientosCalcBase(max) {
   max = Number(max) || 300;
   var ss = libro();
   var out = [];
@@ -2119,7 +2121,7 @@ function registrarIngreso(d) {
   if (yo.limitado) throw new Error('Su usuario tiene acceso limitado: solo registra gastos.');
   if (yo.rol === 'gerente') d.unidad = yo.sucursal;
   var v = preparaIngreso(d);
-  if (yo.rol === 'gerente') return guardaPorConfirmar(yo, 'ingreso', v, d);
+  if (yo.rol === 'gerente') throw new Error('El corte lo manda la caja al cerrar cada turno. Usted lo revisa y lo confirma en la app de Gerentes › Corte de caja.');
   return escribeIngreso(v, yo.nombre, new Date(), null);
 }
 
@@ -3755,7 +3757,7 @@ function resumenMes(cred, mes) {
     if (m.desglosado) { p.efe += m.efectivo || 0; p.tar += m.tarjeta || 0; }
     else p.sinDesglose += m.monto;
     // lo que salió de la caja es gasto, aunque se capture en el corte
-    if (m.caja > 0) { p.caja += m.caja; p.gas += m.caja; }
+    if (m.caja > 0) { p.caja += m.caja; p.gas += (m.cajaResto != null ? m.cajaResto : m.caja); }
     if (m.comision > 0) { p.com += m.comision; p.gas += m.comision; }
   });
 
@@ -3839,7 +3841,7 @@ function resumenMes(cred, mes) {
   det.forEach(function (x) { suma(x.unidad, x.categoria, x.subtotal); });
   movs.forEach(function (m) {
     if (m.clase === 'ingreso') {
-      if (m.caja > 0) suma(m.unidad, CAT_CAJA, m.caja);
+      if ((m.cajaResto != null ? m.cajaResto : m.caja) > 0) suma(m.unidad, CAT_CAJA, m.cajaResto != null ? m.cajaResto : m.caja);
       if (m.comision > 0) suma(m.unidad, CAT_COMISION, m.comision);
       return;
     }
@@ -8446,7 +8448,7 @@ function gastoRealMes(mes) {
   var venta = {};
   movs.forEach(function (m) {
     if (m.clase === 'ingreso') { venta[m.unidad] = (venta[m.unidad] || 0) + m.monto;
-      if (m.caja > 0) suma(m.unidad, CAT_CAJA, m.caja);
+      if ((m.cajaResto != null ? m.cajaResto : m.caja) > 0) suma(m.unidad, CAT_CAJA, m.cajaResto != null ? m.cajaResto : m.caja);
       if (m.comision > 0) suma(m.unidad, CAT_COMISION, m.comision); return; }
     if (m.titulo === CAT_ENVIOS) { venta[m.unidad] = (venta[m.unidad] || 0) - m.monto; return; }
     if (conDet[m.id]) return;
@@ -15763,7 +15765,7 @@ function cajaCorte(ss, u, e, ahora) {
 }
 
 /** Reportes › Ventas de las cajas. Administrador, dueños, director operativo y finanzas: todas; el gerente: su sucursal. */
-function ventasCajas(cred, desde, hasta, sid) {
+function ventasCajasBase(cred, desde, hasta, sid) {
   var yo = verifica(cred);
   var todas = yo.esAdmin || ['dueno', 'operaciones', 'finanzas'].indexOf(yo.rol) >= 0;
   if (!todas && yo.rol !== 'gerente') throw new Error('Su usuario no ve las ventas de las cajas.');
@@ -16448,14 +16450,15 @@ function tokenSupabase(cred) {
  * Cada minuto, esta función trae lo nuevo y lo pasa a las mismas hojas de siempre con cajaLote (la misma de la entrega 73):
  *  · cada orden → «Ventas caja» y sus platillos → «Ventas caja detalle» (si ya estaba, no se duplica: se busca por su clave);
  *  · cada anulación → la orden queda «Anulada» en la hoja;
- *  · cada corte → «Cortes caja» mientras CAJAS_CORTES no sea «ingresos» (prueba); con CAJAS_CORTES = ingresos, a Ingresos (AM/PM).
+ *  · cada corte → Ingresos (AM/PM). Solo con CAJAS_CORTES = prueba se queda aparte en «Cortes caja» (129).
  * Después le avisa a Supabase qué pasó (pos_hoja_marcar). Si algo cambió mientras tanto, se vuelve a pasar en la siguiente vuelta.
  * Propiedades: SUPABASE_URL y SUPABASE_SERVICE_KEY (las de la etapa 1) y, para encender los cortes de verdad, CAJAS_CORTES = ingresos. */
 var CAJAS_SUPA_MAX = 300;
 
 function cajasSupaPasar() {
   var pr = PropertiesService.getScriptProperties();
-  var modo = String(pr.getProperty('CAJAS_CORTES') || '').trim().toLowerCase() === 'ingresos' ? 'ingresos' : 'prueba';
+  // 129: el corte de la caja entra a Ingresos solo (la gerente ya no lo escribe); «prueba» queda solo si alguien lo pone a propósito
+  var modo = String(pr.getProperty('CAJAS_CORTES') || '').trim().toLowerCase() === 'prueba' ? 'prueba' : 'ingresos';
   var ords = supaFetch('GET', 'pos_ordenes?select=clave,suc,orden,fecha,hora,turno,tipo,total,envio,efectivo,tarjeta,estado,cajera,cliente,llamada_de,motivo,descuento,personas,v,pos_lineas(n,codigo,nombre,categoria,cant,precio,total)&hoja=eq.pendiente&order=recibido.asc&limit=' + CAJAS_SUPA_MAX) || [];
   var cortes = supaFetch('GET', 'pos_cortes?select=*&estado_hoja=eq.pendiente&order=recibido.asc&limit=60') || [];
   if (!ords.length && !cortes.length) return { ordenes: 0, cortes: 0 };
@@ -16490,7 +16493,9 @@ function cajasSupaReloj() { try { var x = cajasSupaPasar(); if (x.ordenes || x.c
   try { var y = invSalida(); if (y.hechos || y.errores) Logger.log('inventario a hojas: ' + JSON.stringify(y)); } catch (e2) { Logger.log('invSalida: ' + e2.message); }
   if (new Date().getMinutes() % 15 === 0) { try { cajaHorariosAsegura(); perQuincenaMandar(); } catch (e3) { Logger.log('personal: ' + e3.message); }
     try { t127SemanasRepaso(); } catch (e5) { Logger.log('semanas: ' + e5.message); }
-    try { if (supaCfgSuave()) supaFetch('post', 'rpc/com_recordatorios', {}); } catch (e4) { Logger.log('recordatorios: ' + e4.message); } } }
+    try { if (supaCfgSuave()) supaFetch('post', 'rpc/com_recordatorios', {}); } catch (e4) { Logger.log('recordatorios: ' + e4.message); } }
+  try { var g9 = cajasGastosPasar(); if (g9.gastos) Logger.log('gastos de caja: ' + JSON.stringify(g9)); } catch (e9) { Logger.log('gastos de caja: ' + e9.message); }
+  try { gastoReglasHistorial(false); } catch (e10) { Logger.log('reglas de gastos: ' + e10.message); } }
 /** ▶ Ejecutar una vez: deja el paso automático cada minuto. */
 function cajasSupaInstalarReloj() {
   ScriptApp.getProjectTriggers().forEach(function (t) { if (t.getHandlerFunction() === 'cajasSupaReloj') ScriptApp.deleteTrigger(t); });
@@ -17360,7 +17365,7 @@ var AREA_GAS = {
     pdfCalendario: ['pdf', 2], guardarHorasApoyo: ['apoyo', 2], guardarPersonaCal: ['equipo', 2], eliminarPersonaCal: ['equipo', 2],
     listaAvisosPersonal: ['avisos', 1], guardarAvisoPersonal: ['avisos', 2], quitarAvisoPersonal: ['avisos', 2],
     listaReconocimientos: ['reconocimientos', 1], darReconocimiento: ['reconocimientos', 2], anularReconocimiento: ['reconocimientos', 2],
-    registrarIngreso: ['corte', 2], ventas: ['venta_dia', 1],
+    ventas: ['venta_dia', 1],
     pantallaSolicitud: ['recibir', 1], listaSolicitudes: ['recibir', 1], abrirSolicitud: ['recibir', 1], llegoSolicitud: ['recibir', 2], recibirSolicitud: ['recibir', 2],
     pantallaFirmas: ['firmar', 1], firmarTraslado: ['firmar', 2],
     listaPendientes: ['pendientes', 1], llegaPendiente: ['pendientes', 2], listaDiferencias: ['diferencias', 1],
@@ -17452,11 +17457,12 @@ function areaPuente(q) {
     }
   }
   var cred = areaCred(yo.usuario), v, todo = [cred].concat(args);
-  if (fn === 'registrarIngreso') { var d0 = args[0] && typeof args[0] === 'object' ? args[0] : {}; d0.cred = cred; todo = [d0]; }
   _AREA_EN_PUENTE = true;
   try { v = llamar(fn, String(q.rid || ''), todo); }
   catch (e) { if (sinPrecios) throw new Error(areaSinQ(e && e.message ? e.message : e)); throw e; }
   finally { _AREA_EN_PUENTE = false; }
+  // 129 · Gerentes sin «Venta en quetzales»: el calendario llega sin la venta
+  if (app === 'mng' && yo.venta === false) v = mngSinVentaTodo(v);
   if (!sinPrecios) return v;
   v = areaSinPrecios(v);
   if (v && typeof v === 'object' && v.mensaje) v.mensaje = areaSinQ(v.mensaje);
@@ -18079,4 +18085,175 @@ function resolverPrestamo(cred, idPr, si, nota) {
   var yo = quien(cred), x = pcPrestamos().filter(function (y) { return y.id === String(idPr); })[0];
   if (x && !yo.esAdmin && x.pidio === yo.nombre) throw new Error('Esto lo responde la gerente de ' + nombreUnidad(x.en) + '.');
   return resolverPrestamo127(cred, idPr, si, t127Seguro(nota));
+}
+/* ════════════ 129 · EL CORTE Y LOS GASTOS DE LA CAJA, SOLOS ════════════
+ * 1) Cada corte de Rey Pizza Caja entra a Ingresos al cerrar el turno (ya no hay modo de prueba salvo CAJAS_CORTES = prueba).
+ *    La gerente ya no escribe el corte: lo confirma en su app (Supabase, pos_cortes.ger_estado).
+ * 2) Cada gasto de caja entra a la hoja Gastos (y su desglose a «Gastos detalle»), ya clasificado por Supabase:
+ *    registrado por «Rey Pizza Caja», con la nota «Caja · AM · Mercado · cajera». Si la caja lo cambia o lo quita, el de antes queda anulado.
+ * 3) El estado de resultados no cuenta dos veces: «Gastos de caja» queda solo con lo que no llegó clasificado
+ *    (lo del corte − los gastos de caja que ya están en Gastos).
+ * 4) Una vez al día se le pasa a Supabase lo que ya se compró antes (producto → categoría), para clasificar igual.
+ * 5) El contrato de confidencialidad: sin firmarlo, Administración no abre (salvo el administrador). */
+
+var GASTO_CAJA_NOTA = /^Caja · (AM|PM) · /;
+
+/** Los gastos de caja que Supabase tiene por pasar a la hoja. */
+function cajasGastosPasar() {
+  var gs = supaFetch('GET', 'pos_gastos?select=id,suc,fecha,turno,hora,caja_cat,tipo,factura,obs,cajera,total,filas,categoria,quitado,version,hoja_id&estado_hoja=eq.pendiente&order=recibido.asc&limit=40') || [];
+  if (!gs.length) return { gastos: 0 };
+  var marca = [], hechos = 0;
+  gs.forEach(function (g) {
+    try {
+      var sid = SUC_CAJA[String(g.suc || '').toUpperCase()], u = sid ? unidadPorId(sid) : null;
+      if (!u) throw new Error('Sucursal desconocida: ' + g.suc);
+      var fecha = String(g.fecha).slice(0, 10);
+      if (!esFecha(fecha)) throw new Error('Fecha inválida.');
+      if (g.hoja_id) gastoCajaAnula(String(g.hoja_id), g.quitado ? 'La cajera lo quitó en Rey Pizza Caja' : 'Reemplazado por el gasto actualizado de Rey Pizza Caja');
+      if (g.quitado) { marca.push({ id: g.id, version: g.version, hoja_id: '' }); hechos++; return; }
+      // lo que escribe la cajera nunca entra como fórmula a la hoja (=, +, -, @ al inicio)
+      var nota = ('Caja · ' + (g.turno === 'AM' ? 'AM' : 'PM') + ' · ' + String(g.caja_cat || 'Gasto') + (g.cajera ? ' · ' + g.cajera : '') + (g.obs ? ' · ' + g.obs : '')).slice(0, 140);
+      var d = { unidad: u.id, fechaPago: fecha, proveedor: '', factura: t127Seguro(String(g.factura || '').slice(0, 30)), nota: nota };
+      if (g.tipo === 'detalle' && (g.filas || []).length) {
+        d.lineas = g.filas.map(function (f) { return { producto: t127Seguro(String(f.producto || 'Producto').slice(0, 70)), cantidad: Number(f.unidades), precio: Number(f.precio) || 0, medida: 'unidad', categoria: f.categoria }; });
+        d.categoria = g.categoria; d.total = Number(g.total) || 0;          // los productos tienen que sumar el total del gasto
+      } else { d.categoria = g.categoria; d.monto = Number(g.total) || 0; }
+      var v = preparaGasto(d);
+      var r = escribeGasto(v, QUIEN_CAJA, new Date(), { por: QUIEN_CAJA, en: new Date() });
+      marca.push({ id: g.id, version: g.version, hoja_id: r.nuevo.id }); hechos++;
+    } catch (e) {
+      var m = String(e && e.message || e);
+      // un error de datos queda marcado (se ve en Finanzas); uno pasajero se reintenta en la siguiente vuelta
+      if (/desconocid|inválid|invalid|precio|monto|Escoja/i.test(m)) marca.push({ id: g.id, version: g.version, error: m });
+    }
+  });
+  if (marca.length) supaFetch('POST', 'rpc/pos_gastos_marcar', { p: marca });
+  return { gastos: hechos };
+}
+/** Anula en la hoja Gastos un gasto que mandó la caja (y su desglose). */
+function gastoCajaAnula(id, motivo) {
+  var lock = LockService.getScriptLock(); lock.waitLock(15000); _LEE = {};
+  try {
+    var h = libro().getSheetByName('Gastos'); if (!h || h.getLastRow() < 2) return;
+    var ids = h.getRange(2, 1, h.getLastRow() - 1, 3).getValues();
+    for (var k = ids.length - 1; k >= 0; k--) {
+      if (String(ids[k][0]) !== id) continue;
+      if (String(ids[k][2]) !== QUIEN_CAJA) return;              // solo lo que escribió la caja
+      if (String(h.getRange(k + 2, 11).getValue()).toLowerCase() !== 'sí') h.getRange(k + 2, 11, 1, 4).setValues([['Sí', motivo, QUIEN_CAJA, new Date()]]);
+      anulaDetalle(id);
+      return;
+    }
+  } finally { lock.releaseLock(); }
+}
+/** Una vez al día: lo que ya se compró en Administración (producto → la categoría que más se usó), para que la caja se clasifique igual. */
+function gastoReglasHistorial(forzar) {
+  var pr = PropertiesService.getScriptProperties(), hoy = Utilities.formatDate(new Date(), ZONA, 'yyyy-MM-dd');
+  if (!forzar && pr.getProperty('GASTO_REGLAS_DIA') === hoy) return 0;
+  var h = libro().getSheetByName('Gastos detalle'); if (!h || h.getLastRow() < 2) { pr.setProperty('GASTO_REGLAS_DIA', hoy); return 0; }
+  var n = h.getLastRow() - 1, ini = Math.max(2, h.getLastRow() - 4000 + 1), v = h.getRange(ini, 1, h.getLastRow() - ini + 1, 14).getValues(), cuenta = {};
+  v.forEach(function (r) {
+    if (String(r[13]).toLowerCase() !== 'no' || String(r[2]) === QUIEN_CAJA) return;     // lo anulado y lo que ya vino de la caja no enseña
+    var p = String(r[8] || '').trim().toLowerCase(), c = String(r[7] || '');
+    if (p.length < 3 || CATEGORIAS.indexOf(c) < 0) return;
+    var x = cuenta[p] = cuenta[p] || {}; x[c] = (x[c] || 0) + 1;
+  });
+  var lista = Object.keys(cuenta).slice(0, 5000).map(function (p) { var x = cuenta[p], m = Object.keys(x).sort(function (a, b) { return x[b] - x[a]; })[0]; return { producto: p, categoria: m }; });
+  if (lista.length) supaFetch('POST', 'rpc/pos_gasto_reglas_historial', { p: lista });
+  pr.setProperty('GASTO_REGLAS_DIA', hoy);
+  return lista.length;
+}
+
+/** Lo de antes, más «cajaResto» en cada ingreso: lo del corte que no llegó como gasto de caja clasificado (para no contarlo dos veces). */
+function movimientosCalc(max) {
+  var out = movimientosCalcBase(max), cg = {};
+  out.forEach(function (m) {
+    if (m.clase !== 'gasto' || m.anulado || m.quien !== QUIEN_CAJA) return;
+    var t = GASTO_CAJA_NOTA.exec(m.nota || ''); if (!t) return;
+    var k = m.unidad + '|' + m.fecha + '|' + t[1]; cg[k] = r2((cg[k] || 0) + m.monto);
+  });
+  out.forEach(function (m) {
+    if (m.clase !== 'ingreso') return;
+    var k = m.unidad + '|' + m.fecha + '|' + m.turno, g = m.anulado ? 0 : (cg[k] || 0);
+    m.cajaClasificada = Math.min(m.caja || 0, g);
+    m.cajaResto = r2(Math.max(0, (m.caja || 0) - g));
+    if (!m.anulado && g) delete cg[k];          // un corte reemplazado (anulado) no se queda con lo clasificado
+  });
+  return out;
+}
+
+/** La app de Gerentes sin «Venta en quetzales»: el calendario sin la venta; la venta típica como índice (0–100), que sirve para el personal sugerido. */
+function mngSinVenta(v) {
+  if (!v || typeof v !== 'object') return v;
+  if (Array.isArray(v.tipica)) { var mx = 0; v.tipica.forEach(function (x) { mx = Math.max(mx, Number(x) || 0); });
+    v.tipica = v.tipica.map(function (x) { return mx > 0 ? Math.round((Number(x) || 0) / mx * 100) : 0; }); v.tipicaIndice = true; }
+  if (v.venta && typeof v.venta === 'object') v.venta = {};
+  delete v.ventaSemana; delete v.ventaQuincena;
+  return v;
+}
+
+/** Toda respuesta de la app de Gerentes sin «Venta en quetzales»: donde venga el calendario (también al guardar turnos, confirmar…), sin la venta. */
+function mngSinVentaTodo(v, prof) {
+  prof = prof || 0;
+  if (!v || typeof v !== 'object' || prof > 4) return v;
+  if (Array.isArray(v)) { v.forEach(function (x) { mngSinVentaTodo(x, prof + 1); }); return v; }
+  if (Array.isArray(v.tipica) || (v.venta && typeof v.venta === 'object' && !Array.isArray(v.venta))) mngSinVenta(v);
+  Object.keys(v).forEach(function (k) { if (v[k] && typeof v[k] === 'object') mngSinVentaTodo(v[k], prof + 1); });
+  return v;
+}
+/* ── el contrato de confidencialidad en Administración ── */
+var ACU_LIBRES = ['ping'];
+function acu129Freno(fn, args) {
+  if (_AREA_EN_PUENTE || ACU_LIBRES.indexOf(fn) >= 0) return;
+  var c = args && args[0]; if (c && typeof c === 'object' && c.cred && typeof c.cred === 'object') c = c.cred;
+  if (!c || typeof c !== 'object' || !c.usuario) return;
+  var nombre = String(c.usuario).trim(), u = null;
+  try { usuariosCache().forEach(function (x) { if (x.nombre.toLowerCase() === nombre.toLowerCase()) u = x; }); } catch (e) { return; }
+  if (!u || !u.activo || u.rol === 'admin' || u.esAdmin) return;
+  var cache = null, llave = 'acu_' + Utilities.base64EncodeWebSafe(Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, nombre.toLowerCase())).slice(0, 30);
+  try { cache = CacheService.getScriptCache(); var v = cache.get(llave); if (v === '1') return; if (v === '0') throw acuError(); } catch (e) { if (e && e.acu) throw e; }
+  var r = null;
+  try { r = supaFetch('POST', 'rpc/adm_contrato_firmado', { p_usuario: nombre }); } catch (e) { Logger.log('contrato: Supabase no contestó (' + e.message + ')'); return; }   // si Supabase no contesta, Administración sigue (queda anotado)
+  if (r == null) throw new Error('Su usuario de Administración no está unido a su persona. Pídale al administrador que lo una en Datos del personal; después firme el contrato de confidencialidad en su app de Rey Pizza.');
+  var si = r === true;
+  try { if (cache) cache.put(llave, si ? '1' : '0', si ? 21600 : 60); } catch (e) {}
+  if (!si) throw acuError();
+}
+function acuError() {
+  var e = new Error('Primero lea y firme el contrato de confidencialidad. Ábralo en su app de Rey Pizza (con su teléfono y su código): sale al entrar. Después vuelva aquí.');
+  e.acu = true; return e;
+}
+
+/** Ventas › lo de las cajas: además, el corte de cada turno (lo que mandó la caja, sus gastos ya clasificados y si la gerente lo confirmó). */
+function ventasCajas(cred, desde, hasta, sid) {
+  var yo0 = verifica(cred);
+  if (!yo0.esAdmin && ['dueno', 'operaciones', 'finanzas'].indexOf(yo0.rol) < 0) throw new Error('Su usuario no ve las ventas de las cajas.');      // 129: tampoco la gerente
+  var out = ventasCajasBase(cred, desde, hasta, sid);
+  out.cortes = [];
+  if (!supaCfgSuave()) return out;
+  try {
+    var pre = {}; Object.keys(SUC_CAJA).forEach(function (k) { pre[SUC_CAJA[k]] = k; });
+    var sucs = (out.sucursales || []).map(function (s) { return pre[s.id]; }).filter(Boolean);
+    if (!sucs.length) return out;
+    var filtro = 'fecha=gte.' + out.desde + '&fecha=lte.' + out.hasta + '&suc=in.(' + sucs.join(',') + ')';
+    var cs = supaFetch('GET', 'pos_cortes?select=id,suc,fecha,turno,efectivo,tarjeta,gasto_caja,ordenes,cajera,abre,cierra,ger_estado,ger_por,ger_en,ger_contado,ger_nota&' + filtro + '&order=fecha.desc,suc.asc,turno.asc&limit=400') || [];
+    var gs = supaFetch('GET', 'pos_gastos?select=suc,fecha,turno,caja_cat,categoria,total,filas,tipo&quitado=eq.false&' + filtro + '&limit=2000') || [];
+    var ct = supaFetch('GET', 'pos_cierres_tarjeta?select=suc,fecha,turno,sistema,codigo,monto,conf_estado&' + filtro + '&limit=1000') || [];
+    var en = supaFetch('GET', 'pos_entregas?select=suc,fecha,turno,repartidor,min_total&' + filtro + '&limit=3000') || [];
+    var porT = {}, tjT = {}, enT = {};
+    ct.forEach(function (c) { var k = c.suc + '|' + String(c.fecha).slice(0, 10) + '|' + c.turno; (tjT[k] = tjT[k] || []).push({ sistema: c.sistema, codigo: c.codigo, monto: Number(c.monto), estado: c.conf_estado }); });
+    en.forEach(function (c) { var k = c.suc + '|' + String(c.fecha).slice(0, 10) + '|' + c.turno, z = enT[k] = enT[k] || { n: 0, suma: 0, conT: 0 }; z.n++; if (c.min_total != null) { z.suma += Number(c.min_total); z.conT++; } });
+    gs.forEach(function (g) {
+      var k = g.suc + '|' + String(g.fecha).slice(0, 10) + '|' + g.turno, c = porT[k] = porT[k] || {};
+      if (g.tipo === 'detalle' && (g.filas || []).length) g.filas.forEach(function (f) { c[f.categoria] = r2((c[f.categoria] || 0) + (Number(f.unidades) || 0) * (Number(f.precio) || 0)); });
+      else c[g.categoria] = r2((c[g.categoria] || 0) + Number(g.total));
+    });
+    out.cortes = cs.map(function (c) {
+      var f = String(c.fecha).slice(0, 10), u = unidadPorId(SUC_CAJA[c.suc]);
+      return { sucursal: u ? u.nombre : c.suc, fecha: f, turno: c.turno, venta: r2(Number(c.efectivo) + Number(c.tarjeta)), efectivo: Number(c.efectivo), tarjeta: Number(c.tarjeta),
+        gastos: Number(c.gasto_caja), depositar: r2(Number(c.efectivo) - Number(c.gasto_caja)), ordenes: c.ordenes, cajera: c.cajera || '', abre: c.abre || '', cierra: c.cierra || '',
+        porCategoria: porT[c.suc + '|' + f + '|' + c.turno] || {}, cierres: tjT[c.suc + '|' + f + '|' + c.turno] || [],
+        entregas: (function (z) { return z ? { n: z.n, min: z.conT ? Math.round(z.suma / z.conT) : null } : { n: 0, min: null }; })(enT[c.suc + '|' + f + '|' + c.turno]), estado: c.ger_estado, por: c.ger_por || '', contado: c.ger_contado, nota: c.ger_nota || '' };
+    });
+  } catch (e) { out.cortesError = 'No se pudieron leer los cortes de las cajas.'; }
+  return out;
 }
