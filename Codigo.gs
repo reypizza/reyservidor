@@ -926,7 +926,7 @@ function doGet() {
  * mismo proyecto por POST. Solo se pueden llamar las funciones de esta lista (las mismas
  * que usa la pantalla), y cada una revisa el código de quien pregunta, igual que antes.
  * La lista la pone sola el armado; no hace falta tocarla. */
-/*API_INI*/var API_PERMITIDAS = ['abrirSolicitud', 'abrirTraslado', 'aceptarSolicitud', 'aceptarYPreparar', 'aclararDiferencia', 'activarCorreos', 'activarObligacion', 'activarProducto', 'activarProductoSucursal', 'adjuntarCotizacion', 'agregarEquipo', 'agregarProducto', 'agregarRecomendados', 'agregarRecomendadosCmo', 'agregarRubro', 'anclarProducto', 'anular', 'anularOrden', 'anularPagoImpuesto', 'anularSolicitud', 'aprobarFondos', 'aprobarPresupuesto', 'aprobarPresupuestoArea', 'asignarDescanso', 'borrarKpi', 'borrarKpiCmo', 'borrarSolicitud', 'cambiarEquipo', 'cambiarMiPin', 'cambiarPermiso', 'cancelarPermiso', 'confirmarPlanilla', 'confirmarRegistro', 'consolidado', 'copiarPresupuesto', 'costosTraslados', 'cotizarOrden', 'darDeBaja', 'datos', 'despacharSolicitudes', 'detalleGasto', 'editarProducto', 'eliminarPersonaCal', 'entrar', 'enviarEmergencia', 'enviarKpis', 'enviarKpisCmo', 'enviarSolicitud', 'enviarSugerencia', 'estadoCorreos', 'evaluarMerma', 'existencias', 'existenciasEmergencia', 'firmarTraslado', 'guardarAjustesInv', 'guardarBonoGeneral', 'guardarBonosCal', 'guardarBorradorCal', 'guardarComision', 'guardarConfigCal', 'guardarConteo', 'guardarEstudio', 'guardarHorario', 'guardarHorasApoyo', 'guardarHorasReales', 'guardarKpi', 'guardarKpiCmo', 'guardarLugar', 'guardarMando', 'guardarMedida', 'guardarMiCorreo', 'guardarMiPresupuesto', 'guardarObligacion', 'guardarOrden', 'guardarPersonaCal', 'guardarPrecios', 'guardarPresupuesto', 'guardarProducto', 'guardarProductoBodega', 'guardarProveedor', 'guardarProveedorInv', 'guardarReceta', 'guardarRepartidor', 'guardarTraslado', 'guardarTurnos', 'guardarUsuario', 'habilita', 'habilitarConteo', 'historialTraslados', 'indicadoresConta', 'leerBonoGeneral', 'leerSugerencias', 'listaBodega', 'listaCatalogo', 'listaConsultas', 'listaDiferencias', 'listaEntrada', 'listaFondos', 'listaImpuestos', 'listaKpis', 'listaKpisCmo', 'listaLugares', 'listaOrdenes', 'listaPermisos', 'listaPrecios', 'listaRepartidores', 'listaReportes', 'listaSolicitudes', 'listaUsuarios', 'llegoSolicitud', 'marcarPreparadas', 'medirAceite', 'miAvance', 'miCorreo', 'miPanel', 'miPresupuesto', 'notificaciones', 'ordenesPago', 'pagarFondos', 'pagarOrden', 'pagarRepartidor', 'pantallaCalendarios', 'pantallaConteo', 'pantallaEmergencias', 'pantallaFirmas', 'pantallaHorarios', 'pantallaKpi', 'pantallaMando', 'pantallaMant', 'pantallaMerma', 'pantallaMuestreo', 'pantallaPedidosBodega', 'pantallaProduccion', 'pantallaSolicitud', 'pantallaSugerencias', 'pdfCalendario', 'pdfOrden', 'pedirDescanso', 'pedirEmergencia', 'pedirFondos', 'pedirPermiso', 'ping', 'planillasPorPagar', 'ponPreciosGerentes', 'porConfirmar', 'preguntar', 'presupuestoMes', 'presupuestosAreas', 'probarCorreo', 'productosConfig', 'productosParaAnclar', 'productosSucursal', 'reabrirPlanilla', 'rechazarRegistro', 'recibirEfectivo', 'recibirEmergencia', 'recibirOrden', 'recibirSolicitud', 'registrarGasto', 'registrarIngreso', 'registrarKpis', 'registrarLote', 'registrarMant', 'registrarMerma', 'registrarObservacion', 'registrarPagoImpuesto', 'renombrarCategoria', 'reporteDiario', 'reporteTraslados', 'resolverDescanso', 'responderConsulta', 'responderMerma', 'resultadosKpi', 'resultadosKpiCmo', 'resultadosKpiRango', 'resultadosMuestreo', 'resumenInventario', 'resumenMes', 'revisarPermiso', 'seguimiento', 'sugerenciaCompra', 'tableroFinanzas', 'tableroKpi', 'terminarFondos', 'validarRegistro', 'ventas', 'verTraslado', 'verificarFondos', 'proveedoresProductos', 'guardarProveedorProd', 'eliminarProveedor', 'detalleAbastecimiento', 'pdfHistorialInventario', 'pantallaCierreMes', 'guardarCierreMes', 'misMenus', 'menusRol', 'guardarMenusRol', 'historialInventario', 'reiniciarPresupuestos', 'autorizarFondos', 'hechaFondos', 'listaPendientes', 'llegaPendiente', 'cancelarPendiente', 'despacharPendientes', 'devolverFondo', 'corregirFondo', 'pantallaEquipos', 'guardarEquipoA', 'bajaEquipo', 'revisarEquipos', 'confirmarRevisionEq', 'pedirEquipo', 'resolverPedidoEq', 'entregarCompraEq', 'recibirEquipo', 'devolverOrden', 'corregirOrden', 'reiniciarPrecios', 'guardarMezcla', 'registrarLoteMezcla', 'etiquetasLote', 'guardarConfigEtiquetas', 'listaKpisCoo', 'guardarKpiCoo', 'borrarKpiCoo', 'enviarKpisCoo', 'agregarRecomendadosCoo', 'resultadosKpiCoo', 'pantallaKpiCoo', 'registrarKpisCoo', 'resumenAreas', 'resumenAreasSenales', 'pantallaZonas', 'guardarZonas', 'listaKpisTec', 'guardarKpiTec', 'borrarKpiTec', 'enviarKpisTec', 'agregarRecomendadosTec', 'resultadosKpiTec', 'pantallaKpiTec', 'registrarKpisTec', 'cotizarFondo', 'recibirFondo', 'pantallaNivelacion', 'iniciarNivelacion', 'guardarConteoNivelacion', 'explicarNivelacion', 'vistoBuenoNivelacion', 'aprobarNivelacion', 'devolverNivelacion', 'anularNivelacion', 'pdfNivelacion', 'resumenSucursal', 'tableroBodega', 'permisosRol', 'guardarPermisosRol', 'guardarReglasCal', 'confirmarSemanaCal', 'pedirCambioCal', 'autorizarCambioCal', 'ventasCajas', 'pantallaDirectores', 'guardarAreaDir', 'quitarDirector', 'pagarDirectores', 'reabrirDirectores', 'proponerContratacion', 'cancelarPropuesta', 'resolverPropuesta', 'tokenSupabase', 'ponSugeridoPedido', 'invSalidaYa', 'permisosCaja', 'guardarPermisosCaja', 'guardarPersonaCaja', 'guardarHorariosCaja', 'listaAvisosPersonal', 'guardarAvisoPersonal', 'quitarAvisoPersonal', 'listaReconocimientos', 'darReconocimiento', 'anularReconocimiento', 'accesoOperadores', 'guardarAccesoOperadores', 'pedirPrestamo', 'resolverPrestamo', 'moverPersonaSucursal', 'autorizarAscenso', 'entrarAparato', 'aparatoCrear', 'aparatoQuitar', 'reabrirSemanaCal', 'guardarAsistencia', 'pantallaCoberturas', 'pedirCobertura', 'resolverCobertura', 'opsTurnos', 'guardarHorarioSucursal'];/*API_FIN*/
+/*API_INI*/var API_PERMITIDAS = ['abrirSolicitud', 'abrirTraslado', 'aceptarSolicitud', 'aceptarYPreparar', 'aclararDiferencia', 'activarCorreos', 'activarObligacion', 'activarProducto', 'activarProductoSucursal', 'adjuntarCotizacion', 'agregarEquipo', 'agregarProducto', 'agregarRecomendados', 'agregarRecomendadosCmo', 'agregarRubro', 'anclarProducto', 'anular', 'anularOrden', 'anularPagoImpuesto', 'anularSolicitud', 'aprobarFondos', 'aprobarPresupuesto', 'aprobarPresupuestoArea', 'asignarDescanso', 'borrarKpi', 'borrarKpiCmo', 'borrarSolicitud', 'cambiarEquipo', 'cambiarMiPin', 'cambiarPermiso', 'cancelarPermiso', 'confirmarPlanilla', 'confirmarRegistro', 'consolidado', 'copiarPresupuesto', 'costosTraslados', 'cotizarOrden', 'darDeBaja', 'datos', 'despacharSolicitudes', 'detalleGasto', 'editarProducto', 'eliminarPersonaCal', 'entrar', 'enviarEmergencia', 'enviarKpis', 'enviarKpisCmo', 'enviarSolicitud', 'enviarSugerencia', 'estadoCorreos', 'evaluarMerma', 'existencias', 'existenciasEmergencia', 'firmarTraslado', 'guardarAjustesInv', 'guardarBonoGeneral', 'guardarBonosCal', 'guardarBorradorCal', 'guardarComision', 'guardarConfigCal', 'guardarConteo', 'guardarEstudio', 'guardarHorario', 'guardarHorasApoyo', 'guardarHorasReales', 'guardarKpi', 'guardarKpiCmo', 'guardarLugar', 'guardarMando', 'guardarMedida', 'guardarMiCorreo', 'guardarMiPresupuesto', 'guardarObligacion', 'guardarOrden', 'guardarPersonaCal', 'guardarPrecios', 'guardarPresupuesto', 'guardarProducto', 'guardarProductoBodega', 'guardarProveedor', 'guardarProveedorInv', 'guardarReceta', 'guardarRepartidor', 'guardarTraslado', 'guardarTurnos', 'guardarUsuario', 'habilita', 'habilitarConteo', 'historialTraslados', 'indicadoresConta', 'leerBonoGeneral', 'leerSugerencias', 'listaBodega', 'listaCatalogo', 'listaConsultas', 'listaDiferencias', 'listaEntrada', 'listaFondos', 'listaImpuestos', 'listaKpis', 'listaKpisCmo', 'listaLugares', 'listaOrdenes', 'listaPermisos', 'listaPrecios', 'listaRepartidores', 'listaReportes', 'listaSolicitudes', 'listaUsuarios', 'llegoSolicitud', 'marcarPreparadas', 'medirAceite', 'miAvance', 'miCorreo', 'miPanel', 'miPresupuesto', 'notificaciones', 'ordenesPago', 'pagarFondos', 'pagarOrden', 'pagarRepartidor', 'pantallaCalendarios', 'pantallaConteo', 'pantallaEmergencias', 'pantallaFirmas', 'pantallaHorarios', 'pantallaKpi', 'pantallaMando', 'pantallaMant', 'pantallaMerma', 'pantallaMuestreo', 'pantallaPedidosBodega', 'pantallaProduccion', 'pantallaSolicitud', 'pantallaSugerencias', 'pdfCalendario', 'pdfOrden', 'pedirDescanso', 'pedirEmergencia', 'pedirFondos', 'pedirPermiso', 'ping', 'planillasPorPagar', 'ponPreciosGerentes', 'porConfirmar', 'preguntar', 'presupuestoMes', 'presupuestosAreas', 'probarCorreo', 'productosConfig', 'productosParaAnclar', 'productosSucursal', 'reabrirPlanilla', 'rechazarRegistro', 'recibirEfectivo', 'recibirEmergencia', 'recibirOrden', 'recibirSolicitud', 'registrarGasto', 'registrarIngreso', 'registrarKpis', 'registrarLote', 'registrarMant', 'registrarMerma', 'registrarObservacion', 'registrarPagoImpuesto', 'renombrarCategoria', 'reporteDiario', 'reporteTraslados', 'resolverDescanso', 'responderConsulta', 'responderMerma', 'resultadosKpi', 'resultadosKpiCmo', 'resultadosKpiRango', 'resultadosMuestreo', 'resumenInventario', 'resumenMes', 'revisarPermiso', 'seguimiento', 'sugerenciaCompra', 'tableroFinanzas', 'tableroKpi', 'terminarFondos', 'validarRegistro', 'ventas', 'verTraslado', 'verificarFondos', 'proveedoresProductos', 'guardarProveedorProd', 'eliminarProveedor', 'detalleAbastecimiento', 'pdfHistorialInventario', 'pantallaCierreMes', 'guardarCierreMes', 'misMenus', 'menusRol', 'guardarMenusRol', 'historialInventario', 'reiniciarPresupuestos', 'autorizarFondos', 'hechaFondos', 'listaPendientes', 'llegaPendiente', 'cancelarPendiente', 'despacharPendientes', 'devolverFondo', 'corregirFondo', 'pantallaEquipos', 'guardarEquipoA', 'bajaEquipo', 'revisarEquipos', 'confirmarRevisionEq', 'pedirEquipo', 'resolverPedidoEq', 'entregarCompraEq', 'recibirEquipo', 'devolverOrden', 'corregirOrden', 'reiniciarPrecios', 'guardarMezcla', 'registrarLoteMezcla', 'etiquetasLote', 'guardarConfigEtiquetas', 'listaKpisCoo', 'guardarKpiCoo', 'borrarKpiCoo', 'enviarKpisCoo', 'agregarRecomendadosCoo', 'resultadosKpiCoo', 'pantallaKpiCoo', 'registrarKpisCoo', 'resumenAreas', 'resumenAreasSenales', 'pantallaZonas', 'guardarZonas', 'listaKpisTec', 'guardarKpiTec', 'borrarKpiTec', 'enviarKpisTec', 'agregarRecomendadosTec', 'resultadosKpiTec', 'pantallaKpiTec', 'registrarKpisTec', 'cotizarFondo', 'recibirFondo', 'pantallaNivelacion', 'iniciarNivelacion', 'guardarConteoNivelacion', 'explicarNivelacion', 'vistoBuenoNivelacion', 'aprobarNivelacion', 'devolverNivelacion', 'anularNivelacion', 'pdfNivelacion', 'resumenSucursal', 'tableroBodega', 'permisosRol', 'guardarPermisosRol', 'guardarReglasCal', 'confirmarSemanaCal', 'pedirCambioCal', 'autorizarCambioCal', 'ventasCajas', 'pantallaDirectores', 'guardarAreaDir', 'quitarDirector', 'pagarDirectores', 'reabrirDirectores', 'proponerContratacion', 'cancelarPropuesta', 'resolverPropuesta', 'tokenSupabase', 'ponSugeridoPedido', 'invSalidaYa', 'permisosCaja', 'guardarPermisosCaja', 'guardarPersonaCaja', 'guardarHorariosCaja', 'listaAvisosPersonal', 'guardarAvisoPersonal', 'quitarAvisoPersonal', 'listaReconocimientos', 'darReconocimiento', 'anularReconocimiento', 'accesoOperadores', 'guardarAccesoOperadores', 'pedirPrestamo', 'resolverPrestamo', 'moverPersonaSucursal', 'autorizarAscenso', 'entrarAparato', 'aparatoCrear', 'aparatoQuitar', 'reabrirSemanaCal', 'guardarAsistencia', 'pantallaCoberturas', 'pedirCobertura', 'resolverCobertura', 'opsTurnos', 'guardarHorarioSucursal', 'contratoEstado', 'contratoAbrir', 'contratoFirmar'];/*API_FIN*/
 /** Solo contesta «aquí estoy»: sirve para despertar el servidor y medir la velocidad. No lee ni guarda nada. */
 function ping() { return { ok: true }; }
 function doPost(e) {
@@ -13018,7 +13018,7 @@ function exportarIndicadores(q) {
 /* ════════════ COPIA COMPLETA PARA EL SERVIDOR PROPIO ════════════
  * El servidor propio guarda una copia de TODAS las pestañas y corre este mismo código sobre ella para contestar las lecturas.
  * Cada cambio que pasa por aquí avisa qué pestañas tocó («tocadas»), y el servidor solo vuelve a traer esas. */
-var VERSION_CODIGO = '2026-11-05-a';       // se cambia a mano cada vez que se cambia este archivo; el servidor compara que coincida con la suya
+var VERSION_CODIGO = '2026-11-06-a';       // se cambia a mano cada vez que se cambia este archivo; el servidor compara que coincida con la suya
 function versionCodigo() { return VERSION_CODIGO; }
 function huellaTexto(t) { return Utilities.base64Encode(Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, t)).slice(0, 22); }
 /** Un resumen barato de cada pestaña: cuántas filas y columnas tiene y una huella de sus últimas 25 filas. */
@@ -16495,7 +16495,8 @@ function cajasSupaReloj() { try { var x = cajasSupaPasar(); if (x.ordenes || x.c
     try { t127SemanasRepaso(); } catch (e5) { Logger.log('semanas: ' + e5.message); }
     try { if (supaCfgSuave()) supaFetch('post', 'rpc/com_recordatorios', {}); } catch (e4) { Logger.log('recordatorios: ' + e4.message); } }
   try { var g9 = cajasGastosPasar(); if (g9.gastos) Logger.log('gastos de caja: ' + JSON.stringify(g9)); } catch (e9) { Logger.log('gastos de caja: ' + e9.message); }
-  try { gastoReglasHistorial(false); } catch (e10) { Logger.log('reglas de gastos: ' + e10.message); } }
+  try { gastoReglasHistorial(false); } catch (e10) { Logger.log('reglas de gastos: ' + e10.message); }
+  try { var c13 = capturasAvisar(); if (c13) Logger.log('capturas avisadas: ' + c13); } catch (e13) { Logger.log('capturas: ' + e13.message); } }
 /** ▶ Ejecutar una vez: deja el paso automático cada minuto. */
 function cajasSupaInstalarReloj() {
   ScriptApp.getProjectTriggers().forEach(function (t) { if (t.getHandlerFunction() === 'cajasSupaReloj') ScriptApp.deleteTrigger(t); });
@@ -18209,17 +18210,18 @@ function acu129Freno(fn, args) {
   var nombre = String(c.usuario).trim(), u = null;
   try { usuariosCache().forEach(function (x) { if (x.nombre.toLowerCase() === nombre.toLowerCase()) u = x; }); } catch (e) { return; }
   if (!u || !u.activo || u.rol === 'admin' || u.esAdmin) return;
+  try { quien(c); } catch (e0) { return; }               // 130: sin el PIN correcto no se pregunta nada a Supabase (la función misma lo rechaza)
   var cache = null, llave = 'acu_' + Utilities.base64EncodeWebSafe(Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, nombre.toLowerCase())).slice(0, 30);
   try { cache = CacheService.getScriptCache(); var v = cache.get(llave); if (v === '1') return; if (v === '0') throw acuError(); } catch (e) { if (e && e.acu) throw e; }
   var r = null;
   try { r = supaFetch('POST', 'rpc/adm_contrato_firmado', { p_usuario: nombre }); } catch (e) { Logger.log('contrato: Supabase no contestó (' + e.message + ')'); return; }   // si Supabase no contesta, Administración sigue (queda anotado)
-  if (r == null) throw new Error('Su usuario de Administración no está unido a su persona. Pídale al administrador que lo una en Datos del personal; después firme el contrato de confidencialidad en su app de Rey Pizza.');
+  if (r == null) return;                                // 130: la persona se crea sola; null solo si el usuario no existe (ya lo frenó quien())
   var si = r === true;
   try { if (cache) cache.put(llave, si ? '1' : '0', si ? 21600 : 60); } catch (e) {}
   if (!si) throw acuError();
 }
 function acuError() {
-  var e = new Error('Primero lea y firme el contrato de confidencialidad. Ábralo en su app de Rey Pizza (con su teléfono y su código): sale al entrar. Después vuelva aquí.');
+  var e = new Error('Primero lea y firme el contrato de confidencialidad. Se abre aquí mismo: léalo, márquelo y fírmelo con su PIN.');
   e.acu = true; return e;
 }
 
@@ -18256,4 +18258,66 @@ function ventasCajas(cred, desde, hasta, sid) {
     });
   } catch (e) { out.cortesError = 'No se pudieron leer los cortes de las cajas.'; }
   return out;
+}
+
+/* ══════════ 130 · el contrato se firma en Administración y las capturas de pantalla le llegan al Director ══════════ */
+ACU_LIBRES.push('entrar', 'entrarAparato', 'contratoEstado', 'contratoAbrir', 'contratoFirmar', 'notificaciones');
+
+/** Quien pide el contrato en Administración (nombre y PIN ya revisados). El Director no lo firma. */
+function contratoYo(cred) {
+  var yo = quien(cred);
+  if (yo.esAdmin || yo.rol === 'admin') return null;
+  if (!supaCfgSuave()) throw new Error('Falta conectar Supabase en esta copia de Administración.');
+  return yo;
+}
+/** Si falta firmar: el texto del contrato. */
+function contratoEstado(cred) {
+  var yo = contratoYo(cred);
+  if (!yo) return { pendiente: false };
+  var r = supaFetch('POST', 'rpc/adm_acuerdo', { p_usuario: yo.nombre, p_accion: 'estado' }) || { pendiente: false };
+  if (!r.pendiente) acuOlvida(yo.nombre);
+  return r;
+}
+function acuOlvida(nombre) {
+  try { CacheService.getScriptCache().remove('acu_' + Utilities.base64EncodeWebSafe(Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, String(nombre).toLowerCase())).slice(0, 30)); } catch (e) {}
+}
+/** Desde que lo abre empiezan a contar los segundos de lectura. */
+function contratoAbrir(cred) {
+  var yo = contratoYo(cred);
+  if (!yo) return { ok: true };
+  return supaFetch('POST', 'rpc/adm_acuerdo', { p_usuario: yo.nombre, p_accion: 'abrir' });
+}
+/** Firmar: los puntos marcados, la firma con el dedo y su PIN de Administración (se vuelve a revisar). */
+function contratoFirmar(cred, puntos, firma, pin) {
+  var yo = contratoYo(cred);
+  if (!yo) return { ok: true };
+  try { quien({ usuario: yo.nombre, pin: String(pin || '') }, true); }
+  catch (e) { return { error: /Demasiados/.test(e.message) ? e.message : 'Ese no es su PIN de Administración.' }; }
+  var r = supaFetch('POST', 'rpc/adm_acuerdo', { p_usuario: yo.nombre, p_accion: 'firmar', p_puntos: Number(puntos) || 0, p_firma: String(firma || '') });
+  acuOlvida(yo.nombre);
+  return r;
+}
+
+/** Reloj: cada intento de captura de pantalla, por correo al Director (además del aviso en sus apps). */
+function capturasAvisar() {
+  if (!supaCfgSuave()) return 0;
+  // un correo cada 15 minutos como máximo, con todos los intentos juntos (así no se gasta la cuota de correos)
+  var cc = null; try { cc = CacheService.getScriptCache(); if (cc.get('capturas_correo')) return 0; } catch (e) { cc = null; }
+  var lista = supaFetch('POST', 'rpc/per_capturas_pendientes', {}) || [];
+  if (!lista.length) return 0;
+  var filas = lista.map(function (c) {
+    var en = new Date(c.en);
+    return '<tr><td style="padding:4px 8px">' + esHtml(Utilities.formatDate(en, ZONA, 'dd/MM HH:mm')) + '</td><td style="padding:4px 8px"><b>' + esHtml(c.nombre) + '</b></td><td style="padding:4px 8px">' +
+      esHtml(c.app || '') + (c.pantalla ? ' › ' + esHtml(c.pantalla) : '') + '</td></tr>';
+  }).join('');
+  var cuerpo = '<p>' + (lista.length === 1 ? 'Alguien intentó' : lista.length + ' veces intentaron') + ' tomar una captura de pantalla en la app REY PIZZA. La pantalla salió en negro (no se llevó nada).</p>' +
+    '<table style="border-collapse:collapse;font-size:14px">' + filas + '</table>';
+  var enviados = 0;
+  usuariosCache().forEach(function (u) {
+    if (!u.activo || !(u.esAdmin || u.rol === 'admin') || !correoValido(u.correo)) return;
+    try { if (enviaCorreo(u.correo, 'Rey Pizza · Intento de captura de pantalla', htmlCorreo('Intento de captura de pantalla', cuerpo))) enviados++; } catch (e) {}
+  });
+  supaFetch('POST', 'rpc/per_capturas_marcar', { p_ids: lista.map(function (c) { return c.id; }) });
+  try { if (cc) cc.put('capturas_correo', '1', 900); } catch (e) {}
+  return enviados;
 }
