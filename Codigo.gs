@@ -1008,6 +1008,7 @@ function llamar(fn, rid, args) {
   if (API_PERMITIDAS.indexOf(fn) < 0 || typeof globalThis[fn] !== 'function')
     throw new Error('La app pidió algo que no existe (' + fn + '). Falta pegar el Codigo.gs nuevo y crear una versión nueva de la implementación.');
   args = Array.isArray(args) ? args : [];
+  mudFrena(fn);
   if (fn !== 'entrarAparato') apaCred(args); else _POR_APARATO = false;
   t127Freno(fn, args);
   acu129Freno(fn, args);
@@ -13018,7 +13019,7 @@ function exportarIndicadores(q) {
 /* ════════════ COPIA COMPLETA PARA EL SERVIDOR PROPIO ════════════
  * El servidor propio guarda una copia de TODAS las pestañas y corre este mismo código sobre ella para contestar las lecturas.
  * Cada cambio que pasa por aquí avisa qué pestañas tocó («tocadas»), y el servidor solo vuelve a traer esas. */
-var VERSION_CODIGO = '2026-11-06-a';       // se cambia a mano cada vez que se cambia este archivo; el servidor compara que coincida con la suya
+var VERSION_CODIGO = '2026-11-07-a';       // se cambia a mano cada vez que se cambia este archivo; el servidor compara que coincida con la suya
 function versionCodigo() { return VERSION_CODIGO; }
 function huellaTexto(t) { return Utilities.base64Encode(Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, t)).slice(0, 22); }
 /** Un resumen barato de cada pestaña: cuántas filas y columnas tiene y una huella de sus últimas 25 filas. */
@@ -16627,6 +16628,7 @@ function areaCred(nombre) {
 function areaAccion(t) {
   var d = t.datos || {}, fn = String(d.fn || '');
   if (AREA_FN.indexOf(fn) < 0 || typeof globalThis[fn] !== 'function') { var e0 = new Error('Función no permitida: ' + fn); e0.final = true; throw e0; }
+  mudFrena(fn);
   var h = areaHojaAcc(), lr = h.getLastRow(), fila = 0;
   if (lr > 1) { var n = Math.min(lr - 1, 3000), v = h.getRange(lr - n + 1, 1, n, 7).getValues();
     for (var i = v.length - 1; i >= 0; i--) if (String(v[i][0]) === String(t.id)) { fila = lr - n + 1 + i;
@@ -16653,6 +16655,7 @@ function invSalida() {
       try {
         if (t.tipo === 'filas') (t.datos.partes || []).forEach(invPonFilas);
         else if (t.tipo === 'anular_conteo') invAnulaConteo(t.datos);
+        else if (t.tipo === 'hoja') mudHojaPon(t.datos);
         else if (t.tipo === 'accion') {
           // las funciones de hoy toman su propio candado: se suelta mientras corren
           lock.releaseLock(); _LEE = {}; _MEMO = {};
@@ -18321,3 +18324,63 @@ function capturasAvisar() {
   try { if (cc) cc.put('capturas_correo', '1', 900); } catch (e) {}
   return enviados;
 }
+
+/* ════════════ 134 · SACAR DE GOOGLE (G1): la copia a la hoja de lo que ya vive en Supabase ════════════
+ * Cuando un módulo ya lo contesta Supabase, cada cambio deja un trabajo «hoja» en la cola inv.salida:
+ * { hoja, clave: 'ID', id, fila: { encabezado: valor } }. Aquí se pone esa fila en su hoja (la cambia si ya está, o la agrega),
+ * para que lo que en Google todavía lee esa hoja (tableros, avisos, reportes) siga al día. Solo se tocan las columnas que vienen. */
+function mudValor(v) {
+  if (v === null || v === undefined) return '';
+  if (typeof v === 'string') {
+    var m = /^(\d{4})-(\d{2})-(\d{2})[ T](\d{2}):(\d{2})(?::(\d{2}))?$/.exec(v);
+    if (m) return new Date(+m[1], +m[2] - 1, +m[3], +m[4], +m[5], +(m[6] || 0));      // fecha y hora: como fecha de la hoja
+    return t127Seguro(v);                                                              // un texto que empieza con = no se vuelve fórmula
+  }
+  return v;
+}
+/** aaaa-mm, aaaa-mm-dd, aaaa-Tn o aaaa: se queda como texto (la hoja no lo convierte en fecha). */
+function mudEsTextoFecha(v) { return typeof v === 'string' && /^\d{4}(-\d{2}(-\d{2})?|-T[1-4])?$/.test(v); }
+function mudHojaPon(d) {
+  d = d || {};
+  var nombre = String(d.hoja || ''), clave = String(d.clave || 'ID'), id = String(d.id == null ? '' : d.id).trim(), fila = d.fila || {};
+  if (!nombre || !id || typeof fila !== 'object') { var e0 = new Error('Trabajo de hoja incompleto.'); e0.final = true; throw e0; }
+  var h = libro().getSheetByName(nombre);
+  if (!h) { var e1 = new Error('No existe la hoja «' + nombre + '».'); e1.final = true; throw e1; }
+  var n = h.getLastColumn(), cab = h.getRange(1, 1, 1, n).getValues()[0].map(function (x) { return String(x == null ? '' : x).trim(); });
+  var ci = cab.indexOf(clave);
+  if (ci < 0) { var e2 = new Error('La hoja «' + nombre + '» no tiene la columna ' + clave + '.'); e2.final = true; throw e2; }
+  var ult = h.getLastRow(), r = -1;
+  if (ult > 1) {
+    var ids = h.getRange(2, ci + 1, ult - 1, 1).getValues();
+    for (var i = ids.length - 1; i >= 0; i--) if (String(ids[i][0] == null ? '' : ids[i][0]).trim() === id) { r = i + 2; break; }
+  }
+  var vals = r > 0 ? h.getRange(r, 1, 1, n).getValues()[0] : cab.map(function () { return ''; });
+  if (r < 0) r = Math.max(ult, 1) + 1;
+  Object.keys(fila).forEach(function (k) { var j = cab.indexOf(k); if (j < 0) return;
+    if (mudEsTextoFecha(fila[k])) h.getRange(r, j + 1).setNumberFormat('@');
+    vals[j] = mudValor(fila[k]); });
+  h.getRange(r, 1, 1, n).setValues([vals]);
+  _LEE = {}; _MEMO = {};
+}
+
+/* Lo que ya contesta Supabase no se guarda aquí: si una app vieja (o el respaldo) lo manda a Google, se frena
+ * para que nada quede escrito solo en la hoja. La lista se pregunta a Supabase y se guarda 30 segundos. */
+function mudEnSupa() {
+  var c = null; try { c = CacheService.getScriptCache(); } catch (e) { c = null; }
+  var x = c ? c.get('mud_fns') : null;
+  if (x) return JSON.parse(x);
+  var l;
+  try { l = supaFetch('post', 'rpc/mud_srv_fns', {}); if (!Array.isArray(l)) throw new Error('sin lista'); PropertiesService.getScriptProperties().setProperty('MUD_FNS', JSON.stringify(l)); }
+  catch (e) { l = JSON.parse(PropertiesService.getScriptProperties().getProperty('MUD_FNS') || '[]'); }      // si Supabase no contesta: la última lista que se supo (nada mudado se guarda aquí)
+  if (c) c.put('mud_fns', JSON.stringify(l), 30);
+  return l;
+}
+function mudFrena(fn) {
+  if (!supaCfgSuave()) return;
+  if (mudEnSupa().indexOf(fn) >= 0) throw new Error('Esto ya no se guarda en Google: espere un minuto y vuelva a intentar.');
+}
+
+/* 134 · Producción también tiene las secciones de todas las áreas: equipos, pagos, permisos y preguntas */
+AREA_GAS.prep = AREA_GAS.prep || {};
+['pantallaEquipos', 'pedirEquipo', 'recibirEquipo', 'confirmarRevisionEq', 'listaFondos', 'pedirFondos', 'recibirFondo', 'hechaFondos', 'corregirFondo',
+ 'listaPermisos', 'pedirPermiso', 'cancelarPermiso', 'pantallaSugerencias', 'enviarSugerencia', 'listaConsultas', 'preguntar', 'responderConsulta'].forEach(function (k) { if (AREA_GAS.stock[k]) AREA_GAS.prep[k] = AREA_GAS.stock[k]; });
