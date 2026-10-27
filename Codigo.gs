@@ -918,6 +918,7 @@ function estadoResultados(ss) {
 /* ════════════ LA PÁGINA ════════════ */
 
 function doGet() {
+  if (mudApagado()) return mudApagadoRespuesta(false);
   return ContentService.createTextOutput('Administración de Rey Pizza está en https://adm.reypizza.gt').setMimeType(ContentService.MimeType.TEXT);
 }
 
@@ -931,6 +932,7 @@ function doGet() {
 function ping() { return { ok: true }; }
 function doPost(e) {
   var out;
+  if (mudApagado()) return mudApagadoRespuesta(true);
   try {
     var q = JSON.parse((e && e.postData && e.postData.contents) || '{}');
     var t0 = Date.now();
@@ -1178,9 +1180,11 @@ function quien(cred, cuenta) {
   cred = cred || {};
   extiendeCategorias();
   extiendeLugares();                       // los lugares creados en la app valen desde la primera línea
+  _MUD_TOK_OK = '';
+  if (cred.tok) { var _mt = mudTokUsuario(cred); _MUD_TOK_OK = _mt.u.nombre.toLowerCase(); cred = { usuario: _mt.u.nombre, pin: '', tok: cred.tok }; cuenta = false; }
   var nombre = String(cred.usuario || '').trim();
   var pin = String(cred.pin || '').trim();
-  if (!nombre || !pin) throw new Error('Escoja su nombre y escriba su PIN.');
+  if (!nombre || (!pin && !_MUD_TOK_OK)) throw new Error('Escoja su nombre y escriba su PIN.');
 
   var cache = null, llave = '', fallos = 0;
   if (cuenta) {
@@ -1198,7 +1202,7 @@ function quien(cred, cuenta) {
     if (u.nombre.toLowerCase() === nombre.toLowerCase()) hallado = u;
   });
 
-  if (!hallado || !hallado.activo || !mismoPin(hallado.pin, pin)) {
+  if (!hallado || !hallado.activo || !(_MUD_TOK_OK ? hallado.nombre.toLowerCase() === _MUD_TOK_OK : mismoPin(hallado.pin, pin))) {
     if (cache) cache.put(llave, String(fallos + 1), 600);
     throw new Error('Nombre o PIN incorrectos.');
   }
@@ -1212,7 +1216,7 @@ function quien(cred, cuenta) {
     throw new Error('A su usuario le falta la sucursal o el lugar. Pida al administrador que lo ponga.');
   hallado = permPresta(hallado);
   return { nombre: hallado.nombre, rol: hallado.rol, esAdmin: hallado.rol === 'admin', rolReal: hallado.rolReal || '', confirmaReal: hallado.confirmaReal,
-    codigoCorto: String(hallado.pin).length < 6,
+    codigoCorto: !_MUD_TOK_OK && String(hallado.pin).length < 6,
     sucursal: (hallado.rol === 'gerente' || hallado.rol === 'auxiliar' || hallado.rol === 'cmo') ? hallado.sucursal : '',
     limitado: hallado.rol === 'auxiliar' || hallado.rol === 'cmo',
     cmo: hallado.rol === 'cmo',
@@ -1746,7 +1750,7 @@ function entrar(cred) {
   }
   quien(cred, true);
   var d = datos(cred);
-  d.cred = { usuario: cred.usuario, pin: String(cred.pin) };
+  d.cred = cred.tok ? { usuario: cred.usuario, tok: cred.tok } : { usuario: cred.usuario, pin: String(cred.pin) };
   return d;
 }
 
@@ -16354,7 +16358,7 @@ function supaProbar() {
   Logger.log(m); return m;
 }
 function supaCopiarTodo() { var m = supaCorre(true); Logger.log(m); return m; }
-function supaSincronizar() { var m = supaCorre(false); try { mudDirSucursales(); } catch (e) { Logger.log('dir: ' + e); } Logger.log(m); return m; }
+function supaSincronizar() { var m = supaCorre(false); Logger.log(m); return m; }      // 137: Directores › sucursales lo llena Supabase (pl_dir_sucursales)
 function supaInstalarReloj() {
   supaQuitarReloj();
   ScriptApp.newTrigger('supaSincronizar').timeBased().everyMinutes(10).create();
@@ -16449,6 +16453,8 @@ function supaFirma(claims) {
 }
 function tokenSupabase(cred) {
   var yo = quien(cred), c = supaCfg();
+  if (cred && cred.tok) { var _an = String(PropertiesService.getScriptProperties().getProperty('SUPABASE_ANON_KEY') || '');      // 137: el pase nuevo ya es de Supabase
+    return { url: c.url, anon: _an, token: cred.tok, exp: Number(mudTokCuerpo(cred.tok).exp) * 1000 }; }
   var anon = String(PropertiesService.getScriptProperties().getProperty('SUPABASE_ANON_KEY') || '');
   if (anon.length < 20) throw new Error('Falta SUPABASE_ANON_KEY en las propiedades del proyecto.');
   var ahora = Math.floor(Date.now() / 1000), exp = ahora + 8 * 3600;
@@ -18361,7 +18367,7 @@ function mudValor(v) {
   return v;
 }
 /** aaaa-mm, aaaa-mm-dd, aaaa-Tn o aaaa: se queda como texto (la hoja no lo convierte en fecha). */
-function mudEsTextoFecha(v) { return typeof v === 'string' && /^\d{4}(-\d{2}(-\d{2})?|-T[1-4])?$/.test(v); }
+function mudEsTextoFecha(v) { return typeof v === 'string' && (/^\d{4}(-\d{2}(-\d{2})?|-T[1-4])?$/.test(v) || /^\d{1,2}:\d{2}$/.test(v)); }
 /** La hoja; si no existe y el trabajo trae sus encabezados, la crea (la primera vez que se usa esa parte). */
 function mudHojaCrea(nombre, cab) {
   var h = libro().getSheetByName(nombre);
@@ -18767,6 +18773,451 @@ function gasSeguro(v) {
     return c;
   });
   return o;
+}
+
+/* ════════════ 137 · ENTRADA Y USUARIOS EN SUPABASE (unidad «acceso») ════════════
+ * Con la unidad en Supabase, «Usuarios» y «Lugares» son copia de las tablas. Aquí:
+ *  · al poner una copia de «Usuarios» o «Lugares» se olvida lo que Apps Script tenía en memoria (usuarios 5 min, lugares 10 min);
+ *  · el cambio de nombre de un lugar: Supabase ya lo cambió en sus tablas y aquí se cambia en todas las hojas (como lugarRenombra);
+ *  · un lugar nuevo: su pestaña con los gastos (como hojaDeLugar).
+ * Estos dos llegan por la cola como trabajos «correo» (que = lugar_renombra | lugar_hoja). */
+var _mudHojaPonAc = mudHojaPon;
+mudHojaPon = function (d) {
+  var r = _mudHojaPonAc(d);
+  var n = d && d.hoja;
+  if (n === 'Usuarios') { try { olvidaUsuarios(); } catch (e) {} }
+  if (n === 'Lugares') { try { recargaLugares(); } catch (e) {} }
+  return r;
+};
+var _mudCorreoAc = mudCorreo;
+mudCorreo = function (d) {
+  d = d || {};
+  if (d.que === 'lugar_renombra') return mudLugarRenombra(String(d.id || ''), String(d.viejo || ''), String(d.nuevo || ''));
+  if (d.que === 'lugar_hoja') { try { recargaLugares(); hojaDeLugar(unidadPorId(String(d.id || ''))); } catch (e) {} return 1; }
+  return _mudCorreoAc(d);
+};
+/** Lo mismo que lugarRenombra, sin revisar quién (ya lo revisó Supabase) y sin la bitácora (la copia Supabase). */
+function mudLugarRenombra(id, viejo, nuevo) {
+  if (!viejo || !nuevo || viejo === nuevo) return 0;
+  var ss = libro(), total = 0;
+  var tab = ss.getSheetByName(viejo), un = null;
+  try { recargaLugares(); un = unidadPorId(id); } catch (e) {}
+  if (tab && !ss.getSheetByName(nuevo)) {
+    tab.setName(nuevo);
+    try { tab.getRange('A1').setValue(nuevo + ' · ' + (un ? un.marca : ''));
+      tab.getRange('A5').setFormula('=IFERROR(QUERY(Gastos!A:Q,"select G,O,F,I,Q,J,C,K where E = \'' + nuevo + '\' order by G desc label G \'Fecha de pago\', O \'Proveedor\', F \'Categoría\', I \'Total\', Q \'Artículos\', J \'Nota\', C \'Registró\', K \'Anulado\'",1),"Sin gastos todavía")'); } catch (e) {}
+  }
+  ss.getSheets().forEach(function (s) {
+    var nom = s.getName();
+    if (nom === 'Lugares' || nom === 'Lugares cambios' || nom === nuevo) return;
+    total += lugarReemplaza(s, viejo, nuevo);
+  });
+  _LEE = {}; _MEMO = {};
+  try { recargaLugares(); olvidaUsuarios(); } catch (e) {}
+  return total;
+}
+
+/* ════════════ 137 · LA ENTRADA NUEVA A ADMINISTRACIÓN: el pase de Supabase también sirve aquí ════════════
+ * Con el código personal (como en las demás apps), Supabase firma el pase de Administración (iss reino-apps-script, con adm_id).
+ * Mientras queden funciones en Google, quien(cred) acepta cred = { usuario, tok }: se revisa la firma (el mismo JWT secret),
+ * que no haya vencido, que sea de ese usuario y que Supabase diga que sigue vivo (60 s en memoria). El PIN de la hoja ya no hace falta. */
+var _MUD_TOK_OK = '';
+function mudB64Txt(s) { s = String(s || '').replace(/-/g, '+').replace(/_/g, '/'); while (s.length % 4) s += '='; return Utilities.newBlob(Utilities.base64Decode(s)).getDataAsString(); }
+function mudTokCuerpo(tok) {
+  var p = String(tok || '').split('.');
+  if (p.length !== 3 || String(tok).length > 4000) throw new Error('Vuelva a entrar.');
+  var sec = String(PropertiesService.getScriptProperties().getProperty('SUPABASE_JWT_SECRET') || '');
+  if (sec.length < 20) throw new Error('Falta SUPABASE_JWT_SECRET en las propiedades del proyecto.');
+  var firma = Utilities.base64EncodeWebSafe(Utilities.computeHmacSha256Signature(p[0] + '.' + p[1], sec)).replace(/=+$/, '');
+  if (firma !== p[2]) throw new Error('Vuelva a entrar.');
+  var c; try { c = JSON.parse(mudB64Txt(p[1])); } catch (e) { throw new Error('Vuelva a entrar.'); }
+  if (c.iss !== 'reino-apps-script' || !c.adm_id || !c.app_nombre || !(Number(c.exp) * 1000 > Date.now())) throw new Error('Vuelva a entrar.');
+  return c;
+}
+/** Pregunta a Supabase si el pase sigue vivo (cambió el código, el rol, el enlace…). 60 s en memoria. */
+function mudTokVivo(tok) {
+  var cache = null, llave = 'tv_' + Utilities.base64EncodeWebSafe(Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, String(tok))).slice(0, 40);
+  try { cache = CacheService.getScriptCache(); if (cache.get(llave) === '1') return true; } catch (e) { cache = null; }
+  var c = supaCfg(), anon = String(PropertiesService.getScriptProperties().getProperty('SUPABASE_ANON_KEY') || '');
+  if (anon.length < 20) throw new Error('Falta SUPABASE_ANON_KEY en las propiedades del proyecto.');
+  var r = UrlFetchApp.fetch(c.url + '/rest/v1/rpc/adm_pase_vivo', { method: 'post', muteHttpExceptions: true, contentType: 'application/json', payload: '{}',
+    headers: { apikey: anon, Authorization: 'Bearer ' + tok } });
+  var ok = r.getResponseCode() === 200 && String(r.getContentText()).trim() === 'true';
+  if (ok && cache) try { cache.put(llave, '1', 60); } catch (e) {}
+  return ok;
+}
+/** El usuario de la hoja que corresponde a un pase nuevo (o error). */
+function mudTokUsuario(cred) {
+  var c = mudTokCuerpo(cred.tok);
+  if (String(c.app_nombre).toLowerCase() !== String(cred.usuario || '').trim().toLowerCase()) throw new Error('Vuelva a entrar.');
+  if (!mudTokVivo(cred.tok)) throw new Error('Vuelva a entrar.');
+  var u = null; usuariosCache().forEach(function (x) { if (x.nombre.toLowerCase() === String(c.app_nombre).toLowerCase()) u = x; });
+  if (!u || !u.activo) throw new Error('Vuelva a entrar.');
+  return { u: u, c: c };
+}
+
+/* ════════════ 137 · MANTENIMIENTO Y EQUIPOS (paquete C): la unidad «mantenimiento» vive en Supabase ════════════
+ * Con la unidad en Supabase, las hojas Mantenimiento equipos / registros, Aceite mediciones, Equipos, Equipos revisiones y
+ * Equipos pedidos son copia de las tablas (mant.*). Dos cosas todavía corren aquí mientras el dinero siga en Google:
+ *  · mudEqComprar: la compra de un equipo pide su solicitud de dinero (pedirFondos) y le avisa el número a Supabase.
+ *  · equiposDeFondo: cuando una solicitud de equipo se recibe, sus equipos se crean en Supabase (no en la hoja, que es copia). */
+function mudMantEnSupa() {
+  if (!supaCfgSuave()) return false;
+  try { return mudEnSupa().indexOf('pantallaEquipos') >= 0; } catch (e) { return false; }
+}
+function mudMantSrv(op, p) {
+  var r = supaFetch('post', 'rpc/mud_mant_srv', { p_op: op, p: p });
+  if (r && r.google) throw new Error('Mantenimiento todavía vive en Google.');
+  return r;
+}
+/** Trabajo «accion» que deja resolverPedidoEq («comprar») en Supabase. */
+function mudEqComprar(cred, numero, f) {
+  var yo = quien(cred), so = null, err = '';
+  try { so = pedirFondos(cred, f || {}); } catch (e) { err = String(e.message || e); }
+  var sn = so ? (/SO-\d+/.exec(so.mensaje || '') || [''])[0] : '';
+  mudMantSrv('solicitud', { numero: String(numero || ''), sn: sn, por: yo.nombre, error: sn ? '' : (err || 'No se creó la solicitud de dinero.') });
+  if (!sn) throw new Error(err || 'No se creó la solicitud de dinero.');
+  return { ok: true, mensaje: String(numero) + ': solicitud ' + sn };
+}
+if (typeof AREA_FN !== 'undefined' && AREA_FN.indexOf('mudEqComprar') < 0) AREA_FN.push('mudEqComprar');
+
+var _mudEquiposDeFondo = equiposDeFondo;
+equiposDeFondo = function (x, yo) {
+  if (!mudMantEnSupa()) return _mudEquiposDeFondo(x, yo);
+  var u = null; UNIDADES.forEach(function (y) { if (y.nombre === x.unidad) u = y; });
+  if (!u || !lugaresEq().some(function (l) { return l.id === u.id; })) throw new Error('«' + x.unidad + '» no admite equipos todavía. Avise al administrador.');
+  var resp = x.por;
+  if (!usuariosCache().some(function (y) { return y.activo && y.nombre === resp; })) resp = responsablePorDefecto(u.id);
+  var ls = x.renglones, base = x.pagado > 0 ? x.pagado : x.monto, subs = ls.map(function (l) { return Math.round(l.c * (l.r != null ? l.r : l.p) * 100) / 100; });
+  var suma = subs.reduce(function (a, b) { return a + b; }, 0), usado = 0, eqs = [];
+  ls.forEach(function (l, i) {
+    var costo = i === ls.length - 1 ? r2(base - usado) : r2(suma > 0 ? base * subs[i] / suma : base / ls.length);
+    usado += costo;
+    eqs.push({ lugar: u.id, equipo: String(l.n), detalle: 'Compra ' + x.numero, cantidad: Math.max(1, Math.round(l.c)), responsable: resp, por: yo.nombre,
+      nota: ('Solicitud ' + x.numero + ': ' + x.que).slice(0, 200), costo: costo, solicitud: x.numero });
+  });
+  return (mudMantSrv('equipos_fondo', { equipos: eqs }) || {}).numeros || [];
+};
+
+/* ════════════ 137 · PERSONAL (paquete D): calendarios, turnos, asistencia, permisos, coberturas y préstamos viven en Supabase ════════════
+ * Con la unidad «personal» en Supabase, las hojas Calendario equipo / turnos / config / bonos / horas reales / borradores / confirmaciones /
+ * asistencia / cambios, Personal caja, Caja horarios, Personal coberturas, Personal préstamos, Permisos, Horarios gerentes y Descansos gerentes
+ * son copia de las tablas (pers.filas). Lo que Apps Script hacía solo cada 15 minutos (cajasSupaReloj) ahora lo hace el reloj
+ * «personal_repaso» de Supabase: aquí se frena para que nada se escriba dos veces ni sobre la copia. Las funciones de la pantalla
+ * ya las frena mudFrena (mud.fns). */
+function mudPersEnSupa() {
+  if (!supaCfgSuave()) return false;
+  try { return mudEnSupa().indexOf('guardarTurnos') >= 0; } catch (e) { return false; }
+}
+var _mudPerQuincenaMandar = perQuincenaMandar;
+perQuincenaMandar = function () { if (mudPersEnSupa()) return 'La quincena de cada persona la manda Supabase.'; return _mudPerQuincenaMandar(); };
+var _mudCajaHorariosAsegura = cajaHorariosAsegura;
+cajaHorariosAsegura = function () { if (mudPersEnSupa()) return; return _mudCajaHorariosAsegura(); };
+var _mudT127SemanasRepaso = t127SemanasRepaso;
+t127SemanasRepaso = function () { if (mudPersEnSupa()) return; return _mudT127SemanasRepaso(); };
+var _mudT127HorariosAplica = t127HorariosAplica;
+t127HorariosAplica = function () { if (mudPersEnSupa()) return; return _mudT127HorariosAplica(); };
+
+/* ════════════ 137 · PAQUETE F: EL DINERO (Apps Script) ════════════
+ * 1) «Inversión (equipo y mejoras)»: se puede escoger al registrar un gasto, pero nunca cuenta como gasto de operación:
+ *    el estado de resultados, el resumen del mes, lo gastado contra el presupuesto y el tablero de finanzas la dejan fuera.
+ * 2) Con el dinero en Supabase, Apps Script ya no escribe Ingresos ni Gastos: los cortes y los gastos de Rey Pizza Caja los pasa
+ *    Supabase (fin.cajas_pasar), y el catálogo de gastos (Proveedores, Productos) se cambia allá (mud_catg_srv).
+ * Todo con asignaciones al cargar (no «function»): así se envuelve la versión que ya existe. */
+var CAT_INVERSION = 'Inversión (equipo y mejoras)';
+if (CATEGORIAS.indexOf(CAT_INVERSION) < 0) CATEGORIAS.push(CAT_INVERSION);
+
+function dinero137EnSupa() { try { return supaCfgSuave() && mudEnSupa().indexOf('registrarGasto') >= 0; } catch (e) { return false; } }
+
+/* ── 1. la inversión, fuera de los cálculos de margen ── */
+var _SIN_INV = 0;
+movimientos = (function (orig) {
+  return function (max) {
+    var r = orig.apply(this, arguments);
+    if (!_SIN_INV) return r;
+    var k = 'movSinInv:' + (Number(max) || 300);
+    return _MEMO[k] || (_MEMO[k] = r.filter(function (m) { return !(m.clase === 'gasto' && m.titulo === CAT_INVERSION); }));
+  };
+})(movimientos);
+detalleDeGastos = (function (orig) {
+  return function () {
+    var r = orig.apply(this, arguments);
+    return _SIN_INV ? r.filter(function (x) { return x.categoria !== CAT_INVERSION; }) : r;
+  };
+})(detalleDeGastos);
+function dinero137SinInv(orig) {
+  return function () { _SIN_INV++; try { return orig.apply(this, arguments); } finally { _SIN_INV--; } };
+}
+resumenMes = dinero137SinInv(resumenMes);
+gastoRealMes = dinero137SinInv(gastoRealMes);
+tableroFinanzas = dinero137SinInv(tableroFinanzas);
+estadoResultados = dinero137SinInv(estadoResultados);
+
+/* ── 2. con el dinero en Supabase, la caja ya no se pasa desde aquí ── */
+cajaCorte = (function (orig) {
+  return function () { if (dinero137EnSupa()) throw new Error('El corte lo pasa Supabase.'); return orig.apply(this, arguments); };      // sin «inválido»: queda pendiente y lo toma Supabase
+})(cajaCorte);
+cajaCortePrueba = (function (orig) {
+  return function () { if (dinero137EnSupa()) throw new Error('El corte lo pasa Supabase.'); return orig.apply(this, arguments); };
+})(cajaCortePrueba);
+cajasGastosPasar = (function (orig) {
+  return function () { if (dinero137EnSupa()) return { gastos: 0, supabase: true }; return orig.apply(this, arguments); };
+})(cajasGastosPasar);
+gastoReglasHistorial = (function (orig) {
+  return function () { if (dinero137EnSupa()) return 0; return orig.apply(this, arguments); };
+})(gastoReglasHistorial);
+
+/* ── el catálogo de gastos: lo que todavía se escribe desde aquí, va a Supabase ── */
+aseguraProveedor = (function (orig) {
+  return function (nombre, quien, unidadId) {
+    if (!dinero137EnSupa()) return orig.apply(this, arguments);
+    nombre = String(nombre || '').trim(); if (!nombre) return;
+    supaFetch('post', 'rpc/mud_catg_srv', { p_op: 'proveedor_asegura', p_d: { nombre: nombre, quien: String(quien || 'app'), unidad: String(unidadId || '') } });
+  };
+})(aseguraProveedor);
+recuerdaPrecios = (function (orig) {
+  return function (lineas) {
+    if (!dinero137EnSupa()) return orig.apply(this, arguments);
+    try { supaFetch('post', 'rpc/mud_catg_srv', { p_op: 'precios', p_d: { lineas: (lineas || []).map(function (l) { return { producto: l.producto, proveedor: l.proveedor || '', precio: l.precio }; }) } }); } catch (e) {}
+  };
+})(recuerdaPrecios);
+function dinero137Frena(orig) {
+  return function () {
+    if (dinero137EnSupa()) throw new Error('Los proveedores ya se cambian en Administración › Catálogo de gastos.');
+    return orig.apply(this, arguments);
+  };
+}
+guardarProveedorProd = dinero137Frena(guardarProveedorProd);
+guardarProveedorInv = dinero137Frena(guardarProveedorInv);
+eliminarProveedor = dinero137Frena(eliminarProveedor);
+
+/** ▶ Una vez: la columna de lo cobrado en línea (tienda, Recurrente) al final de «Ingresos». */
+function dinero137Instalar() {
+  var h = libro().getSheetByName('Ingresos'); if (!h) return 'Falta la hoja Ingresos.';
+  var n = h.getLastColumn(), cab = h.getRange(1, 1, 1, n).getValues()[0].map(function (x) { return String(x || '').trim(); });
+  if (cab.indexOf('En línea (Recurrente)') >= 0) return 'Ya estaba.';
+  h.getRange(1, Math.max(n, H_INGRESOS.length) + 1).setValue('En línea (Recurrente)');
+  return 'Listo: columna «En línea (Recurrente)» en Ingresos.';
+}
+
+/* ════════════ 137 · PAQUETE F2: LAS VENTAS DE LAS CAJAS (Apps Script) ════════════
+ * Con el dinero en Supabase, las órdenes de Rey Pizza Caja ya no se pasan a «Ventas caja» / «Ventas caja detalle»:
+ * Supabase lee las ventas de sus tablas (pos_ordenes, pos_lineas) y los cortes los pasa fin.cajas_pasar (paquete F).
+ * Asignación al cargar (no «function»): así se envuelve la versión que ya existe (el reloj cajasSupaReloj la llama por su nombre). */
+cajasSupaPasar = (function (orig) {
+  return function () { if (dinero137EnSupa()) return { ordenes: 0, cortes: 0, supabase: true }; return orig.apply(this, arguments); };
+})(cajasSupaPasar);
+
+/* ════════════ 137 · G · LAS SOLICITUDES DE PAGO, CON EL DINERO EN SUPABASE ════════════
+ * Cuando el dinero ya vive en Supabase, «Requisiciones» es solo una copia: si algo de Apps Script pide una solicitud por dentro
+ * (resolverPedidoEq › «Comprar», mientras Mantenimiento siga en Google), no se escribe en la hoja: se pide a Supabase
+ * (mud_fondo_srv, con la llave del servidor), con las mismas revisiones y el mismo número SO-…, y la copia llega a la hoja sola.
+ * Lo que llega desde las pantallas ya no pasa por aquí (lo frena mudFrena y lo contesta Supabase). */
+function g137DineroEnSupa() { try { return supaCfgSuave() && mudEnSupa().indexOf('pedirFondos') >= 0; } catch (e) { return false; } }
+pedirFondos = (function (orig) {
+  return function (cred, d) {
+    if (!g137DineroEnSupa()) return orig.apply(this, arguments);
+    permiteCmo();
+    var yo = quien(cred);
+    var r;
+    try { r = supaFetch('post', 'rpc/mud_fondo_srv', { p: { usuario: yo.nombre, d: d || {} } }) || {}; }
+    catch (e) { var m = /"message"\s*:\s*"((?:[^"\\]|\\.)*)"/.exec(String(e.message || '')); throw new Error(m ? JSON.parse('"' + m[1] + '"') : e.message); }
+    if (r.google) return orig.apply(this, arguments);
+    if (!r.numero) throw new Error(r.message || 'No se pudo pedir el dinero. Intente otra vez.');
+    return { ok: true, numero: r.numero, mensaje: r.mensaje || r.numero };
+  };
+})(pedirFondos);
+
+/* ════════════ 137 · I · YA NO HAY CORREOS (D2) ════════════
+ * Con la unidad «avisos» en Supabase (o mudándose), Google ya no manda correos: los avisos llegan en la app y al celular
+ * (Supabase: mud.aviso, la campanita, la venta de las 21:15, las capturas; la Edge Function «avisos» manda el push).
+ * Mientras la unidad siga en Google, todo sigue como siempre. Se envuelven al cargar (no se cambia el código de cada uno). */
+function mudAvisosEnSupa() { try { return mudEnSupa().indexOf('miCorreo') >= 0; } catch (e) { return false; } }
+var _iEnviaCorreo = enviaCorreo;
+enviaCorreo = function (para, asunto, html) { if (mudAvisosEnSupa()) return false; return _iEnviaCorreo(para, asunto, html); };
+var _iEnviarCorreosPendientes = enviarCorreosPendientes;
+enviarCorreosPendientes = function () { if (mudAvisosEnSupa()) return 0; return _iEnviarCorreosPendientes(); };
+var _iReporteDiarioCorreo = reporteDiarioCorreo;
+reporteDiarioCorreo = function () { if (mudAvisosEnSupa()) return 0; return _iReporteDiarioCorreo(); };
+var _iCapturasAvisar = capturasAvisar;
+capturasAvisar = function () { if (mudAvisosEnSupa()) return 0; return _iCapturasAvisar(); };      // ahora las junta y avisa Supabase (mudf.i_capturas)
+var _iCorreoNivelacion = correoNivelacion;
+correoNivelacion = function (numero) { if (mudAvisosEnSupa()) return ''; return _iCorreoNivelacion(numero); };
+
+/* ════════════ 137 · J · LA COPIA ÚNICA DE LOS ARCHIVOS DE DRIVE A SUPABASE ════════════
+ * Cotizaciones de las órdenes de compra, cotizaciones y facturas de las solicitudes de dinero, fotos de producto dañado y los PDF de los reportes:
+ * cada enlace de Drive que está en esas hojas se baja de Drive, se sube a Supabase Storage (bucket privado «archivos», con la llave del servidor),
+ * se anota en Supabase (archivo_srv_pon, que cambia el enlace también en las tablas de Supabase) y en la hoja el enlace queda como «archivo:<id>».
+ * Se puede correr las veces que haga falta: lo que ya se copió no se vuelve a subir, y se detiene antes de los 6 minutos de Apps Script.
+ * ▶ Ejecutar mudArchivosPasar() desde el editor (o mudArchivosReloj() para que siga solo cada 10 minutos hasta terminar). */
+var MUD_ARCH_HOJAS = [
+  { hoja: 'Órdenes de compra pagos', col: 'Cotización (archivo)', ref: 'No. de orden', tipo: 'cotizacion' },
+  { hoja: 'Requisiciones', col: 'Cotización (archivo)', ref: 'No.', tipo: 'fondo', suc: 'Unidad', por: 'Pedida por', nom: 'Nombre del archivo' },
+  { hoja: 'Producto dañado', col: 'Foto', ref: 'No.', tipo: 'merma', suc: 'Sucursal', por: 'Registró' },
+  { hoja: 'Reportes', col: 'Enlace', ref: 'Mes', tipo: 'reporte', nom: 'Archivo', por: 'Generado por' }
+];
+var MUD_ARCH_TIPOS = { 'application/pdf': 'pdf', 'image/jpeg': 'jpg', 'image/jpg': 'jpg', 'image/png': 'png', 'image/webp': 'webp' };
+var MUD_ARCH_MAX = 10 * 1024 * 1024;
+
+/** Los ID de Drive que hay en un texto (uno o varios enlaces). */
+function mudArchIds(t) {
+  var r = [], m, re = /https:\/\/(?:drive|docs)\.google\.com\/[^\s"'<>]*/g;
+  t = String(t == null ? '' : t);
+  while ((m = re.exec(t))) {
+    var u = m[0], id = (/\/d\/([-\w]{10,})/.exec(u) || /[?&]id=([-\w]{10,})/.exec(u) || [])[1];
+    if (id) r.push({ url: u, id: id });
+  }
+  return r;
+}
+/** Cuáles ya están copiados (para seguir donde se quedó). */
+function mudArchYa(ids) {
+  var ya = {};
+  for (var i = 0; i < ids.length; i += 100) {
+    var r = supaFetch('post', 'rpc/archivo_srv_ya', { p_ids: ids.slice(i, i + 100) }) || {};
+    Object.keys(r).forEach(function (k) { ya[k] = r[k]; });
+  }
+  return ya;
+}
+/** Sube un archivo de Drive a Storage y lo anota. Devuelve la referencia nueva («archivo:<id>»). */
+function mudArchSube(c, cf, id, url, fila, vals, cab) {
+  var f = DriveApp.getFileById(id), blob = f.getBlob(), mime = String(blob.getContentType() || '').toLowerCase();
+  if (mime === 'image/jpg') mime = 'image/jpeg';
+  var ext = MUD_ARCH_TIPOS[mime];
+  if (!ext) throw new Error('Tipo de archivo que no se copia: ' + mime);
+  var bytes = blob.getBytes();
+  if (bytes.length > MUD_ARCH_MAX) throw new Error('Pesa más de 10 MB (' + Math.round(bytes.length / 1048576) + ' MB).');
+  var ruta = 'drive/' + id + '.' + ext;
+  var r = UrlFetchApp.fetch(c.url + '/storage/v1/object/archivos/' + ruta, { method: 'post', contentType: mime, payload: bytes, muteHttpExceptions: true,
+    headers: { apikey: c.key, Authorization: 'Bearer ' + c.key, 'x-upsert': 'true' } });
+  var code = r.getResponseCode();
+  if (code >= 300) throw new Error('Storage ' + code + ': ' + String(r.getContentText()).slice(0, 200));
+  var col = function (n) { var j = n ? cab.indexOf(n) : -1; return j < 0 ? '' : String(vals[j] == null ? '' : vals[j]).trim(); };
+  var nombre = col(cf.nom) || f.getName();
+  var x = supaFetch('post', 'rpc/archivo_srv_pon', { p: { drive_id: id, drive_url: url, ruta: ruta, nombre: String(nombre).slice(0, 120), mime: mime, tam: bytes.length,
+    tipo: cf.tipo, ref: col(cf.ref), sucursal: col(cf.suc), por: col(cf.por), hoja: cf.hoja, columna: cf.col } }) || {};
+  if (!x.ref) throw new Error('Supabase no devolvió la referencia.');
+  return x.ref;
+}
+function mudArchivosPasar() {
+  var t0 = Date.now(), limite = 4.5 * 60 * 1000, c = supaCfg(), res = { copiados: 0, cambiados: 0, faltan: 0, errores: [] };
+  var lock = LockService.getScriptLock(); lock.waitLock(30000);
+  try {
+    MUD_ARCH_HOJAS.forEach(function (cf) {
+      var h = libro().getSheetByName(cf.hoja); if (!h || h.getLastRow() < 2) return;
+      var n = h.getLastColumn(), v = h.getRange(1, 1, h.getLastRow(), n).getValues(), cab = v[0].map(function (x) { return String(x == null ? '' : x).trim(); });
+      var ci = cab.indexOf(cf.col); if (ci < 0) return;
+      var pend = [], ids = [];
+      for (var i = 1; i < v.length; i++) { var l = mudArchIds(v[i][ci]); if (l.length) { pend.push({ fila: i + 1, vals: v[i], links: l }); l.forEach(function (x) { ids.push(x.id); }); } }
+      if (!pend.length) return;
+      var ya = mudArchYa(ids);
+      pend.forEach(function (p) {
+        var t = String(p.vals[ci]), cambio = false;
+        p.links.forEach(function (x) {
+          var ref = ya[x.id];
+          if (!ref) {
+            if (Date.now() - t0 > limite) { res.faltan++; return; }
+            try { ref = mudArchSube(c, cf, x.id, x.url, p.fila, p.vals, cab); ya[x.id] = ref; res.copiados++; }
+            catch (e) { res.errores.push({ hoja: cf.hoja, fila: p.fila, id: x.id, error: String(e && e.message || e).slice(0, 200) }); return; }
+          }
+          t = t.split(x.url).join(ref); cambio = true;
+        });
+        if (cambio) { h.getRange(p.fila, ci + 1).setNumberFormat('@').setValue(t); res.cambiados++; }
+      });
+    });
+  } finally { lock.releaseLock(); _LEE = {}; _MEMO = {}; }
+  res.seg = Math.round((Date.now() - t0) / 1000);
+  try { PropertiesService.getScriptProperties().setProperty('MUD_ARCH_ESTADO', JSON.stringify({ en: new Date().toISOString(), copiados: res.copiados, faltan: res.faltan, errores: res.errores.length })); } catch (e) {}
+  Logger.log(JSON.stringify(res));
+  return res;
+}
+/** Que siga solo cada 10 minutos hasta que no falte nada (después el reloj se quita). */
+function mudArchivosReloj() {
+  ScriptApp.getProjectTriggers().forEach(function (t) { if (t.getHandlerFunction() === 'mudArchivosPasarReloj') ScriptApp.deleteTrigger(t); });
+  ScriptApp.newTrigger('mudArchivosPasarReloj').timeBased().everyMinutes(10).create();
+  return mudArchivosPasar();
+}
+function mudArchivosPasarReloj() {
+  var r = mudArchivosPasar();
+  if (!r.faltan) ScriptApp.getProjectTriggers().forEach(function (t) { if (t.getHandlerFunction() === 'mudArchivosPasarReloj') ScriptApp.deleteTrigger(t); });
+  return r;
+}
+
+/* ════════════ 137 · K · APAGAR APPS SCRIPT (G9) ════════════
+ * Cuando todo vive en Supabase (Operaciones › Mudanza: todo «En Supabase» y «Apagar Google» hecho), desde el editor de Apps Script:
+ *   1) mudRespaldoFinal()   → una copia completa del libro en su Drive y el enlace para bajarla en Excel (.xlsx).
+ *   2) mudApagar()          → revisa con Supabase que ya no quede nada en Google, pasa lo último de la cola, quita todos los relojes
+ *                              y desde ahí doGet/doPost contestan «apagado» (con a dónde ir).
+ *   3) mudSoloLectura()     → protege cada hoja: solo usted (el dueño) puede cambiar algo; para los demás el libro queda de solo lectura.
+ * Si hiciera falta volver: mudEncender() quita el «apagado» y vuelve a poner los relojes de siempre. */
+var MUD_RELOJES_GAS = [
+  { fn: 'cajasSupaReloj', min: 1 }, { fn: 'supaSincronizar', min: 10 }, { fn: 'enviarCorreosPendientes', min: 5 },
+  { fn: 'reporteDiarioCorreo', dia: [21, 15] }
+];
+var MUD_APAGADO_MSG = 'Google ya está apagado. Administración está en https://adm.reypizza.gt y cada área en su app de Rey Pizza.';
+
+function mudApagado() {
+  try { return !!PropertiesService.getScriptProperties().getProperty('MUD_APAGADO'); } catch (e) { return false; }
+}
+/** Lo que contestan doGet/doPost cuando ya se apagó (doPost: el mismo formato de error que las apps ya muestran). */
+function mudApagadoRespuesta(esPost) {
+  if (esPost) return ContentService.createTextOutput(JSON.stringify({ ok: false, apagado: true, error: MUD_APAGADO_MSG })).setMimeType(ContentService.MimeType.JSON);
+  return ContentService.createTextOutput(MUD_APAGADO_MSG).setMimeType(ContentService.MimeType.TEXT);
+}
+
+/** ▶ Ejecutar a mano. Una copia completa del libro, para guardar (y el enlace para bajarla en Excel). */
+function mudRespaldoFinal() {
+  var ss = libro(), hoy = Utilities.formatDate(new Date(), ZONA, 'yyyy-MM-dd');
+  var copia = DriveApp.getFileById(ss.getId()).makeCopy('Rey Pizza · respaldo final de las hojas ' + hoy);
+  var xlsx = 'https://docs.google.com/spreadsheets/d/' + copia.getId() + '/export?format=xlsx';
+  var m = 'Respaldo listo: «' + copia.getName() + '» en su Drive. Bájelo en Excel con este enlace (abra sesión con su cuenta): ' + xlsx;
+  Logger.log(m); return { ok: true, copia: copia.getUrl(), excel: xlsx, hojas: ss.getSheets().length };
+}
+
+/** ▶ Ejecutar a mano, una vez, al final. */
+function mudApagar() {
+  if (!supaCfgSuave()) throw new Error('Falta la configuración de Supabase en las propiedades del proyecto.');
+  var e = supaFetch('post', 'rpc/mud_apagado_srv', {});
+  if (!e || !e.todoEnSupabase || !e.hojasApagadas)
+    throw new Error('Todavía no: primero mude todo y toque «Apagar Google» en Operaciones › Mudanza de Google.' + (e && e.enGoogle && e.enGoogle.length ? ' En Google: ' + e.enGoogle.join(', ') + '.' : ''));
+  var hecho = { cola: null, relojes: [] };
+  try { hecho.cola = invSalida(); } catch (x) { hecho.cola = 'cola: ' + x.message; }        // lo último que estuviera en camino
+  ScriptApp.getProjectTriggers().forEach(function (t) { hecho.relojes.push(t.getHandlerFunction()); ScriptApp.deleteTrigger(t); });
+  var pr = PropertiesService.getScriptProperties();
+  pr.setProperty('MUD_APAGADO', Utilities.formatDate(new Date(), ZONA, 'yyyy-MM-dd HH:mm'));
+  pr.setProperty('MUD_RELOJES_QUITADOS', JSON.stringify(hecho.relojes));
+  try { CacheService.getScriptCache().removeAll(['mud_fns']); } catch (x) {}
+  Logger.log('Apps Script apagado. Relojes quitados: ' + (hecho.relojes.join(', ') || 'ninguno') + '. Desde ahora contesta: ' + MUD_APAGADO_MSG);
+  return { ok: true, relojes: hecho.relojes, cola: hecho.cola };
+}
+
+/** ▶ Solo si hiciera falta volver a Google (antes, en Operaciones › Mudanza, «Encender Google» y regresar los módulos). */
+function mudEncender() {
+  var pr = PropertiesService.getScriptProperties();
+  pr.deleteProperty('MUD_APAGADO');
+  var hay = {}; ScriptApp.getProjectTriggers().forEach(function (t) { hay[t.getHandlerFunction()] = true; });
+  var puestos = [];
+  MUD_RELOJES_GAS.forEach(function (r) {
+    if (hay[r.fn] || typeof this[r.fn] !== 'function') return;
+    var b = ScriptApp.newTrigger(r.fn).timeBased();
+    if (r.min) b.everyMinutes(r.min).create(); else b.everyDays(1).atHour(r.dia[0]).nearMinute(r.dia[1]).create();
+    puestos.push(r.fn);
+  }, this);
+  Logger.log('Apps Script encendido otra vez. Relojes puestos: ' + (puestos.join(', ') || 'ninguno'));
+  return { ok: true, relojes: puestos };
+}
+
+/** ▶ Ejecutar a mano después de apagar: cada hoja queda protegida (solo el dueño la cambia). Para los demás, de solo lectura. */
+function mudSoloLectura() {
+  var ss = libro(), yo = Session.getEffectiveUser(), n = 0;
+  ss.getSheets().forEach(function (h) {
+    var p = h.protect().setDescription('Rey Pizza · archivo (ya no se usa: todo vive en Supabase)');
+    p.addEditor(yo);
+    p.removeEditors(p.getEditors().filter(function (u) { return u.getEmail() !== yo.getEmail(); }));
+    if (p.canDomainEdit()) p.setDomainEdit(false);
+    n++;
+  });
+  Logger.log(n + ' hojas protegidas: solo ' + yo.getEmail() + ' puede cambiarlas.');
+  return { ok: true, hojas: n };
 }
 
 /* 134 · Producción también tiene las secciones de todas las áreas: equipos, pagos, permisos y preguntas */
