@@ -2052,6 +2052,7 @@ function preparaGasto(d) {
 
 /** Escribe un gasto ya revisado. `conf` = {por, en} cuando lo confirmó alguien. */
 function escribeGasto(v, nombre, ahora, conf) {
+  v = gasSeguro(v); nombre = t127Seguro(nombre);
   var u = unidadPorId(v.unidad), lineas = v.lineas, mes = v.mes;
   var lock = LockService.getScriptLock();
   lock.waitLock(15000); _LEE = {};
@@ -2235,6 +2236,8 @@ function anular(d) {
   var yo = noMira(verificaCaja(d.cred));
   var motivo = String(d.motivo || '').trim();
   if (motivo.length < 4) throw new Error('Escriba el motivo de la anulación.');
+  if (d.clase === 'gasto' && parDeTraslado(String(d.id))) { var _mt = []; try { _mt = mudEnSupa(); } catch (e2) { _mt = []; }
+    if (_mt.indexOf('guardarTraslado') >= 0) throw new Error('Ese gasto es de un traslado: corríjalo desde el traslado (Bodega › Traslados).'); }
 
   var nombreHoja = d.clase === 'gasto' ? 'Gastos' : 'Ingresos';
   var lock = LockService.getScriptLock();
@@ -3233,6 +3236,7 @@ function aAncho(filas, n) {
 
 function escribeDetalle(filas) {
   if (!filas.length) return;
+  filas = mudSegFilas(filas);
   var hd = hojaCat('Gastos detalle', H_DETALLE);
   var d0 = hd.getLastRow() + 1;
   hd.getRange(d0, 7, filas.length, 1).setNumberFormat('@');
@@ -5301,6 +5305,8 @@ function recibirSolicitud(cred, numero, recibidos, nota, firma) {
         throw new Error('Falta escribir cuánto llegó de «' + l.nombre + '».');
       var n = Number(String(crudo).replace(',', '.'));
       if (!isFinite(n) || n < 0) throw new Error('La cantidad de «' + l.nombre + '» no es válida.');
+      if (!(env > 0) && n > 0) throw new Error('No se envió «' + l.nombre + '»: no puede llegar.');
+      if (n > 100000 || n > env * 2 + 10) throw new Error('La cantidad de «' + l.nombre + '» no es válida.');
       n = r3(n);
       var dif = r3(env - n);
       h.getRange(l.fila, 12, 1, 3).setValues([[n, dif, Math.abs(dif) > 0.0005 ? DIF.PEND : '']]);
@@ -9106,7 +9112,7 @@ function enviarEmergencia(cred, numero, enviados, rechazar, motivo) {
   var kardex = [], n = 0, uDa = UNIDADES.filter(function (u) { return u.nombre === e.da; })[0];
   e.lineas.forEach(function (l) {
     var crudo = enviados[l.codigo], q = crudo == null || String(crudo).trim() === '' ? l.pedido : r3(Number(String(crudo).replace(',', '.')));
-    if (!isFinite(q) || q < 0) throw new Error('La cantidad de «' + l.nombre + '» no es válida.');
+    if (!isFinite(q) || q < 0 || q > 100000) throw new Error('La cantidad de «' + l.nombre + '» no es válida.');
     h.getRange(l.fila, 10).setValue(q);
     h.getRange(l.fila, 13, 1, 3).setValues([[EM_EST.ENV, yo.nombre, ahora]]);
     if (q > 0) { n++; kardex.push([ahora, uDa.nombre, l.codigo, l.nombre, MOV.SAL_EM, -q, numero, yo.nombre, 'A ' + e.pide]); }
@@ -9130,6 +9136,7 @@ function recibirEmergencia(cred, numero, recibidos) {
   e.lineas.forEach(function (l) {
     var crudo = recibidos[l.codigo], q = crudo == null || String(crudo).trim() === '' ? (l.enviado || 0) : r3(Number(String(crudo).replace(',', '.')));
     if (!isFinite(q) || q < 0) throw new Error('La cantidad de «' + l.nombre + '» no es válida.');
+    if (q > (Number(l.enviado) || 0)) throw new Error('No puede llegar más de lo que se mandó de «' + l.nombre + '».');
     h.getRange(l.fila, 11).setValue(q);
     h.getRange(l.fila, 13).setValue(EM_EST.REC);
     h.getRange(l.fila, 16, 1, 2).setValues([[yo.nombre, ahora]]);
@@ -13019,7 +13026,7 @@ function exportarIndicadores(q) {
 /* ════════════ COPIA COMPLETA PARA EL SERVIDOR PROPIO ════════════
  * El servidor propio guarda una copia de TODAS las pestañas y corre este mismo código sobre ella para contestar las lecturas.
  * Cada cambio que pasa por aquí avisa qué pestañas tocó («tocadas»), y el servidor solo vuelve a traer esas. */
-var VERSION_CODIGO = '2026-11-07-a';       // se cambia a mano cada vez que se cambia este archivo; el servidor compara que coincida con la suya
+var VERSION_CODIGO = '2026-11-08-a';       // se cambia a mano cada vez que se cambia este archivo; el servidor compara que coincida con la suya
 function versionCodigo() { return VERSION_CODIGO; }
 function huellaTexto(t) { return Utilities.base64Encode(Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, t)).slice(0, 22); }
 /** Un resumen barato de cada pestaña: cuántas filas y columnas tiene y una huella de sus últimas 25 filas. */
@@ -15991,6 +15998,7 @@ function quitarDirector(cred, id, fecha) {
 /** Paga un área: un gasto de Nómina y bonificaciones por cada lugar al que se carga (repartido = un tercio a cada sucursal). */
 function pagarDirectores(cred, area, fecha, pagado, fechaPago, nota) {
   var yo = quien(cred); dirAcceso(yo, 2);
+  mudCopiasAntes(['Directores y áreas', 'Directores bonos']);      // 135: no pagar con una copia vieja de lo que ya vive en Supabase
   var A = dirArea(area); if (!A) throw new Error('Escoja el área.');
   var lock = LockService.getScriptLock(); lock.waitLock(15000); _LEE = {};
   try {
@@ -16031,6 +16039,7 @@ function pagarDirectores(cred, area, fecha, pagado, fechaPago, nota) {
 }
 function reabrirDirectores(cred, area, fecha, motivo) {
   var yo = quien(cred); dirAcceso(yo, 2);
+  mudCopiasAntes(['Directores y áreas', 'Directores bonos']);      // 135: no pagar con una copia vieja de lo que ya vive en Supabase
   var A = dirArea(area); if (!A) throw new Error('Escoja el área.');
   motivo = String(motivo || '').trim(); if (motivo.length < 4) throw new Error('Escriba el motivo.');
   var lock = LockService.getScriptLock(); lock.waitLock(15000); _LEE = {};
@@ -16235,6 +16244,9 @@ var SUPA_NO_COPIAR = ['Resumen', 'Estado de resultados', 'Supabase copia'];
 var SUPA_LOTE = 400, SUPA_TIEMPO = 270000;          // filas por envío; 4.5 min por corrida (el límite de Google es 6)
 /* Columnas que NUNCA se copian (los PIN y cualquier clave): en Supabase cada quien tendrá su propio acceso. */
 var SUPA_SECRETO = /^(pin|clave|contrase|token|secret|password)/i;
+// 135: en estas hojas «Clave» es el nombre del ajuste, no una clave secreta (la mudanza de Personal de caja la necesita)
+var SUPA_CLAVE_OK = { 'Calendario config': true, 'Ajustes de inventario': true };
+function supaEsSecreto(nom, c) { return SUPA_SECRETO.test(c) && !(c === 'Clave' && SUPA_CLAVE_OK[nom]); }
 var H_SUPA = ['Hoja', 'Filas', 'Columnas', 'Huella', 'Copiada en', 'Segundos', 'Estado'];
 
 function supaCfg() {
@@ -16280,7 +16292,7 @@ function supaCopiaHoja(h, valores, huella) {
   var enc = supaEncabezados(valores[0] || []), filas = [];   // los encabezados se guardan todos; los datos secretos no
   for (var i = 1; i < valores.length; i++) {
     var f = valores[i]; if (!f.some(function (v) { return v !== '' && v != null; })) continue;
-    var o = {}; enc.forEach(function (c, j) { if (SUPA_SECRETO.test(c)) return; var v = supaValor(f[j]); if (v !== null) o[c] = v; });
+    var o = {}; enc.forEach(function (c, j) { if (supaEsSecreto(nom, c)) return; var v = supaValor(f[j]); if (v !== null) o[c] = v; });
     filas.push({ hoja: nom, fila: i + 1, datos: o });
   }
   for (var k = 0; k < filas.length; k += SUPA_LOTE)
@@ -16342,7 +16354,7 @@ function supaProbar() {
   Logger.log(m); return m;
 }
 function supaCopiarTodo() { var m = supaCorre(true); Logger.log(m); return m; }
-function supaSincronizar() { var m = supaCorre(false); Logger.log(m); return m; }
+function supaSincronizar() { var m = supaCorre(false); try { mudDirSucursales(); } catch (e) { Logger.log('dir: ' + e); } Logger.log(m); return m; }
 function supaInstalarReloj() {
   supaQuitarReloj();
   ScriptApp.newTrigger('supaSincronizar').timeBased().everyMinutes(10).create();
@@ -16384,8 +16396,8 @@ function supaMarcaH(nombre, t, k) {
     m.todo = true;
   } catch (e) { try { _SUPA_T[nombre].todo = true; } catch (e2) {} }
 }
-function supaFilaObj(enc, f) {
-  var o = {}; enc.forEach(function (c, j) { if (SUPA_SECRETO.test(c)) return; var v = supaValor(f[j]); if (v !== null) o[c] = v; });
+function supaFilaObj(enc, f, nom) {
+  var o = {}; enc.forEach(function (c, j) { if (supaEsSecreto(nom || '', c)) return; var v = supaValor(f[j]); if (v !== null) o[c] = v; });
   return o;
 }
 /** Sube lo que esta llamada cambió. Nunca hace fallar a la app: si algo sale mal, lo pone al día el reloj. */
@@ -16413,7 +16425,7 @@ function supaEmpuja() {
         vals.forEach(function (f, j) {
           var n = a + j;
           if (!f.some(function (v) { return v !== '' && v != null; })) borra.push(n);
-          else sube.push({ hoja: nom, fila: n, datos: supaFilaObj(enc, f) });
+          else sube.push({ hoja: nom, fila: n, datos: supaFilaObj(enc, f, nom) });
         });
         for (var y = lr + 1; y <= b; y++) borra.push(y);
       }
@@ -16492,6 +16504,7 @@ function cajasSupaPasar() {
 /** Para el reloj: no deja que un error de Supabase rompa nada; queda anotado en el registro de ejecuciones. */
 function cajasSupaReloj() { try { var x = cajasSupaPasar(); if (x.ordenes || x.cortes) Logger.log(JSON.stringify(x)); } catch (e) { Logger.log('cajasSupa: ' + e.message); }
   try { var y = invSalida(); if (y.hechos || y.errores) Logger.log('inventario a hojas: ' + JSON.stringify(y)); } catch (e2) { Logger.log('invSalida: ' + e2.message); }
+  try { mudPendAvisar(); } catch (e6) { Logger.log('pendientes: ' + e6.message); }
   if (new Date().getMinutes() % 15 === 0) { try { cajaHorariosAsegura(); perQuincenaMandar(); } catch (e3) { Logger.log('personal: ' + e3.message); }
     try { t127SemanasRepaso(); } catch (e5) { Logger.log('semanas: ' + e5.message); }
     try { if (supaCfgSuave()) supaFetch('post', 'rpc/com_recordatorios', {}); } catch (e4) { Logger.log('recordatorios: ' + e4.message); } }
@@ -16533,6 +16546,8 @@ function supaAjustesFilas() {
 /** Manda el catálogo a Supabase. Se puede correr desde el editor (botón ▶). */
 function supaCatalogo() {
   if (!supaCfgSuave()) return 'Supabase no está configurado.';
+  // 136: con Inventario ya en Supabase, el catálogo vive allá (la hoja es copia): no se vuelve a mandar
+  try { if (mudEnSupa().indexOf('editarProducto') >= 0) return 'Inventario ya vive en Supabase.'; } catch (e) {}
   var r = supaFetch('post', 'rpc/inv_pon_catalogo', { p: supaCatalogoFilas() });
   var a = ''; try { a = ' · ' + supaFetch('post', 'rpc/inv_pon_ajustes', { p: supaAjustesFilas() }); } catch (e) { a = ' · ajustes: ' + e.message; }
   var m = 'Catálogo en Supabase: ' + r + a; try { Logger.log(m); } catch (e) {} return m;
@@ -16655,7 +16670,10 @@ function invSalida() {
       try {
         if (t.tipo === 'filas') (t.datos.partes || []).forEach(invPonFilas);
         else if (t.tipo === 'anular_conteo') invAnulaConteo(t.datos);
-        else if (t.tipo === 'hoja') mudHojaPon(t.datos);
+        else if (t.tipo === 'hoja') { if (t.datos && t.datos.donde) mudHojaDonde(t.datos); else mudHojaPon(t.datos); }
+        else if (t.tipo === 'correo') mudCorreo(t.datos);
+        else if (t.tipo === 'espejo') mudEspejo(t.datos);
+        else if (t.tipo === 'gas') { lock.releaseLock(); _LEE = {}; _MEMO = {}; try { mudGas(t.datos); } finally { lock.waitLock(25000); _LEE = {}; _MEMO = {}; } }
         else if (t.tipo === 'accion') {
           // las funciones de hoy toman su propio candado: se suelta mientras corren
           lock.releaseLock(); _LEE = {}; _MEMO = {};
@@ -16691,7 +16709,7 @@ var H_CHOR = ['Sucursal', 'Turnos (JSON)', 'Días con otro horario (JSON)', 'Rec
 var H_AVP = ['ID', 'Sucursal', 'Para', 'Tipo', 'Título', 'Texto', 'Fecha límite', 'Activo', 'Creado por', 'Creado en'];
 var H_RECO = ['ID', 'Persona', 'Sucursal', 'Motivo', 'Premio', 'Valor', 'Producto', 'Vence', 'Dio', 'Dado en', 'Estado', 'Nota'];
 var H_ACOP = ['Sucursal', 'Sección', 'Encendido', 'Cambiado por', 'Cambiado en'];
-var H_PRES = ['ID', 'Persona', 'Fecha', 'Turno', 'Está en', 'La pide', 'Pidió', 'Pedido en', 'Estado', 'Resolvió', 'Resuelto en', 'Nota'];
+var H_PRESTAMOS = ['ID', 'Persona', 'Fecha', 'Turno', 'Está en', 'La pide', 'Pidió', 'Pedido en', 'Estado', 'Resolvió', 'Resuelto en', 'Nota'];
 var PC_SUCS = ['centro', 'almendras', 'parque'];
 /* Lo que se le da al cajero y a la mesera (igual que en la caja: lib/autoriza.js). */
 var CAJA_CAT = [
@@ -16972,7 +16990,7 @@ function pcPorQuien(r) {
 /* ── «Pedírselo»: el gerente que necesita a alguien que ya está en otra sucursal se lo pide al que lo puso ── */
 PERM_API.pedirPrestamo = [['personal.turnos'], 2]; PERM_API.resolverPrestamo = [['personal.turnos'], 2];
 function pcPrestamos() {
-  return pcLee('Personal préstamos', H_PRES).map(function (r) {
+  return pcLee('Personal préstamos', H_PRESTAMOS).map(function (r) {
     return { fila: r.fila, id: calTxt(r[0]), persona: calTxt(r[1]), f: calTxt(r[2]), turno: calTxt(r[3]), en: calTxt(r[4]).toLowerCase(), para: calTxt(r[5]).toLowerCase(), pidio: calTxt(r[6]),
       cuando: r[7] instanceof Date ? fmtSello(r[7]) : calTxt(r[7]), estado: calTxt(r[8]) || 'Pedido', resolvio: calTxt(r[9]), resuelto: r[10] instanceof Date ? fmtSello(r[10]) : calTxt(r[10]), nota: calTxt(r[11]) };
   });
@@ -16985,7 +17003,7 @@ function pedirPrestamo(cred, sid, id, f, turno) {
   if (!r) throw new Error('Esa persona ya está libre ese turno: póngala en el calendario.');
   var p = D.eq.filter(function (x) { return x.id === id; })[0] || { nombre: id };
   if (pcPrestamos().some(function (x) { return x.persona === id && x.f === f && x.turno === turno && x.para === sid && x.estado === 'Pedido'; })) throw new Error('Ya lo pidió: espere la respuesta.');
-  pcHoja('Personal préstamos', H_PRES).appendRow([pcId('PR'), id, f, turno, r.sid, sid, yo.nombre, pcSello(), 'Pedido', '', '', '']);
+  pcHoja('Personal préstamos', H_PRESTAMOS).appendRow([pcId('PR'), id, f, turno, r.sid, sid, yo.nombre, pcSello(), 'Pedido', '', '', '']);
   return { ok: true, mensaje: 'Se le pidió a ' + nombreUnidad(r.sid) + ' que suelte a ' + p.nombre + ' el ' + dia(f) + ' (' + (turno === 'am' ? 'mañana' : 'tarde') + '). Le llega en la campanita.' };
 }
 /** El gerente de la sucursal donde está la persona lo suelta (se quita su turno de allá) o dice que no. */
@@ -17004,7 +17022,7 @@ function resolverPrestamo127(cred, idPr, si, nota) {
       var r = D.tu.filter(function (t) { return t.id === x.persona && t.f === x.f && t.sid === x.en; })[0];
       if (r) { var am = x.turno === 'am' ? '' : r.am, pm = x.turno === 'pm' ? '' : r.pm; calHoja('Calendario turnos', H_CTU, ['B']).getRange(r.fila, 4, 1, 4).setValues([[am, pm, yo.nombre, new Date()]]); }
     }
-    pcHoja('Personal préstamos', H_PRES).getRange(x.fila, 9, 1, 4).setValues([[si ? 'Soltado' : 'No', yo.nombre, pcSello(), String(nota || '').slice(0, 120)]]);
+    pcHoja('Personal préstamos', H_PRESTAMOS).getRange(x.fila, 9, 1, 4).setValues([[si ? 'Soltado' : 'No', yo.nombre, pcSello(), String(nota || '').slice(0, 120)]]);
   } finally { lock.releaseLock(); }
   return { ok: true, mensaje: si ? 'Listo: ya lo pueden poner en ' + nombreUnidad(x.para) + '.' : 'Se le avisó que no.' };
 }
@@ -17070,8 +17088,11 @@ function guardarAvisoPersonal(cred, d) {
   var h = pcHoja('Avisos personal', H_AVP);
   if (d.id) {
     var a = pcAvisos().filter(function (x) { return x.id === d.id; })[0]; if (!a) throw new Error('Ese aviso ya no existe.');
-    h.getRange(a.fila, 2, 1, 7).setValues([[sid, para, tipo, titulo, texto, lim, 'sí']]);
-  } else h.appendRow([pcId('AV'), sid, para, tipo, titulo, texto, lim, 'sí', yo.nombre, pcSello()]);
+    // 135: el aviso que se cambia también tiene que ser de una sucursal suya (y uno para todas, solo el director operativo)
+    pcExige(yo, 'personal.avisos', 2, a.sid === '*' ? null : a.sid, 'publicar avisos');
+    if (a.sid === '*' && !(yo.esAdmin || yo.rol === 'operaciones')) throw new Error('Para todas las sucursales, lo publica el director operativo.');
+    h.getRange(a.fila, 2, 1, 7).setValues([[sid, para, tipo, t127Seguro(titulo), t127Seguro(texto), lim, 'sí']]);
+  } else h.appendRow([pcId('AV'), sid, para, tipo, t127Seguro(titulo), t127Seguro(texto), lim, 'sí', yo.nombre, pcSello()]);
   var r = listaAvisosPersonal(cred, sid === '*' ? (yo.sucursal && PC_SUCS.indexOf(yo.sucursal) >= 0 ? yo.sucursal : 'centro') : sid);
   r.mensaje = tipo === 'reglamento' ? 'Reglamento publicado.' : 'Aviso publicado: le llega a cada uno en su app.';
   return r;
@@ -17080,6 +17101,7 @@ function quitarAvisoPersonal(cred, id) {
   var yo = quien(cred), a = pcAvisos().filter(function (x) { return x.id === String(id); })[0];
   if (!a) throw new Error('Ese aviso ya no existe.');
   pcExige(yo, 'personal.avisos', 2, a.sid === '*' ? null : a.sid, 'quitar avisos');
+  if (a.sid === '*' && !(yo.esAdmin || yo.rol === 'operaciones')) throw new Error('Para todas las sucursales, lo quita el director operativo.');
   pcHoja('Avisos personal', H_AVP).getRange(a.fila, 8).setValue('no');
   var r = listaAvisosPersonal(cred, a.sid === '*' ? 'centro' : a.sid); r.mensaje = 'Aviso quitado.'; return r;
 }
@@ -17106,7 +17128,7 @@ function listaReconocimientos(cred, sid) {
 function darReconocimiento(cred, d) {
   var yo = quien(cred); d = d || {}; var sid = pcSidOk(String(d.sid || ''));
   pcExige(yo, 'personal.premios', 2, sid, 'dar reconocimientos');
-  var p = pcPersonas().filter(function (x) { return x.id === String(d.persona || ''); })[0];
+  var p = pcPersonas().filter(function (x) { return x.id === String(d.persona || '') && (x.sid === sid || (x.cubre || []).indexOf(sid) >= 0); })[0];      // 135: alguien de esa sucursal
   if (!p) throw new Error('Escoja a la persona.');
   var motivo = String(d.motivo || '').trim().slice(0, 80); if (!motivo) throw new Error('Escriba el motivo (ej. Empleado del mes).');
   var premio = ['descuento', 'producto', 'ninguno'].indexOf(d.premio) >= 0 ? d.premio : 'ninguno';
@@ -17119,7 +17141,7 @@ function darReconocimiento(cred, d) {
     if (t.n && L.usado.n >= t.n) throw new Error('Ya dio ' + L.usado.n + ' premios este mes (el tope es ' + t.n + '). El reconocimiento puede ir sin premio.');
     if (t.q && premio === 'producto' && L.usado.q + valor > t.q) throw new Error('Con este premio pasa el tope del mes en productos (Q' + t.q + '). Lleva Q' + L.usado.q + '.');
   }
-  pcHoja('Reconocimientos', H_RECO).appendRow([pcId('RC'), p.id, sid, motivo, premio, valor, producto, vence, yo.nombre, pcSello(), 'vigente', '']);
+  pcHoja('Reconocimientos', H_RECO).appendRow([pcId('RC'), p.id, sid, t127Seguro(motivo), premio, valor, t127Seguro(producto), vence, yo.nombre, pcSello(), 'vigente', '']);
   var r = listaReconocimientos(cred, sid); r.mensaje = 'Reconocimiento para ' + p.nombre + (premio !== 'ninguno' ? ': le llega el premio en su app y lo canjea en la caja.' : '.'); return r;
 }
 function anularReconocimiento(cred, id) {
@@ -17391,7 +17413,7 @@ var AREA_GAS = {
 };
 var AREA_SIN_PRECIOS = { stock: true };
 // lo que es dinero: precios, costos y lo que se valora con ellos (en la nivelación: valor, faltante, sobrante, neto; en firmas: total)
-var AREA_PRECIO = /precio|costo|^valor$|^monto|importe|unitario|^faltante$|^sobrante$|^neto$|^total$/i;
+var AREA_PRECIO = /precio|costo|^valor$|^monto|importe|unitario|^faltante$|^sobrante$|^neto$|total|transporte|pagado|gasto/i;      // 136: también subtotal, totales, transporte, pagado y gasto
 
 /** Quién pide y si puede (lo contesta Supabase con el pase de la persona). Se recuerda 30 segundos por pase y función. */
 function areaQuien(tok, app, fn, nivel) {
@@ -18340,26 +18362,56 @@ function mudValor(v) {
 }
 /** aaaa-mm, aaaa-mm-dd, aaaa-Tn o aaaa: se queda como texto (la hoja no lo convierte en fecha). */
 function mudEsTextoFecha(v) { return typeof v === 'string' && /^\d{4}(-\d{2}(-\d{2})?|-T[1-4])?$/.test(v); }
+/** La hoja; si no existe y el trabajo trae sus encabezados, la crea (la primera vez que se usa esa parte). */
+function mudHojaCrea(nombre, cab) {
+  var h = libro().getSheetByName(nombre);
+  if (!h && Array.isArray(cab) && cab.length) {
+    h = libro().insertSheet(nombre);
+    h.getRange(1, 1, 1, cab.length).setValues([cab.map(function (x) { return String(x); })]);
+    h.setFrozenRows(1);
+  }
+  return h;
+}
+function mudBuscaFila(h, cab, clave, id) {
+  var ks = String(clave).split('|'), ids = ks.length > 1 ? String(id).split('|') : [String(id)], js = ks.map(function (k) { return cab.indexOf(k); });
+  if (js.some(function (j) { return j < 0; }) || ks.length !== ids.length) { var e = new Error('La hoja «' + h.getName() + '» no tiene la columna ' + clave + '.'); e.final = true; throw e; }
+  var ult = h.getLastRow(); if (ult < 2) return -1;
+  var v = h.getRange(2, 1, ult - 1, cab.length).getValues();
+  for (var i = v.length - 1; i >= 0; i--)
+    if (js.every(function (j, t) { var x = v[i][j]; return String(x instanceof Date ? fmtDia(x) : x == null ? '' : x).trim() === ids[t]; })) return i + 2;
+  return -1;
+}
+/* Pone una fila: en una fila que ya estaba solo se tocan las celdas que vienen (lo demás no se vuelve a escribir:
+ * así un texto que empezaba con «=» y quedó como texto no se vuelve fórmula, y las fórmulas de la hoja se quedan). */
+function mudPonFila(h, cab, r, fila, yaEstaba) {
+  var ks = Object.keys(fila || {}).filter(function (k) { return cab.indexOf(k) >= 0; });
+  ks.forEach(function (k) { if (mudEsTextoFecha(fila[k])) h.getRange(r, cab.indexOf(k) + 1).setNumberFormat('@'); });
+  if (yaEstaba) { ks.forEach(function (k) { h.getRange(r, cab.indexOf(k) + 1).setValue(mudValor(fila[k])); }); return; }
+  var vals = cab.map(function () { return ''; });
+  ks.forEach(function (k) { vals[cab.indexOf(k)] = mudValor(fila[k]); });
+  h.getRange(r, 1, 1, cab.length).setValues([vals]);
+}
+/* 135 · al empezar a mudar un módulo: Apps Script vuelve a copiar sus hojas completas a Supabase (que no se pierda lo último de Google). */
+function mudEspejo(d) {
+  (d && Array.isArray(d.hojas) ? d.hojas : []).forEach(function (n) {
+    var h = libro().getSheetByName(String(n)); if (!h) return;
+    var v = h.getDataRange().getValues(); supaCopiaHoja(h, v, supaHuella(v));
+  });
+}
 function mudHojaPon(d) {
   d = d || {};
-  var nombre = String(d.hoja || ''), clave = String(d.clave || 'ID'), id = String(d.id == null ? '' : d.id).trim(), fila = d.fila || {};
-  if (!nombre || !id || typeof fila !== 'object') { var e0 = new Error('Trabajo de hoja incompleto.'); e0.final = true; throw e0; }
-  var h = libro().getSheetByName(nombre);
+  // 135: modo «mas» solo agrega la fila al final (bitácoras); «cab» trae los encabezados para crear la hoja si todavía no existe
+  var nombre = String(d.hoja || ''), clave = String(d.clave || 'ID'), id = String(d.id == null ? '' : d.id).trim(), fila = d.fila || {}, mas = d.modo === 'mas';
+  var clave2 = d.clave2 ? String(d.clave2) : '', id2 = String(d.id2 == null ? '' : d.id2).trim();      // 135: dos columnas como clave (producto + proveedor)
+  if (!nombre || (!id && !mas) || typeof fila !== 'object') { var e0 = new Error('Trabajo de hoja incompleto.'); e0.final = true; throw e0; }
+  var h = mudHojaCrea(nombre, d.cab);
   if (!h) { var e1 = new Error('No existe la hoja «' + nombre + '».'); e1.final = true; throw e1; }
   var n = h.getLastColumn(), cab = h.getRange(1, 1, 1, n).getValues()[0].map(function (x) { return String(x == null ? '' : x).trim(); });
-  var ci = cab.indexOf(clave);
-  if (ci < 0) { var e2 = new Error('La hoja «' + nombre + '» no tiene la columna ' + clave + '.'); e2.final = true; throw e2; }
-  var ult = h.getLastRow(), r = -1;
-  if (ult > 1) {
-    var ids = h.getRange(2, ci + 1, ult - 1, 1).getValues();
-    for (var i = ids.length - 1; i >= 0; i--) if (String(ids[i][0] == null ? '' : ids[i][0]).trim() === id) { r = i + 2; break; }
-  }
-  var vals = r > 0 ? h.getRange(r, 1, 1, n).getValues()[0] : cab.map(function () { return ''; });
-  if (r < 0) r = Math.max(ult, 1) + 1;
-  Object.keys(fila).forEach(function (k) { var j = cab.indexOf(k); if (j < 0) return;
-    if (mudEsTextoFecha(fila[k])) h.getRange(r, j + 1).setNumberFormat('@');
-    vals[j] = mudValor(fila[k]); });
-  h.getRange(r, 1, 1, n).setValues([vals]);
+  // 135: la clave puede ser de varias columnas: «Quincena|Id» con id «2026-10-01|D001» (o clave2/id2)
+  if (clave2) { clave = clave + '|' + clave2; id = id + '|' + id2; }
+  var r = mas ? -1 : mudBuscaFila(h, cab, clave, id), ult = h.getLastRow();
+  if (d.borrar) { if (r > 0) h.deleteRow(r); _LEE = {}; _MEMO = {}; return; }      // 135: quitar la fila (un proveedor eliminado)
+  mudPonFila(h, cab, r > 0 ? r : Math.max(ult, 1) + 1, fila, r > 0);
   _LEE = {}; _MEMO = {};
 }
 
@@ -18378,6 +18430,343 @@ function mudEnSupa() {
 function mudFrena(fn) {
   if (!supaCfgSuave()) return;
   if (mudEnSupa().indexOf(fn) >= 0) throw new Error('Esto ya no se guarda en Google: espere un minuto y vuelva a intentar.');
+}
+
+/* ── 135 · copia a hojas sin columna ID (Presupuestos) y los correos que salían al guardar (siguen saliendo de Google hasta G8) ── */
+function mudCoincide(celda, quiero) {
+  quiero = String(quiero == null ? '' : quiero);
+  if (/^\d{4}-\d{2}$/.test(quiero)) return (celda instanceof Date ? Utilities.formatDate(celda, ZONA, 'yyyy-MM') : String(celda == null ? '' : celda).slice(0, 7)) === quiero;
+  return String(celda == null ? '' : celda) === quiero;
+}
+function mudHojaDonde(d) {
+  d = d || {};
+  var nombre = String(d.hoja || ''), donde = d.donde || {}, modo = d.modo === 'reemplaza' ? 'reemplaza' : 'pon';
+  var ks = Object.keys(donde);
+  if (!nombre || !ks.length) { var e0 = new Error('Trabajo de hoja incompleto.'); e0.final = true; throw e0; }
+  var h = mudHojaCrea(nombre, d.cab);
+  if (!h) { var e1 = new Error('No existe la hoja «' + nombre + '».'); e1.final = true; throw e1; }
+  var n = h.getLastColumn(), cab = h.getRange(1, 1, 1, n).getValues()[0].map(function (x) { return String(x == null ? '' : x).trim(); });
+  var cols = ks.map(function (k) { var j = cab.indexOf(k); if (j < 0) { var e2 = new Error('La hoja «' + nombre + '» no tiene la columna ' + k + '.'); e2.final = true; throw e2; } return j; });
+  var ult = h.getLastRow(), vals = ult > 1 ? h.getRange(2, 1, ult - 1, n).getValues() : [], hits = [];
+  vals.forEach(function (f, i) { if (cols.every(function (j, q) { return mudCoincide(f[j], donde[ks[q]]); })) hits.push(i + 2); });
+  if (modo === 'pon') {
+    if (hits.length) mudPonFila(h, cab, hits[hits.length - 1], d.fila, true);
+    else mudPonFila(h, cab, Math.max(ult, 1) + 1, d.fila, false);
+  } else {
+    for (var i = hits.length - 1; i >= 0; i--) h.deleteRow(hits[i]);
+    var r0 = Math.max(h.getLastRow(), 1) + 1;
+    (d.filas || []).forEach(function (f, k) { mudPonFila(h, cab, r0 + k, f, false); });
+  }
+  _LEE = {}; _MEMO = {};
+}
+/* Los correos que salían al guardar (siguen saliendo de Google hasta G8). */
+function mudCorreo(d) {
+  d = d || {};
+  if (d.que === 'presupuesto') { _LEE = {}; _MEMO = {}; return correoPresupuesto(String(d.mes || ''), String(d.aprobo || '')); }
+  if (d.que === 'aviso') return correoAviso(String(d.para || ''), d.aviso || {});
+  if (d.que === 'nivelacion') { try { return correoNivelacion(String(d.numero || '')); } catch (e) { return ''; } }      // 136: la nivelación aprobada (sigue saliendo de Google hasta G8)
+  var e = new Error('Correo desconocido.'); e.final = true; throw e;
+}
+
+/* ── 135 · Directores: lo que vive en Supabase se copia a su hoja en menos de un minuto. Pagar y reabrir (siguen en Google hasta G7)
+ *    primero ponen las copias en camino y, si alguna no llegó, no calculan con la hoja vieja. ── */
+function mudCopiasAntes(hojas) {
+  if (!supaCfgSuave()) return;
+  try { invSalida(); } catch (e) {}
+  var n = 0;
+  try { n = Number(supaFetch('post', 'rpc/mud_copias_srv', { p_hojas: hojas })) || 0; } catch (e) { n = 0; }
+  if (n > 0) throw new Error('Todavía se están copiando cambios de Directores a la hoja. Espere un minuto y vuelva a intentar.');
+}
+/* La pantalla de Directores en Supabase necesita lo que Google todavía calcula de las sucursales (la planilla, hasta G6):
+ * cada 10 minutos (con la copia de las hojas) se le manda. */
+function mudDirSucursales() {
+  if (!supaCfgSuave()) return 0;
+  var hoy = hoyISO(), q0 = calQuincena(hoy), fechas = [masDias(q0.ini, -1), hoy, masDias(q0.fin, 1)], D = calDatos(), out = [];
+  fechas.forEach(function (f) {
+    var q = calQuincena(f);
+    ['centro', 'almendras', 'parque'].forEach(function (s) {
+      var mm = calModelo(D, s, q.ini), pl = calPlanillaDe(D, s, q.ini);
+      out.push({ sid: s, ini: q.ini, datos: { sid: s, nombre: nombreUnidad(s), total: pl ? pl.pagado : mm.tot.total, horas: mm.tot.horas, gerencia: mm.tot.gerencia, pagada: !!pl,
+        estado: pl ? 'pagada' : mm.tot.conReales ? 'con horas trabajadas' : 'proyectada' } });
+    });
+  });
+  return supaFetch('post', 'rpc/dir_sucursales_poner', { p: out });
+}
+
+/* ════════════ 136 · INVENTARIO (paquete A): el catálogo de bodega ya vive en Supabase ════════════
+ * Con la unidad «inventario» en Supabase, «Productos de bodega» y «Productos del proveedor» son copia de las tablas.
+ * Lo que todavía corre aquí y les cambia precios (cotizar una orden vieja, la factura de una compra) se manda a Supabase
+ * (rpc mud_bod_srv) en lugar de escribir la hoja: la hoja la pone la copia de Supabase. Y los correos de cambios de precio
+ * que deja Supabase en la cola salen de aquí (hasta G8). */
+function mudInvEnSupa() {
+  if (!supaCfgSuave()) return false;
+  try { return mudEnSupa().indexOf('editarProducto') >= 0; } catch (e) { return false; }
+}
+function mudBodSrv(op, p) {
+  var r = supaFetch('post', 'rpc/mud_bod_srv', { p_op: op, p: p });
+  if (r && r.google) throw new Error('Inventario todavía vive en Google.');
+  _BOD = null; _MEMO = {};
+  return r;
+}
+var _mudSincronizaPreciosBodega = sincronizaPreciosBodega;
+sincronizaPreciosBodega = function (lineas, precios, numero) {
+  if (!mudInvEnSupa()) return _mudSincronizaPreciosBodega(lineas, precios, numero);
+  mudBodSrv('sincroniza', { numero: String(numero || ''), precios: precios || {},
+    lineas: (lineas || []).map(function (o) { return { codigo: o.codigo, proveedor: o.proveedor || '', codProv: o.codProv || '', compra: o.compra || '', presentacion: o.presentacion || '', rinde: Number(o.rinde) || 0 }; }) });
+};
+var _mudActualizaAncla = actualizaAncla;
+actualizaAncla = function (b, o, precio, por, ahora) {
+  if (!mudInvEnSupa()) return _mudActualizaAncla(b, o, precio, por, ahora);
+  o = o || {};
+  // la factura de una compra (gastoCompraApp) además deja ese precio en el producto: lo hace Supabase (la hoja es copia)
+  mudBodSrv('ancla', { codigo: b.codigo, precio: precio, por: String(por || ''), factura: /^Factura /.test(String(por || '')),
+    o: { proveedor: o.proveedor || '', codProv: o.codProv || '', compra: o.compra || '', presentacion: o.presentacion || '', rinde: Number(o.rinde) || 0 } });
+};
+/* Los correos de precios que deja Supabase (avisaCambioPrecios / avisaCambioPrecioProducto). */
+var _mudCorreoA = mudCorreo;
+mudCorreo = function (d) {
+  d = d || {};
+  if (d.que === 'precios') return avisaCambioPrecios({ nombre: String(d.yo || '') }, Array.isArray(d.hechos) ? d.hechos : [], String(d.titulo || 'Cambios de precios en bodega'));
+  if (d.que === 'precio_producto') return avisaCambioPrecioProducto({ nombre: String(d.yo || '') }, { nombre: String(d.nombre || ''), presCompra: String(d.presCompra || '') },
+    { antes: Number(d.antes) || 0, ahora: Number(d.ahora) || 0 });
+  return _mudCorreoA(d);
+};
+
+/* ════════════ 136 · INVENTARIO (parte C): pedidos de sucursal ════════════
+ * El dinero de los traslados de un pedido recibido o borrado lo escribe mud136_d.js (mudGas_traslado, mudGas_traslado_borra). */
+
+/** Los avisos de pendientes sin orden de compra (48 h a Operaciones, 4 días al Director). Va en el reloj de cada minuto; corre cada 10. */
+function mudPendAvisar() {
+  if (!supaCfgSuave()) return null;
+  var c = null; try { c = CacheService.getScriptCache(); if (c.get('mud_pend_avisar')) return null; } catch (e) { c = null; }
+  var r = null;
+  try { r = supaFetch('post', 'rpc/inv_pendientes_avisar', {}); } catch (e2) { Logger.log('pendientes: ' + e2.message); }
+  if (c) try { c.put('mud_pend_avisar', '1', 600); } catch (e3) {}
+  return r;
+}
+
+/* ════════════ 136 · PARTE D: EL DINERO DE LOS TRASLADOS Y LAS EMERGENCIAS (Gastos sigue en Google hasta G7) ════════════
+ * Con Inventario en Supabase, los traslados viven allá (inv.tr_*). Cada traslado nuevo, corregido o anulado deja un trabajo «gas»
+ * y aquí se escribe en Gastos / Gastos detalle exactamente como lo hacían creaTraslado, corrigeTraslado, borraSol y creaPrestamo.
+ * Supabase manda las filas ya hechas (ids, montos, notas, categorías). Ninguno se escribe dos veces si la cola lo repite. */
+function mud136Fecha(s) {
+  var m = /^(\d{4})-(\d{2})-(\d{2})[ T](\d{2}):(\d{2})(?::(\d{2}))?/.exec(String(s || ''));
+  return m ? new Date(+m[1], +m[2] - 1, +m[3], +m[4], +m[5], +(m[6] || 0)) : new Date();
+}
+function mud136FilaDe(h, id) {
+  if (!h || h.getLastRow() < 2) return 0;
+  var ids = h.getRange(2, 1, h.getLastRow() - 1, 1).getValues();
+  for (var i = ids.length - 1; i >= 0; i--) if (String(ids[i][0]) === String(id)) return i + 2;
+  return 0;
+}
+/** El traslado nuevo (T… y T…-B) o el préstamo de una emergencia entre sucursales (E… y E…-O), con su detalle. */
+function mudGas_traslado(id, d) {
+  var h = libro().getSheetByName('Gastos');
+  if (!h) throw new Error('Falta la hoja Gastos. Corra la función instalar.');
+  var gs = d.gastos || [];
+  if (!gs.length) { var e0 = new Error('Trabajo de dinero sin filas.'); e0.final = true; throw e0; }
+  if (mud136FilaDe(h, gs[0].id)) return;                                  // ya estaba escrito
+  var filas = gs.map(function (g) {
+    return [g.id, mud136Fecha(g.en), g.por, '', g.unidad, g.categoria, aDate(g.pago), g.mes, Number(g.monto) || 0, t127Seguro(g.nota), 'No', '', '', '',
+      g.proveedor, g.factura, Number(g.articulos) || 0];
+  });
+  var f0 = h.getLastRow() + 1;
+  h.getRange(f0, 8, filas.length, 1).setNumberFormat('@');
+  h.getRange(f0, 1, filas.length, H_GASTOS.length).setValues(mudSegFilas(aAncho(filas, H_GASTOS.length)));
+  escribeDetalle(mud136Detalle(d.detalle || []));
+}
+function mudGas_emergencia(id, d) { return mudGas_traslado(id, d); }
+function mud136Detalle(ls) {
+  return ls.map(function (l) {
+    return [l.id, mud136Fecha(l.en), l.por, l.unidad, l.proveedor, aDate(l.pago), l.mes, l.categoria, t127Seguro(l.producto), Number(l.cantidad) || 0, l.medida,
+      Number(l.precio) || 0, Number(l.subtotal) || 0, 'No', '', '', '', ''];
+  });
+}
+/** corrigeTraslado: los renglones viejos quedan «Reemplazado»; el gasto toma el monto nuevo (o queda anulado si ya no lleva nada). */
+function mudGas_traslado_corrige(id, d) {
+  var ss = libro(), h = ss.getSheetByName('Gastos'), hd = ss.getSheetByName('Gastos detalle');
+  var fS = mud136FilaDe(h, d.id), fB = mud136FilaDe(h, d.par), en = mud136Fecha(d.en);
+  if (!fS) throw new Error('Todavía no está en Gastos el traslado ' + d.id + '.');      // el trabajo que lo crea va antes en la cola: se vuelve a intentar
+  var g = d.gasto || {}, b = d.bodega || {}, v = h.getRange(fS, 9, 1, 4).getValues()[0];
+  // ¿ya se hizo? (el gasto ya tiene la nota y el monto de esta corrección, o ya quedó anulado con esta nota)
+  if (d.anular ? (String(v[2]).toLowerCase() === 'sí' && String(v[3]) === String(t127Seguro(d.nota)))
+               : (String(v[1]) === String(t127Seguro(g.nota)) && Math.abs((Number(v[0]) || 0) - (Number(g.monto) || 0)) < 0.005)) return;
+  // ¿quedó escrito el detalle nuevo y faltó el gasto? (mismas filas: gasto, hora, producto y cantidad, sin reemplazar)
+  var nuevas = mud136Detalle(d.detalle || []), clave = function (r) { return [r[0], r[1] instanceof Date ? r[1].getTime() : r[1], r[8], Number(r[9]), Number(r[12])].join('|'); };
+  var hay = {}, dYa = false;
+  if (nuevas.length && hd && hd.getLastRow() > 1) {
+    hd.getRange(2, 1, hd.getLastRow() - 1, 14).getValues().forEach(function (r) { if (String(r[13]).toLowerCase() === 'no') { var k = clave(r); hay[k] = (hay[k] || 0) + 1; } });
+    dYa = nuevas.every(function (r) { var k = clave(r); if (!(hay[k] > 0)) return false; hay[k]--; return true; });
+  }
+  if (!dYa && hd && hd.getLastRow() > 1) {
+    var n = hd.getLastRow() - 1, vi = hd.getRange(2, 1, n, 1).getValues(), ve = hd.getRange(2, 14, n, 1).getValues();
+    for (var k = 0; k < n; k++) {
+      var i2 = String(vi[k][0]);
+      if ((i2 === d.id || i2 === d.par) && String(ve[k][0]).toLowerCase() === 'no') hd.getRange(k + 2, 14).setValue('Reemplazado');
+    }
+  }
+  if (d.anular) {
+    h.getRange(fS, 11, 1, 4).setValues([['Sí', t127Seguro(d.nota), d.quien, en]]);
+    if (fB) h.getRange(fB, 11, 1, 4).setValues([['Sí', t127Seguro(d.nota), d.quien, en]]);
+    return;
+  }
+  if (!dYa) escribeDetalle(nuevas);
+  h.getRange(fS, 6).setValue(g.categoria);
+  h.getRange(fS, 9, 1, 2).setValues([[Number(g.monto) || 0, t127Seguro(g.nota)]]);
+  h.getRange(fS, 17).setValue(Number(g.articulos) || 0);
+  if (fB) { h.getRange(fB, 9).setValue(Number(b.monto) || 0); h.getRange(fB, 17).setValue(Number(b.articulos) || 0); }
+}
+/** borraSol: el traslado de una solicitud borrada queda anulado (y su detalle, menos lo reemplazado). */
+function mudGas_traslado_borra(id, d) {
+  var g = libro().getSheetByName('Gastos'); if (!g || g.getLastRow() < 2) return;
+  var en = mud136Fecha(d.en), ids = [];
+  leeTodo(g, 16).forEach(function (r, i) {
+    if (String(r[15]) === String(d.numero) && String(r[10]).toLowerCase() !== 'sí') {
+      g.getRange(i + 2, 11, 1, 4).setValues([['Sí', t127Seguro(d.motivo), d.quien, en]]);
+      ids.push(String(r[0]));
+    }
+  });
+  ids.forEach(function (x) { anulaDetalle(x); });
+}
+
+/* ════════════ 136 · COMPRAS EN SUPABASE: el dinero que todavía se escribe aquí (Gastos, hasta G7) ════════════
+ * Supabase deja el trabajo «gas» y mudGas lo trae aquí:
+ *  · pago_oc  → pagar una orden de Administración (lo de pagarOrden: el gasto de la Bodega Central, el proveedor y los precios del catálogo de compras);
+ *  · compra   → pagar la factura de una compra de la app (lo de gastoCompraApp, sin tocar los precios de bodega: viven en la ficha de la app).
+ * Cada trabajo queda anotado en «Mudanza dinero» con su id: si la cola lo repite, no se escribe otra vez. */
+var H_MUD_DINERO = ['ID', 'Qué', 'Hecho en', 'Resultado'];
+function mudDineroHoja() {
+  var ss = libro(), h = ss.getSheetByName('Mudanza dinero');
+  if (!h) { h = ss.insertSheet('Mudanza dinero'); h.getRange(1, 1, 1, H_MUD_DINERO.length).setValues([H_MUD_DINERO]); h.setFrozenRows(1); }
+  return h;
+}
+function mudDineroYa(id) {
+  var h = mudDineroHoja(), n = h.getLastRow(); if (n < 2) return null;
+  var v = h.getRange(2, 1, n - 1, 4).getValues();
+  for (var i = v.length - 1; i >= 0; i--) if (String(v[i][0]) === id) return String(v[i][3] || '');
+  return null;
+}
+function mudDineroAnota(id, que, res) { mudDineroHoja().appendRow([id, que, new Date(), String(res || '')]); }
+/* 136 (seguridad): primero se anota «escribiendo»; si Apps Script se cae a medias, el reintento busca el gasto en Gastos antes de escribirlo otra vez */
+var MUD_ESCRIBIENDO = 'escribiendo';
+function mudDineroFila(id) {
+  var h = mudDineroHoja(), n = h.getLastRow(); if (n < 2) return 0;
+  var v = h.getRange(2, 1, n - 1, 1).getValues();
+  for (var i = v.length - 1; i >= 0; i--) if (String(v[i][0]) === id) return i + 2;
+  return 0;
+}
+function mudDineroEmpieza(id, que) { var f = mudDineroFila(id); if (f) return f; mudDineroAnota(id, que, MUD_ESCRIBIENDO); return mudDineroHoja().getLastRow(); }
+function mudDineroTermina(fila, res) { mudDineroHoja().getRange(fila, 3, 1, 2).setValues([[new Date(), String(res || '')]]); }
+/** El gasto que ya se escribió para esa orden (si se cayó antes de anotarlo): la nota empieza con «Orden <número>» y la factura es la misma. */
+function mudGastoDeOrden(numero, factura) {
+  var h = libro().getSheetByName('Gastos'); if (!h) return '';
+  var n = h.getLastRow(); if (n < 2) return '';
+  var desde = Math.max(2, n - 3000), v = h.getRange(desde, 1, n - desde + 1, 16).getValues();
+  for (var i = v.length - 1; i >= 0; i--) {
+    var nota = String(v[i][9] || '').replace(/^'/, '');
+    if (nota.indexOf('Orden ' + numero + ' ') === 0 && String(v[i][15] || '').replace(/^'/, '') === String(factura)) return String(v[i][0]);
+  }
+  return '';
+}
+/* escribeGasto toma el candado del script: invSalida ya lo tiene, se suelta mientras se escribe (como con las «accion») */
+function mudSinCandado(fn) {
+  var L = LockService.getScriptLock(), tenia = false;
+  try { tenia = L.hasLock(); } catch (e) { tenia = false; }
+  if (tenia) L.releaseLock();
+  _LEE = {}; _MEMO = {};
+  try { return fn(); } finally { if (tenia) L.waitLock(25000); _LEE = {}; _MEMO = {}; }
+}
+function mudCatCompras() {
+  var cat = {};
+  filasProductos().forEach(function (p) { cat[(p.nombre + '§' + p.proveedor).toLowerCase()] = p; if (!cat[p.nombre.toLowerCase()]) cat[p.nombre.toLowerCase()] = p; });
+  return cat;
+}
+
+function mudGas_pago_oc(id, d) {
+  var ya = mudDineroYa(id);
+  if (ya != null && ya !== MUD_ESCRIBIENDO) { try { if (ya) supaFetch('post', 'rpc/mud_oc_gasto_srv', { p_numero: String(d.numero || ''), p_gasto: ya }); } catch (e) {} return; }
+  var numero = String(d.numero || ''), prov = String(d.proveedor || ''), quien = String(d.quien || 'Administración'), forma = String(d.forma || 'Transferencia'), ref = String(d.referencia || '');
+  var cat = mudCatCompras();
+  var lineas = (d.lineas || []).filter(function (l) { return Number(l.cantidad) > 0; }).map(function (l) {
+    var p = cat[(String(l.producto) + '§' + prov).toLowerCase()] || cat[String(l.producto).toLowerCase()] || {};
+    return { producto: String(l.producto || ''), cantidad: Number(l.cantidad), medida: String(l.medida || ''), precio: Number(l.precio) || 0,
+      categoria: p.categoria || 'Insumos de cocina', contenido: p.contenido || 0, base: p.base || '' };
+  });
+  if (Number(d.transporte) > 0) lineas.push({ producto: 'Costo de transporte', cantidad: 1, medida: 'servicio', precio: Number(d.transporte), categoria: 'Combustible y transporte', contenido: 0, base: '' });
+  var v = preparaGasto({ unidad: 'bodega', fechaPago: String(d.fecha || hoyISO()), proveedor: prov, factura: String(d.factura || numero), lineas: lineas,
+    nota: 'Orden ' + numero + ' · ' + forma + (ref ? ' ' + ref : '') });
+  var fila = mudDineroEmpieza(id, 'pago_oc'), gid = ya === MUD_ESCRIBIENDO ? mudGastoDeOrden(numero, String(d.factura || numero)) : '';
+  if (!gid) {
+    var r = mudSinCandado(function () { return escribeGasto(v, quien, new Date(), null); });
+    try { aseguraProveedor(prov, quien); } catch (e) {}
+    try { recuerdaPrecios(v.lineas); } catch (e) {}
+    gid = r && r.nuevo ? String(r.nuevo.id) : '';
+  }
+  mudDineroTermina(fila, gid);
+  // el ID del gasto en la orden (la hoja y Supabase)
+  try { var pg = filasOCP()[numero]; if (pg) hojaOCP().getRange(pg.fila, 14).setValue(gid); } catch (e) {}
+  try { supaFetch('post', 'rpc/mud_oc_gasto_srv', { p_numero: numero, p_gasto: gid }); } catch (e) {}
+}
+
+function mudGas_compra(id, d) {
+  var ya = mudDineroYa(id);
+  if (ya != null && ya !== MUD_ESCRIBIENDO) return;
+  var numero = String(d.numero || '').trim(), prov = String(d.proveedor || '').trim(), quien = String(d.usuario || 'Administración');
+  var fecha = esFecha(d.fecha) ? d.fecha : hoyISO();
+  var forma = FORMAS_PAGO.indexOf(d.forma) >= 0 ? d.forma : 'Transferencia';
+  var ref = String(d.referencia || '').trim().slice(0, 40), factura = String(d.factura || '').trim().slice(0, 30) || numero;
+  var cat = mudCatCompras();
+  var lineas = (d.lineas || []).filter(function (l) { return Number(l.cantidad) > 0 && Number(l.precio) > 0; }).map(function (l) {
+    var p = cat[(String(l.producto) + '§' + prov).toLowerCase()] || cat[String(l.producto).toLowerCase()] || {};
+    return { producto: String(l.producto || '').slice(0, 70), cantidad: Number(l.cantidad), medida: String(l.medida || 'unidad'), precio: Number(l.precio),
+      categoria: p.categoria || 'Insumos de cocina', contenido: p.contenido || 0, base: p.base || '' };
+  });
+  if (Number(d.transporte) > 0) lineas.push({ producto: 'Costo de transporte', cantidad: 1, medida: 'servicio', precio: Number(d.transporte), categoria: 'Combustible y transporte', contenido: 0, base: '' });
+  var fila = mudDineroEmpieza(id, 'compra');
+  if (!lineas.length) { mudDineroTermina(fila, 'sin líneas'); return; }
+  var v = preparaGasto({ unidad: 'bodega', fechaPago: fecha, proveedor: prov, factura: factura, lineas: lineas,
+    nota: ('Orden ' + numero + ' (app) · ' + forma + (ref ? ' ' + ref : '')).slice(0, 140) });
+  var gid = ya === MUD_ESCRIBIENDO ? mudGastoDeOrden(numero, factura) : '';
+  if (!gid) {
+    var r = mudSinCandado(function () { return escribeGasto(v, quien, new Date(), null); });
+    try { aseguraProveedor(prov, quien); } catch (e) {}
+    try { recuerdaPrecios(v.lineas); } catch (e) {}
+    gid = r && r.nuevo ? r.nuevo.id : '';
+  }
+  mudDineroTermina(fila, gid);
+}
+
+/* ════════════ 136 · EL DINERO QUE TODAVÍA VIVE EN GOOGLE (Gastos, hasta G7) ════════════
+ * Con Inventario y Compras en Supabase, los traslados, emergencias y pagos de órdenes de compra siguen escribiendo Gastos aquí.
+ * Supabase deja un trabajo «gas» en la cola: { modulo, que, id, datos }. Solo se aceptan estos «que»; cada uno lo escribe
+ * mudGas_<que>(id, datos) (en mud136_*.js de cada parte), con el nombre de quien lo hizo que manda Supabase (sin quien()).
+ * Cada uno revisa por su id que no esté ya escrito: si la cola lo repite, no se duplica. */
+var MUD_GAS_QUE = { traslado: true, traslado_corrige: true, traslado_borra: true, emergencia: true, pago_oc: true, compra: true };
+function mudGas(d) {
+  d = d || {};
+  var q = String(d.que || ''), id = String(d.id || '');
+  if (!MUD_GAS_QUE[q] || !id) { var e0 = new Error('Trabajo de dinero desconocido.'); e0.final = true; throw e0; }
+  var f = this['mudGas_' + q];
+  if (typeof f !== 'function') { var e1 = new Error('Falta mudGas_' + q + ' en Apps Script.'); throw e1; }
+  // invSalida suelta su candado para estos trabajos; aquí se toma de nuevo (lo que llama a escribeGasto lo suelta con mudSinCandado)
+  var lock = LockService.getScriptLock(); lock.waitLock(25000);
+  try { f(id, d.datos || {}); } finally { try { if (lock.hasLock()) lock.releaseLock(); } catch (e) {} }
+  _LEE = {}; _MEMO = {};
+}
+
+/* 136 (revisión de seguridad) · nada de lo que se escribe en Gastos / Gastos detalle se vuelve fórmula: un texto que empieza con = + - @ va como texto */
+function mudSegFilas(filas) {
+  return (filas || []).map(function (f) { return Array.isArray(f) ? f.map(function (x) { return typeof x === 'string' ? t127Seguro(x) : x; }) : f; });
+}
+function gasSeguro(v) {
+  var o = {}, s = function (x) { return typeof x === 'string' ? t127Seguro(x) : x; };
+  Object.keys(v || {}).forEach(function (k) { o[k] = v[k]; });
+  ['nota', 'proveedor', 'factura', 'categoria'].forEach(function (k) { if (k in o) o[k] = s(o[k]); });
+  o.lineas = (v && v.lineas || []).map(function (l) {
+    var c = {}; Object.keys(l || {}).forEach(function (k) { c[k] = s(l[k]); });
+    return c;
+  });
+  return o;
 }
 
 /* 134 · Producción también tiene las secciones de todas las áreas: equipos, pagos, permisos y preguntas */
